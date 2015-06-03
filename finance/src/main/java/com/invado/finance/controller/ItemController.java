@@ -32,7 +32,13 @@ public class ItemController {
 
     @Autowired
     private ArticleService service;
-    
+
+    @RequestMapping("/home")
+    public String showHomePage(){
+        System.out.println("ide na home page");
+        return "home";
+    }
+
     @RequestMapping("/item/{page}")
     public String showItems(@PathVariable Integer page,
                             Map<String, Object> model)
@@ -43,7 +49,8 @@ public class ItemController {
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
-        return "item-table";
+        //return "item-table";
+        return "item-view";
     }
 
     @RequestMapping("/item/{page}/{code}/delete.html")

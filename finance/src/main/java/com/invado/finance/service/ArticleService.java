@@ -276,6 +276,7 @@ public class ArticleService {
         }
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
+
             Long countEntities = this.count(dao,
                     code,
                     desc,
@@ -478,8 +479,7 @@ public class ArticleService {
                     "",
                     ex);
             throw new SystemException(
-                    Utils.getMessage("Article.PersistenceEx.ReadAll"),
-                    ex);
+                    Utils.getMessage("Article.PersistenceEx.ReadAll"), ex);
         }
     }
 }

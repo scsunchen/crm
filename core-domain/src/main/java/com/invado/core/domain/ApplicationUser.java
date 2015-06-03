@@ -50,6 +50,8 @@ public class ApplicationUser implements Serializable {
     @Size(max = 100, message = "{User.Desc.Size}")
     @Column(name = "description")
     private String description;
+    @Version
+    private Long version;
     @ManyToMany
     @JoinTable(name = "c_user_role",
             joinColumns =

@@ -13,6 +13,7 @@
         <module>core-domain</module>
         <module>core-module-spi</module>
         <module>finance</module>
+        <module>master-data-management</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

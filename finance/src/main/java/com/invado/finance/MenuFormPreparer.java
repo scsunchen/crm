@@ -33,13 +33,13 @@ public class MenuFormPreparer implements ViewPreparer {
         finance.setActive(false);
         finance.setPath("finance");
         finance.setName("Finansije");
-        finance.put("OpÅ¡ti Å¡ifarnici", "PreduzeÄ‡e", "/core/client/0");
-        finance.put("OpÅ¡ti Å¡ifarnici", "Organizaciona jedinica", "/core/org-unit/0");
-        finance.put("OpÅ¡ti Å¡ifarnici", "Poslovni partner", "/core/partner/0");
-        finance.put("OpÅ¡ti Å¡ifarnici", "OpÅ¡tina", "/core/township/0");
-        finance.put("OpÅ¡ti Å¡ifarnici", "Banka", "/core/bank/0");
-        finance.put("OpÅ¡ti Å¡ifarnici", "Valuta", "/core/currency/0");
-        finance.put("OpÅ¡ti Å¡ifarnici", "Kurs", "/core/exchange-rate/0");
+        finance.put("Opšti šifarnici", "Preduzeæe", "/core/client/0");
+        finance.put("Opšti šifarnici", "Organizaciona jedinica", "/core/org-unit/0");
+        finance.put("Opšti šifarnici", "Poslovni partner", "/core/partner/0");
+        finance.put("Opšti šifarnici", "Opština", "/core/township/0");
+        finance.put("Opšti šifarnici", "Banka", "/core/bank/0");
+        finance.put("Opšti šifarnici", "Valuta", "/core/currency/0");
+        finance.put("Opšti šifarnici", "Kurs", "/core/exchange-rate/0");
         finance.put("Fakturisanje", "Artikal", "/finance/item/0");
         finance.put("Fakturisanje", "Faktura", "/finance/invoice/0");
         modules.add(finance);
@@ -57,12 +57,13 @@ public class MenuFormPreparer implements ViewPreparer {
     }
 
     @Override
-    public void execute(Request request, AttributeContext ac) {
+    public void execute(Request  request, AttributeContext ac) {
         HttpServletRequest request1 = ((ServletRequestAttributes) 
                 RequestContextHolder.getRequestAttributes())
                 .getRequest();
         ac.putAttribute("modules", new Attribute(modules));
         for (Module module : modules) {
+            System.out.println("evo ga ima"+module.getName());
             if (request1.getRequestURI().contains(module.getPath())) {
                 ac.putAttribute("selectedModule", new Attribute(module));
             }

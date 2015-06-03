@@ -42,7 +42,8 @@ public class Module implements ModuleServiceProviderInterface {
     }
 
     public Boolean isVisibleForUser(String username) {
-        return getFeaturesByGroupForUser(username).isEmpty() == false;
+        //return getFeaturesByGroupForUser(username).isEmpty() == false;
+        return true;
     }
 
     public Boolean getActive() {

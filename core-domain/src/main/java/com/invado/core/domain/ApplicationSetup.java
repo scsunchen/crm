@@ -135,8 +135,9 @@ public class ApplicationSetup implements Serializable {
     }
     
     public static enum ApplicationUser implements Serializable {
-        
-        UNDEFINED;
+
+        PRVI, NULTI
+        //UNDEFINED;
     }
 
 }

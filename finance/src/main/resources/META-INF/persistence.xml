@@ -22,6 +22,9 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <class>com.invado.finance.domain.Article</class>
     <class>com.invado.finance.domain.Properties</class>
     <properties>
+        <property name="hibernate.show_sql" value="true" />
+        <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+        <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
   </persistence-unit>
 </persistence>
