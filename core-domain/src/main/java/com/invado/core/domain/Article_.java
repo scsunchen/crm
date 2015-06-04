@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package com.invado.finance.domain;
+package com.invado.core.domain;
 
-import com.invado.core.domain.ApplicationUser;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.metamodel.SingularAttribute;

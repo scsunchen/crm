@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.finance;
+package com.invado.core.utils;
 
 import java.text.MessageFormat;
 import java.util.PropertyResourceBundle;

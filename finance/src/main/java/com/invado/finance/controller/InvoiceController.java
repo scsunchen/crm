@@ -5,7 +5,6 @@
  */
 package com.invado.finance.controller;
 
-import com.invado.finance.domain.Article;
 import com.invado.finance.service.InvoiceService;
 import com.invado.finance.service.dto.InvoiceDTO;
 import com.invado.finance.service.dto.PageRequestDTO;

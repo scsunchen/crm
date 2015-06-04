@@ -5,14 +5,8 @@
  */
 package com.invado.finance;
 
-import com.invado.finance.domain.Article;
-import com.invado.finance.domain.VatPercent;
-import com.invado.finance.service.ArticleService;
 import com.invado.finance.service.InvoiceService;
 import com.invado.finance.service.dto.PageRequestDTO;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

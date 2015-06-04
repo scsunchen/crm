@@ -1,5 +1,8 @@
 package com.invado.finance.domain;
 
+import com.invado.core.domain.Article;
+import com.invado.core.domain.VatPercent;
+
 import java.math.BigDecimal;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;

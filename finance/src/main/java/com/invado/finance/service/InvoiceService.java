@@ -14,9 +14,9 @@ import com.invado.core.domain.Client_;
 import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
 import com.invado.core.domain.OrgUnitPK;
-import com.invado.finance.Utils;
-import com.invado.finance.domain.Article;
-import com.invado.finance.domain.Article_;
+import com.invado.core.utils.Utils;
+import com.invado.core.domain.Article;
+import com.invado.core.domain.Article_;
 import com.invado.finance.domain.Invoice;
 import com.invado.finance.domain.InvoiceBusinessPartner;
 import com.invado.finance.domain.InvoiceItem;
@@ -59,10 +59,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import static com.invado.finance.domain.InvoiceBusinessPartner.ABROAD;
-import static com.invado.finance.domain.InvoiceBusinessPartner.DOMESTIC;
-import static com.invado.finance.domain.VatPercent.GENERAL_RATE;
-import static com.invado.finance.domain.VatPercent.LOWER_RATE;
+
 import org.springframework.stereotype.Service;
 
 /**

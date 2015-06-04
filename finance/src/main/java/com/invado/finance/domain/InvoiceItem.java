@@ -12,6 +12,9 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.invado.core.domain.Article;
+import com.invado.core.domain.VatPercent;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**

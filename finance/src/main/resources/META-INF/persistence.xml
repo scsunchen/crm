@@ -19,7 +19,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <class>com.invado.core.domain.BankCreditor</class>
     <class>com.invado.finance.domain.Invoice</class>
     <class>com.invado.finance.domain.InvoiceItem</class>
-    <class>com.invado.finance.domain.Article</class>
+    <class>com.invado.core.domain.Article</class>
     <class>com.invado.finance.domain.Properties</class>
     <properties>
         <property name="hibernate.show_sql" value="true" />
