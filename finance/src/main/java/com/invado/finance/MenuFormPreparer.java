@@ -63,7 +63,6 @@ public class MenuFormPreparer implements ViewPreparer {
                 .getRequest();
         ac.putAttribute("modules", new Attribute(modules));
         for (Module module : modules) {
-            System.out.println("evo ga ima"+module.getName());
             if (request1.getRequestURI().contains(module.getPath())) {
                 ac.putAttribute("selectedModule", new Attribute(module));
             }

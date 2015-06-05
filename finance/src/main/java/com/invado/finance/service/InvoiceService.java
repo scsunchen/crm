@@ -71,7 +71,7 @@ public class InvoiceService {
 
     private static final Logger LOG = Logger.getLogger(InvoiceService.class.getName());
 
-    @PersistenceContext(unitName = "unit")
+    @PersistenceContext(name = "unit")
     private EntityManager dao;   
     @Autowired
     private Validator validator;

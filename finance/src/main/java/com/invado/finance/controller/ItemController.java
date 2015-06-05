@@ -35,7 +35,7 @@ public class ItemController {
 
     @RequestMapping("/home")
     public String showHomePage(){
-        System.out.println("ide na home page");
+        System.out.println("ide na home page iz itema");
         return "home";
     }
 

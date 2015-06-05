@@ -3,17 +3,16 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-    <definition name="main-menu-form" template="/WEB-INF/layouts/crm-menu-form.jsp" preparer="com.invado.finance.MenuFormPreparer">
+    <definition name="main-menu-form" template="/WEB-INF/layouts/menu-form.jsp" preparer="com.invado.masterdata.MenuFormPreparer">
         <put-attribute name="title" value=""/>
-        <put-attribute name="header" value="/WEB-INF/layouts/crm-header.jsp"/>
-        <put-attribute name="menu" value="/WEB-INF/layouts/crm-module-menu.jsp" />
         <put-attribute name="body" value=""/>
     </definition>
     <definition name="home" extends="main-menu-form">
         <put-attribute name="body" value="/WEB-INF/layouts/crm-logo.jsp"/>
     </definition>
-    <definition name="item-view" extends="main-menu-form">
-        <put-attribute name="body" value="/WEB-INF/jsp/crm-item-table.jsp"/>
+    <definition name="partner-view" extends="main-menu-form">
+        <put-attribute name="title" value="Poslovni partner"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-table.jsp"/>
     </definition>
     <definition name="error" extends="main-menu-form" >
         <put-attribute name="title" value="Gre?ka"/>

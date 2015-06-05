@@ -55,7 +55,7 @@ public class ArticleService {
     private static final Logger LOG = Logger.getLogger(
             ArticleService.class.getName());
 
-    @PersistenceContext(unitName = "unit")
+    @PersistenceContext(name = "unit")
     private EntityManager dao;
 
     @Autowired
