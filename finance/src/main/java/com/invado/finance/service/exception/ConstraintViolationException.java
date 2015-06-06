@@ -34,8 +34,14 @@ public class ConstraintViolationException extends ApplicationException {
     }
 
     @Override
+    public String getLocalizedMessage() {
+        return getMessage();
+    }
+
+    @Override
     public String getMessage() {
-        String result = super.getMessage().length() > 0 ? super.getMessage() + "." : "";
+        String result = (super.getMessage() != null && super.getMessage().length() > 0)
+                ? super.getMessage() + "." : "";
         for (String violation : constraint) {
             if (violation.length() > 0) {
                 result += String.format(" %s.", violation);

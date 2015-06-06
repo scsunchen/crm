@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -49,7 +48,6 @@ public class ItemController {
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
-        //return "item-table";
         return "item-view";
     }
 
@@ -69,13 +67,20 @@ public class ItemController {
     }
 
     @RequestMapping(value = "/item/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(Article item,
-            BindingResult result)
+    public String processCreationForm(@ModelAttribute("item") Article item,
+            BindingResult result,
+            SessionStatus status,
+            Map<String, Object> model)
             throws Exception {
         if (result.hasErrors()) {
+            model.put("action", "create");
+            model.put("VATOptions", Arrays.asList(VatPercent.values()));
+            model.put("unitOfMeasure", Arrays.asList(UnitOfMeasure.values()));
+            return "item-grid";
         } else {
             item.setUserDefinedUnitOfMeasure(Boolean.FALSE);
             this.service.create(item);
+            status.setComplete();
         }
         return "redirect:/item/{page}";
     }
@@ -102,12 +107,9 @@ public class ItemController {
             throws Exception {
         if (result.hasErrors()) {
             model.put("VATOptions", Arrays.asList(VatPercent.values()));
-            model.put("UnitOfMeasure", Arrays.asList(UnitOfMeasure.values())
-                    .stream().map(p -> p.getDescription())
-                    .collect(Collectors.toList()));
+            model.put("unitOfMeasure", Arrays.asList(UnitOfMeasure.values()));
             return "item-grid";
         } else {
-            //disable id
             item.setUserDefinedUnitOfMeasure(Boolean.FALSE);
             this.service.update(item);
             status.setComplete();

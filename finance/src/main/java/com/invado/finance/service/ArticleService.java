@@ -21,7 +21,9 @@ import com.invado.finance.service.exception.ReferentialIntegrityException;
 import com.invado.finance.service.exception.SystemException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -107,18 +109,18 @@ public class ArticleService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class)
     public Article update(Article dto) throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateArticlePermission
         if (dto == null) {
             throw new ConstraintViolationException(
-                    Utils.getMessage("Article.IllegalArgumentEx"));
+                    "", Arrays.asList(Utils.getMessage("Article.IllegalArgumentEx")));
         }
         if (dto.getCode() == null || dto.getCode().length() == 0) {
             throw new ConstraintViolationException(
-                    Utils.getMessage("Article.IllegalArgumentEx.Code"));
+                    "", Arrays.asList(Utils.getMessage("Article.IllegalArgumentEx.Code")));
         }
         try {
             Article item = dao.find(Article.class,
@@ -130,28 +132,21 @@ public class ArticleService {
                                 dto.getCode())
                 );
             }
-            dao.lock(item, LockModeType.OPTIMISTIC);
-            System.out.println(dto.getVersion());
-            System.out.println(item.getVersion());
-            item.setDescription(dto.getDescription());
-            item.setVATRate(dto.getVATRate());
-            item.setUnitOfMeasureCode(dto.getUnitOfMeasureCode());
-            item.setUserDefinedUnitOfMeasure(dto.getUserDefinedUnitOfMeasure());
-            item.setVersion(dto.getVersion());
-            item.setUpdated(LocalDate.now());
+            dto.setUpdated(LocalDate.now());
+            dto.setUnitsInStock(item.getUnitsInStock());
             ApplicationUser user = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
                     .setParameter(1, username)
                     .getSingleResult();
-            item.setLastUpdateBy(user);
+            dto.setLastUpdateBy(user);
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new ConstraintViolationException("", msgs);
             }
-            dao.flush();
+            dao.merge(dto);
             return item;
         } catch (ConstraintViolationException | EntityNotFoundException ex) {
             throw ex;
@@ -239,8 +234,8 @@ public class ArticleService {
         //TODO : check ReadArticlePermission
         String code = null;
         String desc = null;
-        Date updateFrom = null;
-        Date updateTo = null;
+        LocalDate updateFrom = null;
+        LocalDate updateTo = null;
         BigDecimal stockFrom = null;
         BigDecimal stockTo = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
@@ -250,21 +245,11 @@ public class ArticleService {
             if (s.getKey().equals("description") && s.getValue() instanceof String) {
                 desc = (String) s.getValue();
             }
-            if (s.getKey().equals("updatedFrom") && s.getValue() instanceof Date) {
-                Calendar updateFromCalendar = Calendar.getInstance();
-                updateFromCalendar.setTime((Date) s.getValue());
-                updateFromCalendar.set(Calendar.HOUR_OF_DAY, 0);
-                updateFromCalendar.set(Calendar.MINUTE, 0);
-                updateFromCalendar.set(Calendar.SECOND, 0);
-                updateFrom = updateFromCalendar.getTime();
+            if (s.getKey().equals("updatedFrom") && s.getValue() instanceof LocalDate) {
+                updateFrom = (LocalDate) s.getValue();
             }
-            if (s.getKey().equals("updatedTo") && s.getValue() instanceof Date) {
-                Calendar updateToCalendar = Calendar.getInstance();
-                updateToCalendar.setTime((Date) s.getValue());
-                updateToCalendar.set(Calendar.HOUR_OF_DAY, 23);
-                updateToCalendar.set(Calendar.MINUTE, 59);
-                updateToCalendar.set(Calendar.SECOND, 59);
-                updateTo = updateToCalendar.getTime();
+            if (s.getKey().equals("updatedTo") && s.getValue() instanceof LocalDate) {
+                updateTo = (LocalDate) s.getValue();
             }
             if (s.getKey().equals("stockFrom") && s.getValue() instanceof BigDecimal) {
                 stockFrom = (BigDecimal) s.getValue();
@@ -336,8 +321,8 @@ public class ArticleService {
             EntityManager EM,
             String code,
             String desc,
-            Date dateFrom,
-            Date dateTo,
+            LocalDate dateFrom,
+            LocalDate dateTo,
             BigDecimal stockFrom,
             BigDecimal stockTo) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
@@ -400,8 +385,8 @@ public class ArticleService {
     private List<Article> search(EntityManager em,
             String code,
             String desc,
-            Date updatedFrom,
-            Date updatedTo,
+            LocalDate updatedFrom,
+            LocalDate updatedTo,
             BigDecimal stockFrom,
             BigDecimal stockTo,
             int first,
@@ -467,8 +452,8 @@ public class ArticleService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<Article> readAll(String code,
             String desc,
-            Date updatedFrom,
-            Date updatedTo,
+            LocalDate updatedFrom,
+            LocalDate updatedTo,
             BigDecimal stockFrom,
             BigDecimal stockTo) {
         try {
