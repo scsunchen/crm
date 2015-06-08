@@ -100,6 +100,10 @@ public class BusinessPartner implements Serializable {
         return companyIdNumber;
     }
 
+    public void setCompanyIdNumber(String companyIdNumber) {
+        this.companyIdNumber = companyIdNumber;
+    }
+
     public String getName() {
         return name;
     }

@@ -35,8 +35,7 @@ public class OrgUnit implements Serializable {
 
     public static final String READ_BY_CLIENT = "OrgUnit.ReadByClient";
     public static final String READ_ALL_ORDERBY_PK = "OrgUnit.ReadAllOrderByPK";
-    public static final String READ_BY_CLIENT_ORDERBY_PK = 
-            "OrgUnit.ReadByClientOrderByPK";
+    public static final String READ_BY_CLIENT_ORDERBY_PK = "OrgUnit.ReadByClientOrderByPK";
     public static final String COUNT_BY_CLIENT = "OrgUnit.CountByClient";
     public static final String COUNT_ALL = "OrgUnit.CountAll";
     
@@ -97,8 +96,12 @@ public class OrgUnit implements Serializable {
         return client;
     }
     
-    public Integer getID() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -124,7 +127,8 @@ public class OrgUnit implements Serializable {
     public void setStreet(String street) {
         this.street = street;
     }
-     
+
+
     public Long getVersion() {
         return version;
     }
@@ -180,7 +184,9 @@ public class OrgUnit implements Serializable {
         return client.getTownship().getName();
     }
 
-    //************************************************************************//    
+
+
+    //************************************************************************//
                            // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//
     
