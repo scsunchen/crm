@@ -12,86 +12,60 @@
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
 <form:form modelAttribute="item" method="post">
-    <div class="form-group">
-        <c:choose>
-            <c:when test="${action == 'create'}">
-                <input:inputField label="Šifra *" name="companyIdNumber" autofocus="true"/>
-            </c:when>
-            <c:otherwise>
-                <input:inputField label="Šifra *" name="companyIdNumber" disabled="true"/>
-            </c:otherwise>
-        </c:choose>
-    </div>
-    <div class="form-group">
-        <div class="col-md-6">
-            <input:inputField label="Naziv *" name="name"/>
-        </div>
-        <div class="col-md-6">
-            <input:inputField label="Dodatni Naziv" name="name1"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-3">
-            <input:inputField name="address.country" label="Država"/>
-        </div>
-        <div class="col-md-3">
-            <input:inputField name="address.place" label="Mesto"/>
-        </div>
-        <div class="col-md-3">
-            <input:inputField name="address.street" label="Ulica i broj"/>
-        </div>
-        <div class="col-md-3">
-            <input:inputField name="address.postCode" label="Poštanski Broj"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-3">
-            <input:inputField label="Telefon" name="phone"/>
-        </div>
-        <div class="col-md-3">
-            <input:inputField label="Fax" name="fax"/>
-        </div>
-        <div class="col-md-6">
-            <input:inputField label="email" name="EMail"/>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-3">
-            <input:inputField label="PIB" name="TIN"/>
-        </div>
-        <div class="col-md-3">
-            <input:inputField label="Šifra delatnosti" name="activityCode"/>
-        </div>
-        <div class="col-md-4">
-            <input:inputField label="Tekući račun" name="currentAccount"/>
-        </div>
-        <div class="col-md-2 checkbox">
-            <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-4">
-            <spring:bind path="currencyDesignation">
-                <div class="form-group">
-                    <label for="currencyDesignation">Valuta</label>
-                    <form:select path="currencyDesignation" id="currencyDesignation" class="form-control"
-                                 items="${currencyDesignation}"
-                                 itemLabel="description"/>
+    <fieldset class="col-lg-12">
+        <div class="form-group">
+            <div class="col-lg-6">
+                <c:choose>
+                    <c:when test="${action == 'create'}">
+                        <input:inputField label="Matični broj *" name="companyIdNumber" autofocus="true"/>
+                    </c:when>
+                    <c:otherwise>
+                        <input:inputField label="Matični broj *" name="companyIdNumber" disabled="true"/>
+                    </c:otherwise>
+                </c:choose>
+                <input:inputField label="Naziv *" name="name"/>
+                <input:inputField label="Dodatni Naziv" name="name1"/>
+            </div>
+            <div class="col-lg-3">
+                <input:inputField name="address.country" label="Država"/>
+                <input:inputField name="address.place" label="Mesto"/>
+                <input:inputField name="address.street" label="Ulica i broj"/>
+                <input:inputField name="address.postCode" label="Poštanski Broj"/>
+                <input:inputField label="Telefon" name="phone"/>
+                <input:inputField label="Fax" name="fax"/>
+                <input:inputField label="email" name="EMail"/>
+            </div>
+            <div class="col-lg-3">
+                <input:inputField label="PIB" name="TIN"/>
+                <input:inputField label="Šifra delatnosti" name="activityCode"/>
+                <input:inputField label="Tekući račun" name="currentAccount"/>
+                <spring:bind path="currencyDesignation">
+                    <div class="form-group">
+                        <label for="currencyDesignation">Valuta</label>
+                        <form:select path="currencyDesignation" id="currencyDesignation" class="form-control"
+                                     items="${currencyDesignation}"
+                                     itemLabel="description"/>
+                    </div>
+                </spring:bind>
+                <input:inputField label="Rabat" name="rebate"/>
+                <input:inputField label="Beskamatni period" name="interestFreeDays"/>
+                <spring:bind path="parentBusinessPartner.companyIdNumber">
+                    <div class="form-group">
+                        <label for="parent">Nadređeni partner</label>
+                        <form:select path="parentBusinessPartner" id="parent" class="form-control" itemLabel="parent">
+                            <form:option value="">&nbsp;</form:option>
+                            <form:options items="${parents}" itemLabel="name" itemValue="companyIdNumber"/>
+                        </form:select>
+                    </div>
+                </spring:bind>
+                <div class="checkbox">
+                    <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>
                 </div>
-            </spring:bind>
+            </div>
+            <form:hidden path="version"/>
         </div>
-        <div class="col-md-4">
-            <input:inputField label="Rabat" name="rebate"/>
-        </div>
-        <div class="col-md-4">
-            <input:inputField label="Beskamatni period" name="interestFreeDays"/>
-        </div>
-    </div>
-    <form:hidden path="version"/>
-
-    <div class="form-group col-md-1">
+    </fieldset>
+    <div class="form-group">
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">

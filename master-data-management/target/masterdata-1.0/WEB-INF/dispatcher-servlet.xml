@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.invado.masterdata.controller"></context:component-scan>
+
+    <!-- all resources inside folder src/main/webapp/resources are mapped so they can be refered to inside JSP files
+    (see header.jsp for more details) -->
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <!-- zamenićemo za tiles
+    <bean
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/jsp/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+                            -->
+
+
+    <bean id="viewResolverTiles" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass">
+            <value>
+                org.springframework.web.servlet.view.tiles3.TilesView
+            </value>
+        </property>
+    </bean>
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles.xml</value>
+            </list>
+        </property>
+        <property name="preparerFactoryClass"
+                  value="org.springframework.web.servlet.view.tiles3.SimpleSpringPreparerFactory">
+        </property>
+    </bean>
+
+    <!--
+        - This bean resolves specific types of exceptions to corresponding logical 
+        - view names for error views.
+    -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- view name resolved using bean of type InternalResourceViewResolver 
+        (declared in mvc-view-config.xml)
+        <property name="defaultErrorView" value="exception"/>
+                                          -->
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Throwable">error</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="servicePropertyConfig"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/com/invado/masterdata/bundle/server-strings.properties</value>
+            </list>
+        </property>
+        <property name="placeholderPrefix" value="$properties{"/>
+    </bean>
+</beans>

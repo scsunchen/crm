@@ -18,7 +18,7 @@
         <thead>
         <tr>
             <th></th>
-            <th>Šifra</th>
+            <th>Matični broj</th>
             <th>Naziv</th>
             <th>Dodatni naziv</th>
             <th>Adresa</th>

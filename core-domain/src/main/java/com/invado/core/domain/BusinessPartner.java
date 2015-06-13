@@ -17,11 +17,14 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table( name = "c_business_partner", schema = "devel")
 @NamedQueries({
     @NamedQuery(name = BusinessPartner.READ_BY_TIN , 
-        query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.TIN) LIKE  ?1")
+        query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.TIN) LIKE  ?1"),
+        @NamedQuery(name = BusinessPartner.READ_PARENT,
+        query = "SELECT x FROM BusinessPartner x where x.parentBusinessPartner is null")
 })
 public class BusinessPartner implements Serializable {
     
     public static final String READ_BY_TIN = "BusinessPartner.ReadByTIN";
+    public static final String READ_PARENT = "BusinessPartner.ReadParentPartners";
     
     @Id
     @Column(name = "registration_number")
@@ -69,6 +72,9 @@ public class BusinessPartner implements Serializable {
     private Integer interestFreeDays;//>=0
     @Column(name = "vat")
     private Boolean VAT;
+    @ManyToOne
+    @JoinColumn(name = "parent_partner_id")
+    private BusinessPartner parentBusinessPartner;
     @Embedded
     private ContactPerson contactPerson;
     @Version
@@ -244,8 +250,16 @@ public class BusinessPartner implements Serializable {
         }
         return address.getPlace();
     }
-    
-    //************************************************************************//    
+
+    public BusinessPartner getParentBusinessPartner() {
+        return parentBusinessPartner;
+    }
+
+    public void setParentBusinessPartner(BusinessPartner parentBusinessPartner) {
+        this.parentBusinessPartner = parentBusinessPartner;
+    }
+
+    //************************************************************************//
                            // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//
     

@@ -130,7 +130,7 @@ public Invoice(){
         }
 
 public Invoice(OrgUnit orgUnit,String document){
-        this.orgUnit=orgUnit.getID();
+        this.orgUnit=orgUnit.getId();
         this.document=document;
         }
 

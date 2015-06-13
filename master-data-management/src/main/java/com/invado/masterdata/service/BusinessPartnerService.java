@@ -67,6 +67,11 @@ public class BusinessPartnerService {
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
+            if (a.getParentBusinessPartner() != null) {
+                a.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartner().getCompanyIdNumber()));
+            }else{
+                a.setParentBusinessPartner(null);
+            }
             dao.persist(a);
             return a;
         } catch (IllegalArgumentException | EntityExistsException ex) {
@@ -137,6 +142,13 @@ public class BusinessPartnerService {
             }
         }
     }
+    @Transactional
+    public List<BusinessPartner> readParentPartners(){
+        Query parent = dao.createNamedQuery(BusinessPartner.READ_PARENT);
+        List<BusinessPartner> parents = parent.getResultList();
+       return parents;
+    }
+
 
     @Transactional(rollbackFor = Exception.class)
     public void delete(String companyIdNumber) throws IllegalArgumentException,

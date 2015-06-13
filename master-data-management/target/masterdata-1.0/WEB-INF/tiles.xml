@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="main-menu-form" template="/WEB-INF/layouts/menu-form.jsp"
+                preparer="com.invado.masterdata.MenuFormPreparer">
+        <put-attribute name="head" value=""/>
+        <put-attribute name="title" value=""/>
+        <put-attribute name="panel-title" value=""/>
+        <put-attribute name="body" value=""/>
+    </definition>
+    <definition name="home" extends="main-menu-form">
+        <put-attribute name="body" value="/WEB-INF/jsp/logo.jsp"/>
+    </definition>
+    <definition name="error" extends="main-menu-form">
+        <put-attribute name="title" value="Greška"/>
+        <put-attribute name="panel-title" value="Greška prilikom izvršavanja programa"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/exception.jsp"/>
+    </definition>
+    <definition name="resulterror" extends="main-menu-form">
+        <put-attribute name="title" value="Greška"/>
+        <put-attribute name="panel-title" value="Greška prilikom izvršavanja programa"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/result-exception.jsp"/>
+    </definition>
+    <definition name="partner-view" extends="main-menu-form">
+        <put-attribute name="title" value="Poslovni partner"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-table.jsp"/>
+    </definition>
+    <definition name="partner-grid" extends="main-menu-form">
+        <put-attribute name="title" value="$properties{Business.Partner.Create.Title}"/>
+        <put-attribute name="panel-title" value="Ažuriranje poslovnog partnera"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-grid.jsp"/>
+    </definition>
+    <definition name="orgunit-view" extends="main-menu-form">
+        <put-attribute name="title" value="Organizaciona celina"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/orgunit-table.jsp"/>
+    </definition>
+    <definition name="orgunit-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Organizaciona celina"/>
+        <put-attribute name="panel-title" value="Ažuriranje organizacionih celina"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/orgunit-grid.jsp"/>
+    </definition>
+    <definition name="client-view" extends="main-menu-form">
+        <put-attribute name="title" value="Kompanija korisnik"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/client-table.jsp"/>
+    </definition>
+    <definition name="client-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Kompanija korisnik"/>
+        <put-attribute name="panel-title" value="Ažuriranje kompanijskih podataka"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/client-grid.jsp"/>
+    </definition>
+    <definition name="bank-view" extends="main-menu-form">
+        <put-attribute name="title" value="Banka"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/bank-creditor-table.jsp"/>
+    </definition>
+    <definition name="bank-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Banka"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o bankama"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/bank-creditor-grid.jsp"/>
+    </definition>
+    <definition name="township-view" extends="main-menu-form">
+        <put-attribute name="title" value="Opština"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/township-table.jsp"/>
+    </definition>
+    <definition name="township-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Opština"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o opštinama"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/township-grid.jsp"/>
+    </definition>
+</tiles-definitions>

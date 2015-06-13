@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,7 +29,6 @@ public class BusinessPartnerController {
 
     @RequestMapping("/home")
     public String showHomePage() {
-        System.out.println("ide na home page sada");
         return "home";
     }
 
@@ -36,13 +36,13 @@ public class BusinessPartnerController {
     public String showItems(@PathVariable Integer page,
                             Map<String, Object> model)
             throws Exception {
-        System.out.println("Ovo radi za razliku od onog drugog!");
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
         ReadRangeDTO<BusinessPartner> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
+
         //return "item-table";
         return "partner-view";
     }
@@ -51,6 +51,9 @@ public class BusinessPartnerController {
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
         System.out.println("u pravom smo kodu");
         model.put("item", new BusinessPartner());
+        List<BusinessPartner> parents = service.readParentPartners();
+        System.out.println("Evo je lista "+parents.size());
+        model.put("parents", parents);
         model.put("action", "create");
         return "partner-grid";
     }
@@ -61,7 +64,6 @@ public class BusinessPartnerController {
                                       SessionStatus status,
                                       Map<String, Object> model)
             throws Exception {
-        System.out.println("jeste našao metodu kontrolera"+" "+item.getCompanyIdNumber()+" "+item.getName());
         if (result.hasErrors()) {
             model.put("action", "create");
             return "partner-grid";
@@ -88,7 +90,7 @@ public class BusinessPartnerController {
         return "partner-grid";
     }
 
-    @RequestMapping(value = "/item/{page}/update/{code}",
+    @RequestMapping(value = "/partner/{page}/update/{code}",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") BusinessPartner item,
                                       BindingResult result,

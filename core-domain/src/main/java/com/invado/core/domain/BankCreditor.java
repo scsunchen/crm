@@ -38,7 +38,6 @@ public class BankCreditor implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Basic(optional = false)
     @Column(name = "id")
     @NotNull(message = "{Bank.Id.NotNull}")
     @DecimalMin(value="1", message = "{Bank.Id.DecimalMin}")
@@ -137,6 +136,10 @@ public class BankCreditor implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

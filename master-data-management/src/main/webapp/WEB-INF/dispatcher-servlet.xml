@@ -72,7 +72,7 @@
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:bundle/server-strings.properties</value>
+                <value>classpath:/com/invado/masterdata/bundle/server-strings.properties</value>
             </list>
         </property>
         <property name="placeholderPrefix" value="$properties{"/>

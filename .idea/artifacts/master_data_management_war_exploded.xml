@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="master-data-management:war exploded">
-    <output-path>$PROJECT_DIR$/master-data-management/target/master-data</output-path>
+    <output-path>$PROJECT_DIR$/master-data-management/target/masterdata-1.0</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -88,11 +88,10 @@
           <element id="archive" name="finance-1.0.jar">
             <element id="module-output" name="finance" />
           </element>
-          <element id="library" level="application" name="ojdbc6" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="F:\Invado\crm\master-data-management\target/MANIFEST.MF" />
+        <element id="file-copy" path="E:\Nikola\Invado\crm\master-data-management\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="master-data-management/web/Web" />
     </root>
