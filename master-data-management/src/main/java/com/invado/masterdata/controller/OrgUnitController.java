@@ -69,10 +69,10 @@ public class OrgUnitController {
 
     @RequestMapping(value = "/org-unit/{page}/update/{code}",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String code,
+    public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        OrgUnit item = service.read(code);
+        OrgUnit item = service.read(id);
         model.put("item", item);
         return "orgunit-grid";
     }

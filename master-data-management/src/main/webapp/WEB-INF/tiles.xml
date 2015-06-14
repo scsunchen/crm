@@ -68,4 +68,22 @@
         <put-attribute name="panel-title" value="Ažuriranje podataka o opštinama"/>
         <put-attribute name="body" value="/WEB-INF/jsp/township-grid.jsp"/>
     </definition>
+    <definition name="job-view" extends="main-menu-form">
+        <put-attribute name="title" value="Radna mesta"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/job-table.jsp"/>
+    </definition>
+    <definition name="job-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Radna mesta"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o rdnim mestima"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/job-grid.jsp"/>
+    </definition>
+    <definition name="employee-view" extends="main-menu-form">
+        <put-attribute name="title" value="Radnik"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/employee-table.jsp"/>
+    </definition>
+    <definition name="employee-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Radna mesta"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o rdnicima"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/employee-grid.jsp"/>
+    </definition>
 </tiles-definitions>

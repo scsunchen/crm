@@ -2,49 +2,236 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eeba6398-9634-4954-91ca-f897aba000a8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BankCreditorController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BankCreditorService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor_.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/ClientController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/dto/ClientDTO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ClientService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/TestController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/TownshipController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/TownshipService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township_.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/bank-creditor-grid.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/bank-creditor-table.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-grid.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-table.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/META-INF/context.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/result-exception.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/test.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/township-grid.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/township-table.jsp" />
-      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\src\main\resources\bundle\server-strings.properties" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BusinessPartnerService.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BusinessPartnerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/images/dtm-logo.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/fonts/glyphicons-halflings-regular.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/fonts/glyphicons-halflings-regular.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/fonts/glyphicons-halflings-regular.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/ApplicationException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/BusinessPartnerRelationshipTermsController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/BusinessPartnerRelationshipTermsService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms_.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/ClientNotExistsEx.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/ConstraintViolationException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/CurrencyNotFoundException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Employee.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/EmployeeService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Employee_.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/EntityExistsException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/EntityNotFoundException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/IllegalArgumentException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Job.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/JobController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/JobService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Job_.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MasterdataValidator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/OrgUnitNotExistsEx.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/PageNotExistsException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/PageRequestDTO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/ReadRangeDTO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/ReferentialIntegrityException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/SystemException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/Test.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/Utils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/application-context.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/css/bootstrap-theme.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/css/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/js/bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/META-INF/context.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/currencyFormattedField.tag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-grid.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-table.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/exception.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/fonts/glyphicons-halflings-regular.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/index.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputField.tag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/integerFormattedField.tag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/job-grid.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/job-table.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/js/jquery-1.11.2.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/localDateFormattedField.tag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/logo.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/css/main.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/masterdata-persistence.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/js/masterdata.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/layouts/menu-form.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/pom.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/result-exception.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/resources/bundle/server-strings.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-grid.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/test.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/web.xml" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\core-domain\target\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\core-module-spi\target\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\finance\target\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\META-INF\context.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\application-context.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\META-INF\masterdata-persistence.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\MasterdataValidator.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\MenuFormPreparer.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\Test.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\Utils.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\bundle\server-strings.properties" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\controller\BankCreditorController.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\controller\BusinessPartnerController.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\controller\ClientController.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\controller\OrgUnitController.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\controller\TestController$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\controller\TestController.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\controller\TownshipController.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\BankCreditorService.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\BusinessPartnerService.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\ClientService.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\OrgUnitService.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\TownshipService.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\dto\ClientDTO.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\dto\PageRequestDTO$SearchCriterion.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\dto\PageRequestDTO.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\dto\ReadRangeDTO.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\ApplicationException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\ClientNotExistsEx.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\ConstraintViolationException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\CurrencyNotFoundException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\EntityExistsException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\EntityNotFoundException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\IllegalArgumentException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\OrgUnitNotExistsEx.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\PageNotExistsException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\ReferentialIntegrityException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\classes\com\invado\masterdata\service\exception\SystemException.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\dispatcher-servlet.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\bank-creditor-grid.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\bank-creditor-table.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\client-grid.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\client-table.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\exception.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\logo.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\orgunit-grid.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\orgunit-table.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\partner-grid.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\partner-table.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\result-exception.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\test.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\township-grid.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\jsp\township-table.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\layouts\menu-form.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\antlr-2.7.7.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\aopalliance-1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\classmate-1.0.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\commons-beanutils-1.9.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\commons-collections-3.2.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\commons-digester-2.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\commons-lang-2.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\compiler-0.8.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\core-domain-1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\core-service-provider-interface-1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\dom4j-1.6.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\finance-1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\freemarker-2.3.21.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\guava-17.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\hibernate-commons-annotations-4.0.5.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\hibernate-core-4.3.7.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\hibernate-entitymanager-4.3.7.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\hibernate-jpa-2.1-api-1.0.0.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\hibernate-validator-5.1.3.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\jandex-1.1.0.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\javassist-3.18.1-GA.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\javassist-3.7.ga.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\javax.el-2.2.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\javax.el-api-2.2.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\javax.inject-1.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\jboss-logging-3.1.3.GA.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\jboss-logging-annotations-1.2.0.Beta1.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\jboss-transaction-api_1.2_spec-1.0.0.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\jcl-over-slf4j-1.7.8.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\jstl-1.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\master-data-1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\mvel2-2.0.11.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\ognl-2.7.3.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\oro-2.0.8.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\postgresql-9.1-901-1.jdbc4.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\slf4j-api-1.7.8.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-aop-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-beans-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-context-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-core-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-expression-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-jdbc-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-orm-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-security-config-3.2.5.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-security-core-3.2.5.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-security-web-3.2.5.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-tx-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-web-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\spring-webmvc-4.1.4.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-api-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-autotag-core-runtime-1.1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-compat-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-core-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-el-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-extras-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-freemarker-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-jsp-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-mvel-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-ognl-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-request-api-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-request-freemarker-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-request-jsp-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-request-mustache-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-request-servlet-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-request-servlet-wildcard-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-request-velocity-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-servlet-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-template-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\tiles-velocity-3.0.5.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\validation-api-1.1.0.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\velocity-1.7.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\velocity-tools-2.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\lib\xml-apis-1.0.b2.jar" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\tags\inputField.tag" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\tiles.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\WEB-INF\web.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\index.jsp" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\css\bootstrap-theme.min.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\css\bootstrap.min.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\css\main.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\fonts\glyphicons-halflings-regular.eot" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\fonts\glyphicons-halflings-regular.svg" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\fonts\glyphicons-halflings-regular.ttf" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\fonts\glyphicons-halflings-regular.woff" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\fonts\glyphicons-halflings-regular.woff2" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\images\dtm-logo.jpg" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\js\bootstrap.min.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\js\jquery-1.11.2.min.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata-1.0\resources\js\masterdata.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\master-data-management\target\masterdata.war" afterPath="" />
+      <change type="DELETED" beforePath="E:\Nikola\Invado\crm\target\MANIFEST.MF" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/target/classes/com/invado/masterdata/MasterdataValidator.class" afterPath="$PROJECT_DIR$/master-data-management/target/classes/com/invado/masterdata/MasterdataValidator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/target/classes/com/invado/masterdata/MenuFormPreparer.class" afterPath="$PROJECT_DIR$/master-data-management/target/classes/com/invado/masterdata/MenuFormPreparer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/target/classes/com/invado/masterdata/controller/OrgUnitController.class" afterPath="$PROJECT_DIR$/master-data-management/target/classes/com/invado/masterdata/controller/OrgUnitController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/target/classes/com/invado/masterdata/service/OrgUnitService.class" afterPath="$PROJECT_DIR$/master-data-management/target/classes/com/invado/masterdata/service/OrgUnitService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MasterdataValidator.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MasterdataValidator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/OrgUnitController.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/OrgUnitController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/core-domain.iml" afterPath="$PROJECT_DIR$/core-domain/core-domain.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/finance.iml" afterPath="$PROJECT_DIR$/finance/finance.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/finance_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/finance_war.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/finance_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/finance_war_exploded.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputField.tag" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputField.tag" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/master-data-management.iml" afterPath="$PROJECT_DIR$/master-data-management/master-data-management.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/master_data_management_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/master_data_management_war.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/master_data_management_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/master_data_management_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/pom.xml" afterPath="$PROJECT_DIR$/master-data-management/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/resources/com/invado/finance/bundle/server-strings.properties" afterPath="$PROJECT_DIR$/finance/src/main/resources/com/invado/finance/bundle/server-strings.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="crm.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,6 +241,7 @@
     <ignored path="$PROJECT_DIR$/finance/target/" />
     <ignored path="$PROJECT_DIR$/master-data-management/target/" />
     <ignored path=".idea/dataSources.local.xml" />
+    <ignored path="$PROJECT_DIR$/customer-relationship-management/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,90 +262,70 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BusinessPartner.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java">
+      <file leaf-file-name="BusinessPartnerRelationshipTermsController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/BusinessPartnerRelationshipTermsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="3757">
-              <caret line="26" column="42" selection-start-line="26" selection-start-column="31" selection-end-line="26" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusinessPartnerService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BusinessPartnerService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="6069">
-              <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="partner-grid.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.576923" vertical-offset="561" max-vertical-offset="1462">
-              <caret line="66" column="15" selection-start-line="66" selection-start-column="15" selection-end-line="66" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MenuFormPreparer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48658317" vertical-offset="153" max-vertical-offset="1054">
-              <caret line="39" column="60" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusinessPartnerController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="551" max-vertical-offset="1683">
-              <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="79" max-vertical-offset="2397">
+              <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
               <folding>
-                <element signature="e#1029#1030#0" expanded="true" />
-                <element signature="e#1058#1059#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1358#1359#0" expanded="true" />
+                <element signature="e#1387#1388#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/pom.xml">
+      <file leaf-file-name="terms-grid.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-grid.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1734" max-vertical-offset="3111">
-              <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+            <state vertical-scroll-proportion="-4.25" vertical-offset="0" max-vertical-offset="1020">
+              <caret line="13" column="40" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java">
+      <file leaf-file-name="inputTextArea.tag" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1326" max-vertical-offset="4811">
-              <caret line="112" column="30" selection-start-line="112" selection-start-column="30" selection-end-line="112" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="609">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ClientService.java">
+      <file leaf-file-name="terms-table.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1353" max-vertical-offset="3009">
-              <caret line="215" column="0" selection-start-line="215" selection-start-column="0" selection-end-line="215" selection-end-column="0" />
+            <state vertical-scroll-proportion="-1.8461539" vertical-offset="122" max-vertical-offset="1632">
+              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessPartnerRelationshipTermsService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/BusinessPartnerRelationshipTermsService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3825" max-vertical-offset="6613">
+              <caret line="0" column="48" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="48" />
               <folding>
-                <element signature="method#update#0;class#ClientService#0" expanded="false" />
-                <element signature="method#delete#0;class#ClientService#0" expanded="false" />
-                <element signature="method#read#0;class#ClientService#0" expanded="false" />
-                <element signature="method#count#0;class#ClientService#0" expanded="false" />
-                <element signature="method#search#0;class#ClientService#0" expanded="false" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessPartnerRelationshipTerms.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-33.346153" vertical-offset="0" max-vertical-offset="1292">
+              <caret line="77" column="60" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+              <folding>
+                <element signature="e#1725#1726#0" expanded="true" />
+                <element signature="e#1754#1755#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -171,29 +339,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/test.jsp" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/resources/bundle/server-strings.properties" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/META-INF/context.xml" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/bank-grid.jsp" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/bank-table.jsp" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/TOWNSHIP-GRID.jsp" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township.java" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township_.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/TownshipCoontroller.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/TownshipController.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/TownshipService.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/township-table.jsp" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/test.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/TestController.java" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor_.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/resources/com/invado/finance/bundle/server-strings.properties" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/result-exception.jsp" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/ClientController.java" />
         <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor.java" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BankCreditorService.java" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BankCreditorController.java" />
@@ -211,7 +356,40 @@
         <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BusinessPartnerService.java" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/pom.xml" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/Test.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/SystemException.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Employee.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Employee_.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Job_.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/job-grid.jsp" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/job-table.jsp" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Job.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-grid.jsp" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-table.jsp" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/exception/EmployeeService.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/EmployeeService.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/JobService.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/JobController.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/OrgUnitController.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/BusinessPartnerRrelationshipTermsService.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms_.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/BusinessPartnerRelationshipTermsService.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputField.tag" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MasterdataValidator.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/application-context.xml" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/BusinessPartnerRelationshipTermsController.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-grid.jsp" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag" />
       </list>
     </option>
   </component>
@@ -239,14 +417,6 @@
           <option name="myItemId" value="" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="master-data Maven Webapp" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Dependencies" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
-        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -254,7 +424,7 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="master-data Maven Webapp" />
+          <option name="myItemId" value="CRM" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -264,18 +434,12 @@
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="master-data Maven Webapp" />
+          <option name="myItemId" value="CRM" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
           <option name="myItemId" value="Lifecycle" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
       </PATH>
     </treeState>
@@ -285,6 +449,31 @@
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>CodeSpring CoreSpring</id>
+          </State>
+          <State>
+            <id>Spring</id>
+          </State>
+          <State>
+            <id>Spring CoreSpring</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>SpringJavaAutowiringInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -311,6 +500,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -339,7 +529,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -353,7 +543,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -379,7 +569,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -409,7 +599,41 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tags" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -443,7 +667,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -477,7 +701,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -507,7 +731,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="META-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -537,7 +791,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -567,7 +847,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -583,7 +863,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
+              <option name="myItemId" value="relationship" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -597,7 +877,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -613,7 +893,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
+              <option name="myItemId" value="relationship" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -631,7 +911,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -647,89 +927,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
+              <option name="myItemId" value="relationship" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -737,9 +935,42 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="relationship" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -763,16 +994,20 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Nikola\Invado\crm\master-data-management\src\main\webapp\resources" />
-      <recent name="E:\Nikola\Invado\crm\master-data-management\src\main\webapp" />
+      <recent name="E:\Nikola\Invado\crm\customer-relationship-management\src\main\webapp\WEB-INF\tags" />
+      <recent name="E:\Nikola\Invado\crm\customer-relationship-management\src\main\webapp\WEB-INF\layouts" />
+      <recent name="E:\Nikola\Invado\crm\customer-relationship-management\src\main\java\com\invado\customer\relationship\service" />
+      <recent name="E:\Nikola\Invado\crm\customer-relationship-management\src\main\java\com\invado\customer\relationship" />
+      <recent name="E:\Nikola\Invado\crm\customer-relationship-management\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Nikola\Invado\crm\customer-relationship-management\src\main\webapp\WEB-INF\tags" />
       <recent name="E:\Nikola\Invado\crm\master-data-management\src\main\resources\com\invado\masterdata\bundle" />
       <recent name="E:\Nikola\Invado\crm\master-data-management\src\main\resources" />
       <recent name="E:\Nikola\Invado\crm\master-data-management\src\main\resources\bundle\com.invado.masterdata\bundle" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.MasterdataDepl">
+  <component name="RunManager" selected="Tomcat Server.CRMDepl">
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -1048,6 +1283,83 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="CRMDepl" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.14" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8090/crm/home" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="customer-relationship-management:war">
+          <settings>
+            <option name="CONTEXT_PATH" value="/crm" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_crm_5" />
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <RunnerSettings RunnerId="Cover" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="55535" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method>
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="customer-relationship-management:war" />
+        </option>
+      </method>
+    </configuration>
     <configuration default="false" name="MasterdataDepl" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.14" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8090/masterdata/home" />
       <option name="UPDATING_POLICY" value="restart-server" />
@@ -1125,8 +1437,9 @@
         </option>
       </method>
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.MasterdataDepl" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.CRMDepl" />
+      <item index="1" class="java.lang.String" itemvalue="Tomcat Server.MasterdataDepl" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -1163,16 +1476,17 @@
       <workItem from="1434196608190" duration="113000" />
       <workItem from="1434208262140" duration="595000" />
       <workItem from="1434216478297" duration="6639000" />
-      <workItem from="1434224135016" duration="1059000" />
+      <workItem from="1434224135016" duration="4176000" />
+      <workItem from="1434277685187" duration="21786000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="84393000" />
+    <option name="totallyTimeSpent" value="109296000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1188,24 +1502,24 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997773" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32850778" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24387528" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24387528" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1943557" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2571885" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1248,7 +1562,7 @@
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="15" />
+      <option name="time" value="18" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1257,385 +1571,460 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4635" max-vertical-offset="5508">
-          <caret line="326" column="79" selection-start-line="326" selection-start-column="0" selection-end-line="326" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit_.java">
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Job_.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="13" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.384615" vertical-offset="0" max-vertical-offset="1020">
-          <caret line="22" column="34" selection-start-line="0" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township_.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
-          <caret line="10" column="68" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/OrgUnitController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="574" max-vertical-offset="1496">
-          <caret line="93" column="6" selection-start-line="22" selection-start-column="3" selection-end-line="93" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/TownshipController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.423077" vertical-offset="51" max-vertical-offset="1717">
-          <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/township-table.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="668" max-vertical-offset="1496">
-          <caret line="57" column="37" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/InvoiceController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="697">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client_.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor_.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
-          <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/jstl/jstl/1.2/jstl-1.2.jar!/org/apache/taglibs/standard/tag/rt/core/WhenTag.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="510">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/tags/textField.tag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/resources/com/invado/finance/bundle/server-strings.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3723">
-          <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/utils/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="680">
-          <caret line="32" column="37" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/invoice-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="635">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/item-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.037523452" vertical-offset="20" max-vertical-offset="1139">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/exception.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="153">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/TestController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="884">
-          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/result-exception.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="170">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.1.4.RELEASE/spring-context-4.1.4.RELEASE-sources.jar!/org/springframework/validation/AbstractBindingResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1348" max-vertical-offset="5797">
-          <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/TownshipService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1540" max-vertical-offset="5627">
-          <caret line="127" column="68" selection-start-line="127" selection-start-column="9" selection-end-line="127" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BankCreditorService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-26.692308" vertical-offset="4644" max-vertical-offset="5661">
-          <caret line="314" column="30" selection-start-line="314" selection-start-column="30" selection-end-line="314" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="1292">
-          <caret line="59" column="60" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/ItemController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1819">
-          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BankCreditorController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="41" max-vertical-offset="1734">
-          <caret line="70" column="52" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/bank-creditor-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.8076923" vertical-offset="212" max-vertical-offset="1003">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.1.4.RELEASE/spring-web-4.1.4.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="4352">
-          <caret line="136" column="0" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.4.RELEASE/spring-webmvc-4.1.4.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1127" max-vertical-offset="3944">
-          <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.4.RELEASE/spring-webmvc-4.1.4.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9887" max-vertical-offset="13651">
-          <caret line="705" column="0" selection-start-line="705" selection-start-column="0" selection-end-line="705" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.4.RELEASE/spring-webmvc-4.1.4.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/AbstractHandlerMethodAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="838" max-vertical-offset="1666">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.4.RELEASE/spring-webmvc-4.1.4.RELEASE-sources.jar!/org/springframework/web/servlet/FrameworkServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="14098" max-vertical-offset="18088">
-          <caret line="981" column="0" selection-start-line="981" selection-start-column="0" selection-end-line="981" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.4.RELEASE/spring-webmvc-4.1.4.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="13678" max-vertical-offset="21624">
-          <caret line="879" column="0" selection-start-line="879" selection-start-column="0" selection-end-line="879" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1564">
-          <caret line="63" column="5" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="2261">
-          <caret line="70" column="25" selection-start-line="70" selection-start-column="25" selection-end-line="70" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/4.1.4.RELEASE/spring-core-4.1.4.RELEASE.jar!/org/springframework/cglib/proxy/MethodProxy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1273" max-vertical-offset="2499">
-          <caret line="101" column="18" selection-start-line="101" selection-start-column="18" selection-end-line="101" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/bank-creditor-table.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1683">
-          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-table.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="666" max-vertical-offset="2006">
-          <caret line="58" column="16" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.12" vertical-offset="153" max-vertical-offset="1462">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/ClientController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="997" max-vertical-offset="2448">
-          <caret line="65" column="38" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="38" />
-          <folding />
+          <caret line="12" column="69" selection-start-line="12" selection-start-column="69" selection-end-line="12" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/township-grid.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.423077" vertical-offset="224" max-vertical-offset="833">
-          <caret line="23" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+        <state vertical-scroll-proportion="-16.346153" vertical-offset="0" max-vertical-offset="833">
+          <caret line="25" column="73" selection-start-line="0" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ClientService.java">
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/job-grid.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1353" max-vertical-offset="3009">
-          <caret line="215" column="0" selection-start-line="215" selection-start-column="0" selection-end-line="215" selection-end-column="0" />
-          <folding>
-            <element signature="method#update#0;class#ClientService#0" expanded="false" />
-            <element signature="method#delete#0;class#ClientService#0" expanded="false" />
-            <element signature="method#read#0;class#ClientService#0" expanded="false" />
-            <element signature="method#count#0;class#ClientService#0" expanded="false" />
-            <element signature="method#search#0;class#ClientService#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.423077" vertical-offset="326" max-vertical-offset="1649">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="63" selection-end-column="26" />
+        <state vertical-scroll-proportion="-17.615385" vertical-offset="1" max-vertical-offset="850">
+          <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java">
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/township-table.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1326" max-vertical-offset="4811">
-          <caret line="112" column="30" selection-start-line="112" selection-start-column="30" selection-end-line="112" selection-end-column="30" />
+        <state vertical-scroll-proportion="-22.23077" vertical-offset="0" max-vertical-offset="1496">
+          <caret line="34" column="65" selection-start-line="0" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml">
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/job-table.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2262295" vertical-offset="0" max-vertical-offset="1037">
-          <caret line="44" column="76" selection-start-line="44" selection-start-column="76" selection-end-line="44" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/resources/META-INF/masterdata-persistence.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6692913" vertical-offset="0" max-vertical-offset="635">
-          <caret line="25" column="92" selection-start-line="25" selection-start-column="54" selection-end-line="25" selection-end-column="92" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1734" max-vertical-offset="3111">
-          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="551" max-vertical-offset="1683">
-          <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-          <folding>
-            <element signature="e#1029#1030#0" expanded="true" />
-            <element signature="e#1058#1059#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3791">
-          <caret line="26" column="42" selection-start-line="26" selection-start-column="31" selection-end-line="26" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BusinessPartnerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="6069">
-          <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.576923" vertical-offset="561" max-vertical-offset="1462">
-          <caret line="66" column="15" selection-start-line="66" selection-start-column="15" selection-end-line="66" selection-end-column="15" />
+        <state vertical-scroll-proportion="-30.692308" vertical-offset="205" max-vertical-offset="1513">
+          <caret line="59" column="44" selection-start-line="59" selection-start-column="44" selection-end-line="59" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48658317" vertical-offset="153" max-vertical-offset="1054">
-          <caret line="39" column="60" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="179" max-vertical-offset="1071">
+          <caret line="44" column="73" selection-start-line="44" selection-start-column="73" selection-end-line="44" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9" max-vertical-offset="1598">
+          <caret line="86" column="63" selection-start-line="86" selection-start-column="63" selection-end-line="86" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/TownshipService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4276" max-vertical-offset="5219">
+          <caret line="323" column="22" selection-start-line="33" selection-start-column="3" selection-end-line="323" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1564">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="42" selection-end-column="25" />
+          <folding>
+            <element signature="e#1761#1762#0" expanded="false" />
+            <element signature="e#1799#1800#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Job.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9" max-vertical-offset="1020">
+          <caret line="46" column="30" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#450#451#0" expanded="false" />
+            <element signature="e#475#476#0" expanded="false" />
+            <element signature="e#512#513#0" expanded="false" />
+            <element signature="e#540#541#0" expanded="false" />
+            <element signature="e#571#572#0" expanded="false" />
+            <element signature="e#598#599#0" expanded="false" />
+            <element signature="e#638#639#0" expanded="false" />
+            <element signature="e#670#671#0" expanded="false" />
+            <element signature="e#708#709#0" expanded="false" />
+            <element signature="e#742#743#0" expanded="false" />
+            <element signature="e#796#797#0" expanded="false" />
+            <element signature="e#842#843#0" expanded="false" />
+            <element signature="e#904#905#0" expanded="false" />
+            <element signature="e#948#949#0" expanded="false" />
+            <element signature="e#986#987#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/TownshipController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="553" max-vertical-offset="1496">
+          <caret line="93" column="9" selection-start-line="22" selection-start-column="3" selection-end-line="93" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Address.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="28" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-grid.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-29.423077" vertical-offset="0" max-vertical-offset="1326">
+          <caret line="45" column="44" selection-start-line="45" selection-start-column="44" selection-end-line="45" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-table.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.615385" vertical-offset="666" max-vertical-offset="2006">
+          <caret line="60" column="12" selection-start-line="0" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3486454" vertical-offset="1621" max-vertical-offset="2975">
+          <caret line="35" column="35" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Employee.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36299765" vertical-offset="863" max-vertical-offset="1717">
+          <caret line="97" column="15" selection-start-line="97" selection-start-column="15" selection-end-line="97" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1939#1940#0" expanded="false" />
+            <element signature="e#1965#1966#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2130" max-vertical-offset="5508">
+          <caret line="173" column="9" selection-start-line="173" selection-start-column="9" selection-end-line="173" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Employee_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="25" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ClientService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2293" max-vertical-offset="3604">
+          <caret line="309" column="0" selection-start-line="309" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
+          <folding>
+            <element signature="method#update#0;class#ClientService#0" expanded="false" />
+            <element signature="method#delete#0;class#ClientService#0" expanded="false" />
+            <element signature="method#read#0;class#ClientService#0" expanded="false" />
+            <element signature="method#count#0;class#ClientService#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-table.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="17.653847" vertical-offset="612" max-vertical-offset="1819">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/EmployeeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-48.235294" vertical-offset="1688" max-vertical-offset="5865">
+          <caret line="244" column="29" selection-start-line="244" selection-start-column="29" selection-end-line="244" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/JobService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.923077" vertical-offset="2189" max-vertical-offset="5440">
+          <caret line="147" column="43" selection-start-line="147" selection-start-column="43" selection-end-line="147" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/JobController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="936" max-vertical-offset="1683">
+          <caret line="73" column="32" selection-start-line="73" selection-start-column="32" selection-end-line="73" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/OrgUnitController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="387" max-vertical-offset="1496">
+          <caret line="74" column="38" selection-start-line="74" selection-start-column="38" selection-end-line="74" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/ReadRangeDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="87" max-vertical-offset="697">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/PageRequestDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1105">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BusinessPartnerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5442" max-vertical-offset="6069">
+          <caret line="376" column="5" selection-start-line="38" selection-start-column="2" selection-end-line="376" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Article_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <caret line="19" column="70" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/localDateFormattedField.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="559">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/currencyFormattedField.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="559">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputField.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.038462" vertical-offset="0" max-vertical-offset="510">
+          <caret line="23" column="42" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/integerFormattedField.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="559">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.769231" vertical-offset="0" max-vertical-offset="493">
+          <caret line="18" column="62" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49827588" vertical-offset="0" max-vertical-offset="580">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="23" selection-end-column="97" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-grid.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.038462" vertical-offset="836" max-vertical-offset="1649">
+          <caret line="63" column="27" selection-start-line="55" selection-start-column="11" selection-end-line="63" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/masterdata-persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.68" vertical-offset="0" max-vertical-offset="612">
+          <caret line="26" column="65" selection-start-line="26" selection-start-column="59" selection-end-line="26" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MasterdataValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <caret line="34" column="26" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MasterdataValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1649">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BankCreditorController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1513">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/BusinessPartnerRelationshipTermsService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3825" max-vertical-offset="6613">
+          <caret line="0" column="48" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-48.28" vertical-offset="51" max-vertical-offset="1462">
+          <caret line="74" column="33" selection-start-line="74" selection-start-column="33" selection-end-line="74" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/application-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.84" vertical-offset="0" max-vertical-offset="1071">
+          <caret line="13" column="83" selection-start-line="13" selection-start-column="83" selection-end-line="13" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="1241">
+          <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
+          <caret line="30" column="60" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.8461539" vertical-offset="122" max-vertical-offset="1632">
+          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/BusinessPartnerRelationshipTermsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="997" max-vertical-offset="2397">
+          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1358#1359#0" expanded="true" />
+            <element signature="e#1387#1388#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-33.346153" vertical-offset="0" max-vertical-offset="1292">
+          <caret line="77" column="60" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding>
+            <element signature="e#1725#1726#0" expanded="true" />
+            <element signature="e#1754#1755#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-grid.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.25" vertical-offset="0" max-vertical-offset="1020">
+          <caret line="13" column="40" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="609">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1646,7 +2035,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>master-data-management:war</last-edited>
+          <last-edited>customer-relationship-management:war</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

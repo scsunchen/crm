@@ -165,18 +165,18 @@ public class OrgUnitService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public OrgUnit read(String companyIdNumber) throws javax.persistence.EntityNotFoundException {
+    public OrgUnit read(Integer id) throws javax.persistence.EntityNotFoundException {
         //TODO : check ReadOrgUnitPermission
-        if (companyIdNumber == null) {
+        if (id == null) {
             throw new javax.persistence.EntityNotFoundException(
                     Utils.getMessage("OrgUnit.IllegalArgumentEx.Code")
             );
         }
         try {
-            OrgUnit OrgUnit = dao.find(OrgUnit.class, companyIdNumber);
+            OrgUnit OrgUnit = dao.find(OrgUnit.class, id);
             if (OrgUnit == null) {
                 throw new javax.persistence.EntityNotFoundException(
-                        Utils.getMessage("OrgUnit.EntityNotFoundEx", companyIdNumber)
+                        Utils.getMessage("OrgUnit.EntityNotFoundEx", id)
                 );
             }
             return OrgUnit;

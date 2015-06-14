@@ -24,6 +24,7 @@
         <processorPath useClasspath="true" />
         <module name="core-domain" />
         <module name="core-service-provider-interface" />
+        <module name="customer-relationship-management" />
         <module name="finance" />
         <module name="master-data-management" />
       </profile>
@@ -31,9 +32,9 @@
     <bytecodeTargetLevel>
       <module name="core-domain" target="1.8" />
       <module name="core-service-provider-interface" target="1.8" />
+      <module name="customer-relationship-management" target="1.8" />
       <module name="finance" target="1.8" />
       <module name="master-data-management" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
-
