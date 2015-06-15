@@ -17,11 +17,14 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table( name = "c_business_partner", schema = "devel")
 @NamedQueries({
     @NamedQuery(name = BusinessPartner.READ_BY_TIN , 
-        query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.TIN) LIKE  ?1")
+        query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.TIN) LIKE  ?1"),
+    @NamedQuery(name = BusinessPartner.READ_BY_NAME_ORDERBY_NAME , 
+        query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name ORDER BY x.name")
 })
 public class BusinessPartner implements Serializable {
     
     public static final String READ_BY_TIN = "BusinessPartner.ReadByTIN";
+    public static final String READ_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadByNameOrderByName";
     
     @Id
     @Column(name = "registration_number")

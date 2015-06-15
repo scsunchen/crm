@@ -4,6 +4,8 @@
  */
 package com.invado.finance.domain;
 
+import com.invado.core.utils.Utils;
+
 /**
  *
  * @author root
@@ -13,4 +15,11 @@ public enum InvoiceBusinessPartner {
     DOMESTIC,
     ABROAD;
     
+    public String getDescription() {
+        switch (this) {
+            case DOMESTIC  : return Utils.getMessage("InvoiceBusinessPartner.Domestic");
+            case ABROAD : return Utils.getMessage("InvoiceBusinessPartner.Abroad");
+        }
+        return "";
+    }
 }

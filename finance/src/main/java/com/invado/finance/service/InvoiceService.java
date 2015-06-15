@@ -77,7 +77,7 @@ public class InvoiceService {
     private Validator validator;
     private final String username = "a";
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void createInvoice(InvoiceDTO dto) throws IllegalArgumentException,
                                                      ReferentialIntegrityException,
                                                      EntityExistsException {
@@ -85,64 +85,64 @@ public class InvoiceService {
             throw new IllegalArgumentException(
                     Utils.getMessage("Invoice.IllegalArgumentException"));
         }
-        if (dto.clientId == null) {
+        if (dto.getClientId() == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Client"));
         }
-        if (dto.orgUnitId == null) {
+        if (dto.getOrgUnitId() == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
         }
-        if (dto.document == null) {
+        if (dto.getDocument() == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
-        if (dto.isDomesticCurrency == null) {
+        if (dto.getIsDomesticCurrency() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.IsDomesticCurrency"));
         }
-        if (dto.isDomesticCurrency == false && dto.currencyISOCode == null) {
+        if (dto.getIsDomesticCurrency() == false && dto.getCurrencyISOCode() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.CurrencyISOCode"));
         }
         try {
-            Invoice temp = dao.find(Invoice.class, new InvoicePK(dto.clientId,
-                    dto.orgUnitId,
-                    dto.document));
+            Invoice temp = dao.find(Invoice.class, new InvoicePK(dto.getClientId(),
+                    dto.getOrgUnitId(),
+                    dto.getDocument()));
             if (temp != null) {
                 throw new EntityExistsException(
                         Utils.getMessage("Invoice.EntityExistsException",
-                        dto.clientId, dto.orgUnitId, dto.document));
+                        dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()));
             }
             OrgUnit unit = dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.orgUnitId, dto.clientId));
+                    new OrgUnitPK(dto.getOrgUnitId(), dto.getClientId()));
             if (unit == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.OrgUnit",
-                                dto.clientId, dto.orgUnitId));
+                                dto.getClientId(), dto.getOrgUnitId()));
             }
             BusinessPartner partner = null;
-            if (dto.partnerID != null) {
-                partner = dao.find(BusinessPartner.class, dto.partnerID);
+            if (dto.getPartnerID() != null) {
+                partner = dao.find(BusinessPartner.class, dto.getPartnerID());
                 if (partner == null) {
                     throw new ReferentialIntegrityException(
                             Utils.getMessage("Invoice.ReferentialIntegrityException.Partner",
-                                    dto.partnerID));
+                                    dto.getPartnerID()));
                 }
             }
             List<ApplicationUser> userList = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
                     ApplicationUser.class)
-                    .setParameter(1, dto.username)
-                    .setParameter(2, dto.password)
+                    .setParameter(1, dto.getUsername())
+                    .setParameter(2, dto.getPassword())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.User",
-                                dto.username));
+                                dto.getUsername()));
             }
             Currency currency = null;
-            if (dto.isDomesticCurrency) {
+            if (dto.getIsDomesticCurrency()) {
                 //read domestic currency ISO code from application properties
                 String ISOCode = dao.find(Properties.class,
                         "domestic_currency")
@@ -156,34 +156,34 @@ public class InvoiceService {
                     dao.flush();
                 }
             } else {
-                currency = dao.find(Currency.class, dto.currencyISOCode);
+                currency = dao.find(Currency.class, dto.getCurrencyISOCode());
                 if (currency == null) {
                     throw new ReferentialIntegrityException(
                             Utils.getMessage("Invoice.ReferentialIntegrityException.Currency",
-                                    dto.currencyISOCode));
+                                    dto.getCurrencyISOCode()));
                 }
             }
-            BankCreditor bank = (dto.bankID == null) ? null : dao.find(BankCreditor.class, dto.bankID);
-            if (dto.bankID != null & bank == null) {
+            BankCreditor bank = (dto.getBankID() == null) ? null : dao.find(BankCreditor.class, dto.getBankID());
+            if (dto.getBankID() != null & bank == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.Bank",
-                                dto.bankID));
+                                dto.getBankID()));
             }
-            Invoice invoice = new Invoice(unit, dto.document);
+            Invoice invoice = new Invoice(unit, dto.getDocument());
             invoice.setPartner(partner);
-            invoice.setCreditRelationDate(dto.creditRelationDate);
-            invoice.setInvoiceDate(dto.invoiceDate);
-            invoice.setValueDate(dto.valueDate);
-            invoice.setPaid(dto.paid);
+            invoice.setCreditRelationDate(dto.getCreditRelationDate());
+            invoice.setInvoiceDate(dto.getInvoiceDate());
+            invoice.setValueDate(dto.getValueDate());
+            invoice.setPaid(dto.getPaid());
             invoice.setRecorded(Boolean.FALSE);
             invoice.setPrinted(Boolean.FALSE);
-            invoice.setInvoiceType(dto.proForma);
-            invoice.setPartnerType(dto.partnerType);
+            invoice.setInvoiceType(dto.getProForma());
+            invoice.setPartnerType(dto.getPartnerType());
             invoice.setUser(userList.get(0));
             invoice.setCurrency(currency);
-            invoice.setIsDomesticCurrency(dto.isDomesticCurrency);
-            invoice.setContractNumber(dto.contractNumber);
-            invoice.setContractDate(dto.contractDate);
+            invoice.setIsDomesticCurrency(dto.getIsDomesticCurrency());
+            invoice.setContractNumber(dto.getContractNumber());
+            invoice.setContractDate(dto.getContractDate());
             invoice.setBank(bank);
             List<String> msgs = validator.validate(invoice)
                     .stream()
@@ -202,7 +202,7 @@ public class InvoiceService {
         } 
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteInvoice(Integer clientId,
                               Integer orgUnitId,
                               String document) 
@@ -282,7 +282,7 @@ public class InvoiceService {
         } 
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Long updateInvoice(InvoiceDTO dto) throws IllegalArgumentException,
             ReferentialIntegrityException,
             EntityNotFoundException {
@@ -290,31 +290,31 @@ public class InvoiceService {
         if (dto == null) {
             throw new IllegalArgumentException(Utils.getMessage("Invoice.IllegalArgumentException"));
         }
-        if (dto.clientId == null) {
+        if (dto.getClientId() == null) {
             throw new IllegalArgumentException(Utils.getMessage("Invoice.IllegalArgumentException.Client"));
         }
-        if (dto.orgUnitId == null) {
+        if (dto.getOrgUnitId() == null) {
             throw new IllegalArgumentException(Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
         }
-        if (dto.document == null) {
+        if (dto.getDocument() == null) {
             throw new IllegalArgumentException(Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
-        if (dto.isDomesticCurrency == null) {
+        if (dto.getIsDomesticCurrency() == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Invoice.IllegalArgumentException.IsDomesticCurrency"));
         }
-        if (dto.isDomesticCurrency == false && dto.currencyISOCode == null) {
+        if (dto.getIsDomesticCurrency() == false && dto.getCurrencyISOCode() == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Invoice.IllegalArgumentException.CurrencyISOCode"));
         }
         try {
             Invoice temp = dao.find(Invoice.class,
-                    new InvoicePK(dto.clientId, dto.orgUnitId, dto.document),
+                    new InvoicePK(dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()),
                     LockModeType.OPTIMISTIC);
             if (temp == null) {
                 throw new EntityNotFoundException(
-                        Utils.getMessage("Invoice.EntityNotFoundException", dto.clientId,
-                                dto.orgUnitId, dto.document));
+                        Utils.getMessage("Invoice.EntityNotFoundException", dto.getClientId(),
+                                dto.getOrgUnitId(), dto.getDocument()));
             }
             if (temp.isRecorded().equals(Boolean.TRUE)) {
                 throw new IllegalArgumentException(
@@ -322,12 +322,12 @@ public class InvoiceService {
                 );
             }
             BusinessPartner partner = null;
-            if (dto.partnerID != null) {
-                partner = dao.find(BusinessPartner.class, dto.partnerID);
+            if (dto.getPartnerID() != null) {
+                partner = dao.find(BusinessPartner.class, dto.getPartnerID());
                 if (partner == null) {
                     throw new ReferentialIntegrityException(
                             Utils.getMessage("Invoice.ReferentialIntegrityException.Partner",
-                                    dto.partnerID));
+                                    dto.getPartnerID()));
                 }
             }
             ApplicationUser user = dao.createNamedQuery(
@@ -336,7 +336,7 @@ public class InvoiceService {
                     .setParameter(1, username)
                     .getSingleResult();
             Currency currency = null;
-            if (dto.isDomesticCurrency) {
+            if (dto.getIsDomesticCurrency()) {
                 //read domestic currency ISO code from application properties
                 String ISOCode = dao.find(Properties.class, "domestic_currency")
                         .getValue();
@@ -349,36 +349,36 @@ public class InvoiceService {
                     dao.flush();
                 }
             } else {
-                currency = dao.find(Currency.class, dto.currencyISOCode);
+                currency = dao.find(Currency.class, dto.getCurrencyISOCode());
                 if (currency == null) {
                     throw new ReferentialIntegrityException(
                             Utils.getMessage(
                                     "Invoice.ReferentialIntegrityException.Currency",
-                                    dto.currencyISOCode)
+                                    dto.getCurrencyISOCode())
                     );
                 }
             }
-            BankCreditor bank = (dto.bankID == null) ? null : dao.find(BankCreditor.class, dto.bankID);
-            if (dto.bankID != null & bank == null) {
+            BankCreditor bank = (dto.getBankID() == null) ? null : dao.find(BankCreditor.class, dto.getBankID());
+            if (dto.getBankID() != null & bank == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.Bank",
-                                dto.bankID));
+                                dto.getBankID()));
             }
             temp.setPartner(partner);
 //            //partner type korisnik ne moze da promeni
-            temp.setInvoiceType(dto.proForma);
-            temp.setPaid(dto.paid);
+            temp.setInvoiceType(dto.getProForma());
+            temp.setPaid(dto.getPaid());
 //            //printed korisnik ne moze da promeni
-            temp.setInvoiceDate(dto.invoiceDate);
-            temp.setCreditRelationDate(dto.creditRelationDate);
-            temp.setValueDate(dto.valueDate);
+            temp.setInvoiceDate(dto.getInvoiceDate());
+            temp.setCreditRelationDate(dto.getCreditRelationDate());
+            temp.setValueDate(dto.getValueDate());
             temp.setCurrency(currency);
-            temp.setIsDomesticCurrency(dto.isDomesticCurrency);
-            temp.setContractNumber(dto.contractNumber);
-            temp.setContractDate(dto.contractDate);
+            temp.setIsDomesticCurrency(dto.getIsDomesticCurrency());
+            temp.setContractNumber(dto.getContractNumber());
+            temp.setContractDate(dto.getContractDate());
             temp.setUser(user);
             temp.setBank(bank);
-            temp.setVersion(dto.version);
+            temp.setVersion(dto.getVersion());
             List<String> msgs = validator.validate(temp).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -394,7 +394,7 @@ public class InvoiceService {
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
                 throw new SystemException(Utils.getMessage("Invoice.OptimisticLockEx",
-                        dto.clientId, dto.orgUnitId, dto.document),ex);
+                        dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()),ex);
             } else {
                 LOG.log(Level.WARNING, "Invoice.PersistenceEx.Update", ex);
                 throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Update"),ex);
@@ -435,17 +435,17 @@ public class InvoiceService {
                                 clientId, unitId, document, ordinal));
             }
             InvoiceItemDTO dto = new InvoiceItemDTO();
-            dto.clientId = temp.getClientId();
-            dto.unitId = temp.getOrgUnitId();
-            dto.invoiceDocument = temp.getInvoiceDocument();
-            dto.ordinal = temp.getOrdinal();
-            dto.netPrice = temp.getNetPrice();
-            dto.totalCost = temp.getTotalCost();
-            dto.quantity = temp.getQuantity();
-            dto.articleCode = temp.getItemCode();
-            dto.articleDesc = temp.getItemDescription();
-            dto.VATPercent = temp.getVatPercent();
-            dto.rabatPercent = temp.getRebatePercent();
+            dto.setClientId(temp.getClientId());
+            dto.setUnitId(temp.getOrgUnitId());
+            dto.setInvoiceDocument(temp.getInvoiceDocument());
+            dto.setOrdinal(temp.getOrdinal());
+            dto.setNetPrice(temp.getNetPrice());
+            dto.setTotalCost(temp.getTotalCost());
+            dto.setQuantity(temp.getQuantity());
+            dto.setArticleCode(temp.getItemCode());
+            dto.setArticleDesc(temp.getItemDescription());
+            dto.setVATPercent(temp.getVatPercent());
+            dto.setRabatPercent(temp.getRebatePercent());
             return dto;
         } catch (EntityNotFoundException ex) {
             throw ex;
@@ -456,7 +456,7 @@ public class InvoiceService {
         } 
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Long removeItem(Integer clientId,
             Integer unitId,
             String document,
@@ -536,7 +536,7 @@ public class InvoiceService {
         } 
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Long updateItem(InvoiceItemDTO dto) throws ReferentialIntegrityException,
             IllegalArgumentException,
             EntityNotFoundException {
@@ -545,37 +545,37 @@ public class InvoiceService {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException"));
         }
-        if (dto.clientId == null) {
+        if (dto.getClientId() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Client"));
         }
-        if (dto.unitId == null) {
+        if (dto.getUnitId() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.OrgUnit"));
         }
-        if (dto.invoiceDocument == null) {
+        if (dto.getInvoiceDocument() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Document"));
         }
-        if (dto.ordinal == null) {
+        if (dto.getOrdinal() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Ordinal"));
         }
-        if (dto.articleCode == null) {
+        if (dto.getArticleCode() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.ArticleCode")
             );
         }
         try {
             Invoice invoice = dao.find(Invoice.class,
-                    new InvoicePK(dto.clientId, dto.unitId, dto.invoiceDocument)
+                    new InvoicePK(dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument())
             );
             if (invoice == null) {
                 throw new EntityNotFoundException(Utils.getMessage(
                         "Invoice.EntityNotFoundException",
-                        dto.clientId,
-                        dto.unitId,
-                        dto.invoiceDocument));
+                        dto.getClientId(),
+                        dto.getUnitId(),
+                        dto.getInvoiceDocument()));
             }
             if (invoice.isRecorded().equals(Boolean.TRUE)) {
                 throw new IllegalArgumentException(Utils.getMessage(
@@ -584,26 +584,26 @@ public class InvoiceService {
             List<ApplicationUser> userList = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
                     ApplicationUser.class)
-                    .setParameter(1, dto.username)
-                    .setParameter(2, dto.password)
+                    .setParameter(1, dto.getUsername())
+                    .setParameter(2, dto.getPassword())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.User",
-                                dto.username));
+                                dto.getUsername()));
             }
             invoice.setUser(userList.get(0));
-            invoice.setVersion(dto.invoiceVersion);
+            invoice.setVersion(dto.getInvoiceVersion());
             dao.lock(invoice, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
             InvoiceItem temp = dao.find(InvoiceItem.class,
-                    new InvoiceItemPK(dto.clientId, dto.unitId, dto.invoiceDocument, dto.ordinal));
+                    new InvoiceItemPK(dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument(), dto.getOrdinal()));
             if (temp == null) {
                 throw new EntityNotFoundException(Utils.getMessage(
                         "Invoice.EntityNotFoundException.InvoiceItem",
-                        dto.clientId, dto.unitId, dto.invoiceDocument, dto.ordinal));
+                        dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument(), dto.getOrdinal()));
             }
-            temp.setQuantity(dto.quantity);
-            temp.setNetPrice(dto.netPrice);
+            temp.setQuantity(dto.getQuantity());
+            temp.setNetPrice(dto.getNetPrice());
             BigDecimal vatPercent = null;
             switch (temp.getArticleVAT()) {
                 case GENERAL_RATE:
@@ -621,7 +621,7 @@ public class InvoiceService {
                     temp.setVatPercent(BigDecimal.ZERO);
                     break;
             }
-            temp.setRabatPercent(dto.rabatPercent);
+            temp.setRabatPercent(dto.getRabatPercent());
             String[] netPriceValidation = validator.validateProperty(temp, "netPrice")
                     .stream()
                     .map(ConstraintViolation::getMessage)
@@ -643,9 +643,9 @@ public class InvoiceService {
             if (rabatValidation.length > 0) {
                 throw new IllegalArgumentException(quantityValidation);
             }
-            BigDecimal net = dto.netPrice.subtract(dto.netPrice.multiply(dto.rabatPercent));
+            BigDecimal net = dto.getNetPrice().subtract(dto.getNetPrice().multiply(dto.getRabatPercent()));
             BigDecimal total = (net.multiply(BigDecimal.ONE.add(temp.getVatPercent())))
-                    .multiply(dto.quantity);
+                    .multiply(dto.getQuantity());
             temp.setTotalCost(total.setScale(2, RoundingMode.HALF_UP));
             List<String> msgs = validator.validate(invoice).stream()
                     .map(ConstraintViolation::getMessage)
@@ -661,7 +661,7 @@ public class InvoiceService {
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
                 throw new SystemException(Utils.getMessage("Invoice.OptimisticLockEx",
-                        dto.clientId, dto.unitId, dto.invoiceDocument),ex);
+                        dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument()),ex);
             } else {
                 LOG.log(Level.WARNING, "", ex);
                 throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.UpdateItem"),ex);
@@ -669,7 +669,7 @@ public class InvoiceService {
         } 
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Long addItem(InvoiceItemDTO dto) throws ReferentialIntegrityException,
                                                    IllegalArgumentException,
                                                    EntityExistsException {
@@ -678,30 +678,30 @@ public class InvoiceService {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException"));
         }
-        if (dto.clientId == null) {
+        if (dto.getClientId() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Client"));
         }
-        if (dto.unitId == null) {
+        if (dto.getUnitId() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.OrgUnit"));
         }
-        if (dto.invoiceDocument == null) {
+        if (dto.getInvoiceDocument() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Document"));
         }
-        if (dto.articleCode == null) {
+        if (dto.getArticleCode() == null) {
             throw new IllegalArgumentException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.ArticleCode"));
         }
 
         try {
             Invoice invoice = dao.find(Invoice.class,
-                    new InvoicePK(dto.clientId, dto.unitId, dto.invoiceDocument));
+                    new InvoicePK(dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument()));
             if (invoice == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.EntityNotFoundException",
-                                dto.clientId, dto.unitId, dto.invoiceDocument));
+                                dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument()));
             }
             if (invoice.isRecorded().equals(Boolean.TRUE)) {
                 throw new IllegalArgumentException(
@@ -710,40 +710,40 @@ public class InvoiceService {
             List<ApplicationUser> userList = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
                     ApplicationUser.class)
-                    .setParameter(1, dto.username)
-                    .setParameter(2, dto.password)
+                    .setParameter(1, dto.getUsername())
+                    .setParameter(2, dto.getPassword())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.User",
-                                dto.username));
+                                dto.getUsername()));
             }
             OrgUnit unit = dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.unitId, dto.clientId));
+                    new OrgUnitPK(dto.getUnitId(), dto.getClientId()));
             if (unit == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.OrgUnit",
-                                dto.clientId, dto.unitId));
+                                dto.getClientId(), dto.getUnitId()));
             }
             invoice.setUser(userList.get(0));
-            invoice.setVersion(dto.invoiceVersion);
+            invoice.setVersion(dto.getInvoiceVersion());
             dao.lock(invoice, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-            Article article = dao.find(Article.class, dto.articleCode);
+            Article article = dao.find(Article.class, dto.getArticleCode());
             if (article == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.Article",
-                                dto.articleCode));
+                                dto.getArticleCode()));
             }
             //can't throw nouniqueresultexception
             Integer max = dao.createNamedQuery("Invoice.GetMaxOrdinalNumber",
                     Integer.class)
-                    .setParameter("document", dto.invoiceDocument)
+                    .setParameter("document", dto.getInvoiceDocument())
                     .setParameter("orgUnit", unit)
                     .getSingleResult();
             Integer ordinalNumber = (max == null) ? 1 : (max + 1);
             InvoiceItem item = new InvoiceItem(invoice, ordinalNumber);
             //ne moze da se desi da imam dve stavke sa istim kljucem
-            item.setNetPrice(dto.netPrice);
+            item.setNetPrice(dto.getNetPrice());
             BigDecimal vatPercent = null;
             switch (article.getVATRate()) {
                 case GENERAL_RATE:
@@ -763,8 +763,8 @@ public class InvoiceService {
                     item.setVatPercent(BigDecimal.ZERO);
                     break;
             }
-            item.setRabatPercent(dto.rabatPercent);
-            item.setQuantity(dto.quantity);
+            item.setRabatPercent(dto.getRabatPercent());
+            item.setQuantity(dto.getQuantity());
             item.setArticleVAT(article.getVATRate());
             item.setArticle(article);
             item.setItemDescription(article.getDescription());
@@ -790,9 +790,9 @@ public class InvoiceService {
             if (rabatValidation.length > 0) {
                 throw new IllegalArgumentException(quantityValidation);
             }
-            BigDecimal net = dto.netPrice.subtract(dto.netPrice.multiply(dto.rabatPercent));
+            BigDecimal net = dto.getNetPrice().subtract(dto.getNetPrice().multiply(dto.getRabatPercent()));
             BigDecimal total = (net.multiply(BigDecimal.ONE.add(item.getVatPercent())))
-                    .multiply(dto.quantity);
+                    .multiply(dto.getQuantity());
             item.setTotalCost(total.setScale(2, RoundingMode.HALF_UP));
             invoice.addItem(item);
              List<String> msgs = validator.validate(invoice).stream()
@@ -808,7 +808,7 @@ public class InvoiceService {
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
                 throw new SystemException(Utils.getMessage("Invoice.OptimisticLockEx",
-                        dto.clientId, dto.unitId, dto.invoiceDocument),ex);
+                        dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument()),ex);
             } else {
                 LOG.log(Level.WARNING, "", ex);
                 throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.AddItem"),ex);
@@ -848,19 +848,19 @@ public class InvoiceService {
             List<InvoiceItem> itemList = temp.getUnmodifiableItemsSet();
             for (InvoiceItem item : itemList) {
                 InvoiceItemDTO dto = new InvoiceItemDTO();
-                dto.clientId = item.getClientId();
-                dto.clientDesc = item.getClientName();
-                dto.unitId = item.getOrgUnitId();
+                dto.setClientId(item.getClientId());
+                dto.setClientDesc(item.getClientName());
+                dto.setUnitId(item.getOrgUnitId());
 //                dto.unitDesc = item.getOrgUnitName();
-                dto.invoiceDocument = item.getInvoiceDocument();
-                dto.ordinal = item.getOrdinal();
-                dto.articleCode = item.getItemCode();
-                dto.articleDesc = item.getItemDescription();
-                dto.quantity = item.getQuantity();
-                dto.netPrice = item.getNetPrice();
-                dto.VATPercent = item.getVatPercent();
-                dto.rabatPercent = item.getRebatePercent();
-                dto.totalCost = item.getTotalCost();
+                dto.setInvoiceDocument(item.getInvoiceDocument());
+                dto.setOrdinal(item.getOrdinal());
+                dto.setArticleCode(item.getItemCode());
+                dto.setArticleDesc(item.getItemDescription());
+                dto.setQuantity(item.getQuantity());
+                dto.setNetPrice(item.getNetPrice());
+                dto.setVATPercent(item.getVatPercent());
+                dto.setRabatPercent(item.getRebatePercent());
+                dto.setTotalCost(item.getTotalCost());
                 result[i] = dto;
                 i = i + 1;
             }
@@ -1008,7 +1008,7 @@ public class InvoiceService {
             throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Read"),ex);
         } 
     }
-
+    
     @Transactional(readOnly = true)
     public ReadRangeDTO<InvoiceDTO> readPage(
             PageRequestDTO p)

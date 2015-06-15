@@ -12,13 +12,13 @@ import com.invado.finance.service.ArticleService;
 import com.invado.finance.service.dto.PageRequestDTO;
 import com.invado.finance.service.dto.ReadRangeDTO;
 import java.util.Arrays;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
+import javax.inject.Inject;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -29,19 +29,18 @@ import org.springframework.web.bind.support.SessionStatus;
 @Controller
 public class ItemController {
 
-    @Autowired
+    @Inject
     private ArticleService service;
 
     @RequestMapping("/home")
-    public String showHomePage(){
-        System.out.println("ide na home page iz itema");
+    public String showHomePage() {
         return "home";
     }
 
     @RequestMapping("/item/{page}")
     public String showItems(@PathVariable Integer page,
-                            Map<String, Object> model)
-                            throws Exception {
+            Map<String, Object> model)
+            throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
         ReadRangeDTO<Article> items = service.readPage(request);
@@ -67,7 +66,8 @@ public class ItemController {
     }
 
     @RequestMapping(value = "/item/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") Article item,
+    public String processCreationForm(
+            @ModelAttribute("item") Article item,
             BindingResult result,
             SessionStatus status,
             Map<String, Object> model)
@@ -86,10 +86,10 @@ public class ItemController {
     }
 
     @RequestMapping(value = "/item/{page}/update/{code}",
-                    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public String initUpdateForm(@PathVariable String code,
-                                 Map<String, Object> model)
-                                 throws Exception {
+            Map<String, Object> model)
+            throws Exception {
         Article item = service.read(code);
         model.put("item", item);
         model.put("action", "update");
@@ -99,8 +99,9 @@ public class ItemController {
     }
 
     @RequestMapping(value = "/item/{page}/update/{code}",
-                    method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") Article item,
+            method = RequestMethod.POST)
+    public String processUpdationForm(
+            @ModelAttribute("item") Article item,
             BindingResult result,
             SessionStatus status,
             Map<String, Object> model)

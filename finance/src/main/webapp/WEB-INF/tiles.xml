@@ -24,6 +24,21 @@
         <put-attribute name="panel-title" value="Artikal"/>
         <put-attribute name="body" value="/WEB-INF/jsp/item-grid.jsp"/>
     </definition>
+    <definition name="invoice-table" extends="main-menu-form">
+        <put-attribute name="title" value="Faktura"/>
+        <put-attribute name="panel-title" value="Pregled faktura"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/invoice-table.jsp"/>
+    </definition>
+    <definition name="invoice-create-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Faktura"/>
+        <put-attribute name="panel-title" value="Faktura"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/invoice-create-grid.jsp"/>
+    </definition>
+    <definition name="invoice-update-master-detail" extends="main-menu-form">
+        <put-attribute name="title" value="Faktura"/>
+        <put-attribute name="panel-title" value="Faktura"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/invoice-update-master-detail.jsp"/>
+    </definition>
     <definition name="error" extends="main-menu-form" >
         <put-attribute name="title" value="Greška"/>
         <put-attribute name="panel-title" value="Greška prilikom izvršavanja programa"/>

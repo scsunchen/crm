@@ -13,12 +13,12 @@
 
 <spring:bind path="${name}">
     
-    <div class="form-group">
-        <label for="${name}" >${label}</label>
+    <div class="form-group" >
+        <label for="${name}"  ><spring:message code="${label}"/></label>            
         <form:input id="${name}" path="${name}" 
                     class="form-control"
                     disabled="${disabled}"
                     autofocus="${autofocus}" />
-        <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.displayValue} je neispravno uneta vrednost" /></c:if></span>
+        <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
     </div>
 </spring:bind>

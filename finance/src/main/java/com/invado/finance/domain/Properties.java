@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
  * @author root
  */
 @Entity
-@Table(name = "r_properties")
+@Table(name = "r_properties", schema="devel")
 public class Properties implements Serializable {
 
     private static final long serialVersionUID = 1L;

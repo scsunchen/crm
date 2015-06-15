@@ -25,12 +25,17 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = Currency.COUNT_ALL,
             query = "SELECT COUNT(x) FROM Currency x"),
     @NamedQuery(name = Currency.READ_ALL_ORDERBY_ISOCODE,
-            query = "SELECT x FROM Currency x ORDER BY x.ISOCode")
+            query = "SELECT x FROM Currency x ORDER BY x.ISOCode"),
+    @NamedQuery(name = Currency.READ_BY_ISOCODE_ORDERBY_ISOCODE,
+            query = "SELECT x FROM Currency x WHERE UPPER(x.ISOCode) LIKE :iso ORDER BY x.ISOCode")
 })
 public class Currency implements Serializable {
 
     public static final String COUNT_ALL = "Currency.CountAll";
-    public static final String READ_ALL_ORDERBY_ISOCODE = "Currency.ReadAllOrderByISOCode";
+    public static final String READ_ALL_ORDERBY_ISOCODE = 
+            "Currency.ReadAllOrderByISOCode";
+    public static final String READ_BY_ISOCODE_ORDERBY_ISOCODE = 
+            "Currency.ReadByISOCodeOrderByISOCode";
     @Id
     @Column(name = "iso_code")
     @NotNull(message = "{Currency.ISOCode.NotNull}")
@@ -50,6 +55,10 @@ public class Currency implements Serializable {
 
     public String getISOCode() {
         return ISOCode;
+    }
+
+    public void setISOCode(String ISOCode) {
+        this.ISOCode = ISOCode;
     }
 
     public String getDescription() {

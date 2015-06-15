@@ -7,8 +7,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <a class="btn btn-primary" href="${page}/create" ><span class="glyphicon glyphicon-plus"></span> Kreiraj</a>
 <br/>
 <br/>
@@ -17,28 +16,29 @@
         <thead>
             <tr>
                 <th></th>
-                <th>Šifra</th>
-                <th>Naziv</th>
-                <th>PDV</th>
-                <th>Jedinica mere</th>
-                <th>Korisnik</th>
-                <th>Poslednja izmena</th>
+                <th><spring:message code="Article.Table.Code" /></th>
+                <th><spring:message code="Article.Table.Desc" /></th>
+                <th><spring:message code="Article.Table.VAT" /></th>
+                <th><spring:message code="Article.Table.Unit" /></th>
+                <th><spring:message code="Article.Table.LastUpdateBy" /></th>
+                <th><spring:message code="Article.Table.Updated" /></th>
             </tr>
         </thead>
         <tbody>
             <c:set var="count" value="0" scope="page" />
             <c:forEach var="item" items="${data}">
                 <!-- Modal -->
-            <div class="modal fade" id="dialog${count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="dialog${count}" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">Da li ste sigurni da želite da obrišete ${item.description}?</h4>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                            <a type="button" class="btn btn-danger" href="${page}/${item.code}/delete.html">Obriši</a>
+                            <spring:url value="${page}/${item.code}/delete.html" var="deletehref"/>
+                            <a type="button" class="btn btn-danger" href="${deletehref}">Obriši</a>
                         </div>
                     </div>
                 </div>
@@ -55,15 +55,7 @@
                 <td><c:out value="${item.VATRate.description}"/></td>
                 <td><c:out value="${item.unitOfMeasureCode}"/></td>
                 <td><c:out value="${item.lastUpdateBy.username}"/></td>
-                <td><fmt:parseDate value="${item.updated}" 
-                                   pattern="yyyy-MM-dd" 
-                                   type="date"
-                                   var="parsedDate"/>
-                    <fmt:formatDate value="${parsedDate}"                                     
-                                    pattern="dd.MM.yyyy"
-                                    type="date"
-                                    var="formattedDate"/>
-                    <c:out value="${formattedDate}" /></td>
+                <td><spring:eval expression="item.updated" /></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>

@@ -52,8 +52,8 @@ public class ApplicationUser implements Serializable {
     private String description;
     @Version
     private Long version;
-    @ManyToMany
-    @JoinTable(name = "c_user_role",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "c_user_role",schema = "devel",
             joinColumns =
             @JoinColumn(name = "user_id"),
             inverseJoinColumns =

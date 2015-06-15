@@ -28,12 +28,16 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = BankCreditor.COUNT_ALL,
             query = "SELECT COUNT(x) FROM BankCreditor x"),
     @NamedQuery(name = BankCreditor.READ_ALL_ORDERBY_ID,
-            query = "SELECT x FROM BankCreditor x ORDER BY x.id")
+            query = "SELECT x FROM BankCreditor x ORDER BY x.id"),
+    @NamedQuery(name = BankCreditor.READ_BY_NAME_ORDERBY_NAME,
+            query = "SELECT x FROM BankCreditor x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
+    
 })
 public class BankCreditor implements Serializable {
     
     public static final String COUNT_ALL = "BankCreditor.CountAll";
     public static final String READ_ALL_ORDERBY_ID = "BankCreditor.ReadAllOrderById";
+    public static final String READ_BY_NAME_ORDERBY_NAME = "BankCreditor.ReadByNameOrderByName";
     
     private static final long serialVersionUID = 1L;
     

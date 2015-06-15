@@ -22,7 +22,8 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
-
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 /**
  *
  * @author bdragan
@@ -30,11 +31,15 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "r_article", schema = "devel")
 @NamedQueries({
-@NamedQuery(name=Article.READ_ALL_ORDERBY_CODE, query = "SELECT x FROM Article x ORDER BY x.code")
+@NamedQuery(name=Article.READ_ALL_ORDERBY_CODE, query = "SELECT x FROM Article x ORDER BY x.code"),
+@NamedQuery(name=Article.READ_BY_DESCRIPTION_ORDERBY_DESCRIPTION, 
+        query = "SELECT x FROM Article x WHERE UPPER(x.description) LIKE :desc ORDER BY x.description")
 })
 public class Article implements Serializable {
 
     public static final String READ_ALL_ORDERBY_CODE = "Article.ReadAllOrderByCode";
+    public static final String READ_BY_DESCRIPTION_ORDERBY_DESCRIPTION = 
+            "Article.ReadByDescriptionOrderByDescription";
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -59,18 +64,25 @@ public class Article implements Serializable {
     @DecimalMin(value = "0", message = "{Article.SalePriceWithVAT.Min}")
     @Digits(integer=11, fraction=2, message="{Article.SalePriceWithVAT.Digits}")
     @Column(name = "sale_price_with_vat")
+    //FIXME : set currency number format 
+    @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
     private BigDecimal salePriceWithVAT;
     @DecimalMin(value = "0", message = "{Article.SalePrice.Min}")
     @Digits(integer=11, fraction=2, message="{Article.SalePrice.Digits}")
     @Column(name = "sale_price")
+    //FIXME : set currency number format 
+    @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
     private BigDecimal salePrice;
     @DecimalMin(value = "0", message = "{Article.PurchasePrice.Min}")
     @Digits(integer=11, fraction=2, message="{Article.PurchasePrice.Digits}")
     @Column(name = "purchase_price")
+    //FIXME : set currency number format 
+    @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
     private BigDecimal purchasePrice;
     @NotNull(message="{Article.UnitsInStock.NotNull}")
     @Digits(integer=11, fraction=2, message="{Article.UnitsInStock.Digits}")
     @Column(name = "units_in_stock")
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
     private BigDecimal unitsInStock;
     @NotNull(message = "{Article.LastUpdateBy.NotNull}")
     @ManyToOne
@@ -78,6 +90,7 @@ public class Article implements Serializable {
     private ApplicationUser lastUpdateBy;
     @NotNull(message = "{Article.Updated.NotNull}")
     @Convert(converter = LocalDateConverter.class)
+    @DateTimeFormat(style = "M-")
     private LocalDate updated;
     @Version
     private Long version;

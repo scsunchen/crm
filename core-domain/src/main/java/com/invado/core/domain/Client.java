@@ -26,6 +26,8 @@ import org.hibernate.validator.constraints.Range;
             query = "SELECT x FROM Client x WHERE x.township.code = :code"),
     @NamedQuery(name = Client.READ_BY_TIN,
             query = "SELECT x FROM Client x WHERE x.TIN =?1"),
+    @NamedQuery(name = Client.READ_BY_NAME_ORDERBY_NAME,
+            query = "SELECT x FROM Client x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
     @NamedQuery(name = Client.COUNT,
             query = "SELECT COUNT(x) FROM Client x"),
     @NamedQuery(name = Client.READ_ALL_ORDERBY_ID,
@@ -37,6 +39,7 @@ public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String READ_BY_TIN = "Client.ReadByTIN";
+    public static final String READ_BY_NAME_ORDERBY_NAME = "Client.ReadByNameOrderByName";
     public static final String READ_BY_TOWNSHIP = "Client.ReadByTownship";
     public static final String COUNT = "Client.Count";
     public static final String READ_ALL_ORDERBY_ID = "Client.ReadAll";

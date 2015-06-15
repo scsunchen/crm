@@ -6,6 +6,7 @@ import com.invado.core.domain.BankCreditor;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
 import com.invado.core.domain.Currency;
+import com.invado.core.domain.OrgUnit;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -15,6 +16,7 @@ public class Invoice_ {
 
     public static volatile SingularAttribute<Invoice, Client> client;
     public static volatile SingularAttribute<Invoice, Integer> orgUnit;
+    public static volatile SingularAttribute<Invoice, OrgUnit> orgUnitE;
     public static volatile SingularAttribute<Invoice, Date> invoiceDate;
     public static volatile SingularAttribute<Invoice, Date> valueDate;
     public static volatile SingularAttribute<Invoice, Boolean> isDomesticCurrency;
