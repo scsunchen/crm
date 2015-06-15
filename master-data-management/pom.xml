@@ -6,7 +6,7 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>master-data</artifactId>
+    <artifactId>masterdata</artifactId>
     <packaging>war</packaging>
     <name>master-data Maven Webapp</name>
     <url>http://maven.apache.org</url>
@@ -117,7 +117,11 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
+
+
+
 
     <build>
         <plugins>
@@ -144,7 +148,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
                 <configuration>
-                    <warName>finance</warName>
+                    <warName>masterdata</warName>
                 </configuration>
             </plugin>
             <plugin>
@@ -169,6 +173,5 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>master-data</finalName>
     </build>
 </project>

@@ -131,8 +131,12 @@ public class Invoice implements Serializable {
 
     public Invoice(OrgUnit orgUnit, String document) {
         this.client = orgUnit.getClient();
-        this.orgUnit = orgUnit.getID();
+        this.orgUnit = orgUnit.getId();
         this.document = document;
+    }
+
+    public void setIsDomesticCurrency(Boolean isDomesticCurrency) {
+        this.isDomesticCurrency = isDomesticCurrency;
     }
 
     public Client getClient() {
@@ -149,50 +153,6 @@ public class Invoice implements Serializable {
 
     public Integer getBankID() {
         return bank.getId();
-    }
-
-    public String getBankAccountNumber() {
-        return bank.getAccount();
-    }
-
-    public String getBankName() {
-        return bank.getName();
-    }
-
-    public Boolean isDomesticCurrency() {
-        return isDomesticCurrency;
-    }
-
-    public void setIsDomesticCurrency(Boolean isDomesticCurrency) {
-        this.isDomesticCurrency = isDomesticCurrency;
-    }
-
-    public InvoiceDTO getDTO() {
-        InvoiceDTO result = new InvoiceDTO();
-        result.setClientId(this.getClientId());
-        result.setClientDesc(this.getClientName());
-        result.setOrgUnitId(this.getOrgUnitId());
-        result.setOrgUnitDesc(orgUnitE.getName());
-        result.setCreditRelationDate(this.getCreditRelationDate());
-        result.setPartnerID(this.getPartnerID());
-        result.setPartnerName(this.getPartnerName());
-        result.setDocument(this.getDocument());
-        result.setInvoiceDate(this.getInvoiceDate());
-        result.setPaid(this.isPaid());
-        result.setRecorded(this.isRecorded());
-        result.setPrinted(this.isPrinted());
-        result.setProForma(this.getInvoiceType());
-        result.setPartnerType(this.getPartnerType());
-        result.setValueDate(this.getValueDate());
-        result.setCurrencyISOCode(this.getCurrencyISOCode());
-        result.setCurrencyDesc(this.getCurrencyDescription());
-        result.setVersion(this.getVersion());
-        result.setIsDomesticCurrency(this.isDomesticCurrency());
-        result.setContractNumber(this.getContractNumber());
-        result.setContractDate(this.getContractDate());
-        result.setBankID(this.getBankID());
-        result.setBankName(this.getBankName());
-        return result;
     }
 
     public String getContractNumber() {
@@ -218,6 +178,46 @@ public class Invoice implements Serializable {
     public Integer getClientId() {
         return client.getId();
     }
+    public InvoiceDTO getDTO() {
+        InvoiceDTO result = new InvoiceDTO();
+        result.setClientId(this.getClientId());
+        result.setClientDesc(this.getClientName());
+        result.setOrgUnitId(this.getOrgUnitId());
+        result.setOrgUnitDesc(orgUnitE.getName());
+        result.setCreditRelationDate(this.getCreditRelationDate());
+        result.setPartnerID(this.getPartnerID());
+        result.setPartnerName(this.getPartnerName());
+        result.setDocument(this.getDocument());
+        result.setInvoiceDate(this.getInvoiceDate());
+        result.setPaid(this.isPaid());
+        result.setRecorded(this.isRecorded());
+        result.setPrinted(this.isPrinted());
+        result.setProForma(this.getInvoiceType());
+        result.setPartnerType(this.getPartnerType());
+        result.setValueDate(this.getValueDate());
+        result.setCurrencyISOCode(this.getCurrencyISOCode());
+        result.setCurrencyDesc(this.getCurrencyDescription());
+        result.setVersion(this.getVersion());
+        result.setIsDomesticCurrency(this.isDomesticCurrency());
+        result.setContractNumber(this.getContractNumber());
+        result.setContractDate(this.getContractDate());
+        result.setBankID(this.getBankID());
+        result.setBankName(bank.getName());
+        return result;
+    }
+    
+    public String getBankName(){
+        return bank.getName();
+    }
+    
+    public String getBankAccountNumber(){
+        return bank.getAccount();
+    }
+            
+    public Boolean isDomesticCurrency() {
+        return isDomesticCurrency;
+    }
+    
 //
 //    public String getOrgUnitName() {
 //        return orgUnitE.getName();

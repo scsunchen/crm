@@ -24,7 +24,7 @@ public class MasterdataValidator {
         .configure()
         .messageInterpolator(
             new ResourceBundleMessageInterpolator(
-                new PlatformResourceBundleLocator( "com.invado.finance.bundle.server-strings" ))
+                new PlatformResourceBundleLocator( "com.invado.masterdata.bundle.server-strings" ))
         )                
         .buildValidatorFactory()
         .getValidator();

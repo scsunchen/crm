@@ -12,6 +12,8 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.invado.core.utils.Utils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
@@ -115,6 +117,9 @@ public class Client implements Serializable {
     @Column(name = "bank_account")
     @Size(max = 50, message = "{Company.BankAccount.Size}")
     private String bankAccount;
+
+    @Transient
+    private String bankCreditor;
     
     //************************************************************************//    
     // CONSTRUCTORS //
@@ -132,6 +137,10 @@ public class Client implements Serializable {
     //************************************************************************//
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -246,13 +255,7 @@ public class Client implements Serializable {
         this.status = status;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
 
     public Type getType() {
         return type;
@@ -309,7 +312,17 @@ public class Client implements Serializable {
     public void setBankAccount(String bankAccount) {
         this.bankAccount = bankAccount;
     }
-    //************************************************************************//    
+
+
+    public String getBankCreditor() {
+        return bankCreditor;
+    }
+
+    public void setBankCreditor(String bankCreditor) {
+        this.bankCreditor = bankCreditor;
+    }
+
+    //************************************************************************//
     // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//
     @Override
@@ -340,18 +353,30 @@ public class Client implements Serializable {
         return "Client{id=" + id + '}';
     }
 
+
     public enum Employee {
 
         EMPLOYER,
         EMPLOYER_AND_EMPLOYEE,
         EMPLOYEE
+
+
     }
 
     public enum Status {
 
         LEGAL_ENTITY,//pravno lice
         ENTREPRENEUR,//str,szr,..
-        LEGAL_ENTITY_BUDGET//pravno lice
+        LEGAL_ENTITY_BUDGET;//pravno lice
+
+        public String getDescription() {
+            switch (this) {
+                case LEGAL_ENTITY  : return Utils.getMessage("Client.Legal_Entity");
+                case ENTREPRENEUR : return Utils.getMessage("Client.Enterpreneur");
+                case LEGAL_ENTITY_BUDGET : return Utils.getMessage("Client.Legal_Entity_Budget");
+            }
+            return "";
+        }
     }
 
     public enum Type {

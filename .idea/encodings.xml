@@ -4,10 +4,11 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core-domain" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core-module-spi" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" charset="windows-1250" />
     <file url="file://$PROJECT_DIR$/finance" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/MenuFormPreparer.java" charset="windows-1250" />
     <file url="file://$PROJECT_DIR$/master-data-management" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" charset="windows-1250" />
   </component>
 </project>
-

@@ -15,9 +15,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <context:component-scan base-package="com.invado.masterdata.service"/>
-    <context:component-scan base-package="com.invado.finance"/>
+    <context:component-scan base-package="com.invado.masterdata.controller"></context:component-scan>
 
     <!-- all resources inside folder src/main/webapp/resources are mapped so they can be refered to inside JSP files
     (see header.jsp for more details) -->
@@ -68,5 +66,15 @@
                 <prop key="java.lang.Throwable">error</prop>
             </props>
         </property>
+    </bean>
+
+    <bean id="servicePropertyConfig"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/com/invado/masterdata/bundle/server-strings.properties</value>
+            </list>
+        </property>
+        <property name="placeholderPrefix" value="$properties{"/>
     </bean>
 </beans>
