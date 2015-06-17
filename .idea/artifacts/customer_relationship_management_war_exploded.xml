@@ -82,12 +82,11 @@
           <element id="archive" name="core-service-provider-interface-1.0.jar">
             <element id="module-output" name="core-service-provider-interface" />
           </element>
-          <element id="archive" name="finance-1.0.jar">
-            <element id="module-output" name="finance" />
-          </element>
           <element id="archive" name="masterdata-1.0.jar">
             <element id="module-output" name="master-data-management" />
           </element>
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
         </element>
       </element>
       <element id="directory" name="META-INF">

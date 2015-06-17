@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class Utils {
     
     private static final Logger LOG = Logger.getLogger(Utils.class.getName());
-    private static final String MESSAGE_BUNDLE = "com.invado.finance.bundle.server-strings";
+    private static final String MESSAGE_BUNDLE = "com.invado.masterdata.bundle.server-strings";
     private static final PropertyResourceBundle PROPERTY_BUNDLE = getResourceBundle();
 
     private Utils() {

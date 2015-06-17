@@ -4,6 +4,7 @@
     <entry_points version="2.0" />
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/admin" />
     <file type="web" url="file://$PROJECT_DIR$/customer-relationship-management" />
     <file type="web" url="file://$PROJECT_DIR$/finance" />
     <file type="web" url="file://$PROJECT_DIR$/master-data-management" />

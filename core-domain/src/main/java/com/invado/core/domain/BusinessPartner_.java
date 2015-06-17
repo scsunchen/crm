@@ -22,5 +22,6 @@ public class BusinessPartner_ {
     public static volatile SingularAttribute<BusinessPartner, Boolean> VAT;
     public static volatile SingularAttribute<BusinessPartner, String> name1;
     public static volatile SingularAttribute<BusinessPartner, ContactPerson> contactPerson;
+    public static volatile SingularAttribute<BusinessPartner, BusinessPartner> parentBusinessPartner;
 
 }

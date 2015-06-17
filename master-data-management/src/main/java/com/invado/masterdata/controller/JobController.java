@@ -5,6 +5,7 @@ import com.invado.masterdata.service.JobService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +18,13 @@ import java.util.Map;
 /**
  * Created by NikolaB on 6/14/2015.
  */
+@Controller
 public class JobController {
     @Autowired
     private JobService service;
 
 
-    @RequestMapping("/Job/{page}")
+    @RequestMapping("/job/{page}")
     public String showItems(@PathVariable Integer page,
                             Map<String, Object> model)
             throws Exception {
@@ -33,17 +35,17 @@ public class JobController {
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
         //return "item-table";
-        return "Job-view";
+        return "job-view";
     }
 
-    @RequestMapping(value = "/Job/{page}/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/job/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
         model.put("item", new Job());
         model.put("action", "create");
-        return "Job-grid";
+        return "job-grid";
     }
 
-    @RequestMapping(value = "/Job/{page}/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/job/{page}/create", method = RequestMethod.POST)
     public String processCreationForm(@ModelAttribute("item") Job item,
                                       BindingResult result,
                                       SessionStatus status,
@@ -51,31 +53,31 @@ public class JobController {
             throws Exception {
         if (result.hasErrors()) {
             model.put("action", "create");
-            return "Job-grid";
+            return "job-grid";
         } else {
             this.service.create(item);
             status.setComplete();
         }
-        return "redirect:/Job/{page}";
+        return "redirect:/job/{page}";
     }
 
-    @RequestMapping("/Job/{page}/{code}/delete.html")
+    @RequestMapping("/job/{page}/{code}/delete.html")
     public String delete(@PathVariable String code) throws Exception {
         service.delete(code);
-        return "redirect:/Job/{page}";
+        return "redirect:/job/{page}";
     }
 
-    @RequestMapping(value = "/Job/{page}/update/{code}",
+    @RequestMapping(value = "/job/{page}/update/{code}",
             method = RequestMethod.GET)
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
         Job item = service.read(id);
         model.put("item", item);
-        return "Job-grid";
+        return "job-grid";
     }
 
-    @RequestMapping(value = "/Job/{page}/update/{code}",
+    @RequestMapping(value = "/job/{page}/update/{code}",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") Job item,
                                       BindingResult result,
@@ -83,11 +85,11 @@ public class JobController {
                                       Map<String, Object> model)
             throws Exception {
         if (result.hasErrors()) {
-            return "Job-grid";
+            return "job-grid";
         } else {
             this.service.update(item);
             status.setComplete();
         }
-        return "redirect:/Job/{page}";
+        return "redirect:/job/{page}";
     }
 }

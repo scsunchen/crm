@@ -103,11 +103,6 @@
         </dependency>
         <dependency>
             <groupId>com.invado</groupId>
-            <artifactId>finance</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.invado</groupId>
             <artifactId>masterdata</artifactId>
             <version>1.0</version>
         </dependency>

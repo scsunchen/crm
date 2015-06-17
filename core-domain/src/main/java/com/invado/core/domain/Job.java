@@ -1,18 +1,19 @@
 package com.invado.core.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Created by NikolaB on 6/14/2015.
  */
 @Entity
-public class Job {
+@Table(name = "c_job", schema = "devel")
+public class Job implements Serializable {
 
     @Id
     private Integer id;
+    @NotNull(message = "{Job.Name.NotNull}")
     @Column(name="name")
     private String name;
     @Column(name = "description")

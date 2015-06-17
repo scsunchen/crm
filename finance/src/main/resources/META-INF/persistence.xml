@@ -17,14 +17,17 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <class>com.invado.core.domain.Currency</class>
     <class>com.invado.core.domain.ExchangeRate</class>
     <class>com.invado.core.domain.BankCreditor</class>
+    <class>com.invado.core.domain.Employee</class>
+    <class>com.invado.core.domain.Job</class>
     <class>com.invado.finance.domain.Invoice</class>
     <class>com.invado.finance.domain.InvoiceItem</class>
     <class>com.invado.core.domain.Article</class>
     <class>com.invado.finance.domain.Properties</class>
+
     <properties>
         <property name="hibernate.show_sql" value="true" />
         <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-        <property name="hibernate.hbm2ddl.auto" value="update"/>
+        <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
     </properties>
   </persistence-unit>
 </persistence>

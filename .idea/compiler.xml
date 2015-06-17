@@ -22,6 +22,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="admin" />
         <module name="core-domain" />
         <module name="core-service-provider-interface" />
         <module name="customer-relationship-management" />

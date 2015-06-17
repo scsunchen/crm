@@ -25,11 +25,11 @@
         <input:inputField label="Ime *" name="name"/>
         <input:inputField label="Srednje ime" name="middleName"/>
         <input:inputField label="Prezime" name="lastName"/>
-        <input:inputField label="Datum rođenja" name="dateofBirth"/>
+        <input:inputField label="Datum rođenja" name="dateOfBirth"/>
         <input:inputField label="Telefon" name="phone"/>
         <input:inputField label="Email" name="email"/>
         <input:inputField label="Fotografija" name="picture"/>
-        <input:inputField label="Datum rođenja" name="dateofBirth"/>
+        <input:inputField label="Datum rođenja" name="dateOfBirth"/>
         <spring:bind path="orgUnit.id">
             <div class="form-group">
                 <label for="orgunit">Opština</label>

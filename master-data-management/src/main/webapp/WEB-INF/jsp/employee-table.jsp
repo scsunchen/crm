@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<a class="btn btn-primary" href="/masterdata/client/${page}/create"><span class="glyphicon glyphicon-plus"></span>
+<a class="btn btn-primary" href="/masterdata/employee/${page}/create"><span class="glyphicon glyphicon-plus"></span>
   Kreiraj</a>
 <br/>
 <br/>

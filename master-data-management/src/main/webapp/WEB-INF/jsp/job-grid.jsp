@@ -17,10 +17,10 @@
   <div class="form-group">
     <c:choose>
       <c:when test="${action == 'create'}">
-        <input:inputField label="Šifra *" name="code" autofocus="true"/>
+        <input:inputField label="Šifra *" name="id" autofocus="true"/>
       </c:when>
       <c:otherwise>
-        <input:inputField label="Šifra *" name="code" disabled="true"/>
+        <input:inputField label="Šifra *" name="id" disabled="true"/>
       </c:otherwise>
     </c:choose>
   </div>

@@ -11,4 +11,5 @@ public class Job_ {
     public static volatile SingularAttribute<Job, Integer> id;
     public static volatile SingularAttribute<Job, String> name;
     public static volatile SingularAttribute<Job, String> description;
+    public static volatile SingularAttribute<Job, Long> version;
 }

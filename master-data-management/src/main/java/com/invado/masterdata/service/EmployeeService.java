@@ -3,13 +3,12 @@ package com.invado.masterdata.service;
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.Employee;
 import com.invado.core.domain.Employee_;
-import com.invado.core.domain.OrgUnit;
 import com.invado.masterdata.Utils;
-import com.invado.masterdata.service.BankCreditorService;
-import com.invado.masterdata.service.TownshipService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
+import com.invado.masterdata.service.exception.EntityExistsException;
+import com.invado.masterdata.service.exception.EntityNotFoundException;
 import com.invado.masterdata.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.*;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
@@ -49,17 +46,17 @@ public class EmployeeService {
     private OrgUnitService orgUnitService;
 
     @Transactional(rollbackFor = Exception.class)
-    public Employee create(Employee a) throws com.invado.masterdata.service.exception.IllegalArgumentException,
-            javax.persistence.EntityExistsException {
+    public Employee create(Employee a) throws IllegalArgumentException,
+            EntityExistsException {
         //check CreateEmployeePermission
 
         if (a == null) {
-            throw new com.invado.masterdata.service.exception.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     Utils.getMessage("Employee.IllegalArgumentEx"));
         }
         try {
             if (dao.find(Employee.class, a.getId()) != null) {
-                throw new javax.persistence.EntityExistsException(
+                throw new EntityExistsException(
                         Utils.getMessage("Employee.EntityExistsEx", a.getId())
                 );
             }
@@ -73,7 +70,7 @@ public class EmployeeService {
             a.setOrgUnit(orgUnitService.read(a.getOrgUnit().getId()));
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
+        } catch (IllegalArgumentException | EntityExistsException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -85,7 +82,7 @@ public class EmployeeService {
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public Employee update(Employee dto) throws ConstraintViolationException,
-            javax.persistence.EntityNotFoundException,
+            EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateEmployeePermission
         if (dto == null) {
@@ -171,22 +168,22 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Employee read(String companyIDNumber) throws javax.persistence.EntityNotFoundException {
+    public Employee read(String companyIDNumber) throws EntityNotFoundException {
         //TODO : check ReadEmployeePermission
         if (companyIDNumber == null) {
-            throw new javax.persistence.EntityNotFoundException(
+            throw new EntityNotFoundException(
                     Utils.getMessage("Employee.IllegalArgumentEx.Code")
             );
         }
         try {
             Employee Employee = dao.find(Employee.class, companyIDNumber);
             if (Employee == null) {
-                throw new javax.persistence.EntityNotFoundException(
+                throw new EntityNotFoundException(
                         Utils.getMessage("Employee.EntityNotFoundEx", companyIDNumber)
                 );
             }
             return Employee;
-        } catch (javax.persistence.EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

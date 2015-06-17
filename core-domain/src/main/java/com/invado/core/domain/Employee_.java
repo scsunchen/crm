@@ -24,5 +24,7 @@ public class Employee_ {
     public static volatile SingularAttribute<Employee, Date> endDate;
     public static volatile SingularAttribute<Employee, Job> job;
     public static volatile SingularAttribute<Employee, Address> address;
+    public static volatile SingularAttribute<Employee, OrgUnit> orgUnit;
+    public static volatile SingularAttribute<Employee, Long> version;
 
 }
