@@ -35,9 +35,16 @@
         <put-attribute name="body" value="/WEB-INF/jsp/invoice-create-grid.jsp"/>
     </definition>
     <definition name="invoice-update-master-detail" extends="main-menu-form">
+        <put-attribute name="head" value=""/>
         <put-attribute name="title" value="Faktura"/>
         <put-attribute name="panel-title" value="Faktura"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/invoice-update-master-detail.jsp"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="master-toolbar" value="/WEB-INF/jsp/invoice-update-master-toolbar.jsp" />
+                <put-attribute name="master-grid" value="/WEB-INF/jsp/invoice-update-master-grid.jsp" />
+                <put-attribute name="details-table" value="/WEB-INF/jsp/invoice-update-details-table.jsp" />
+            </definition>
+        </put-attribute>
     </definition>
     <definition name="error" extends="main-menu-form" >
         <put-attribute name="title" value="Greška"/>

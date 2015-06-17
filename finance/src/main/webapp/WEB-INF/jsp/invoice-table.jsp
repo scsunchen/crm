@@ -9,7 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<a class="btn btn-primary" href="${page}/create"><span class="glyphicon glyphicon-plus"></span> Kreiraj</a>
+<a class="btn btn-primary" href="${page}/create">
+    <span class="glyphicon glyphicon-plus"></span> <spring:message code="Invoice.Button.Create" /></a>
 <br/>
 <br/>
 <div class="table-responsive">
@@ -17,30 +18,35 @@
         <thead>
             <tr>
                 <th></th>
-                <th>Preduzeće</th>
-                <th>Org. jedinica</th>
-                <th>Dokument</th>
-                <th>Poslovni partner</th>
-                <th>Status</th>
-                <th>Datum DPO</th>
-                <th>Datum kreiranja</th>
-                <th>Proknjiženo</th>
+                <th><spring:message code="Invoice.Table.ClientName" /></th>
+                <th><spring:message code="Invoice.Table.OrgUnitName" /></th>
+                <th><spring:message code="Invoice.Table.Document" /></th>
+                <th><spring:message code="Invoice.Table.Partner" /></th>
+                <th><spring:message code="Invoice.Table.Status" /></th>
+                <th><spring:message code="Invoice.Table.CreditDebitRelationDate" /></th>
+                <th><spring:message code="Invoice.Table.InvoiceDate" /></th>
+                <th><spring:message code="Invoice.Table.Recorded" /></th>
             </tr>
         </thead>
         <tbody>
             <c:set var="count" value="0" scope="page" />
             <c:forEach var="invoice" items="${data}">
                 <!-- Modal -->
-            <div class="modal fade" id="dialog${count}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="dialog${count}" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Da li ste sigurni da želite da obrišete fakturu za preduzeće ${invoice.clientDesc} sa dokumentom ${invoice.document}?</h4>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                <spring:message code="Invoice.Delete.Question" 
+                                                arguments="${invoice.clientDesc},${invoice.document}"/>
+                            </h4>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                            <a type="button" class="btn btn-danger" href="${page}/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/delete.html">Obriši</a>
+                            <a type="button" class="btn btn-danger" 
+                               href="${page}/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/delete.html">Obriši</a>
                         </div>
                     </div>
                 </div>
@@ -62,10 +68,10 @@
                 <td>
                     <c:choose>
                         <c:when test="${invoice.recorded}" >
-                            Proknjižena
+                            <spring:message code="Invoice.Table.Recorded" />
                         </c:when>
                         <c:otherwise>
-                            Nije proknjižena
+                            <spring:message code="Invoice.Table.NotRecorded" />
                         </c:otherwise>
                     </c:choose> 
                 </td>
@@ -80,13 +86,15 @@
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
-                    <span class="glyphicon glyphicon-backward"></span> Prethodna 
+                    <span class="glyphicon glyphicon-backward"></span> 
+                <spring:message code="Invoice.Table.PrevPage" />
                 </a>
             </li>
         <c:out value="${page+1} od ${numberOfPages+1}" />
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>" >
-                <span class="glyphicon glyphicon-forward"></span> Naredna 
+                <span class="glyphicon glyphicon-forward"></span> 
+                <spring:message code="Invoice.Table.NextPage" />
             </a>
         </li>
     </ul>

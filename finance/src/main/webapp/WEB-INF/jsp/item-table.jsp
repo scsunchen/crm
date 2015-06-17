@@ -8,7 +8,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<a class="btn btn-primary" href="${page}/create" ><span class="glyphicon glyphicon-plus"></span> Kreiraj</a>
+<a class="btn btn-primary" href="${page}/create" ><span class="glyphicon glyphicon-plus"></span> 
+    <spring:message code="Article.Button.Create" /></a>
 <br/>
 <br/>
 <div class="table-responsive">
@@ -33,12 +34,14 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Da li ste sigurni da želite da obrišete ${item.description}?</h4>
+                            <h4 class="modal-title" id="myModalLabel"><spring:message code="Article.DeleteQuestion" arguments="${item.description}" /></h4>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <spring:message code="Invoice.Button.Cancel" /></button>
                             <spring:url value="${page}/${item.code}/delete.html" var="deletehref"/>
-                            <a type="button" class="btn btn-danger" href="${deletehref}">Obriši</a>
+                            <a type="button" class="btn btn-danger" href="${deletehref}">
+                                <spring:message code="Invoice.Button.Delete" /></a>
                         </div>
                     </div>
                 </div>
@@ -67,13 +70,15 @@
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
-                    <span class="glyphicon glyphicon-backward"></span> Prethodna 
+                    <span class="glyphicon glyphicon-backward"></span> 
+                    <spring:message code="Invoice.Table.PrevPage" />
                 </a>
             </li>
         <c:out value="${page+1} od ${numberOfPages+1}" />
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>" >
-                <span class="glyphicon glyphicon-forward"></span> Naredna 
+                <span class="glyphicon glyphicon-forward"></span> 
+                    <spring:message code="Invoice.Table.NextPage" />
             </a>
         </li>
     </ul>
