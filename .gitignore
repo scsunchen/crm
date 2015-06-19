@@ -2,3 +2,5 @@
 /core-domain/target/
 /core-module-spi/target/
 /master-data-management/target/
+/target/
+/customer-relationship-management/target/
