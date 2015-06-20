@@ -18,7 +18,7 @@
     <context:component-scan base-package="com.invado.finance.controller"></context:component-scan>
     <!-- all resources inside folder src/main/webapp/resources are mapped so they can be refered to inside JSP files
     (see header.jsp for more details) -->
-    <mvc:annotation-driven >
+    <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
@@ -32,6 +32,7 @@
             </value>
         </property>
     </bean>
+    <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean" />
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions">
             <list>

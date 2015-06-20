@@ -64,20 +64,17 @@ public class Article implements Serializable {
     @DecimalMin(value = "0", message = "{Article.SalePriceWithVAT.Min}")
     @Digits(integer=11, fraction=2, message="{Article.SalePriceWithVAT.Digits}")
     @Column(name = "sale_price_with_vat")
-    //FIXME : set currency number format 
-    @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal salePriceWithVAT;
     @DecimalMin(value = "0", message = "{Article.SalePrice.Min}")
     @Digits(integer=11, fraction=2, message="{Article.SalePrice.Digits}")
     @Column(name = "sale_price")
-    //FIXME : set currency number format 
-    @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal salePrice;
     @DecimalMin(value = "0", message = "{Article.PurchasePrice.Min}")
     @Digits(integer=11, fraction=2, message="{Article.PurchasePrice.Digits}")
     @Column(name = "purchase_price")
-    //FIXME : set currency number format 
-    @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal purchasePrice;
     @NotNull(message="{Article.UnitsInStock.NotNull}")
     @Digits(integer=11, fraction=2, message="{Article.UnitsInStock.Digits}")

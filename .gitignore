@@ -1,4 +1,6 @@
 /finance/target/
+/finance/nb-configuration.xml
+/finance/finance.iml
 /core-domain/target/
 /core-module-spi/target/
 /master-data-management/target/

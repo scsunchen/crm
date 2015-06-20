@@ -4,7 +4,7 @@
  */
 package com.invado.finance.controller.report;
 
-import com.invado.core.utils.Utils;
+import com.invado.finance.Utils;
 import com.invado.finance.service.dto.InvoiceReportDTO;
 import java.awt.*;
 import java.awt.font.FontRenderContext;

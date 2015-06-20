@@ -61,7 +61,7 @@
             </div>
         </div>
     </spring:bind>
-    <spring:bind path="salePriceWithVAT">
+    <spring:bind path="salePriceWithVAT" >
         <div class="form-group row" >
             <div class="col-lg-6" >                
                 <label for="salePriceWithVAT"  ><spring:message code="Article.Label.SalePriceVAT"/></label>            

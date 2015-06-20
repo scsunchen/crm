@@ -4,7 +4,7 @@
  */
 package com.invado.finance.domain;
 
-import com.invado.core.utils.Utils;
+import com.invado.finance.Utils;
 
 /**
  *

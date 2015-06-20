@@ -11,7 +11,7 @@ import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
 import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
-import com.invado.core.utils.Utils;
+import com.invado.finance.Utils;
 import com.invado.finance.service.exception.SystemException;
 import java.util.List;
 import java.util.logging.Level;

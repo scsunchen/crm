@@ -33,15 +33,18 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel"><spring:message code="Article.DeleteQuestion" arguments="${item.description}" /></h4>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                <spring:message code="Article.DeleteQuestion" arguments="${item.description}" />
+                            </h4>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">
-                                <spring:message code="Invoice.Button.Cancel" /></button>
+                                <spring:message code="Article.Button.Cancel" /></button>
                             <spring:url value="${page}/${item.code}/delete.html" var="deletehref"/>
                             <a type="button" class="btn btn-danger" href="${deletehref}">
-                                <spring:message code="Invoice.Button.Delete" /></a>
+                                <spring:message code="Article.Button.Delete" /></a>
                         </div>
                     </div>
                 </div>
@@ -49,8 +52,14 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group" >
-                        <a href="${page}/update/${item.code}" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> pregled</a>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span class="glyphicon glyphicon-trash"></span> brisanje</button>
+                        <a href="${page}/update/${item.code}" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-search"></span> 
+                            <spring:message code="Article.Button.ReadRow" />
+                        </a>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}">
+                            <span class="glyphicon glyphicon-trash"></span> 
+                            <spring:message code="Article.Button.DeleteRow" />                            
+                        </button>
                     </div>
                 </td>
                 <td><c:out value="${item.code}"/></td>
@@ -67,18 +76,18 @@
 </div>
 <nav>
     <ul class="pager pull-right">                       
-        Strana
+        <spring:message code="Article.Table.Page" />
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
                     <span class="glyphicon glyphicon-backward"></span> 
-                    <spring:message code="Invoice.Table.PrevPage" />
+                    <spring:message code="Article.Table.PrevPage" />
                 </a>
             </li>
         <c:out value="${page+1} od ${numberOfPages+1}" />
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>" >
                 <span class="glyphicon glyphicon-forward"></span> 
-                    <spring:message code="Invoice.Table.NextPage" />
+                    <spring:message code="Article.Table.NextPage" />
             </a>
         </li>
     </ul>

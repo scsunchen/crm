@@ -6,7 +6,7 @@ package com.invado.finance.service;
 
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.ApplicationUser;
-import com.invado.core.utils.Utils;
+import com.invado.finance.Utils;
 import com.invado.core.domain.Article;
 import com.invado.core.domain.Article_;
 import com.invado.finance.domain.InvoiceItem;

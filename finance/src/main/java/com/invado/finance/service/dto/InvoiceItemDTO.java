@@ -17,7 +17,6 @@ public class InvoiceItemDTO {
     private Integer clientId;
     private String clientDesc;
     private Integer unitId;
-//    private String unitDesc;
     private String invoiceDocument;
     @NumberFormat
     private Integer ordinal;
@@ -25,13 +24,13 @@ public class InvoiceItemDTO {
     private String articleDesc;
     @NumberFormat(style = NumberFormat.Style.PERCENT)
     private BigDecimal VATPercent;
-    @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal netPrice;    
     @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
     private BigDecimal quantity;
     @NumberFormat(style = NumberFormat.Style.PERCENT)
     private BigDecimal rabatPercent;
-    @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal totalCost;
     private String username;
     private char[] password;

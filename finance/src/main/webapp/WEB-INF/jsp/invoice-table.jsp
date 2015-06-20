@@ -44,9 +44,11 @@
                             </h4>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                <spring:message code="Invoice.Button.Cancel" /></button>
                             <a type="button" class="btn btn-danger" 
-                               href="${page}/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/delete.html">Obriši</a>
+                               href="${page}/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/delete.html">
+                                <spring:message code="Invoice.Button.Delete" /></a>
                         </div>
                     </div>
                 </div>
@@ -83,7 +85,7 @@
 </div>
 <nav>
     <ul class="pager pull-right">                       
-        Strana
+        <spring:message code="Invoice.Table.Page" />
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
                     <span class="glyphicon glyphicon-backward"></span> 

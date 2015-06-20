@@ -14,7 +14,7 @@ import com.invado.core.domain.Client_;
 import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
 import com.invado.core.domain.OrgUnitPK;
-import com.invado.core.utils.Utils;
+import com.invado.finance.Utils;
 import com.invado.core.domain.Article;
 import com.invado.core.domain.Article_;
 import com.invado.finance.domain.Invoice;

@@ -12,7 +12,6 @@ import com.invado.core.domain.Client;
 import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
 import com.invado.finance.controller.report.InvoiceReport;
-import com.invado.finance.domain.Invoice;
 import com.invado.finance.domain.InvoiceBusinessPartner;
 import com.invado.finance.domain.InvoiceType;
 import com.invado.finance.service.MasterDataService;
