@@ -11,9 +11,11 @@
 <br/>
 <fieldset>
     <legend class="control-label"></legend>
-<tiles:insertAttribute name="master-grid" />
+    <tiles:insertAttribute name="master-grid" />
 </fieldset>
-<fieldset>
-    <legend class="control-label"></legend>
-<tiles:insertAttribute name="details-table" />
-</fieldset>
+<br/>
+<br/>
+<!--<fieldset>
+    <legend class="control-label"></legend>-->
+    <tiles:insertAttribute name="details-table" />
+<!--</fieldset>-->

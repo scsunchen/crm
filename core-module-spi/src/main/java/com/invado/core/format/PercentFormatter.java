@@ -5,7 +5,6 @@
  */
 package com.invado.core.format;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -19,6 +18,7 @@ public class PercentFormatter extends org.springframework.format.number.Abstract
 
     @Override
     public Number parse(String text, Locale locale) throws ParseException {
+        //FIXME : ne mozes sam da dodas %
         if(text.contains("%") == false) {
             text += "%";
         }
@@ -27,8 +27,7 @@ public class PercentFormatter extends org.springframework.format.number.Abstract
 
     @Override
     protected NumberFormat getNumberFormat(Locale locale) {
-        DecimalFormat editFormat= (DecimalFormat) DecimalFormat.getPercentInstance(locale);
-        
+        DecimalFormat editFormat= (DecimalFormat) DecimalFormat.getPercentInstance(locale);        
         return editFormat;
     }   
 }

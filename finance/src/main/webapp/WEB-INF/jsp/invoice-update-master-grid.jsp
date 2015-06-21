@@ -135,6 +135,7 @@
         <i:textField label="Invoice.Label.ContractNumber" name="contractNumber" />
         <div class="checkbox"><label><form:checkbox id="paid" path="paid"  />
                 <spring:message code="Invoice.Label.Paid" /></label></div>
+        <form:hidden path="version" />
     </div>
 
     <div class="col-lg-12 form-group">

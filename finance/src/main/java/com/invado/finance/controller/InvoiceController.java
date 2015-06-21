@@ -133,7 +133,7 @@ public class InvoiceController {
         itemDTO.setUnitId(unitId);
         itemDTO.setInvoiceDocument(document);                
         itemDTO.setInvoiceVersion(tmp.getVersion());                
-        model.put("item", itemDTO);
+        model.put("invoiceItem", itemDTO);
         model.put("invoice",tmp);
         model.put("items", invoiceService.readInvoiceItems(clientId, unitId, document));
         model.put("action", "update");
@@ -216,11 +216,14 @@ public class InvoiceController {
     }
     @RequestMapping(value = "/invoice/{page}/{clientId}/{unitId}/{document}/addItem.html",
             method = RequestMethod.POST)
-    public String addItem(@ModelAttribute("item") InvoiceItemDTO item,
+    public String addItem(
+            @ModelAttribute("invoice") InvoiceDTO invoice,
+            @ModelAttribute("invoiceItem") InvoiceItemDTO item,
             BindingResult result,
             SessionStatus status,
             Map<String, Object> model) throws Exception {
         if (result.hasErrors()) {
+            model.put("invoice", invoice);
             model.put("action", "update");
             model.put("partnerTypes", InvoiceBusinessPartner.values());
             model.put("invoiceTypes", InvoiceType.values());
