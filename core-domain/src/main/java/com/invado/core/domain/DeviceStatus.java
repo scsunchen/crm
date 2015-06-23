@@ -1,4 +1,4 @@
-package com.invado.customer.relationship.domain;
+package com.invado.core.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
