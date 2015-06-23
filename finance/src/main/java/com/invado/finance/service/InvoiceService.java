@@ -378,14 +378,15 @@ public class InvoiceService {
             temp.setContractDate(dto.getContractDate());
             temp.setUser(user);
             temp.setBank(bank);
-            temp.setVersion(dto.getVersion());
             List<String> msgs = validator.validate(temp).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            //flush?!?!?!
+            if(temp.getVersion().compareTo(dto.getVersion()) != 0) {
+                throw new OptimisticLockException();
+            };
             return temp.getVersion();
         } catch (EntityNotFoundException | ReferentialIntegrityException 
                 | IllegalArgumentException ex) {
@@ -497,7 +498,6 @@ public class InvoiceService {
                 throw new IllegalArgumentException(Utils.getMessage(
                         "Invoice.IllegalArgumentException.DeleteItemRecorded"));
             }
-            invoice.setVersion(version);
             List<ApplicationUser> userList = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
                     ApplicationUser.class)
@@ -520,6 +520,9 @@ public class InvoiceService {
             }
             invoice.removeItem(invoiceItem);
             dao.remove(invoiceItem);
+            if(invoice.getVersion().compareTo(version) != 0) {
+                throw new OptimisticLockException();
+            };
             return invoice.getVersion();
         } catch (EntityNotFoundException | ReferentialIntegrityException 
                 | IllegalArgumentException ex) {
@@ -593,7 +596,6 @@ public class InvoiceService {
                                 dto.getUsername()));
             }
             invoice.setUser(userList.get(0));
-            invoice.setVersion(dto.getInvoiceVersion());
             dao.lock(invoice, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
             InvoiceItem temp = dao.find(InvoiceItem.class,
                     new InvoiceItemPK(dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument(), dto.getOrdinal()));
@@ -653,6 +655,9 @@ public class InvoiceService {
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
+            if(invoice.getVersion().compareTo(dto.getInvoiceVersion()) != 0) {
+                throw new OptimisticLockException();
+            };
             return invoice.getVersion();
         } catch (IllegalArgumentException | ReferentialIntegrityException 
                 | EntityNotFoundException ex) {
@@ -726,7 +731,6 @@ public class InvoiceService {
                                 dto.getClientId(), dto.getUnitId()));
             }
             invoice.setUser(userList.get(0));
-            invoice.setVersion(dto.getInvoiceVersion());
             dao.lock(invoice, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
             Article article = dao.find(Article.class, dto.getArticleCode());
             if (article == null) {
@@ -801,6 +805,9 @@ public class InvoiceService {
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
+            if(invoice.getVersion().compareTo(dto.getInvoiceVersion()) != 0) {
+                throw new OptimisticLockException();
+            };
             return invoice.getVersion();
         } catch (IllegalArgumentException | ReferentialIntegrityException ex) {
             throw ex;

@@ -13,7 +13,6 @@ import org.springframework.format.annotation.NumberFormat;
  */
 public class InvoiceItemDTO {
     
-    @NumberFormat
     private Integer clientId;
     private String clientDesc;
     private Integer unitId;

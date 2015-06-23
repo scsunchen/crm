@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="i" tagdir="/WEB-INF/tags" %>
 <div class="col-lg-12">        
-    <form:form modelAttribute="item" method="post" 
+    <form:form modelAttribute="invoiceItem" method="post" 
                action="${pageContext.request.contextPath}/invoice/${page}/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/addItem.html" >
         <div class="modal fade" id="dialogAddItem" tabindex="-1" role="dialog">
             <div class="modal-dialog">
@@ -15,6 +15,7 @@
                         <form:hidden path="clientId" /> 
                         <form:hidden path="unitId" /> 
                         <form:hidden path="invoiceDocument" />                         
+                        <form:hidden path="invoiceVersion" />                         
                         <div class="form-group" >
                             <label for="itemDesc"><spring:message code="InvoiceItems.Label.Article" /></label>
                             <form:input id="itemDesc" class="typeahead form-control" type="text" 
