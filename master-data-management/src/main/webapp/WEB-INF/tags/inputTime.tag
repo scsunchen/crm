@@ -14,10 +14,10 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div class="form-group" id="timepickcontainer">
                     <label for="${name}">${label}</label>
 
-                    <div class='input-group date' id='datetimepicker'>
+                    <div class='input-group date' id='timepicker'>
                         <form:input id="${name}" path="${name}"
                                     class="form-control ${status.error ? 'error' : '' }"
                                     disabled="${disabled}"
@@ -30,7 +30,7 @@
             </div>
             <script type="text/javascript">
                 $(function () {
-                    $('#datetimepicker').datetimepicker({
+                    $('#timepickcontainer div').datetimepicker({
                         format: 'LT'
                     });
                 });

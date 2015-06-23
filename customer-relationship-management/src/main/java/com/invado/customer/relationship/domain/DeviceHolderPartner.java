@@ -1,9 +1,13 @@
 package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.domain.Device;
+import com.invado.core.domain.LocalDateConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -18,9 +22,11 @@ public class DeviceHolderPartner {
     @Column(name = "business_partner_id")
     private BusinessPartner businessPartner;
     @Column(name = "startDate")
-    private Date startDate;
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate startDate;
     @Column(name = "end_date")
-    private Date endDate;
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate endDate;
 
     public Integer getId() {
         return Id;
@@ -46,19 +52,19 @@ public class DeviceHolderPartner {
         this.businessPartner = businessPartner;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 }

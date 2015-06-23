@@ -1,7 +1,7 @@
 package com.invado.core.domain;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Created by NikolaB on 6/18/2015.
@@ -18,14 +18,18 @@ public class Device {
     private Article article;
     @Column(name = "serial_number")
     private String serialNumber;
-    @Column(name = "status")
+    @ManyToOne
+    @JoinColumn(name = "status_id")
     private DeviceStatus status;
     @Column(name = "creation_date")
-    private Date creationDate;
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate creationDate;
     @Column(name = "working_start_time")
-    private Date workingStartTime;
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate workingStartTime;
     @Column(name = "working_end_time")
-    private Date workingEndTime;
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate workingEndTime;
     @Column(name = "installed_software_version")
     private String installedSoftwareVersion;
     @Version
@@ -72,27 +76,27 @@ public class Device {
         this.status = status;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getWorkingStartTime() {
+    public LocalDate getWorkingStartTime() {
         return workingStartTime;
     }
 
-    public void setWorkingStartTime(Date workingStartTime) {
+    public void setWorkingStartTime(LocalDate workingStartTime) {
         this.workingStartTime = workingStartTime;
     }
 
-    public Date getWorkingEndTime() {
+    public LocalDate getWorkingEndTime() {
         return workingEndTime;
     }
 
-    public void setWorkingEndTime(Date workingEndTime) {
+    public void setWorkingEndTime(LocalDate workingEndTime) {
         this.workingEndTime = workingEndTime;
     }
 

@@ -48,7 +48,7 @@
       <tr>
         <td>
           <div class="btn-group btn-group-sm" role="group">
-            <a href="${page}/update/${item.code}" class="btn btn-primary"><span
+            <a href="${page}/update/${item.id}" class="btn btn-primary"><span
                     class="glyphicon glyphicon-search"></span> pregled</a>
             <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                     class="glyphicon glyphicon-trash"></span> brisanje
