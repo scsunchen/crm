@@ -17,6 +17,7 @@ import com.invado.core.domain.OrgUnitPK;
 import com.invado.finance.Utils;
 import com.invado.core.domain.Article;
 import com.invado.core.domain.Article_;
+import com.invado.core.exception.ConstraintViolationException;
 import com.invado.finance.domain.Invoice;
 import com.invado.finance.domain.InvoiceBusinessPartner;
 import com.invado.finance.domain.InvoiceItem;
@@ -31,12 +32,11 @@ import com.invado.finance.service.dto.InvoiceItemDTO;
 import com.invado.finance.service.dto.InvoiceReportDTO;
 import com.invado.finance.service.dto.PageRequestDTO;
 import com.invado.finance.service.dto.ReadRangeDTO;
-import com.invado.finance.service.exception.IllegalArgumentException;
-import com.invado.finance.service.exception.EntityExistsException;
-import com.invado.finance.service.exception.EntityNotFoundException;
-import com.invado.finance.service.exception.PageNotExistsException;
-import com.invado.finance.service.exception.ReferentialIntegrityException;
-import com.invado.finance.service.exception.SystemException;
+import com.invado.core.exception.EntityExistsException;
+import com.invado.core.exception.EntityNotFoundException;
+import com.invado.core.exception.PageNotExistsException;
+import com.invado.core.exception.ReferentialIntegrityException;
+import com.invado.core.exception.SystemException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -78,31 +78,31 @@ public class InvoiceService {
     private final String username = "a";
 
     @Transactional(rollbackFor = Exception.class)
-    public void createInvoice(InvoiceDTO dto) throws IllegalArgumentException,
+    public void createInvoice(InvoiceDTO dto) throws ConstraintViolationException,
                                                      ReferentialIntegrityException,
                                                      EntityExistsException {
         if (dto == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException"));
         }
         if (dto.getClientId() == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Client"));
         }
         if (dto.getOrgUnitId() == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (dto.getDocument() == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
         if (dto.getIsDomesticCurrency() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.IsDomesticCurrency"));
         }
         if (dto.getIsDomesticCurrency() == false && dto.getCurrencyISOCode() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.CurrencyISOCode"));
         }
         try {
@@ -190,11 +190,11 @@ public class InvoiceService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
             dao.persist(invoice);
         } catch (EntityExistsException | ReferentialIntegrityException 
-                | IllegalArgumentException ex) {
+                | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -206,19 +206,19 @@ public class InvoiceService {
     public void deleteInvoice(Integer clientId,
                               Integer orgUnitId,
                               String document) 
-                              throws IllegalArgumentException,
+                              throws ConstraintViolationException,
                               EntityNotFoundException {  
         // TODO:check delete invoice permission
         if (clientId == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Client"));
         }
         if (orgUnitId == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (document == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
         try {
@@ -233,12 +233,12 @@ public class InvoiceService {
                         clientId, orgUnitId, document));
             }
             if (temp.isRecorded().equals(Boolean.TRUE)) {
-                throw new IllegalArgumentException(Utils.getMessage(
+                throw new ConstraintViolationException(Utils.getMessage(
                         "Invoice.IllegalArgumentException.DeleteRecorded")
                 );
             }
             dao.remove(temp);
-        } catch (EntityNotFoundException | IllegalArgumentException ex) {
+        } catch (EntityNotFoundException | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -250,19 +250,19 @@ public class InvoiceService {
     public InvoiceDTO readInvoice(Integer clientId,
             Integer orgUnitId,
             String document)
-            throws IllegalArgumentException,
+            throws ConstraintViolationException,
             EntityNotFoundException {
         // TODO : check read invoice permission
         if (clientId == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Client"));
         }
         if (orgUnitId == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (document == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
         try {
@@ -283,28 +283,28 @@ public class InvoiceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Long updateInvoice(InvoiceDTO dto) throws IllegalArgumentException,
+    public Long updateInvoice(InvoiceDTO dto) throws ConstraintViolationException,
             ReferentialIntegrityException,
             EntityNotFoundException {
         // TODO : check update invoice permission
         if (dto == null) {
-            throw new IllegalArgumentException(Utils.getMessage("Invoice.IllegalArgumentException"));
+            throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException"));
         }
         if (dto.getClientId() == null) {
-            throw new IllegalArgumentException(Utils.getMessage("Invoice.IllegalArgumentException.Client"));
+            throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException.Client"));
         }
         if (dto.getOrgUnitId() == null) {
-            throw new IllegalArgumentException(Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
+            throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (dto.getDocument() == null) {
-            throw new IllegalArgumentException(Utils.getMessage("Invoice.IllegalArgumentException.Document"));
+            throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
         if (dto.getIsDomesticCurrency() == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.IsDomesticCurrency"));
         }
         if (dto.getIsDomesticCurrency() == false && dto.getCurrencyISOCode() == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.CurrencyISOCode"));
         }
         try {
@@ -317,7 +317,7 @@ public class InvoiceService {
                                 dto.getOrgUnitId(), dto.getDocument()));
             }
             if (temp.isRecorded().equals(Boolean.TRUE)) {
-                throw new IllegalArgumentException(
+                throw new ConstraintViolationException(
                         Utils.getMessage("Invoice.IllegalArgumentException.UpdateRecorded")
                 );
             }
@@ -382,14 +382,14 @@ public class InvoiceService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
             if(temp.getVersion().compareTo(dto.getVersion()) != 0) {
                 throw new OptimisticLockException();
             };
             return temp.getVersion();
         } catch (EntityNotFoundException | ReferentialIntegrityException 
-                | IllegalArgumentException ex) {
+                | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -408,23 +408,23 @@ public class InvoiceService {
             Integer unitId,
             String document,
             Integer ordinal)
-            throws IllegalArgumentException,
+            throws ConstraintViolationException,
             EntityNotFoundException {
         // TODO : check read invoice permission
         if (clientId == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Client"));
         }
         if (unitId == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (document == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Document"));
         }
         if (ordinal == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Ordinal"));
         }
         try {
@@ -465,24 +465,24 @@ public class InvoiceService {
             String username,
             char[] pass,
             Long version) 
-            throws IllegalArgumentException,
+            throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         // TODO : check update invoice permission
         if (clientId == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Client"));
         }
         if (unitId == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (document == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Document"));
         }
         if (ordinal == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Ordinal"));
         }
         try {
@@ -495,7 +495,7 @@ public class InvoiceService {
                         clientId, unitId, document));
             }
             if (invoice.isRecorded().equals(Boolean.TRUE)) {
-                throw new IllegalArgumentException(Utils.getMessage(
+                throw new ConstraintViolationException(Utils.getMessage(
                         "Invoice.IllegalArgumentException.DeleteItemRecorded"));
             }
             List<ApplicationUser> userList = dao.createNamedQuery(
@@ -525,7 +525,7 @@ public class InvoiceService {
             };
             return invoice.getVersion();
         } catch (EntityNotFoundException | ReferentialIntegrityException 
-                | IllegalArgumentException ex) {
+                | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -541,31 +541,31 @@ public class InvoiceService {
 
     @Transactional(rollbackFor = Exception.class)
     public Long updateItem(InvoiceItemDTO dto) throws ReferentialIntegrityException,
-            IllegalArgumentException,
+            ConstraintViolationException,
             EntityNotFoundException {
         // TODO : check update invoice permission
         if (dto == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException"));
         }
         if (dto.getClientId() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Client"));
         }
         if (dto.getUnitId() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (dto.getInvoiceDocument() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Document"));
         }
         if (dto.getOrdinal() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Ordinal"));
         }
         if (dto.getArticleCode() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.ArticleCode")
             );
         }
@@ -581,7 +581,7 @@ public class InvoiceService {
                         dto.getInvoiceDocument()));
             }
             if (invoice.isRecorded().equals(Boolean.TRUE)) {
-                throw new IllegalArgumentException(Utils.getMessage(
+                throw new ConstraintViolationException(Utils.getMessage(
                         "Invoice.IllegalArgumentException.UpdateItemRecorded"));
             }
             List<ApplicationUser> userList = dao.createNamedQuery(
@@ -629,21 +629,21 @@ public class InvoiceService {
                     .map(ConstraintViolation::getMessage)
                     .toArray(size -> new String[size]);
             if (netPriceValidation.length > 0) {
-                throw new IllegalArgumentException(netPriceValidation);
+                throw new ConstraintViolationException("", netPriceValidation);
             }
             String[] rabatValidation = validator.validateProperty(temp, "rabatPercent")
                     .stream()
                     .map(ConstraintViolation::getMessage)
                     .toArray(size -> new String[size]);
             if (rabatValidation.length > 0) {
-                throw new IllegalArgumentException(rabatValidation);
+                throw new ConstraintViolationException("",rabatValidation);
             }
             String[] quantityValidation = validator.validateProperty(temp, "quantity")
                     .stream()
                     .map(ConstraintViolation::getMessage)
                     .toArray(size -> new String[size]);
             if (rabatValidation.length > 0) {
-                throw new IllegalArgumentException(quantityValidation);
+                throw new ConstraintViolationException("",quantityValidation);
             }
             BigDecimal net = dto.getNetPrice().subtract(dto.getNetPrice().multiply(dto.getRabatPercent()));
             BigDecimal total = (net.multiply(BigDecimal.ONE.add(temp.getVatPercent())))
@@ -653,13 +653,13 @@ public class InvoiceService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
             if(invoice.getVersion().compareTo(dto.getInvoiceVersion()) != 0) {
                 throw new OptimisticLockException();
             };
             return invoice.getVersion();
-        } catch (IllegalArgumentException | ReferentialIntegrityException 
+        } catch (ConstraintViolationException | ReferentialIntegrityException 
                 | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -676,27 +676,27 @@ public class InvoiceService {
 
     @Transactional(rollbackFor = Exception.class)
     public Long addItem(InvoiceItemDTO dto) throws ReferentialIntegrityException,
-                                                   IllegalArgumentException,
+                                                   ConstraintViolationException,
                                                    EntityExistsException {
         // TODO : check update invoice permission
         if (dto == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException"));
         }
         if (dto.getClientId() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Client"));
         }
         if (dto.getUnitId() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (dto.getInvoiceDocument() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Document"));
         }
         if (dto.getArticleCode() == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.ArticleCode"));
         }
 
@@ -709,7 +709,7 @@ public class InvoiceService {
                                 dto.getClientId(), dto.getUnitId(), dto.getInvoiceDocument()));
             }
             if (invoice.isRecorded().equals(Boolean.TRUE)) {
-                throw new IllegalArgumentException(
+                throw new ConstraintViolationException(
                         Utils.getMessage("Invoice.IllegalArgumentException.AddItemRecorded"));
             }
             List<ApplicationUser> userList = dao.createNamedQuery(
@@ -778,21 +778,21 @@ public class InvoiceService {
                     .map(ConstraintViolation::getMessage)
                     .toArray(size -> new String[size]);
             if (netPriceValidation.length > 0) {
-                throw new IllegalArgumentException(netPriceValidation);
+                throw new ConstraintViolationException("", netPriceValidation);
             }
             String[] rabatValidation = validator.validateProperty(item, "rabatPercent")
                     .stream()
                     .map(ConstraintViolation::getMessage)
                     .toArray(size -> new String[size]);
             if (rabatValidation.length > 0) {
-                throw new IllegalArgumentException(rabatValidation);
+                throw new ConstraintViolationException("", rabatValidation);
             }
             String[] quantityValidation = validator.validateProperty(item, "quantity")
                     .stream()
                     .map(ConstraintViolation::getMessage)
                     .toArray(size -> new String[size]);
             if (rabatValidation.length > 0) {
-                throw new IllegalArgumentException(quantityValidation);
+                throw new ConstraintViolationException("", quantityValidation);
             }
             BigDecimal net = dto.getNetPrice().subtract(dto.getNetPrice().multiply(dto.getRabatPercent()));
             BigDecimal total = (net.multiply(BigDecimal.ONE.add(item.getVatPercent())))
@@ -803,13 +803,13 @@ public class InvoiceService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
             if(invoice.getVersion().compareTo(dto.getInvoiceVersion()) != 0) {
                 throw new OptimisticLockException();
             };
             return invoice.getVersion();
-        } catch (IllegalArgumentException | ReferentialIntegrityException ex) {
+        } catch (ConstraintViolationException | ReferentialIntegrityException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -828,19 +828,19 @@ public class InvoiceService {
             Integer clientId,
             Integer orgUnitId,
             String document)
-            throws IllegalArgumentException,
+            throws ConstraintViolationException,
             EntityNotFoundException {
         // TODO : check read invoice permission
         if (clientId == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Client"));
         }
         if (orgUnitId == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (document == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
         try {
@@ -885,19 +885,19 @@ public class InvoiceService {
     public InvoiceReportDTO readInvoiceReport(Integer clientId,
             Integer orgUnitId,
             String document)
-            throws IllegalArgumentException,
+            throws ConstraintViolationException,
             EntityNotFoundException {       
         // TODO : check read invoice permission
         if (clientId == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Client"));
         }
         if (orgUnitId == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.OrgUnit"));
         }
         if (document == null) {
-            throw new IllegalArgumentException(Utils.getMessage(
+            throw new ConstraintViolationException(Utils.getMessage(
                     "Invoice.IllegalArgumentException.Document"));
         }
         try {
@@ -986,7 +986,7 @@ public class InvoiceService {
                                 .multiply(i.getVatPercent()));
                         break;
                     default:
-                        throw new IllegalArgumentException("Illegal item tax rate");
+                        throw new ConstraintViolationException("Illegal item tax rate");
                 }
                 invoiceTotal = invoiceTotal.add((articlePrice.subtract(rebate))
                         .multiply(BigDecimal.ONE.add(i.getVatPercent())));

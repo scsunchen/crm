@@ -16,8 +16,7 @@
             <div class="form-group " >
                 <label for="client"><spring:message code="Invoice.Label.Client" /></label>
                 <form:input id="client" class="typeahead form-control" type="text" 
-                            path="clientDesc" 
-                            autofocus="true" />
+                            path="clientDesc" autofocus="true" />
                 <form:input id="client-hidden" type="hidden" path="clientId"/>
             </div>
             <div class="form-group" >
@@ -143,7 +142,6 @@
 </form:form>
 <script type="text/javascript">
     $('#businessPartner').typeahead({
-        hint: false,
         highlight: true,
         minLength: 1
     }, {

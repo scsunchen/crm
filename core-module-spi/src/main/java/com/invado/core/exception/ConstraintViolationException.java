@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.finance.service.exception;
+package com.invado.core.exception;
 
 import java.util.List;
 
@@ -33,20 +33,4 @@ public class ConstraintViolationException extends ApplicationException {
         return constraint;
     }
 
-    @Override
-    public String getLocalizedMessage() {
-        return getMessage();
-    }
-
-    @Override
-    public String getMessage() {
-        String result = (super.getMessage() != null && super.getMessage().length() > 0)
-                ? super.getMessage() + "." : "";
-        for (String violation : constraint) {
-            if (violation.length() > 0) {
-                result += String.format(" %s.", violation);
-            }
-        }
-        return result;
-    }
 }
