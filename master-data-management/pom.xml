@@ -100,11 +100,11 @@
             <artifactId>core-service-provider-interface</artifactId>
             <version>1.0</version>
         </dependency>
-<!--        <dependency>
+        <dependency>
             <groupId>com.invado</groupId>
             <artifactId>finance</artifactId>
             <version>1.0</version>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>

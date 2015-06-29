@@ -376,8 +376,8 @@ public class BusinessPartnerRelationshipTermsService {
             LOG.log(Level.WARNING,
                     "",
                     ex);
-            throw new com.invado.masterdata.service.exception.SystemException(
-                    com.invado.masterdata.Utils.getMessage("BusinessPartnerRelationshipTerms.PersistenceEx.ReadAll"), ex);
+            throw new SystemException(
+                    Utils.getMessage("BusinessPartnerRelationshipTerms.PersistenceEx.ReadAll"), ex);
         }
     }
 }

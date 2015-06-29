@@ -86,4 +86,22 @@
         <put-attribute name="panel-title" value="Ažuriranje podataka o radnicima"/>
         <put-attribute name="body" value="/WEB-INF/jsp/employee-grid.jsp"/>
     </definition>
+    <definition name="devicestatus-view" extends="main-menu-form">
+        <put-attribute name="title" value="Status terminala"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/devicestatus-table.jsp"/>
+    </definition>
+    <definition name="devicestatus-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Radnik"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o statusima terminala"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/devicestatus-grid.jsp"/>
+    </definition>
+    <definition name="device-view" extends="main-menu-form">
+        <put-attribute name="title" value="Terminal"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/device-table.jsp"/>
+    </definition>
+    <definition name="device-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Terminal"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o terminalima"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/device-grid.jsp"/>
+    </definition>
 </tiles-definitions>
