@@ -12,6 +12,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
+                        <c:if test = "${itemException != null}">
+                            <div class="alert alert-warning">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                ${itemException.message}
+                            </div>
+                        </c:if>
                         <form:hidden path="clientId" /> 
                         <form:hidden path="unitId" /> 
                         <form:hidden path="invoiceDocument" />                         
@@ -58,6 +64,11 @@
                 </div>
             </div>
         </div>
+        <c:if test="${showDialog}" >
+            <script type="text/javascript">
+                $('#dialogAddItem').modal('show');
+            </script>
+        </c:if>      
     </form:form>                
     <a data-toggle="modal" data-target="#dialogAddItem" class="btn btn-primary" >
         <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoice.Button.AddItem" /></a>
@@ -117,6 +128,7 @@
         </table>
     </div>
 </div>
+                    
 <script type="text/javascript">
     $('#itemDesc').typeahead({
         hint: false,

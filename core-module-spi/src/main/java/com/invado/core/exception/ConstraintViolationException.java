@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ConstraintViolationException extends ApplicationException {
 
-    private String[] constraint;
+    private String[] constraint ;
 
     public ConstraintViolationException(String msg) {
         super(msg);
@@ -33,4 +33,23 @@ public class ConstraintViolationException extends ApplicationException {
         return constraint;
     }
 
+    @Override
+    public String getLocalizedMessage() {
+        return getMessage();
+    }
+
+    @Override
+    public String getMessage() {
+        String result = (super.getMessage() != null && super.getMessage().length() > 0)
+                ? super.getMessage() + "." : "";
+        if(constraint == null) {
+            return result;
+        }
+        for (String violation : constraint) {
+            if (violation.length() > 0) {
+                result += String.format(" %s.", violation);
+            }
+        }
+        return result;
+    }
 }

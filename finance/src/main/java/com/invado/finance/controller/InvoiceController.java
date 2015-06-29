@@ -79,7 +79,8 @@ public class InvoiceController {
     public String delete(
             @PathVariable Integer clientId,
             @PathVariable Integer unitId,
-            @PathVariable String document)
+            @PathVariable String document,
+            Map<String, Object> model)
             throws Exception {
         invoiceService.deleteInvoice(clientId, unitId, document);
         return "redirect:/invoice/{page}";
@@ -88,7 +89,6 @@ public class InvoiceController {
     @RequestMapping(value = "/invoice/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
         model.put("invoice", new InvoiceDTO());
-        model.put("action", "create");
         model.put("partnerTypes", InvoiceBusinessPartner.values());
         model.put("invoiceTypes", InvoiceType.values());
         return "invoice-create-grid";
@@ -107,12 +107,18 @@ public class InvoiceController {
         invoice.setUsername(username);
         invoice.setPassword(username.toCharArray());
         if (result.hasErrors()) {
-            model.put("action", "create");
             model.put("partnerTypes", InvoiceBusinessPartner.values());
             model.put("invoiceTypes", InvoiceType.values());
             return "invoice-create-grid";
         }
-        invoiceService.createInvoice(invoice);
+        try {
+            invoiceService.createInvoice(invoice);
+        } catch (Exception e) {
+            model.put("exception", e);
+            model.put("partnerTypes", InvoiceBusinessPartner.values());
+            model.put("invoiceTypes", InvoiceType.values());
+            return "invoice-create-grid";
+        }
         return String.format("redirect:/invoice/{page}/%d/%d/%s/update.html",
                 invoice.getClientId(),
                 invoice.getOrgUnitId(),
@@ -128,25 +134,16 @@ public class InvoiceController {
             Map<String, Object> model)
             throws Exception {
         InvoiceDTO tmp = invoiceService.readInvoice(clientId, unitId, document);
-        InvoiceItemDTO itemDTO = new InvoiceItemDTO();
-        itemDTO.setClientId(clientId);
-        itemDTO.setUnitId(unitId);
-        itemDTO.setInvoiceDocument(document);                
-        itemDTO.setInvoiceVersion(tmp.getVersion());                
-        model.put("invoiceItem", itemDTO);
-        model.put("invoice",tmp);
-        model.put("items", invoiceService.readInvoiceItems(clientId, unitId, document));
-        model.put("action", "update");
-        model.put("partnerTypes", InvoiceBusinessPartner.values());
-        model.put("invoiceTypes", InvoiceType.values());
-        return "invoice-update-master-detail";
+        return initUpdateForm(page, tmp, null, model);
     }
 
-    @RequestMapping(value = "/invoice/{page}/{clientId}/{unitId}/{document}/update.html", 
+    @RequestMapping(value = "/invoice/{page}/{clientId}/{unitId}/{document}/update.html",
             method = RequestMethod.POST)
-    public String processUpdateForm(@ModelAttribute("invoice") InvoiceDTO invoice,
+    public String processUpdateForm(
+            @ModelAttribute("invoice") InvoiceDTO invoice,
             BindingResult result,
             SessionStatus status,
+            @PathVariable String page,
             Map<String, Object> model) throws Exception {
         if (invoice.getCurrencyISOCode() == null || invoice.getCurrencyISOCode().isEmpty()) {
             invoice.setIsDomesticCurrency(Boolean.TRUE);
@@ -156,24 +153,52 @@ public class InvoiceController {
         invoice.setUsername(username);
         invoice.setPassword(username.toCharArray());
         if (result.hasErrors()) {
-            model.put("action", "update");
-            model.put("partnerTypes", InvoiceBusinessPartner.values());
-            model.put("invoiceTypes", InvoiceType.values());
-            return "invoice-update-master-detail";
+            return initUpdateForm(page, 
+                    invoice, 
+                    null,
+                    model);
         }
-        invoiceService.updateInvoice(invoice);
+        try{
+            invoiceService.updateInvoice(invoice);
+        } catch(Exception ex) {
+            return initUpdateForm(page, 
+                    invoice, 
+                    ex,
+                    model);
+        }
         return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
     }
-
+    
+    private String initUpdateForm(String page,
+            InvoiceDTO dto,
+            Exception ex,
+            Map<String, Object> model)
+            throws Exception {
+        InvoiceItemDTO itemDTO = new InvoiceItemDTO();
+        itemDTO.setClientId(dto.getClientId());
+        itemDTO.setUnitId(dto.getOrgUnitId());
+        itemDTO.setInvoiceDocument(dto.getDocument());
+        itemDTO.setInvoiceVersion(dto.getVersion());
+        model.put("page", page);
+        model.put("invoiceItem", itemDTO);
+        model.put("invoice", dto);
+        model.put("items", invoiceService.readInvoiceItems(
+                dto.getClientId(), 
+                dto.getOrgUnitId(), 
+                dto.getDocument()));
+        model.put("partnerTypes", InvoiceBusinessPartner.values());
+        model.put("invoiceTypes", InvoiceType.values());
+        model.put("exception", ex);
+        return "invoice-update-master-detail";
+    }
+    
     @RequestMapping(value = "/invoice/read-client/{name}")
-    public @ResponseBody
-    List<Client> findClientByName(@PathVariable String name) {
+    public @ResponseBody List<Client> findClientByName(@PathVariable String name) {
         return masterDataservice.readClientByName(name);
     }
 
     @RequestMapping(value = "/invoice/read-orgunit/{name}")
-    public @ResponseBody
-    List<OrgUnit> findOrganizationalUnitByName(@PathVariable String name) {
+    public @ResponseBody List<OrgUnit> findOrganizationalUnitByName(@PathVariable String name) {
         return masterDataservice.readOrgUnitByName(name);
     }
 
@@ -191,7 +216,7 @@ public class InvoiceController {
     public @ResponseBody List<Currency> findCurrencyByISO(@PathVariable String iso) {
         return masterDataservice.readCurrencyByISO(iso);
     }
-    
+
     @RequestMapping(value = "/invoice/read-item/{desc}")
     public @ResponseBody List<Article> findItemByDescription(@PathVariable String desc) {
         return masterDataservice.readItemByDescription(desc);
@@ -214,41 +239,58 @@ public class InvoiceController {
                 version);
         return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
     }
+
     @RequestMapping(value = "/invoice/{page}/{clientId}/{unitId}/{document}/addItem.html",
             method = RequestMethod.POST)
     public String addItem(
+            //nemam pojma zasto invoice parametar moram da stavim
             @ModelAttribute("invoice") InvoiceDTO invoice,
             @ModelAttribute("invoiceItem") InvoiceItemDTO item,
             BindingResult result,
             SessionStatus status,
+            @PathVariable String page,
             Map<String, Object> model) throws Exception {
-        if (result.hasErrors()) {
-            model.put("invoice", invoice);
-            model.put("action", "update");
+        invoice.setOrgUnitId(item.getUnitId());
+         if (result.hasErrors()) {
+            model.put("showDialog", Boolean.TRUE);
+            model.put("invoiceItem", item);
+            model.put("page", page);
+            model.put("invoice", invoiceService.readInvoice(
+                    item.getClientId(), 
+                    item.getUnitId(), 
+                    item.getInvoiceDocument())
+            );
+            model.put("items", invoiceService.readInvoiceItems(
+                    item.getClientId(), 
+                    item.getUnitId(), 
+                    item.getInvoiceDocument()));
             model.put("partnerTypes", InvoiceBusinessPartner.values());
             model.put("invoiceTypes", InvoiceType.values());
             return "invoice-update-master-detail";
         }
-        item.setPassword(username.toCharArray());
-        item.setUsername(username);
-        invoiceService.addItem(item);
-        return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
-    }
-
-    public String updateItem(@ModelAttribute("item") InvoiceItemDTO item,
-            BindingResult result,
-            SessionStatus status,
-            Map<String, Object> model) throws Exception {
-        if (result.hasErrors()) {
-            model.put("action", "update");
+        try {
+            item.setPassword(username.toCharArray());
+            item.setUsername(username);
+            invoiceService.addItem(item);
+            return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
+        } catch(Exception ex) {
+            model.put("showDialog", Boolean.TRUE);
+            model.put("itemException", ex);
+            model.put("invoiceItem", item);
+            model.put("page", page);
+            model.put("invoice", invoiceService.readInvoice(
+                    item.getClientId(), 
+                    item.getUnitId(), 
+                    item.getInvoiceDocument())
+            );
+            model.put("items", invoiceService.readInvoiceItems(
+                    item.getClientId(), 
+                    item.getUnitId(), 
+                    item.getInvoiceDocument()));
             model.put("partnerTypes", InvoiceBusinessPartner.values());
             model.put("invoiceTypes", InvoiceType.values());
             return "invoice-update-master-detail";
         }
-        item.setPassword(username.toCharArray());
-        item.setUsername(username);
-        invoiceService.updateItem(item);
-        return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
     }
 
     @RequestMapping(value = "/invoice/{clientId}/{unitId}/{document}/print-preview.html")

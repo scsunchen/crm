@@ -107,7 +107,7 @@ public class ArticleService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Article update(Article dto) throws ConstraintViolationException,
+    public Article update(Article dto) throws com.invado.core.exception.ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateArticlePermission
@@ -137,15 +137,16 @@ public class ArticleService {
                     .setParameter(1, username)
                     .getSingleResult();
             dto.setLastUpdateBy(user);
-            List<String> msgs = validator.validate(item).stream()
+            List<String> msgs = validator.validate(dto).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new ConstraintViolationException("", msgs);
+                throw new com.invado.core.exception.ConstraintViolationException("", msgs);
             }
             dao.merge(dto);
             return item;
-        } catch (ConstraintViolationException | EntityNotFoundException ex) {
+        } catch (com.invado.core.exception.ConstraintViolationException 
+                | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException

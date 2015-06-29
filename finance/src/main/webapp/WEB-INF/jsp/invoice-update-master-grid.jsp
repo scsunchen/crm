@@ -14,38 +14,41 @@
 <form:form modelAttribute="invoice" method="post"
            action="${pageContext.request.contextPath}/invoice/${page}/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/update.html">
     <div class="col-lg-6" >
-        <div class="form-group " >
+        <div class="form-group">
             <label for="client"><spring:message code="Invoice.Label.Client" /></label>
-            <form:input id="client" class="form-control" type="text" 
+            <form:input id="client" class="form-control" 
                         path="clientDesc" 
                         style="margin-bottom: 15px;" 
-                        disabled="true"/>
+                        readonly="true"/>
             <form:input id="client-hidden" type="hidden" path="clientId"/>
         </div>
         <div class="form-group" >
             <label for="orgUnit" ><spring:message code="Invoice.Label.OrgUnit" /></label>
             <form:input id="orgUnit" class="form-control" type="text" 
                         path="orgUnitDesc" style="margin-bottom: 15px;" 
-                        disabled="true"/>
-            <form:input id="orgUnit-hidden" type="hidden" path="orgUnitId"/>
+                        readonly="true"/>
+            <form:input id="orgUnit-hidden" type="hidden" path="orgUnitId" />
         </div>
-        <i:textField label="Invoice.Label.Document" name="document" disabled="true"/>
+        <div class="form-group" >
+            <label for="document"  ><spring:message code="Invoice.Label.Document" /></label>
+            <form:input id="document" class="form-control" path="document" readonly="true"/>
+        </div>
         <div class="form-group" >
             <label for="businessPartner"><spring:message code="Invoice.Label.Partner" /></label>
             <form:input id="businessPartner" class="typeahead form-control" 
-                        type="text" path="partnerName" style="margin-bottom: 15px;"/>
+                        type="text" path="partnerName" />
             <form:input id="businessPartner-hidden" type="hidden" 
                         path="partnerID"/>
         </div>
         <div class="form-group ">
-            <label for="bank"><spring:message code="Invoice.Label.Bank" /></label>
+            <label for="bank" style="margin-top: 15px;"><spring:message code="Invoice.Label.Bank" /></label>
             <form:input id="bank" class="typeahead form-control" 
-                        type="text" path="bankName" style="margin-bottom: 15px;"/>
+                        type="text" path="bankName" />
             <form:input id="bank-hidden" type="hidden" path="bankID"/>
         </div>
         <div class="form-group row">
             <div class="col-lg-6">
-                <label for="currency"><spring:message code="Invoice.Label.Currency" /></label>
+                <label for="currency" style="margin-top: 15px;"><spring:message code="Invoice.Label.Currency" /></label>
                 <form:input id="currency" class="typeahead form-control" 
                             type="text" path="currencyISOCode" />
             </div>

@@ -14,7 +14,7 @@
         <module>core-module-spi</module>
         <module>finance</module>
         <module>master-data-management</module>
-        <module>customer-relationship-management</module>
+        <!--<module>customer-relationship-management</module>-->
         <module>admin</module>
     </modules>
     <properties>
