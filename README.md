@@ -23,6 +23,3 @@ Ako je korisnik uneo pogresne podatke metoda
  baca com.invado.core.exception.ConstraintViolationException izuzetak sa nizom 
 poruka koje bi trebalo obraditi u korisnickom interfejsu tako da korisnik vidi 
 ekransku formu sa pogresno unetim podacima i poruku sta bi trebalo da promeni. 
-
-###Autentikacija u autorizacija
-

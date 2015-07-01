@@ -27,9 +27,7 @@
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <bean id="viewResolverTiles" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass">
-            <value>
-                org.springframework.web.servlet.view.tiles3.TilesView
-            </value>
+            <value>org.springframework.web.servlet.view.tiles3.TilesView</value>
         </property>
     </bean>
     <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean" />

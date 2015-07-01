@@ -5,6 +5,7 @@
  */
 package com.invado.finance.controller;
 
+import com.invado.core.domain.ApplicationUser;
 import com.invado.core.domain.Article;
 import com.invado.finance.domain.UnitOfMeasure;
 import com.invado.core.domain.VatPercent;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
 import javax.inject.Inject;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -31,11 +34,6 @@ public class ItemController {
 
     @Inject
     private ArticleService service;
-
-    @RequestMapping("/home")
-    public String showHomePage() {
-        return "home";
-    }
 
     @RequestMapping("/item/{page}")
     public String showItems(@PathVariable Integer page,
@@ -83,6 +81,9 @@ public class ItemController {
         } 
         try {
             item.setUserDefinedUnitOfMeasure(Boolean.FALSE);
+            User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String name = user.getUsername(); //get logged in username
+            item.setLastUpdateBy(new ApplicationUser(name, null));
             this.service.create(item);
             status.setComplete();
         } catch (Exception ex) {
@@ -127,8 +128,11 @@ public class ItemController {
             model.put("page", page);
             return "item-grid";
         } 
-        try {
+        try {             
             item.setUserDefinedUnitOfMeasure(Boolean.FALSE);
+            User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String name = user.getUsername(); //get logged in username
+            item.setLastUpdateBy(new ApplicationUser(name, null));
             this.service.update(item);
             status.setComplete();            
         } catch(Exception ex) {

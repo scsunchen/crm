@@ -41,11 +41,10 @@ import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ *  
  * @author root
  */
 @Service
@@ -59,7 +58,6 @@ public class ArticleService {
 
     @Autowired
     private Validator validator;
-    private final String username = "a";
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -85,7 +83,7 @@ public class ArticleService {
             ApplicationUser user = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
-                    .setParameter(1, username)
+                    .setParameter(1, a.getLastUpdateBy().getUsername())
                     .getSingleResult();
             a.setLastUpdateBy(user);
             List<String> msgs = validator.validate(a).stream()
@@ -134,7 +132,7 @@ public class ArticleService {
             ApplicationUser user = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
-                    .setParameter(1, username)
+                    .setParameter(1, dto.getLastUpdateBy().getUsername())
                     .getSingleResult();
             dto.setLastUpdateBy(user);
             List<String> msgs = validator.validate(dto).stream()

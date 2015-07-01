@@ -75,7 +75,6 @@ public class InvoiceService {
     private EntityManager dao;   
     @Autowired
     private Validator validator;
-    private final String username = "a";
 
     @Transactional(rollbackFor = Exception.class)
     public void createInvoice(InvoiceDTO dto) throws ConstraintViolationException,
@@ -131,10 +130,9 @@ public class InvoiceService {
                 }
             }
             List<ApplicationUser> userList = dao.createNamedQuery(
-                    ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
+                    ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
                     .setParameter(1, dto.getUsername())
-                    .setParameter(2, dto.getPassword())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new ReferentialIntegrityException(
@@ -333,7 +331,7 @@ public class InvoiceService {
             ApplicationUser user = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME, 
                     ApplicationUser.class)
-                    .setParameter(1, username)
+                    .setParameter(1, dto.getUsername())
                     .getSingleResult();
             Currency currency = null;
             if (dto.getIsDomesticCurrency()) {
@@ -463,7 +461,6 @@ public class InvoiceService {
             String document,
             Integer ordinal,
             String username,
-            char[] pass,
             Long version) 
             throws ConstraintViolationException,
             EntityNotFoundException,
@@ -499,10 +496,9 @@ public class InvoiceService {
                         "Invoice.IllegalArgumentException.DeleteItemRecorded"));
             }
             List<ApplicationUser> userList = dao.createNamedQuery(
-                    ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
+                    ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
                     .setParameter(1, username)
-                    .setParameter(2, pass)
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new ReferentialIntegrityException(
@@ -585,10 +581,9 @@ public class InvoiceService {
                         "Invoice.IllegalArgumentException.UpdateItemRecorded"));
             }
             List<ApplicationUser> userList = dao.createNamedQuery(
-                    ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
+                    ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
                     .setParameter(1, dto.getUsername())
-                    .setParameter(2, dto.getPassword())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new ReferentialIntegrityException(
@@ -713,10 +708,9 @@ public class InvoiceService {
                         Utils.getMessage("Invoice.IllegalArgumentException.AddItemRecorded"));
             }
             List<ApplicationUser> userList = dao.createNamedQuery(
-                    ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
+                    ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
                     .setParameter(1, dto.getUsername())
-                    .setParameter(2, dto.getPassword())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new ReferentialIntegrityException(
@@ -807,7 +801,7 @@ public class InvoiceService {
             }
             if(invoice.getVersion().compareTo(dto.getInvoiceVersion()) != 0) {
                 throw new OptimisticLockException();
-            };
+            }
             return invoice.getVersion();
         } catch (ConstraintViolationException | ReferentialIntegrityException ex) {
             throw ex;

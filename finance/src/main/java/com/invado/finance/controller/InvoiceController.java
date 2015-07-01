@@ -40,6 +40,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -60,7 +62,7 @@ public class InvoiceController {
     private InvoiceService invoiceService;
     @Inject
     private MasterDataService masterDataservice;
-    private final String username = "a";
+    
 
     @RequestMapping("/invoice/{page}")
     public String showInvoices(@PathVariable Integer page,
@@ -104,6 +106,8 @@ public class InvoiceController {
         } else {
             invoice.setIsDomesticCurrency(Boolean.FALSE);
         }
+        String username = ((User)SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal()).getUsername();
         invoice.setUsername(username);
         invoice.setPassword(username.toCharArray());
         if (result.hasErrors()) {
@@ -150,8 +154,9 @@ public class InvoiceController {
         } else {
             invoice.setIsDomesticCurrency(Boolean.FALSE);
         }
+        String username = ((User)SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal()).getUsername();
         invoice.setUsername(username);
-        invoice.setPassword(username.toCharArray());
         if (result.hasErrors()) {
             return initUpdateForm(page, 
                     invoice, 
@@ -230,12 +235,13 @@ public class InvoiceController {
             @PathVariable Integer ordinal,
             @PathVariable Long version)
             throws Exception {
+        String username = ((User)SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal()).getUsername();
         invoiceService.removeItem(clientId,
                 unitId,
                 document,
                 ordinal,
                 username,
-                username.toCharArray(),
                 version);
         return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
     }
@@ -269,7 +275,8 @@ public class InvoiceController {
             return "invoice-update-master-detail";
         }
         try {
-            item.setPassword(username.toCharArray());
+            String username = ((User)SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal()).getUsername();
             item.setUsername(username);
             invoiceService.addItem(item);
             return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
