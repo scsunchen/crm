@@ -6,8 +6,6 @@ package com.invado.finance.service.dto;
 
 import java.math.BigDecimal;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -29,5 +27,4 @@ public class JournalEntryDTO {
     public Long numberOfItems;
     public Long version;
     public Boolean isPosted;
-    public List<JournalEntryItemDTO> items = new ArrayList<>();
 }

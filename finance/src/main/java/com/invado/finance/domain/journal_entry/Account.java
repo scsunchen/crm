@@ -130,20 +130,20 @@ public class Account implements Serializable {
 
     public AccountDTO getDTO() {
         AccountDTO dto = new AccountDTO();
-        dto.number = this.number;
-        dto.name = this.description;
-        dto.determination = this.determination.ordinal();// pripadnost mora biti != null
-        dto.type = this.type.ordinal();// vrsta mora biti != null
-        dto.version = version;
+        dto.setNumber(number);
+        dto.setName(description);
+        dto.setDetermination(determination);
+        dto.setType(type);
+        dto.setVersion(version);
         return dto;
     }
 
     public void set(AccountDTO dto) {
-        number = dto.number;
-        description = dto.name;
-        determination = Determination.values()[dto.determination];
-        type = Type.values()[dto.type];
-        version = dto.version;
+        number = dto.getNumber();
+        description = dto.getName();
+        determination = dto.getDetermination();
+        type = dto.getType();
+        version = dto.getVersion();
     }
 
     @Override

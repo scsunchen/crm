@@ -5,6 +5,7 @@
 package com.invado.finance.domain.journal_entry;
 
 
+import com.invado.core.domain.Client;
 import com.invado.core.domain.LocalDateConverter;
 import com.invado.finance.service.dto.JournalEntryDTO;
 import com.invado.finance.service.dto.JournalEntryReportDTO;
@@ -41,14 +42,26 @@ public class JournalEntry implements Serializable {
     public static final String READ_BY_TYPE =
             "JournalEntry.ReadByType";
     @Id
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    @ManyToOne
+    @NotNull(message = "{Invoice.Client.NotNull}")
+    private Client client;
+    @Id
+    @Column(name = "journal_entry_type_id")
+    @NotNull(message = "{Invoice.Type.NotNull}")
+    private Integer typeId;
+    //Bug : https://hibernate.atlassian.net/browse/HHH-8333
+    //AssertionFailure: Unexpected nested component on the referenced entity when mapping a @MapsId
+    //    @NotNull(message = "{Invoice.OrgUnit.NotNull}")
     @ManyToOne
     @JoinColumns({
         @JoinColumn(name = "journal_entry_type_id",
-                referencedColumnName = "type_id"),
+                referencedColumnName = "type_id", 
+                insertable = false, updatable = false),
         @JoinColumn(name = "company_id",
-                referencedColumnName = "company_id")
+                referencedColumnName = "company_id", 
+                insertable = false, updatable = false)
     })
-    @NotNull(message = "{JournalEntry.Type.NotNull}")
     private JournalEntryType type;
     @Id
     @Column(name = "number")
@@ -56,7 +69,6 @@ public class JournalEntry implements Serializable {
     @DecimalMin(value = "1", message = "{JournalEntry.Number.Min}")
     //proverava se u SO da li je veci od broja u tipu naloga 
     private Integer number;
-    @Temporal(TemporalType.DATE)
     @Column(name = "record_date")
     @NotNull(message = "{JournalEntry.Date.NotNull}")
     //u so proverava da li je u tekucoj godini poslovanja(Podesavanja.godina)
@@ -85,11 +97,15 @@ public class JournalEntry implements Serializable {
     }
 
     public JournalEntry(Integer companyID, Integer typeID, Integer number) {
+        this.client = new Client(companyID);
+        this.typeId = typeID;
         this.type = new JournalEntryType(companyID, typeID);
         this.number = number;
     }
 
     public JournalEntry(JournalEntryType type, Integer number) {
+        this.client = type.getClient();
+        this.typeId = type.getId();
         this.type = type;
         this.number = number;
     }
@@ -138,10 +154,6 @@ public class JournalEntry implements Serializable {
         return type;
     }
 
-    public void setType(JournalEntryType type) {
-        this.type = type;
-    }
-
     public Long getVersion() {
         return version;
     }
@@ -167,11 +179,11 @@ public class JournalEntry implements Serializable {
     }
 
     public Integer getClientID() {
-        return type.getClientID();
+        return client.getId();
     }
 
     public Integer getTypeId() {
-        return type.getId();
+        return typeId;
     }
 
     public JournalEntryDTO getReadAllDTO() {
@@ -266,9 +278,17 @@ public class JournalEntry implements Serializable {
                 break;
         }
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="Object methods implementation">
     @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.client);
+        hash = 29 * hash + Objects.hashCode(this.typeId);
+        return hash;
+    }
+
+    @Override    
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -277,26 +297,18 @@ public class JournalEntry implements Serializable {
             return false;
         }
         final JournalEntry other = (JournalEntry) obj;
-        if (this.type != other.type && (this.type == null || !this.type.equals(other.type))) {
+        if (!Objects.equals(this.client, other.client)) {
             return false;
         }
-        if (this.number != other.number && (this.number == null || !this.number.equals(other.number))) {
+        if (!Objects.equals(this.typeId, other.typeId)) {
             return false;
         }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 43 * hash + (this.type != null ? this.type.hashCode() : 0);
-        hash = 43 * hash + (this.number != null ? this.number.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
     public String toString() {
-        return "JournalEntry{" + "type=" + type + ", number=" + number + '}';
+        return "JournalEntry{" + "client=" + client + ", typeId=" + typeId + '}';
     }
     // </editor-fold>
 }

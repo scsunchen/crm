@@ -96,7 +96,6 @@ public class JournalEntryItem implements Serializable, Comparable {
     })
     private OrgUnit orgUnit;
     @NotNull(message = "{JournalEntryItem.DebitCreditRelationDate.NotNull}")
-    @Temporal(TemporalType.DATE)
     @Column(name = "credit_relation_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate creditDebitRelationDate;
@@ -121,7 +120,6 @@ public class JournalEntryItem implements Serializable, Comparable {
     @Column(name = "internal_document")
     private String internalDocument;//15
     @NotNull(message = "{JournalEntryItem.ValueDate.NotNull}")
-    @Temporal(TemporalType.DATE)
     @Column(name = "value_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate valueDate;//greater than datumDPO

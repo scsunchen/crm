@@ -75,16 +75,16 @@ public class Description implements Serializable {
     
     public DescDTO getDTO() {
         DescDTO dto = new DescDTO();
-        dto.id = id;
-        dto.name = name;
-        dto.version = version;
+        dto.setId(id);
+        dto.setName(name);
+        dto.setVersion(version); 
         return dto;
     }
 
     public void set(DescDTO dto) {
-        id = dto.id;
-        name = dto.name;
-        version = dto.version;
+        id = dto.getId();
+        name = dto.getName();
+        version = dto.getVersion();
     }
 
     void setJournalEntryItemDTO(JournalEntryItemDTO rezultat) {

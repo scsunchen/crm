@@ -29,7 +29,7 @@ public class JournalEntryItemPK implements java.io.Serializable {
     }
 
     public Integer getJournalEntryTypeId() {
-        return journalEntry.getTypeID();
+        return journalEntry.getTypeId();
     }
 
     public Integer getOrdinalNumber() {
@@ -37,7 +37,7 @@ public class JournalEntryItemPK implements java.io.Serializable {
     }
 
     public Integer getClient() {
-        return journalEntry.getCompanyID();
+        return journalEntry.getClient();
     }
 
     public JournalEntryPK getJournalEntry() {

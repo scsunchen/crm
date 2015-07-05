@@ -14,11 +14,22 @@
     <class>com.invado.core.domain.Currency</class>
     <class>com.invado.core.domain.ExchangeRate</class>
     <class>com.invado.core.domain.BankCreditor</class>
+    <class>com.invado.core.domain.Article</class>
     <!--    <class>com.invado.core.domain.Employee</class>
     <class>com.invado.core.domain.Job</class>-->
     <class>com.invado.finance.domain.Invoice</class>
     <class>com.invado.finance.domain.InvoiceItem</class>
-    <class>com.invado.core.domain.Article</class>
     <class>com.invado.finance.domain.Properties</class>
+    <class>com.invado.finance.domain.journal_entry.Account</class>
+    <class>com.invado.finance.domain.journal_entry.Analytical</class>
+    <class>com.invado.finance.domain.journal_entry.Description</class>
+    <class>com.invado.finance.domain.journal_entry.GeneralLedger</class>
+    <class>com.invado.finance.domain.journal_entry.JournalEntryType</class>
+    <class>com.invado.finance.domain.journal_entry.JournalEntry</class>
+    <class>com.invado.finance.domain.journal_entry.JournalEntryItem</class>
+    <class>com.invado.finance.domain.journal_entry.PartnerSpecification</class>
+    <class>com.invado.finance.domain.journal_entry.TrialBalance</class>
+    <class>com.invado.finance.domain.journal_entry.TrialBalanceCompany</class>
+    <class>com.invado.finance.domain.journal_entry.TrialBalanceOrgUnit</class>
   </persistence-unit>
 </persistence>

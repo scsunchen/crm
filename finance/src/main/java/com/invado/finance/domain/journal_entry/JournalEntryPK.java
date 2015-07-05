@@ -5,6 +5,7 @@
 package com.invado.finance.domain.journal_entry;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -12,7 +13,8 @@ import java.io.Serializable;
  */
 public class JournalEntryPK implements Serializable {
 
-    private JournalEntryTypePK type;
+    private Integer client;
+    private Integer typeId;
     private Integer number;
 
     public JournalEntryPK() {
@@ -21,7 +23,8 @@ public class JournalEntryPK implements Serializable {
     public JournalEntryPK(Integer clientID,
             Integer typeID,
             Integer number) {
-        this.type = new JournalEntryTypePK(typeID, clientID);
+        this.client = clientID;
+        this.typeId = typeID;
         this.number = number;
     }
 
@@ -29,16 +32,29 @@ public class JournalEntryPK implements Serializable {
         return number;
     }
 
-    public JournalEntryTypePK getType() {
-        return type;
+    public Integer getClient() {
+        return client;
     }
 
-    public Integer getTypeID() {
-        return type.getId();
+    public void setClient(Integer client) {
+        this.client = client;
     }
 
-    public Integer getCompanyID() {
-        return type.getClient();
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.client);
+        hash = 43 * hash + Objects.hashCode(this.typeId);
+        hash = 43 * hash + Objects.hashCode(this.number);
+        return hash;
     }
 
     @Override
@@ -50,27 +66,20 @@ public class JournalEntryPK implements Serializable {
             return false;
         }
         final JournalEntryPK other = (JournalEntryPK) obj;
-        if (this.type != other.type && (this.type == null || !this.type.equals(other.type))) {
+        if (!Objects.equals(this.client, other.client)) {
             return false;
         }
-        if (this.number != other.number && (this.number == null || !this.number.equals(other.number))) {
+        if (!Objects.equals(this.typeId, other.typeId)) {
+            return false;
+        }
+        if (!Objects.equals(this.number, other.number)) {
             return false;
         }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + (this.type != null ? this.type.hashCode() : 0);
-        hash = 67 * hash + (this.number != null ? this.number.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
     public String toString() {
-        return "JournalEntryPK{" + "type=" + type + ", number=" + number + '}';
+        return "JournalEntryPK{" + "client=" + client + ", typeId=" + typeId + ", number=" + number + '}';
     }
-
-    
 }

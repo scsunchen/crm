@@ -149,21 +149,21 @@ public class JournalEntryType implements Serializable {
 
     public JournalEntryTypeDTO getDTO() {
         JournalEntryTypeDTO dto = new JournalEntryTypeDTO();
-        dto.typeId = id;
-        dto.journalEntryNumber = number;
-        dto.name = name;
-        dto.clientId = client.getId();
-        dto.clientName = client.getName();
-        dto.version = version;
+        dto.setTypeId(id);
+        dto.setJournalEntryNumber(number);
+        dto.setName(name);
+        dto.setClientId(client.getId());
+        dto.setClientName(client.getName());
+        dto.setVersion(version); 
         return dto;
     }
 
     public void set(JournalEntryTypeDTO dto, Client p) {
-        this.id = dto.typeId;
-        this.name = dto.name;
-        this.number = dto.journalEntryNumber;
+        this.id = dto.getTypeId();
+        this.name = dto.getName();
+        this.number = dto.getJournalEntryNumber();
         this.client = p;
-        this.version = dto.version;
+        this.version = dto.getVersion();
     }
 
     //************************************************************************//    

@@ -5,10 +5,9 @@
  */
 package com.invado.finance;
 
-import com.invado.finance.service.InvoiceService;
-import com.invado.finance.service.dto.PageRequestDTO;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -21,16 +20,16 @@ public class Test {
      */
     public static void main(String[] args) throws Exception{
         // TODO code application logic here
-//        EntityManagerFactory factory = Persistence.createEntityManagerFactory("unit");
-//        EntityManager em = factory.createEntityManager();
-//        System.out.println(em.createQuery("Select x from InvoiceItem x").getResultList());
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("unit");
+        EntityManager em = factory.createEntityManager();
+        System.out.println(em.createQuery("Select x from InvoiceItem x").getResultList());
         
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-                "applicationContext.xml");
-        InvoiceService service = applicationContext.getBean(InvoiceService.class);
-        PageRequestDTO p = new PageRequestDTO();
-        p.setPage(1);
-        service.readPage(p);
+//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+//                "application-context.xml");
+//        InvoiceService service = applicationContext.getBean(InvoiceService.class);
+//        PageRequestDTO p = new PageRequestDTO();
+//        p.setPage(1);
+//        service.readPage(p);
 //        service.read("222");
 //        Article a  =new Article("233");
 //        a.setDescription("nerma");

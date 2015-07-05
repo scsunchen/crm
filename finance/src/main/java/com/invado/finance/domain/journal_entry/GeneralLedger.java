@@ -81,7 +81,6 @@ public class GeneralLedger implements Serializable {
     @Column(name = "ordinal")
     private Integer journalEntryItemOrdinalNumber;
     @NotNull(message = "{GeneralLedger.JournalEntryDate.NotNull}")
-    @Temporal(TemporalType.DATE)
     @Column(name = "journal_entry_record_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate recordDate;
@@ -95,7 +94,6 @@ public class GeneralLedger implements Serializable {
     @NotNull(message = "{GeneralLedger.OrgUnit.NotNull}")
     private OrgUnit orgUnit;
     @NotNull(message = "{GeneralLedger.CreditDebitRelationDate.NotNull}")
-    @Temporal(TemporalType.DATE)
     @Column(name = "credit_relation_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate creditDebitRelationDate;
@@ -113,7 +111,6 @@ public class GeneralLedger implements Serializable {
     @Column(name = "internal_document")
     private String internalDocument;
     @NotNull(message = "{GeneralLedger.ValueDate.NotNull}")
-    @Temporal(TemporalType.DATE)
     @Column(name = "value_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate valueDate;

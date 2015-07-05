@@ -98,7 +98,6 @@ public class Analytical implements Serializable {
     @DecimalMin(value = "1", message = "{Analytical.JournalEntryItemOrdinal.Min}")//>=1
     private Integer journalEntryItemOrdinalNumber;
     @NotNull(message = "{Analytical.JournalEntryDate.NotNull}")
-    @Temporal(TemporalType.DATE)
     @Column(name = "journal_entry_record_date")
     @Convert(converter = LocalDateConverter.class)
     //u so proverava da li je u tekucoj godini poslovanja(Podesavanja.godina)
@@ -111,7 +110,6 @@ public class Analytical implements Serializable {
     @NotNull(message = "{Analytical.OrgUnit.NotNull}")
     private OrgUnit orgUnit;
     @NotNull(message = "{Analytical.CreditDebitRelationDate.NotNull}")
-    @Temporal(TemporalType.DATE)
     @Column(name = "credit_relation_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate creditDebitRelationDate;
@@ -138,7 +136,6 @@ public class Analytical implements Serializable {
     @Size(max = 35, message = "{Analytical.InterDocument.Size}")
     private String internalDocument;
     @NotNull(message = "{Analytical.ValueDate.NotNull}")
-    @Temporal(TemporalType.DATE)
     @Column(name = "value_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate valueDate;
