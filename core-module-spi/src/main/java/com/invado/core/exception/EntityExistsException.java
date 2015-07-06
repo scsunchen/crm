@@ -3,14 +3,14 @@
  * and open the template in the editor.
  */
 
-package com.invado.finance.service.exception;
+package com.invado.core.exception;
 
 /**
  *
  * @author bdragan
  */
-public class OrgUnitNotExistsEx  extends ApplicationException {
-  public OrgUnitNotExistsEx(String msg) {
+public class EntityExistsException  extends ApplicationException {
+  public EntityExistsException(String msg) {
     super(msg);
   }
 }

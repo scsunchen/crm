@@ -51,7 +51,7 @@
                                 <li><a href="/${module.path}">${module.name}</a></li>
                                 </c:if>
                             </c:forEach>
-                        <li><a href="#">Odjavi se</a></li>
+                        <li><a href="<c:url value="/j_spring_security_logout" />">Odjavi se</a></li>
                     </ul>
                 </div>
             </div>

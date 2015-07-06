@@ -6,7 +6,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test = "${exception != null}">
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        ${exception.message}
+    </div>
+</c:if>
 <a href="${pageContext.request.contextPath}/invoice/${page}/create" 
    class="btn btn-default" ><span class="glyphicon glyphicon-plus"></span><spring:message code="Invoice.Button.Create" /></a>
 <div class="modal fade" id="dialogDelete" tabindex="-1" role="dialog" >
@@ -29,9 +35,11 @@
     </div>
 </div>
 <button class="btn btn-default" data-toggle="modal" data-target="#dialogDelete">
-    <span class="glyphicon glyphicon-trash"></span><spring:message code="Invoice.Button.Delete" /></button>
+    <span class="glyphicon glyphicon-trash"></span> <spring:message code="Invoice.Button.Delete" /></button>
 <a href=
    "${pageContext.request.contextPath}/invoice/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/print-preview.html" 
    class="btn btn-default" 
    target="_blank">
-    <span class="glyphicon glyphicon-search"></span><spring:message code="Invoice.Button.PrintPreview" /></a>
+    <span class="glyphicon glyphicon-search"></span> <spring:message code="Invoice.Button.PrintPreview" /></a>
+<a href="${pageContext.request.contextPath}/invoice/${page}" class="btn btn-default" >
+    <span class="glyphicon glyphicon-backward"></span> <spring:message code="Invoice.Button.Back" /></a>

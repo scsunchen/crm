@@ -12,19 +12,16 @@ import com.invado.core.domain.Article_;
 import com.invado.finance.domain.InvoiceItem;
 import com.invado.finance.service.dto.PageRequestDTO;
 import com.invado.finance.service.dto.ReadRangeDTO;
-import com.invado.finance.service.exception.ConstraintViolationException;
-import com.invado.finance.service.exception.EntityExistsException;
-import com.invado.finance.service.exception.EntityNotFoundException;
-import com.invado.finance.service.exception.IllegalArgumentException;
-import com.invado.finance.service.exception.PageNotExistsException;
-import com.invado.finance.service.exception.ReferentialIntegrityException;
-import com.invado.finance.service.exception.SystemException;
+import com.invado.core.exception.ConstraintViolationException;
+import com.invado.core.exception.EntityExistsException;
+import com.invado.core.exception.EntityNotFoundException;
+import com.invado.core.exception.PageNotExistsException;
+import com.invado.core.exception.ReferentialIntegrityException;
+import com.invado.core.exception.SystemException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,11 +41,10 @@ import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ *  
  * @author root
  */
 @Service
@@ -62,19 +58,18 @@ public class ArticleService {
 
     @Autowired
     private Validator validator;
-    private final String username = "a";
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Article create(Article a) throws IllegalArgumentException,
+    public Article create(Article a) throws ConstraintViolationException,
             EntityExistsException {
         //check CreateArticlePermission
         if (a == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Article.IllegalArgumentEx"));
         }
         if (a.getCode() == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Article.IllegalArgumentEx.Code"));
         }
         try {
@@ -88,18 +83,18 @@ public class ArticleService {
             ApplicationUser user = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
-                    .setParameter(1, username)
+                    .setParameter(1, a.getLastUpdateBy().getUsername())
                     .getSingleResult();
             a.setLastUpdateBy(user);
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | EntityExistsException ex) {
+        } catch (ConstraintViolationException | EntityExistsException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -110,7 +105,7 @@ public class ArticleService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Article update(Article dto) throws ConstraintViolationException,
+    public Article update(Article dto) throws com.invado.core.exception.ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateArticlePermission
@@ -137,18 +132,19 @@ public class ArticleService {
             ApplicationUser user = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
-                    .setParameter(1, username)
+                    .setParameter(1, dto.getLastUpdateBy().getUsername())
                     .getSingleResult();
             dto.setLastUpdateBy(user);
-            List<String> msgs = validator.validate(item).stream()
+            List<String> msgs = validator.validate(dto).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new ConstraintViolationException("", msgs);
+                throw new com.invado.core.exception.ConstraintViolationException("", msgs);
             }
             dao.merge(dto);
             return item;
-        } catch (ConstraintViolationException | EntityNotFoundException ex) {
+        } catch (com.invado.core.exception.ConstraintViolationException 
+                | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -168,11 +164,11 @@ public class ArticleService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String code) throws IllegalArgumentException,
+    public void delete(String code) throws ConstraintViolationException,
             ReferentialIntegrityException {
         //TODO : check DeleteArticlePermission
         if (code == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Article.IllegalArgumentEx.Code")
             );
         }

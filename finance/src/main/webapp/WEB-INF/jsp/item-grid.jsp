@@ -10,7 +10,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="i" tagdir="/WEB-INF/tags" %>
-
+<c:if test = "${exception != null}">
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        ${exception.message}
+    </div>
+</c:if>
 <form:form modelAttribute="item" method="post">
     <c:choose>
         <c:when test="${action == 'create'}">
@@ -48,8 +53,8 @@
                 <label for="purchasePrice"><spring:message code="Article.Label.PurchasePrice"/></label>            
                 <form:input id="purchasePrice" path="purchasePrice" class="form-control" />
                 <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
+                </div>
             </div>
-        </div>
     </spring:bind>
     <spring:bind path="salePrice">
         <div class="form-group row" >
@@ -58,8 +63,8 @@
                 <form:input id="salePrice" path="salePrice" 
                             class="form-control" />
                 <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
+                </div>
             </div>
-        </div>
     </spring:bind>
     <spring:bind path="salePriceWithVAT" >
         <div class="form-group row" >
@@ -68,8 +73,8 @@
                 <form:input id="salePriceWithVAT" path="salePriceWithVAT" 
                             class="form-control" />
                 <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
+                </div>
             </div>
-        </div>
     </spring:bind>
     <form:hidden path="version" />    
     <div class="form-group">
@@ -83,5 +88,7 @@
                 </c:otherwise>
             </c:choose>
         </button>
+        <a href="${pageContext.request.contextPath}/item/${page}" class="btn btn-default" >
+            <span class="glyphicon glyphicon-backward"></span> <spring:message code="Article.Button.Back" /></a>
     </div>
 </form:form>

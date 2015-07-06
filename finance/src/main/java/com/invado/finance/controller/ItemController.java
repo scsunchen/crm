@@ -5,6 +5,7 @@
  */
 package com.invado.finance.controller;
 
+import com.invado.core.domain.ApplicationUser;
 import com.invado.core.domain.Article;
 import com.invado.finance.domain.UnitOfMeasure;
 import com.invado.core.domain.VatPercent;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Map;
 import javax.inject.Inject;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -31,11 +34,6 @@ public class ItemController {
 
     @Inject
     private ArticleService service;
-
-    @RequestMapping("/home")
-    public String showHomePage() {
-        return "home";
-    }
 
     @RequestMapping("/item/{page}")
     public String showItems(@PathVariable Integer page,
@@ -62,6 +60,7 @@ public class ItemController {
         model.put("action", "create");
         model.put("VATOptions", Arrays.asList(VatPercent.values()));
         model.put("unitOfMeasure", Arrays.asList(UnitOfMeasure.values()));
+        model.put("page", page);
         return "item-grid";
     }
 
@@ -70,24 +69,39 @@ public class ItemController {
             @ModelAttribute("item") Article item,
             BindingResult result,
             SessionStatus status,
+            @PathVariable String page,
             Map<String, Object> model)
             throws Exception {
         if (result.hasErrors()) {
             model.put("action", "create");
             model.put("VATOptions", Arrays.asList(VatPercent.values()));
             model.put("unitOfMeasure", Arrays.asList(UnitOfMeasure.values()));
+            model.put("page", page);
             return "item-grid";
-        } else {
+        } 
+        try {
             item.setUserDefinedUnitOfMeasure(Boolean.FALSE);
+            User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String name = user.getUsername(); //get logged in username
+            item.setLastUpdateBy(new ApplicationUser(name, null));
             this.service.create(item);
             status.setComplete();
+        } catch (Exception ex) {
+            model.put("action", "create");
+            model.put("exception", ex);
+            model.put("VATOptions", Arrays.asList(VatPercent.values()));
+            model.put("unitOfMeasure", Arrays.asList(UnitOfMeasure.values()));
+            model.put("page", page);
+            return "item-grid";
         }
         return "redirect:/item/{page}";
     }
 
     @RequestMapping(value = "/item/{page}/update/{code}",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String code,
+    public String initUpdateForm(
+            @PathVariable String code,
+            @PathVariable String page,
             Map<String, Object> model)
             throws Exception {
         Article item = service.read(code);
@@ -95,6 +109,7 @@ public class ItemController {
         model.put("action", "update");
         model.put("VATOptions", Arrays.asList(VatPercent.values()));
         model.put("unitOfMeasure", Arrays.asList(UnitOfMeasure.values()));
+        model.put("page", page);
         return "item-grid";
     }
 
@@ -104,16 +119,28 @@ public class ItemController {
             @ModelAttribute("item") Article item,
             BindingResult result,
             SessionStatus status,
+            @PathVariable String page,
             Map<String, Object> model)
             throws Exception {
         if (result.hasErrors()) {
             model.put("VATOptions", Arrays.asList(VatPercent.values()));
             model.put("unitOfMeasure", Arrays.asList(UnitOfMeasure.values()));
+            model.put("page", page);
             return "item-grid";
-        } else {
+        } 
+        try {             
             item.setUserDefinedUnitOfMeasure(Boolean.FALSE);
+            User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String name = user.getUsername(); //get logged in username
+            item.setLastUpdateBy(new ApplicationUser(name, null));
             this.service.update(item);
-            status.setComplete();
+            status.setComplete();            
+        } catch(Exception ex) {
+            model.put("exception", ex);
+            model.put("VATOptions", Arrays.asList(VatPercent.values()));
+            model.put("unitOfMeasure", Arrays.asList(UnitOfMeasure.values()));
+            model.put("page", page);
+            return "item-grid";
         }
         return "redirect:/item/{page}";
     }

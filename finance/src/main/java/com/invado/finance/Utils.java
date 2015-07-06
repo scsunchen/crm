@@ -8,6 +8,8 @@ import java.text.MessageFormat;
 import java.util.PropertyResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 
 /**
  *
@@ -38,4 +40,5 @@ public class Utils {
     public static String getMessage(String key, Object... args) {
         return MessageFormat.format(PROPERTY_BUNDLE.getString(key), args);
     }
+    
 }

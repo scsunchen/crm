@@ -15,7 +15,7 @@
 </fieldset>
 <br/>
 <br/>
-<!--<fieldset>
+<!--<fieldset> bootstrap bug : table mot responsive in fieldset!
     <legend class="control-label"></legend>-->
     <tiles:insertAttribute name="details-table" />
 <!--</fieldset>-->
