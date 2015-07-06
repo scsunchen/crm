@@ -58,16 +58,16 @@ public class JobController {
             this.service.create(item);
             status.setComplete();
         }
+        return "redirect:/job/{page}/create";
+    }
+
+    @RequestMapping("/job/{page}/{id}/delete.html")
+    public String delete(@PathVariable Integer id) throws Exception {
+        service.delete(id);
         return "redirect:/job/{page}";
     }
 
-    @RequestMapping("/job/{page}/{code}/delete.html")
-    public String delete(@PathVariable String code) throws Exception {
-        service.delete(code);
-        return "redirect:/job/{page}";
-    }
-
-    @RequestMapping(value = "/job/{page}/update/{code}",
+    @RequestMapping(value = "/job/{page}/update/{id}",
             method = RequestMethod.GET)
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
@@ -77,7 +77,7 @@ public class JobController {
         return "job-grid";
     }
 
-    @RequestMapping(value = "/job/{page}/update/{code}",
+    @RequestMapping(value = "/job/{page}/update/{id}",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") Job item,
                                       BindingResult result,

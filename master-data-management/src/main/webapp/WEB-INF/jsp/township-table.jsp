@@ -22,6 +22,7 @@
       <th></th>
       <th>Šifra</th>
       <th>Naziv</th>
+      <th>Poštanski broj</th>
     </tr>
     </thead>
     <tbody>
@@ -57,11 +58,13 @@
         </td>
         <td><c:out value="${item.code}"/></td>
         <td><c:out value="${item.name}"/></td>
+        <td><c:out value="${item.postCode}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>
     </c:forEach>
     </tbody>
   </table>
+
 </div>
 <nav>
   <ul class="pager pull-right">

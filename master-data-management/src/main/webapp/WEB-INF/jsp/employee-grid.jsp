@@ -14,33 +14,24 @@
 <form:form modelAttribute="item" method="post">
     <div class="form-group">
     <div class="col-lg-6">
-        <c:choose>
-            <c:when test="${action == 'create'}">
-                <input:inputField label="Šifra *" name="id" autofocus="true"/>
-            </c:when>
-            <c:otherwise>
-                <input:inputField label="Šifra" name="id" disabled="true"/>
-            </c:otherwise>
-        </c:choose>
         <input:inputField label="Ime *" name="name"/>
         <input:inputField label="Srednje ime" name="middleName"/>
-        <input:inputField label="Prezime" name="lastName"/>
-        <input:inputField label="Datum rođenja" name="dateOfBirth"/>
+        <input:inputField label="Prezime *" name="lastName"/>
+        <input:inputDate  label="Datum rođenja" name="dateOfBirth"/>
         <input:inputField label="Telefon" name="phone"/>
         <input:inputField label="Email" name="email"/>
         <input:inputField label="Fotografija" name="picture"/>
-        <input:inputField label="Datum rođenja" name="dateOfBirth"/>
         <spring:bind path="orgUnit.id">
             <div class="form-group">
-                <label for="orgunit">Opština</label>
+                <label for="orgunit">Organizaciona jedinica</label>
                 <form:select path="orgUnit" id="orgunit" class="form-control" itemLabel="orgUnit">
                     <form:option value="">&nbsp;</form:option>
                     <form:options items="${orgunits}" itemLabel="name" itemValue="id"/>
                 </form:select>
             </div>
         </spring:bind>
-        <input:inputField label="Datum zapošljenja" name="hireDate"/>
-        <input:inputField label="Datum odlaska" name="endDate"/>
+        <input:inputDate label="Datum zapošljenja" name="hireDate"/>
+        <input:inputDate label="Datum odlaska" name="endDate"/>
         <spring:bind path="job.id">
             <div class="form-group">
                 <label for="job">Radno mesto</label>

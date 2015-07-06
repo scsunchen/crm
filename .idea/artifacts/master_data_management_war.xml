@@ -3,6 +3,11 @@
     <output-path>$PROJECT_DIR$/master-data-management/target</output-path>
     <root id="archive" name="masterdata.war">
       <element id="artifact" artifact-name="master-data-management:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="application" name="ojdbc6" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

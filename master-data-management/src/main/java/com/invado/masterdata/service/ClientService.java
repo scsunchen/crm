@@ -1,12 +1,12 @@
 package com.invado.masterdata.service;
 
-import com.invado.core.domain.ApplicationSetup;
-import com.invado.core.domain.Client;
-import com.invado.core.domain.Client_;
+import com.invado.core.domain.*;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
+import com.invado.masterdata.service.exception.EntityExistsException;
+import com.invado.masterdata.service.exception.EntityNotFoundException;
 import com.invado.masterdata.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,14 +42,10 @@ public class ClientService {
     private Validator validator;
     private final String username = "a";
 
-    @Autowired
-    private TownshipService townshipService;
-    @Autowired
-    private BankCreditorService bankCreditorService;
 
     @Transactional(rollbackFor = Exception.class)
     public Client create(Client a) throws com.invado.masterdata.service.exception.IllegalArgumentException,
-            javax.persistence.EntityExistsException {
+            EntityExistsException {
         //check CreateClientPermission
 
         if (a == null) {
@@ -57,9 +53,9 @@ public class ClientService {
                     Utils.getMessage("Client.IllegalArgumentEx"));
         }
         try {
-            if (dao.find(Client.class, a.getId()) != null) {
-                throw new javax.persistence.EntityExistsException(
-                        Utils.getMessage("Client.EntityExistsEx", a.getId())
+            if (this.readAll(null, a.getCompanyIDNumber(), null, null).size() != 0) {
+                throw new EntityExistsException(
+                        Utils.getMessage("Client.DuplicateUniqueValue.CompanyIdNumber", a.getCompanyIDNumber())
                 );
             }
             List<String> msgs = validator.validate(a).stream()
@@ -68,12 +64,9 @@ public class ClientService {
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            a.setTownship(townshipService.read(a.getTownship().getCode()));
-            System.out.println("id baneke je "+a.getBankCreditor());
-            a.setBank(bankCreditorService.read(Integer.parseInt(a.getBankCreditor())));
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
+        } catch (IllegalArgumentException | EntityExistsException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -85,28 +78,29 @@ public class ClientService {
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public Client update(Client dto) throws ConstraintViolationException,
-            javax.persistence.EntityNotFoundException,
+            EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateClientPermission
         if (dto == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Client.IllegalArgumentEx"));
         }
-        if (dto.getCompanyIDNumber() == null || dto.getCompanyIDNumber().length() == 0) {
+        if (dto.getId() == null) {
             throw new ConstraintViolationException(
-                    Utils.getMessage("Client.IllegalArgumentEx.Code"));
+                    Utils.getMessage("Client.IllegalArgumentEx.Id"));
         }
         try {
             Client item = dao.find(Client.class,
-                    dto.getCompanyIDNumber(),
+                    dto.getId(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
-                throw new javax.persistence.EntityNotFoundException(
+                throw new EntityNotFoundException(
                         Utils.getMessage("Client.EntityNotFoundEx",
                                 dto.getCompanyIDNumber())
                 );
             }
             dao.lock(item, LockModeType.OPTIMISTIC);
+            item.setName(dto.getName());
             item.setCountry(dto.getCountry());
             item.setPlace(dto.getPlace());
             item.setTownship(dto.getTownship());
@@ -118,6 +112,9 @@ public class ClientService {
             item.setBank(dto.getBank());
             item.setStatus(dto.getStatus());
             item.setVersion(dto.getVersion());
+            item.setType(dto.getType());
+            item.setBank(dao.find(BankCreditor.class, Integer.valueOf(dto.getBankCreditor())));
+            item.setTownship(dao.find(Township.class, dto.getTownship().getCode()));
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -126,7 +123,7 @@ public class ClientService {
             }
             dao.flush();
             return item;
-        } catch (ConstraintViolationException | javax.persistence.EntityNotFoundException ex) {
+        } catch (ConstraintViolationException | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -146,16 +143,16 @@ public class ClientService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String companyIDNumber) throws IllegalArgumentException,
+    public void delete(Integer id) throws IllegalArgumentException,
             ReferentialIntegrityException {
         //TODO : check DeleteClientPermission
-        if (companyIDNumber == null) {
+        if (id == null) {
             throw new IllegalArgumentException(
-                    Utils.getMessage("Client.IllegalArgumentEx.Code")
+                    Utils.getMessage("Client.IllegalArgumentEx.Id")
             );
         }
         try {
-            Client service = dao.find(Client.class, companyIDNumber);
+            Client service = dao.find(Client.class, id);
             if (service != null) {
                 dao.remove(service);
                 dao.flush();
@@ -169,22 +166,22 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Client read(String companyIDNumber) throws javax.persistence.EntityNotFoundException {
+    public Client read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadClientPermission
-        if (companyIDNumber == null) {
-            throw new javax.persistence.EntityNotFoundException(
-                    Utils.getMessage("Client.IllegalArgumentEx.Code")
+        if (id == null) {
+            throw new EntityNotFoundException(
+                    Utils.getMessage("Client.IllegalArgumentEx.Id")
             );
         }
         try {
-            Client Client = dao.find(Client.class, companyIDNumber);
+            Client Client = dao.find(Client.class, id);
             if (Client == null) {
-                throw new javax.persistence.EntityNotFoundException(
-                        Utils.getMessage("Client.EntityNotFoundEx", companyIDNumber)
+                throw new EntityNotFoundException(
+                        Utils.getMessage("Client.EntityNotFoundEx", id)
                 );
             }
             return Client;
-        } catch (javax.persistence.EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -198,10 +195,14 @@ public class ClientService {
     public ReadRangeDTO<Client> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadClientPermission
+        Integer id = null;
         String companyIDNumber = null;
         String name = null;
         String TIN = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
+            if (s.getKey().equals("id") && s.getValue() instanceof Integer) {
+                id = (Integer) s.getValue();
+            }
             if (s.getKey().equals("companyIDNumber") && s.getValue() instanceof String) {
                 companyIDNumber = (String) s.getValue();
             }
@@ -216,6 +217,7 @@ public class ClientService {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
             Long countEntities = this.count(dao,
+                    id,
                     companyIDNumber,
                     name,
                     TIN);
@@ -234,6 +236,7 @@ public class ClientService {
                 //first Client = last page number * Clients per page
                 int start = numberOfPages.intValue() * pageSize;
                 result.setData(this.search(dao,
+                        id,
                         companyIDNumber,
                         name,
                         TIN,
@@ -243,6 +246,7 @@ public class ClientService {
                 result.setPage(numberOfPages.intValue());
             } else {
                 result.setData(this.search(dao,
+                        id,
                         companyIDNumber,
                         name,
                         TIN,
@@ -264,6 +268,7 @@ public class ClientService {
 
     private Long count(
             EntityManager EM,
+            Integer id,
             String companyIDNumber,
             String name,
             String TIN) {
@@ -272,9 +277,13 @@ public class ClientService {
         Root<Client> root = c.from(Client.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
+        if (id != null ) {
+            criteria.add(cb.equal(root.get(Client_.id),
+                    cb.parameter(String.class, "id")));
+        }
         if (companyIDNumber != null && companyIDNumber.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(Client_.companyIDNumber)),
-                    cb.parameter(String.class, "code")));
+                    cb.parameter(String.class, "companyIDNumber")));
         }
         if (name != null && name.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(Client_.name)),
@@ -289,8 +298,11 @@ public class ClientService {
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
+        if (id != null ) {
+            q.setParameter("id", id);
+        }
         if (companyIDNumber != null && companyIDNumber.isEmpty() == false) {
-            q.setParameter("code", companyIDNumber.toUpperCase() + "%");
+            q.setParameter("companyIDNumber", companyIDNumber.toUpperCase() + "%");
         }
         if (name != null && name.isEmpty() == false) {
             q.setParameter("name", name.toUpperCase() + "%");
@@ -303,6 +315,7 @@ public class ClientService {
     }
 
     private List<Client> search(EntityManager em,
+                                Integer id,
                                 String companyIDNumber,
                                 String name,
                                 String TIN,
@@ -313,9 +326,13 @@ public class ClientService {
         Root<Client> root = query.from(Client.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
+        if (id != null ) {
+            criteria.add(cb.equal(root.get(Client_.id),
+                    cb.parameter(Integer.class, "id")));
+        }
         if (companyIDNumber != null && companyIDNumber.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(Client_.companyIDNumber)),
-                    cb.parameter(String.class, "code")));
+                    cb.parameter(String.class, "companyIDNumber")));
         }
         if (name != null && name.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(Client_.name)),
@@ -329,8 +346,11 @@ public class ClientService {
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(Client_.companyIDNumber)));
         TypedQuery<Client> typedQuery = em.createQuery(query);
+        if (id != null ) {
+            typedQuery.setParameter("id", id);
+        }
         if (companyIDNumber != null && companyIDNumber.isEmpty() == false) {
-            typedQuery.setParameter("code", companyIDNumber.toUpperCase() + "%");
+            typedQuery.setParameter("companyIDNumber", companyIDNumber.toUpperCase() + "%");
         }
         if (name != null && name.isEmpty() == false) {
             typedQuery.setParameter("desc", name.toUpperCase() + "%");
@@ -345,11 +365,12 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Client> readAll(String companyIDNumber,
+    public List<Client> readAll(Integer id,
+                                String companyIDNumber,
                                 String name,
                                 String TIN) {
         try {
-            return this.search(dao, companyIDNumber, name, TIN, 0, 0);
+            return this.search(dao, id, companyIDNumber, name, TIN, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

@@ -1,9 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: NikolaB
-  Date: 6/7/2015
-  Time: 10:06 PM
-  To change this template use File | Settings | File Templates.
+<%-- 
+    Document   : item-grid
+    Created on : May 30, 2015, 1:54:06 PM
+    Author     : bdragan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
@@ -13,21 +11,24 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-<form:form modelAttribute="item" method="post">
 
+<form:form modelAttribute="item" method="post">
     <div class="form-group">
         <c:choose>
             <c:when test="${action == 'create'}">
-                <input:inputField label="Šifra *" name="id" disabled="true"/>
+                <input:inputField label="ISO Kod" name="ISOCode"/>
             </c:when>
+            <c:otherwise>
+                <input:inputField label="ISO Kod" name="ISOCode" disabled="true"/>
+            </c:otherwise>
         </c:choose>
+        <input:inputField name="ISONumber" label="ISO Broj"/>
+        <input:inputField name="currency" label="Naziv"/>
+        <input:inputField name="state" label="Država"/>
+        <form:hidden path="version"/>
     </div>
-
-    <input:inputField label="Naziv *" name="name"/>
-    <input:inputField label="Opis " name="description"/>
-
-    <div class="form-group btn-group-sm">
-        <a class="btn btn-primary" href="/masterdata/devicestatus/0">Povratak</a>
+    <div class="form-group">
+        <a class="btn btn-primary" href="/masterdata/currency/0">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -40,4 +41,3 @@
         </button>
     </div>
 </form:form>
-

@@ -1,8 +1,8 @@
 package com.invado.masterdata.service;
 
 import com.invado.core.domain.ApplicationSetup;
-import com.invado.core.domain.BankCreditor;
-import com.invado.core.domain.BankCreditor_;
+import com.invado.core.domain.Currency;
+import com.invado.core.domain.Currency_;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -29,12 +29,13 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Created by NikolaB on 6/10/2015.
+ * Created by NikolaB on 6/28/2015.
  */
 @Service
-public class BankCreditorService {
+public class CurrencyService {
+
     private static final Logger LOG = Logger.getLogger(
-            BankCreditor.class.getName());
+            Currency.class.getName());
 
     @PersistenceContext(name = "baza")
     private EntityManager dao;
@@ -45,12 +46,12 @@ public class BankCreditorService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public BankCreditor create(BankCreditor a) throws IllegalArgumentException,
-            javax.persistence.EntityExistsException {
-        //check CreateBankCreditorPermission
+    public Currency create(Currency a) throws com.invado.masterdata.service.exception.IllegalArgumentException,
+            EntityExistsException {
+        //check CreateCurrencyPermission
         if (a == null) {
             throw new IllegalArgumentException(
-                    Utils.getMessage("BankCreditor.IllegalArgumentEx"));
+                    Utils.getMessage("Currency.IllegalArgumentEx"));
         }
         try {
 
@@ -62,48 +63,47 @@ public class BankCreditorService {
             }
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
+        } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
-                    Utils.getMessage("BankCreditor.PersistenceEx.Create", ex)
+                    Utils.getMessage("Currency.PersistenceEx.Create", ex)
             );
         }
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public BankCreditor update(BankCreditor dto) throws ConstraintViolationException,
-            javax.persistence.EntityNotFoundException,
+    public Currency update(Currency dto) throws ConstraintViolationException,
+            EntityNotFoundException,
             ReferentialIntegrityException {
-        //check UpdateBankCreditorPermission
+        //check UpdateCurrencyPermission
         if (dto == null) {
             throw new ConstraintViolationException(
-                    Utils.getMessage("BankCreditor.IllegalArgumentEx"));
+                    Utils.getMessage("Currency.IllegalArgumentEx"));
         }
-        if (dto.getId() == null) {
-            System.out.println("evo ga problem jbt "+dto.getContactPerson());
+        if (dto.getISOCode() == null) {
             throw new ConstraintViolationException(
-                    Utils.getMessage("BankCreditor.IllegalArgumentEx.Code"));
+                    Utils.getMessage("Currency.IllegalArgumentEx.Code"));
         }
         try {
-            BankCreditor item = dao.find(BankCreditor.class,
-                    dto.getId(),
+            Currency item = dao.find(Currency.class,
+                    dto.getISOCode(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
-                throw new javax.persistence.EntityNotFoundException(
-                        Utils.getMessage("BankCreditor.EntityNotFoundEx",
-                                dto.getId())
+                throw new EntityNotFoundException(
+                        Utils.getMessage("Currency.EntityNotFoundEx",
+                                dto.getISOCode())
                 );
             }
             dao.lock(item, LockModeType.OPTIMISTIC);
-            item.setPlace(dto.getPlace());
-            item.setStreet(dto.getStreet());
-            item.setPostCode(dto.getPostCode());
-            item.setContactPerson(dto.getContactPerson());
-            item.setAccount(dto.getAccount());
-            item.setContactPhone(dto.getContactPhone());
-            item.setContactFunction(dto.getContactFunction());
+            item.setCurrency(dto.getCurrency());
+            item.setDescription(dto.getDescription());
+            item.setISOCode(dto.getISOCode());
+            item.setISONumber(dto.getISONumber());
+            item.setDescription(dto.getDescription());
+            /*Dodaj ovde ostalo*/
+            item.setVersion(dto.getVersion());
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -112,95 +112,96 @@ public class BankCreditorService {
             }
             dao.flush();
             return item;
-        } catch (ConstraintViolationException | javax.persistence.EntityNotFoundException ex) {
+        } catch (ConstraintViolationException | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
                 throw new SystemException(
-                        Utils.getMessage("BankCreditor.OptimisticLockEx",
-                                dto.getId()),
+                        Utils.getMessage("Currency.OptimisticLockEx",
+                                dto.getISOCode()),
                         ex
                 );
             } else {
                 LOG.log(Level.WARNING, "", ex);
                 throw new SystemException(
-                        Utils.getMessage("BankCreditor.PersistenceEx.Update"),
+                        Utils.getMessage("Currency.PersistenceEx.Update"),
                         ex);
             }
         }
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Integer id) throws IllegalArgumentException,
+    public void delete(String code) throws IllegalArgumentException,
             ReferentialIntegrityException {
-        //TODO : check DeleteBankCreditorPermission
-        if (id == null) {
+        //TODO : check DeleteCurrencyPermission
+        if (code == null) {
             throw new IllegalArgumentException(
-                    Utils.getMessage("BankCreditor.IllegalArgumentEx.Code")
+                    Utils.getMessage("Currency.IllegalArgumentEx.Code")
             );
         }
         try {
-            BankCreditor service = dao.find(BankCreditor.class, id);
+            Currency service = dao.find(Currency.class, code);
             if (service != null) {
                 dao.remove(service);
                 dao.flush();
             }
-        }  catch (Exception ex) {
+        } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
-                    Utils.getMessage("BankCreditor.PersistenceEx.Delete"),
+                    Utils.getMessage("Currency.PersistenceEx.Delete"),
                     ex);
         }
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public BankCreditor read(Integer id) throws javax.persistence.EntityNotFoundException {
-        //TODO : check ReadBankCreditorPermission
-        if (id == null) {
-            throw new javax.persistence.EntityNotFoundException(
-                    Utils.getMessage("BankCreditor.IllegalArgumentEx.Code")
+    public Currency read(String ISOCode) throws EntityNotFoundException {
+        //TODO : check ReadCurrencyPermission
+        if (ISOCode == null) {
+            throw new EntityNotFoundException(
+                    Utils.getMessage("Currency.IllegalArgumentEx.Code")
             );
         }
         try {
-            BankCreditor BankCreditor = dao.find(BankCreditor.class, id);
-            if (BankCreditor == null) {
-                throw new javax.persistence.EntityNotFoundException(
-                        Utils.getMessage("BankCreditor.EntityNotFoundEx", id)
+            Currency Currency = dao.find(Currency.class, ISOCode);
+            if (Currency == null) {
+                throw new EntityNotFoundException(
+                        Utils.getMessage("Currency.EntityNotFoundEx", ISOCode)
                 );
             }
-            return BankCreditor;
-        } catch (javax.persistence.EntityNotFoundException ex) {
+            return Currency;
+        } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
-                    Utils.getMessage("BankCreditor.PersistenceEx.Read"),
+                    Utils.getMessage("Currency.PersistenceEx.Read"),
                     ex);
         }
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<BankCreditor> readPage(PageRequestDTO p)
+    public ReadRangeDTO<Currency> readPage(PageRequestDTO p)
             throws PageNotExistsException {
-        //TODO : check ReadBankCreditorPermission
-        Integer id = null;
-        String name = null;
-        String TIN = null;
+        //TODO : check ReadCurrencyPermission
+        String ISOCode = null;
+        Integer ISONumber = null;
+        String state = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
-            if (s.getKey().equals("id") && s.getValue() instanceof Integer) {
-                id = (Integer) s.getValue();
+            if (s.getKey().equals("ISOCode") && s.getValue() instanceof String) {
+                ISOCode = (String) s.getValue();
             }
-            if (s.getKey().equals("name") && s.getValue() instanceof String) {
-                name = (String) s.getValue();
+            if (s.getKey().equals("ISONumber") && s.getValue() instanceof String) {
+                ISONumber = (Integer) s.getValue();
+            }
+            if (s.getKey().equals("state") && s.getValue() instanceof String) {
+                state = (String) s.getValue();
             }
         }
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
-            Long countEntities = this.count(dao,
-                    id,
-                    name);
+            Long countEntities = this.count(dao, ISOCode, ISONumber, state);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             Integer pageNumber = p.getPage();
@@ -208,24 +209,18 @@ public class BankCreditorService {
                     || pageNumber.compareTo(numberOfPages.intValue()) == 1) {
                 //page number cannot be less than -1 or greater than numberOfPages
                 throw new PageNotExistsException(
-                        Utils.getMessage("BankCreditor.PageNotExists", pageNumber));
+                        Utils.getMessage("Currency.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<BankCreditor> result = new ReadRangeDTO<>();
+            ReadRangeDTO<Currency> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
-                //first BankCreditor = last page number * BankCreditors per page
+                //first Currency = last page number * Currencys per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao,
-                        id,
-                        name,
-                        start,
-                        pageSize));
+                result.setData(this.search(dao, ISOCode, ISONumber, state, start, pageSize));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao,
-                        id,
-                        name,
+                result.setData(this.search(dao, ISOCode, ISONumber, state,
                         p.getPage() * pageSize,
                         pageSize));
                 result.setNumberOfPages(numberOfPages.intValue());
@@ -237,88 +232,100 @@ public class BankCreditorService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
-                    Utils.getMessage("BankCreditor.PersistenceEx.ReadPage", ex)
+                    Utils.getMessage("Currency.PersistenceEx.ReadPage", ex)
             );
         }
     }
 
     private Long count(
             EntityManager EM,
-            Integer id,
-            String name) {
+            String ISOCode, Integer ISONumber, String state) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
-        Root<BankCreditor> root = c.from(BankCreditor.class);
+        Root<Currency> root = c.from(Currency.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
-        if (id != null ) {
-            criteria.add(cb.equal(root.get(BankCreditor_.id),
-                    cb.parameter(Integer.class, "id")));
+        if (ISOCode != null && ISOCode.isEmpty() == false) {
+            criteria.add(cb.equal(cb.upper(root.get(Currency_.ISOCode)),
+                    cb.parameter(Integer.class, "ISOCode")));
         }
-        if (name != null && name.isEmpty() == false) {
-            criteria.add(cb.like(cb.upper(root.get(BankCreditor_.name)),
-                    cb.parameter(String.class, "name")));
+        if (ISONumber != null) {
+            criteria.add(cb.equal(root.get(Currency_.ISONumber),
+                    cb.parameter(String.class, "ISONumber")));
         }
-
+        if (state != null && state.isEmpty() == false) {
+            criteria.add(cb.equal(cb.upper(root.get(Currency_.state)),
+                    cb.parameter(Integer.class, "state")));
+        }
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
-        if (id != null ) {
-            q.setParameter("id", id);
+        if (ISOCode != null && ISOCode.isEmpty() == false) {
+            q.setParameter("ISOCode", ISOCode);
         }
-        if (name != null && name.isEmpty() == false) {
-            q.setParameter("name", name.toUpperCase() + "%");
+        if (ISONumber != null) {
+            q.setParameter("ISONumber", ISONumber);
         }
-
+        if (state != null && state.isEmpty() == false) {
+            q.setParameter("state", state);
+        }
 
         return q.getSingleResult();
     }
 
-    private List<BankCreditor> search(EntityManager em,
-                                         Integer id,
-                                         String name,
-                                         int first,
-                                         int pageSize) {
+    private List<Currency> search(EntityManager em,
+                                  String ISOCode,
+                                  Integer ISONumber,
+                                  String state,
+                                  int first,
+                                  int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<BankCreditor> query = cb.createQuery(BankCreditor.class);
-        Root<BankCreditor> root = query.from(BankCreditor.class);
+        CriteriaQuery<Currency> query = cb.createQuery(Currency.class);
+        Root<Currency> root = query.from(Currency.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
-        if (id != null ) {
-            criteria.add(cb.equal(root.get(BankCreditor_.id),
-                    cb.parameter(Integer.class, "id")));
+        if (ISONumber != null) {
+            criteria.add(cb.equal(root.get(Currency_.ISONumber),
+                    cb.parameter(Integer.class, "ISONumber")));
         }
-        if (name != null && name.isEmpty() == false) {
-            criteria.add(cb.like(cb.upper(root.get(BankCreditor_.name)),
-                    cb.parameter(String.class, "name")));
+        if (ISOCode != null && ISOCode.isEmpty() == false) {
+            criteria.add(cb.like(root.get(Currency_.ISOCode),
+                    cb.parameter(String.class, "ISOCode")));
         }
-
-
+        if (state != null && state.isEmpty() == false) {
+            criteria.add(cb.like(root.get(Currency_.state),
+                    cb.parameter(String.class, "state")));
+        }
         query.where(criteria.toArray(new Predicate[0]))
-                .orderBy(cb.asc(root.get(BankCreditor_.id)));
-        TypedQuery<BankCreditor> typedQuery = em.createQuery(query);
-        if (id != null ) {
-            typedQuery.setParameter("id", id);
+                .orderBy(cb.asc(root.get(Currency_.ISOCode)));
+        TypedQuery<Currency> typedQuery = em.createQuery(query);
+        if (ISONumber != null) {
+            typedQuery.setParameter("ISONumber", ISONumber);
         }
-        if (name != null && name.isEmpty() == false) {
-            typedQuery.setParameter("name", name.toUpperCase() + "%");
+        if (ISOCode != null && ISOCode.isEmpty() == false) {
+            typedQuery.setParameter("ISOCode", ISOCode.toUpperCase() + "%");
         }
-
+        if (state != null && state.isEmpty() == false) {
+            typedQuery.setParameter("state", ISOCode.toUpperCase() + "%");
+        }
         typedQuery.setFirstResult(first);
         typedQuery.setMaxResults(pageSize);
         return typedQuery.getResultList();
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<BankCreditor> readAll(Integer id,
-                                         String name) {
+    public List<Currency> readAll(
+            String ISOCode,
+            Integer ISONumber,
+            String state) {
         try {
-            return this.search(dao, id, name, 0, 0);
+            return this.search(dao, ISOCode, ISONumber, state, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",
                     ex);
             throw new SystemException(
-                    Utils.getMessage("BankCreditor.PersistenceEx.ReadAll"), ex);
+                    Utils.getMessage("Currency.PersistenceEx.ReadAll"), ex);
         }
     }
 }
+

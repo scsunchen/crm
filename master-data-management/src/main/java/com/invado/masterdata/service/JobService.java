@@ -7,6 +7,8 @@ import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
+import com.invado.masterdata.service.exception.EntityExistsException;
+import com.invado.masterdata.service.exception.EntityNotFoundException;
 import com.invado.masterdata.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,28 +45,24 @@ public class JobService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Job create(Job a) throws com.invado.masterdata.service.exception.IllegalArgumentException,
-            javax.persistence.EntityExistsException {
+    public Job create(Job a) throws IllegalArgumentException,
+            EntityExistsException {
         //check CreateJobPermission
         if (a == null) {
-            throw new com.invado.masterdata.service.exception.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     Utils.getMessage("Job.IllegalArgumentEx"));
         }
         try {
-            if (dao.find(Job.class, a.getId()) != null) {
-                throw new javax.persistence.EntityExistsException(
-                        Utils.getMessage("Job.EntityExistsEx", a.getId())
-                );
-            }
+
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new com.invado.masterdata.service.exception.IllegalArgumentException("", msgs);
+                throw new IllegalArgumentException("", msgs);
             }
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
+        } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -76,7 +74,7 @@ public class JobService {
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public Job update(Job dto) throws ConstraintViolationException,
-            javax.persistence.EntityNotFoundException,
+            EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateJobPermission
         if (dto == null) {
@@ -92,7 +90,7 @@ public class JobService {
                     dto.getId(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
-                throw new javax.persistence.EntityNotFoundException(
+                throw new EntityNotFoundException(
                         Utils.getMessage("Job.EntityNotFoundEx",
                                 dto.getId())
                 );
@@ -110,7 +108,7 @@ public class JobService {
             }
             dao.flush();
             return item;
-        } catch (ConstraintViolationException | javax.persistence.EntityNotFoundException ex) {
+        } catch (ConstraintViolationException | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -130,16 +128,16 @@ public class JobService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String code) throws IllegalArgumentException,
+    public void delete(Integer id) throws IllegalArgumentException,
             ReferentialIntegrityException {
         //TODO : check DeleteJobPermission
-        if (code == null) {
+        if (id == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Job.IllegalArgumentEx.Code")
             );
         }
         try {
-            Job service = dao.find(Job.class, code);
+            Job service = dao.find(Job.class, id);
             if (service != null) {
                 dao.remove(service);
                 dao.flush();
@@ -153,22 +151,22 @@ public class JobService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Job read(Integer id) throws javax.persistence.EntityNotFoundException {
+    public Job read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadJobPermission
         if (id == null) {
-            throw new javax.persistence.EntityNotFoundException(
+            throw new EntityNotFoundException(
                     Utils.getMessage("Job.IllegalArgumentEx.Code")
             );
         }
         try {
             Job Job = dao.find(Job.class, id);
             if (Job == null) {
-                throw new javax.persistence.EntityNotFoundException(
+                throw new EntityNotFoundException(
                         Utils.getMessage("Job.EntityNotFoundEx", id)
                 );
             }
             return Job;
-        } catch (javax.persistence.EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

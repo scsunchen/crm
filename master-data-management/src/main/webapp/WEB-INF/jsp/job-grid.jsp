@@ -17,18 +17,16 @@
   <div class="form-group">
     <c:choose>
       <c:when test="${action == 'create'}">
-        <input:inputField label="Šifra *" name="id" autofocus="true"/>
-      </c:when>
-      <c:otherwise>
         <input:inputField label="Šifra *" name="id" disabled="true"/>
-      </c:otherwise>
+      </c:when>
     </c:choose>
   </div>
   <input:inputField label="Naziv *" name="name"/>
   <input:inputField label="Opis " name="description"/>
   <form:hidden path="version"/>
 
-  <div class="form-group col-md-1">
+  <div class="form-group btn-group-sm">
+      <a class="btn btn-primary" href="/masterdata/job/0">Povratak</a>
     <button type="submit" class="btn btn-primary">
       <c:choose>
         <c:when test="${action == 'create'}">

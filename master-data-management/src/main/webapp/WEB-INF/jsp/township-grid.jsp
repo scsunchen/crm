@@ -25,9 +25,11 @@
     </c:choose>
   </div>
   <input:inputField label="Naziv *" name="name"/>
+  <input:inputField label="Poštanski broj *" name="postCode"/>
   <form:hidden path="version"/>
 
-  <div class="form-group col-md-1">
+  <div class="form-group btn-group-sm">
+    <a class="btn btn-primary" href="/masterdata/township/0">Povratak</a>
     <button type="submit" class="btn btn-primary">
       <c:choose>
         <c:when test="${action == 'create'}">
@@ -39,5 +41,7 @@
       </c:choose>
     </button>
   </div>
+
 </form:form>
+
 

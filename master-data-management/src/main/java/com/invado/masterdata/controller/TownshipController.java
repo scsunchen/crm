@@ -56,9 +56,11 @@ public class TownshipController {
             return "township-grid";
         } else {
             this.service.create(item);
+            model.put("message", item.getCode()+" "+item.getName());
             status.setComplete();
         }
-        return "redirect:/township/{page}";
+        //return "redirect:/township/{page}";
+        return "redirect:/township/{page}/create";
     }
 
     @RequestMapping("/township/{page}/{code}/delete.html")

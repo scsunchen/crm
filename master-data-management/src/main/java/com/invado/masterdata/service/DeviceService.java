@@ -3,11 +3,13 @@ package com.invado.masterdata.service;
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.Device;
 import com.invado.core.domain.DeviceStatus;
-import com.invado.core.domain.Device_;;
+import com.invado.core.domain.Device_;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
+import com.invado.masterdata.service.exception.EntityExistsException;
+import com.invado.masterdata.service.exception.EntityNotFoundException;
 import com.invado.masterdata.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,12 +44,10 @@ public class DeviceService {
     private Validator validator;
     private final String username = "a";
 
-    @Autowired
-    private ArticleSharedService articleService;
 
     @Transactional(rollbackFor = Exception.class)
     public Device create(Device a) throws IllegalArgumentException,
-            javax.persistence.EntityExistsException {
+            EntityExistsException {
         //check CreateDevicePermission
 
         if (a == null) {
@@ -55,21 +55,20 @@ public class DeviceService {
                     Utils.getMessage("Device.IllegalArgumentEx"));
         }
         try {
-            if (dao.find(Device.class, a.getId()) != null) {
-                throw new javax.persistence.EntityExistsException(
-                        Utils.getMessage("Device.EntityExistsEx", a.getId())
-                );
-            }
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            a.setArticle(articleService.read(a.getArticle().getCode()));
+            if (a.getStatus() != null) {
+                a.setStatus(dao.find(DeviceStatus.class, Integer.valueOf(a.getDeviceStatus())));
+            }else{
+                a.setStatus(null);
+            }
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
+        } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -81,7 +80,7 @@ public class DeviceService {
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public Device update(Device dto) throws ConstraintViolationException,
-            javax.persistence.EntityNotFoundException,
+            EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateDevicePermission
         if (dto == null) {
@@ -97,7 +96,7 @@ public class DeviceService {
                     dto.getId(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
-                throw new javax.persistence.EntityNotFoundException(
+                throw new EntityNotFoundException(
                         Utils.getMessage("Device.EntityNotFoundEx",
                                 dto.getId())
                 );
@@ -119,7 +118,7 @@ public class DeviceService {
             }
             dao.flush();
             return item;
-        } catch (ConstraintViolationException | javax.persistence.EntityNotFoundException ex) {
+        } catch (ConstraintViolationException | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -139,16 +138,16 @@ public class DeviceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String companyIDNumber) throws IllegalArgumentException,
+    public void delete(Integer id) throws IllegalArgumentException,
             ReferentialIntegrityException {
         //TODO : check DeleteDevicePermission
-        if (companyIDNumber == null) {
+        if (id == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Device.IllegalArgumentEx.Code")
             );
         }
         try {
-            Device service = dao.find(Device.class, companyIDNumber);
+            Device service = dao.find(Device.class, id);
             if (service != null) {
                 dao.remove(service);
                 dao.flush();
@@ -162,22 +161,23 @@ public class DeviceService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Device read(String companyIDNumber) throws javax.persistence.EntityNotFoundException {
+    public Device read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadDevicePermission
-        if (companyIDNumber == null) {
-            throw new javax.persistence.EntityNotFoundException(
+        //TODO : check ReadDevicePermission
+        if (id == null) {
+            throw new EntityNotFoundException(
                     Utils.getMessage("Device.IllegalArgumentEx.Code")
             );
         }
         try {
-            Device Device = dao.find(Device.class, companyIDNumber);
+            Device Device = dao.find(Device.class, id);
             if (Device == null) {
-                throw new javax.persistence.EntityNotFoundException(
-                        Utils.getMessage("Device.EntityNotFoundEx", companyIDNumber)
+                throw new EntityNotFoundException(
+                        Utils.getMessage("Device.EntityNotFoundEx", id)
                 );
             }
             return Device;
-        } catch (javax.persistence.EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

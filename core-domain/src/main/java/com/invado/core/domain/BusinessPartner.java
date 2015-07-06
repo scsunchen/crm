@@ -28,11 +28,19 @@ public class BusinessPartner implements Serializable {
     public static final String READ_BY_TIN = "BusinessPartner.ReadByTIN";
     public static final String READ_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadByNameOrderByName";
     public static final String READ_PARENT = "BusinessPartner.ReadParentPartners";
-    
+
+    @TableGenerator(
+            name = "PartnerTab",
+            table = "id_generator",
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "Partner",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "PartnerTab")
     @Id
+    private Integer id;
     @Column(name = "registration_number")
-    //8 cifara maticni broj 
-    //4 cifre sifra firme ukoliko je agencija
     @Size(max = 13, message = "{BusinessPartner.Id.Size}")
     @NotBlank(message = "{BusinessPartner.Id.NotBlank}")
     private String companyIdNumber;
@@ -83,6 +91,11 @@ public class BusinessPartner implements Serializable {
     @Version
     @Column(name="version")
     private Long version;
+
+
+    @Transient
+    private String parentCompanyIdNumber;
+    private String parentPartnerName;
     
     //************************************************************************//    
                            // CONSTRUCTORS //
@@ -104,6 +117,15 @@ public class BusinessPartner implements Serializable {
     //************************************************************************//    
                            // GET/SET METHODS //
     //************************************************************************//
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getCompanyIdNumber() {
         return companyIdNumber;
@@ -262,6 +284,22 @@ public class BusinessPartner implements Serializable {
         this.parentBusinessPartner = parentBusinessPartner;
     }
 
+    public String getParentCompanyIdNumber() {
+        return parentCompanyIdNumber;
+    }
+
+    public void setParentCompanyIdNumber(String parentCompanyIdNumber) {
+        this.parentCompanyIdNumber = parentCompanyIdNumber;
+    }
+
+    public String getParentPartnerName() {
+        return parentPartnerName;
+    }
+
+    public void setParentPartnerName(String parentPartnerName) {
+        this.parentPartnerName = parentPartnerName;
+    }
+
     //************************************************************************//
                            // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//
@@ -275,11 +313,8 @@ public class BusinessPartner implements Serializable {
             return false;
         }
         final BusinessPartner other = (BusinessPartner) obj;
-        if ((this.companyIdNumber == null) ? (other.companyIdNumber != null) : 
-                !this.companyIdNumber.equals(other.companyIdNumber)) {
-            return false;
-        }
-        return true;
+        return !((this.companyIdNumber == null) ? (other.companyIdNumber != null) :
+                !this.companyIdNumber.equals(other.companyIdNumber));
     }
 
     @Override

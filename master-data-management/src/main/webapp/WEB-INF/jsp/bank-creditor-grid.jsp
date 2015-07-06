@@ -17,10 +17,10 @@
       <div class="col-lg-6">
         <c:choose>
           <c:when test="${action == 'create'}">
-            <input:inputField label="Matični broj *" name="id" autofocus="true"/>
+            <input:inputField label="Matični broj *" name="id" autofocus="true" placeholder="Matični broj..."/>
           </c:when>
           <c:otherwise>
-            <input:inputField label="Matični broj *" name="id" disabled="true"/>
+            <input:inputField label="Matični broj *" cssclass="disabled" readonly="true" name="id"/>
           </c:otherwise>
         </c:choose>
         <input:inputField label="Naziv *" name="name"/>
@@ -31,14 +31,15 @@
         <input:inputField name="postCode" label="Poštanski Broj"/>
       </div>
       <div class="col-lg-3">
-        <input:inputField label="Kontakt osoba" name="contactPerson"/>
+        <input:inputField label="Kontakt osoba" name="contactPerson" placeholder="Kontakt osoba..."/>
         <input:inputField label="Funkcija kontakt osobe" name="contactFunction"/>
         <input:inputField label="Tekući račun" name="account"/>
       </div>
       <form:hidden path="version"/>
     </div>
   </fieldset>
-  <div class="form-group">
+  <div class="form-group btn-group-sm">
+    <a class="btn btn-primary" href="/masterdata/bank/0">Povratak</a>
     <button type="submit" class="btn btn-primary">
       <c:choose>
         <c:when test="${action == 'create'}">
@@ -49,5 +50,8 @@
         </c:otherwise>
       </c:choose>
     </button>
+  </div>
+  <div>
+    <p>${message}</p>
   </div>
 </form:form>

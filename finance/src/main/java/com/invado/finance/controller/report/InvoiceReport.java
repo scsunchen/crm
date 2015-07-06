@@ -496,29 +496,29 @@ public class InvoiceReport implements Printable, Pageable {
         for (int i = start; i < end; i++) {//ne smes da stavis <= end
             InvoiceReportDTO.Item item = dto.items.get(i);
             g2d.drawString(String.valueOf(item.ordinal),
-                    (float) (pageWidth * 5 / 100 - m.stringWidth(String.valueOf(item.ordinal))),
+                    pageWidth * 5 / 100 - m.stringWidth(String.valueOf(item.ordinal)),
                     detailStart + detailHeight);
             float height = this.drawMultilineString(g2d, item.serviceDesc,
-                    (float) (pageWidth * 7 / 100),
+                    pageWidth * 7 / 100,
                     detailStart + detailHeight,
-                    (float) (pageWidth * 32 / 100));
+                    pageWidth * 32 / 100);
             g2d.drawString(number.format(item.quantity),
-                    (float) (pageWidth * 50 / 100 - m.stringWidth(number.format(item.quantity)) - 2),
+                    pageWidth * 50 / 100 - m.stringWidth(number.format(item.quantity)) - 2,
                     detailStart + detailHeight);
             g2d.drawString(item.unitOfMeasure,
-                    (float) (pageWidth * 50 / 100),
+                    pageWidth * 50 / 100,
                     detailStart + detailHeight);
             g2d.drawString(currency.format(item.netPrice),
-                    (float) (pageWidth * 69 / 100 - m.stringWidth(currency.format(item.netPrice)) - 2),
+                    pageWidth * 69 / 100 - m.stringWidth(currency.format(item.netPrice)) - 2,
                     detailStart + detailHeight);
             g2d.drawString(percent.format(item.VATPercent),
-                    (float) (pageWidth * 77 / 100 - m.stringWidth(percent.format(item.VATPercent)) - 2),
+                    pageWidth * 77 / 100 - m.stringWidth(percent.format(item.VATPercent)) - 2,
                     detailStart + detailHeight);
             g2d.drawString(percent.format(item.rebatePercent),
-                    (float) (pageWidth * 85 / 100 - m.stringWidth(percent.format(item.rebatePercent)) - 2),
+                    pageWidth * 85 / 100 - m.stringWidth(percent.format(item.rebatePercent)) - 2,
                     detailStart + detailHeight);
             g2d.drawString(currency.format(item.itemTotal),
-                    (float) (pageWidth - 2) - m.stringWidth(currency.format(item.itemTotal)),
+                    pageWidth - 2 - m.stringWidth(currency.format(item.itemTotal)),
                     detailStart + detailHeight);
             detailHeight = detailHeight + height;
         }
@@ -542,29 +542,29 @@ public class InvoiceReport implements Printable, Pageable {
         for (int i = start; i < end; i++) {//ne smes da stavis <= end
             InvoiceReportDTO.Item item = dto.items.get(i);
             g2d.drawString(String.valueOf(item.ordinal),
-                    (float) (pageWidth * 5 / 100 - m.stringWidth(String.valueOf(item.ordinal))),
+                    pageWidth * 5 / 100 - m.stringWidth(String.valueOf(item.ordinal)),
                     detailStart + detailHeight);
             float height = this.drawMultilineString(g2d, item.serviceDesc,
-                    (float) (pageWidth * 7 / 100),
+                    pageWidth * 7 / 100,
                     detailStart + detailHeight,
-                    (float) (pageWidth * 32 / 100));
+                    pageWidth * 32 / 100);
             g2d.drawString(number.format(item.quantity),
-                    (float) (pageWidth * 50 / 100 - m.stringWidth(
-                            number.format(item.quantity)) - 2),
+                    pageWidth * 50 / 100 - m.stringWidth(
+                            number.format(item.quantity)) - 2,
                     detailStart + detailHeight);
             g2d.drawString(item.unitOfMeasure,
-                    (float) (pageWidth * 50 / 100),
+                    pageWidth * 50 / 100,
                     detailStart + detailHeight);
             g2d.drawString(currency.format(item.netPrice),
-                    (float) (pageWidth * 73 / 100 - m.stringWidth(
-                            currency.format(item.netPrice)) - 2),
+                    pageWidth * 73 / 100 - m.stringWidth(
+                            currency.format(item.netPrice)) - 2,
                     detailStart + detailHeight);
             g2d.drawString(percent.format(item.VATPercent),
-                    (float) (pageWidth * 83 / 100 - m.stringWidth(
-                            percent.format(item.VATPercent)) - 2),
+                    pageWidth * 83 / 100 - m.stringWidth(
+                            percent.format(item.VATPercent)) - 2,
                     detailStart + detailHeight);
             g2d.drawString(currency.format(item.itemTotal),
-                    (float) (pageWidth - 2) - m.stringWidth(currency.format(item.itemTotal)),
+                    pageWidth - 2 - m.stringWidth(currency.format(item.itemTotal)),
                     detailStart + detailHeight);
             detailHeight = detailHeight + height;
         }
@@ -596,19 +596,19 @@ public class InvoiceReport implements Printable, Pageable {
         g2d.setColor(Color.BLACK);
         summaryHeight += g2d.getFontMetrics().getMaxAscent();
         g2d.drawString(Utils.getMessage("Invoice.Print.ServicePriceTotal"),
-                (float) (pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(Utils.getMessage("Invoice.Print.ServicePriceTotal"))),
+                pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(Utils.getMessage("Invoice.Print.ServicePriceTotal")),
                 summaryStart + summaryHeight);
         g2d.drawString(currency.format(dto.netPriceTotal),
-                (float) (pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.netPriceTotal)) - 2),
+                pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.netPriceTotal)) - 2,
                 summaryStart + summaryHeight);
         summaryHeight += g2d.getFontMetrics().getMaxDescent() + g2d.getFontMetrics().getLeading();
         if (dto.rebateTotal.compareTo(BigDecimal.ZERO) != 0) {
             summaryHeight += g2d.getFontMetrics().getMaxAscent();
             g2d.drawString(Utils.getMessage("Invoice.Print.RebateTotal"),
-                    (float) (pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(Utils.getMessage("Invoice.Print.RebateTotal"))),
+                    pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(Utils.getMessage("Invoice.Print.RebateTotal")),
                     summaryStart + summaryHeight);
             g2d.drawString(currency.format(dto.rebateTotal),
-                    (float) (pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.rebateTotal)) - 2),
+                    pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.rebateTotal)) - 2,
                     summaryStart + summaryHeight);
             summaryHeight += g2d.getFontMetrics().getMaxDescent() + g2d.getFontMetrics().getLeading();
         }
@@ -617,20 +617,20 @@ public class InvoiceReport implements Printable, Pageable {
             summaryHeight += g2d.getFontMetrics().getMaxAscent();
             String text1 = Utils.getMessage("Invoice.Print.TaxBasis", dto.generalRatePercent);
             g2d.drawString(text1,
-                    (float) (pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(text1)),
+                    pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(text1),
                     summaryStart + summaryHeight);
             g2d.drawString(currency.format(dto.generalRateBasis),
-                    (float) (pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.generalRateBasis)) - 2),
+                    pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.generalRateBasis)) - 2,
                     summaryStart + summaryHeight);
             summaryHeight += g2d.getFontMetrics().getMaxDescent() + g2d.getFontMetrics().getLeading();
 
             summaryHeight += g2d.getFontMetrics().getMaxAscent();
             String text2 = Utils.getMessage("Invoice.Print.Tax", dto.generalRatePercent);
             g2d.drawString(text2,
-                    (float) (pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(text2)),
+                    pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(text2),
                     summaryStart + summaryHeight);
             g2d.drawString(currency.format(dto.generalRateTax),
-                    (float) (pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.generalRateTax)) - 2),
+                    pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.generalRateTax)) - 2,
                     summaryStart + summaryHeight);
             summaryHeight += g2d.getFontMetrics().getMaxDescent() + g2d.getFontMetrics().getLeading();
         }
@@ -639,20 +639,20 @@ public class InvoiceReport implements Printable, Pageable {
             summaryHeight += g2d.getFontMetrics().getMaxAscent();
             String text1 = Utils.getMessage("Invoice.Print.TaxBasis", dto.lowerRatePercent);
             g2d.drawString(text1,
-                    (float) (pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(text1)),
+                    pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(text1),
                     summaryStart + summaryHeight);
             g2d.drawString(currency.format(dto.lowerRateBasis),
-                    (float) (pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.lowerRateBasis)) - 2),
+                    pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.lowerRateBasis)) - 2,
                     summaryStart + summaryHeight);
             summaryHeight += g2d.getFontMetrics().getMaxDescent() + g2d.getFontMetrics().getLeading();
 
             summaryHeight += g2d.getFontMetrics().getMaxAscent();
             String text2 = Utils.getMessage("Invoice.Print.Tax", dto.lowerRatePercent);
             g2d.drawString(text2,
-                    (float) (pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(text2)),
+                    pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(text2),
                     summaryStart + summaryHeight);
             g2d.drawString(currency.format(dto.lowerRateTax),
-                    (float) (pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.lowerRateTax)) - 2),
+                    pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.lowerRateTax)) - 2,
                     summaryStart + summaryHeight);
             summaryHeight += g2d.getFontMetrics().getMaxDescent() + g2d.getFontMetrics().getLeading();
         }
@@ -660,10 +660,10 @@ public class InvoiceReport implements Printable, Pageable {
         summaryHeight += g2d.getFontMetrics().getMaxAscent();
         g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 11));
         g2d.drawString(Utils.getMessage("Invoice.Print.Sum"),
-                (float) (pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(Utils.getMessage("Invoice.Print.Sum"))),
+                pageWidth * 78 / 100 - g2d.getFontMetrics().stringWidth(Utils.getMessage("Invoice.Print.Sum")),
                 summaryStart + summaryHeight);
         g2d.drawString(currency.format(dto.invoiceTotalAmount),
-                (float) (pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.invoiceTotalAmount)) - 2),
+                pageWidth - g2d.getFontMetrics().stringWidth(currency.format(dto.invoiceTotalAmount)) - 2,
                 summaryStart + summaryHeight);
         g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 10));
         summaryHeight += g2d.getFontMetrics().getMaxDescent() + g2d.getFontMetrics().getLeading();

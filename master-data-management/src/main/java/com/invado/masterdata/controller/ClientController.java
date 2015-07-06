@@ -77,50 +77,47 @@ public class ClientController {
         if (result.hasErrors()) {
             String resultErrorMessages = null;
             model.put("action", "create");
-            /*
-            System.out.println(model.get("bank").toString());
-            */
             for( ObjectError e:result.getAllErrors()) {
                 resultErrorMessages += e.getDefaultMessage();
             }
             model.put("resulterror", resultErrorMessages);
             return "resulterror";
         } else {
+            item.setTownship(townshipService.read(item.getTownship().getCode()));
+            item.setBank(bankCreditorService.read(Integer.parseInt(item.getBankCreditor())));
             this.service.create(item);
             status.setComplete();
         }
+        return "redirect:/client/{page}/create";
+    }
+
+
+    @RequestMapping("/client/{page}/{id}/delete.html")
+    public String delete(@PathVariable Integer id) throws Exception {
+        service.delete(id);
         return "redirect:/client/{page}";
     }
 
-      /*
-    @InitBinder
-    protected void initBinder(ServletRequestDataBinder binder) throws Exception {
-        binder.registerCustomEditor(BankCreditor.class,"bank",new PropertyEditorSupport(){
-                    @Override public void setAsText(    String text){
-                        BankCreditor stem=new BankCreditor(text,"","");
-                        setValue(stem);
-                    }
-                }
-        );
-    }
-    */
-    @RequestMapping("/client/{page}/{code}/delete.html")
-    public String delete(@PathVariable String code) throws Exception {
-        service.delete(code);
-        return "redirect:/client/{page}";
-    }
-
-    @RequestMapping(value = "/client/{page}/update/{code}",
+    @RequestMapping(value = "/client/{page}/update/{id}",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String code,
+    public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        Client item = service.read(code);
+        List<Client.Status> statuses = Arrays.asList(Client.Status.values());
+        model.put("statuses", statuses);
+
+        List<Township> townships = townshipService.readAll(null, null);
+        model.put("townships", townships);
+
+        List<BankCreditor> bankCreditors = bankCreditorService.readAll(null, null);
+        model.put("banks", bankCreditors);
+
+        Client item = service.read(id);
         model.put("item", item);
         return "client-grid";
     }
 
-    @RequestMapping(value = "/client/{page}/update/{code}",
+    @RequestMapping(value = "/client/{page}/update/{id}",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") Client item,
                                       BindingResult result,

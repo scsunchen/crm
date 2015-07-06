@@ -16,11 +16,8 @@
         <div class="col-lg-6">
             <c:choose>
                 <c:when test="${action == 'create'}">
-                    <input:inputField label="Šifra *" name="id" autofocus="true"/>
+                    <input:inputField label="Šifra *" name="id" disabled="true"/>
                 </c:when>
-                <c:otherwise>
-                    <input:inputField label="Šifra" name="id" disabled="true"/>
-                </c:otherwise>
             </c:choose>
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -38,8 +35,8 @@
             <spring:bind path="township.code">
                 <div class="form-group">
                     <label for="township">Opština</label>
-                    <form:select path="township" id="township" class="form-control" itemLabel="township">
-                        <form:option value="">&nbsp;</form:option>
+                    <form:select path="township" id="township" class="form-control" itemLabel="township" >
+                        <form:option value="${item.township.code}">${item.township.name}</form:option>
                         <form:options items="${townships}" itemLabel="name" itemValue="code"/>
                     </form:select>
                 </div>
@@ -57,7 +54,7 @@
                 <div class="form-group">
                     <label for="bank">Banka</label>
                     <form:select path="bankCreditor" id="bank" class="form-control" itemLabel="bank">
-                        <form:option value="">&nbsp;</form:option>
+                        <form:option value="${item.bank.id}">${item.bank.name}</form:option>
                         <form:options items="${banks}" itemLabel="name" itemValue="id"/>
                     </form:select>
                 </div>
@@ -67,7 +64,7 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <form:select path="status" id="status" class="form-control" itemLabel="status">
-                    <form:option value="">&nbsp;</form:option>
+                    <form:option value="${item.status}">${item.status.description}</form:option>
                     <form:options items="${statuses}" itemLabel="description"/>
                 </form:select>
             </div>
@@ -77,6 +74,7 @@
         <form:hidden path="version"/>
     </div>
     <div class="form-group">
+        <a class="btn btn-primary" href="/masterdata/client/0">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">

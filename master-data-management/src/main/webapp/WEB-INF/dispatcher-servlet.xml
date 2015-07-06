@@ -15,7 +15,7 @@
 
     <!-- all resources inside folder src/main/webapp/resources are mapped so they can be refered to inside JSP files
     (see header.jsp for more details) -->
-    <mvc:annotation-driven>
+    <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
         </mvc:message-converters>
@@ -54,9 +54,11 @@
         <property name="basenames" value="com.invado.masterdata.bundle.server-strings">
         </property>
     </bean>
-
+    <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean"/>
 
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+
+
         <!-- view name resolved using bean of type InternalResourceViewResolver
 (declared in mvc-view-config.xml)
 <property name="defaultErrorView" value="exception"/>

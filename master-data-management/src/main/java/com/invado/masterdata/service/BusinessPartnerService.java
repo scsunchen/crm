@@ -56,11 +56,6 @@ public class BusinessPartnerService {
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx"));
         }
         try {
-            if (dao.find(BusinessPartner.class, a.getCompanyIdNumber()) != null) {
-                throw new EntityExistsException(
-                        Utils.getMessage("BusinessPartner.EntityExistsEx", a.getCompanyIdNumber())
-                );
-            }
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -68,7 +63,7 @@ public class BusinessPartnerService {
                 throw new IllegalArgumentException("", msgs);
             }
             if (a.getParentBusinessPartner() != null) {
-                a.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartner().getCompanyIdNumber()));
+                a.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartner().getId()));
             }else{
                 a.setParentBusinessPartner(null);
             }
@@ -79,7 +74,7 @@ public class BusinessPartnerService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
-                    Utils.getMessage("BusinessPartner.PersistenceEx.Create", ex)
+                    Utils.getMessage("BusinessPartner.PersistenceEx.Create"+ex.getMessage(), ex)
             );
         }
     }
@@ -93,13 +88,13 @@ public class BusinessPartnerService {
             throw new ConstraintViolationException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx"));
         }
-        if (dto.getCompanyIdNumber() == null || dto.getCompanyIdNumber().length() == 0) {
+        if (dto.getId() == null ) {
             throw new ConstraintViolationException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx.Code"));
         }
         try {
             BusinessPartner item = dao.find(BusinessPartner.class,
-                    dto.getCompanyIdNumber(),
+                    dto.getId(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
                 throw new EntityNotFoundException(
@@ -108,6 +103,7 @@ public class BusinessPartnerService {
                 );
             }
             dao.lock(item, LockModeType.OPTIMISTIC);
+            item.setName(dto.getName());
             item.setAddress(dto.getAddress());
             item.setContactPerson(dto.getContactPerson());
             item.setCurrentAccount(dto.getCurrentAccount());
@@ -151,25 +147,25 @@ public class BusinessPartnerService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String companyIdNumber) throws IllegalArgumentException,
+    public void delete(Integer id) throws IllegalArgumentException,
             ReferentialIntegrityException {
         //TODO : check DeleteBusinessPartnerPermission
-        if (companyIdNumber == null) {
+        if (id == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx.Code")
             );
         }
         try {
-            BusinessPartner service = dao.find(BusinessPartner.class, companyIdNumber);
+            BusinessPartner service = dao.find(BusinessPartner.class, id);
             if (service != null) {
                 if (dao.createNamedQuery("Invoice.GetByPartner")
-                        .setParameter("companyIdNumber", companyIdNumber)
+                        .setParameter("companyIdNumber", id)
                         .setFirstResult(0)
                         .setMaxResults(1)
                         .getResultList().isEmpty() == false) {
                     throw new ReferentialIntegrityException(Utils.getMessage(
                             "BusinessPartner.ReferentialIntegrityEx.InvoiceItem",
-                            companyIdNumber)
+                            id)
                     );
                 }
                 dao.remove(service);
@@ -186,18 +182,18 @@ public class BusinessPartnerService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public BusinessPartner read(String companyIdNumber) throws EntityNotFoundException {
+    public BusinessPartner read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadBusinessPartnerPermission
-        if (companyIdNumber == null) {
+        if (id == null) {
             throw new EntityNotFoundException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx.Code")
             );
         }
         try {
-            BusinessPartner BusinessPartner = dao.find(BusinessPartner.class, companyIdNumber);
+            BusinessPartner BusinessPartner = dao.find(BusinessPartner.class, id);
             if (BusinessPartner == null) {
                 throw new EntityNotFoundException(
-                        Utils.getMessage("BusinessPartner.EntityNotFoundEx", companyIdNumber)
+                        Utils.getMessage("BusinessPartner.EntityNotFoundEx", id)
                 );
             }
             return BusinessPartner;
@@ -215,10 +211,14 @@ public class BusinessPartnerService {
     public ReadRangeDTO<BusinessPartner> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadBusinessPartnerPermission
+        Integer id = null;
         String companyIdNumber = null;
         String name = null;
         String TIN = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
+            if (s.getKey().equals("id") && s.getValue() instanceof Integer) {
+                id = (Integer) s.getValue();
+            }
             if (s.getKey().equals("companyIdNumber") && s.getValue() instanceof String) {
                 companyIdNumber = (String) s.getValue();
             }
@@ -233,6 +233,7 @@ public class BusinessPartnerService {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
             Long countEntities = this.count(dao,
+                    id,
                     companyIdNumber,
                     name,
                     TIN);
@@ -251,6 +252,7 @@ public class BusinessPartnerService {
                 //first BusinessPartner = last page number * BusinessPartners per page
                 int start = numberOfPages.intValue() * pageSize;
                 result.setData(this.search(dao,
+                        id,
                         companyIdNumber,
                         name,
                         TIN,
@@ -260,6 +262,7 @@ public class BusinessPartnerService {
                 result.setPage(numberOfPages.intValue());
             } else {
                 result.setData(this.search(dao,
+                        id,
                         companyIdNumber,
                         name,
                         TIN,
@@ -281,6 +284,7 @@ public class BusinessPartnerService {
 
     private Long count(
             EntityManager EM,
+            Integer id,
             String companyIdNumber,
             String name,
             String TIN) {
@@ -289,9 +293,13 @@ public class BusinessPartnerService {
         Root<BusinessPartner> root = c.from(BusinessPartner.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
+        if (id != null) {
+            criteria.add(cb.equal(root.get(BusinessPartner_.id),
+                    cb.parameter(Integer.class, "id")));
+        }
         if (companyIdNumber != null && companyIdNumber.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(BusinessPartner_.companyIdNumber)),
-                    cb.parameter(String.class, "code")));
+                    cb.parameter(String.class, "companyIdNumber")));
         }
         if (name != null && name.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(BusinessPartner_.name)),
@@ -306,8 +314,11 @@ public class BusinessPartnerService {
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
+        if (id != null ) {
+            q.setParameter("id", companyIdNumber.toUpperCase() + "%");
+        }
         if (companyIdNumber != null && companyIdNumber.isEmpty() == false) {
-            q.setParameter("code", companyIdNumber.toUpperCase() + "%");
+            q.setParameter("companyIdNumber", companyIdNumber.toUpperCase() + "%");
         }
         if (name != null && name.isEmpty() == false) {
             q.setParameter("name", name.toUpperCase() + "%");
@@ -320,6 +331,7 @@ public class BusinessPartnerService {
     }
 
     private List<BusinessPartner> search(EntityManager em,
+                                         Integer id,
                                          String companyIdNumber,
                                          String name,
                                          String TIN,
@@ -330,9 +342,13 @@ public class BusinessPartnerService {
         Root<BusinessPartner> root = query.from(BusinessPartner.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
+        if (id != null ) {
+            criteria.add(cb.equal(root.get(BusinessPartner_.companyIdNumber),
+                    cb.parameter(Integer.class, "id")));
+        }
         if (companyIdNumber != null && companyIdNumber.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(BusinessPartner_.companyIdNumber)),
-                    cb.parameter(String.class, "code")));
+                    cb.parameter(String.class, "companyIdNumber")));
         }
         if (name != null && name.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(BusinessPartner_.name)),
@@ -346,6 +362,9 @@ public class BusinessPartnerService {
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(BusinessPartner_.companyIdNumber)));
         TypedQuery<BusinessPartner> typedQuery = em.createQuery(query);
+        if (id != null ) {
+            typedQuery.setParameter("id", id);
+        }
         if (companyIdNumber != null && companyIdNumber.isEmpty() == false) {
             typedQuery.setParameter("code", companyIdNumber.toUpperCase() + "%");
         }
@@ -362,17 +381,34 @@ public class BusinessPartnerService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<BusinessPartner> readAll(String companyIdNumber,
+    public List<BusinessPartner> readAll(Integer id,
+                                         String companyIdNumber,
                                          String name,
                                          String TIN) {
         try {
-            return this.search(dao, companyIdNumber, name, TIN, 0, 0);
+            return this.search(dao, id, companyIdNumber, name, TIN, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",
                     ex);
             throw new SystemException(
                     Utils.getMessage("BusinessPartner.PersistenceEx.ReadAll"), ex);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<BusinessPartner> readPartnerByName(String name) {
+        try {
+            return dao.createNamedQuery(
+                    BusinessPartner.READ_BY_NAME_ORDERBY_NAME,
+                    BusinessPartner.class)
+                    .setParameter("name", ("%"+name+"%").toUpperCase())
+                    .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "BusinessPartner.Exception.ReadItemByDescription"),
+                    ex);
         }
     }
 }

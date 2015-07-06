@@ -7,10 +7,7 @@ import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Arrays;
@@ -74,23 +71,23 @@ public class BusinessPartnerController {
         return "redirect:/partner/{page}";
     }
 
-    @RequestMapping("/partner/{page}/{code}/delete.html")
-    public String delete(@PathVariable String code) throws Exception {
-        service.delete(code);
+    @RequestMapping("/partner/{page}/{id}/delete.html")
+    public String delete(@PathVariable Integer id) throws Exception {
+        service.delete(id);
         return "redirect:/partner/{page}";
     }
 
-    @RequestMapping(value = "/partner/{page}/update/{code}",
+    @RequestMapping(value = "/partner/{page}/update/{id}",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String code,
+    public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        BusinessPartner item = service.read(code);
+        BusinessPartner item = service.read(id);
         model.put("item", item);
         return "partner-grid";
     }
 
-    @RequestMapping(value = "/partner/{page}/update/{code}",
+    @RequestMapping(value = "/partner/{page}/update/{id}",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") BusinessPartner item,
                                       BindingResult result,
@@ -104,5 +101,11 @@ public class BusinessPartnerController {
             status.setComplete();
         }
         return "redirect:/partner/{page}";
+    }
+
+    @RequestMapping(value = "/partner/read-partner/{name}")
+    public @ResponseBody
+    List<BusinessPartner> findItemByDescription(@PathVariable String name) {
+        return service.readPartnerByName(name);
     }
 }

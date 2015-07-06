@@ -61,6 +61,7 @@
     </definition>
     <definition name="township-view" extends="main-menu-form">
         <put-attribute name="title" value="Opština"/>
+        <put-attribute name="panel-title" value="Opština"/>
         <put-attribute name="body" value="/WEB-INF/jsp/township-table.jsp"/>
     </definition>
     <definition name="township-grid" extends="main-menu-form">
@@ -79,6 +80,7 @@
     </definition>
     <definition name="employee-view" extends="main-menu-form">
         <put-attribute name="title" value="Radnik"/>
+        <put-attribute name="panel-title" value="Radnik"/>
         <put-attribute name="body" value="/WEB-INF/jsp/employee-table.jsp"/>
     </definition>
     <definition name="employee-grid" extends="main-menu-form">
@@ -91,7 +93,7 @@
         <put-attribute name="body" value="/WEB-INF/jsp/devicestatus-table.jsp"/>
     </definition>
     <definition name="devicestatus-grid" extends="main-menu-form">
-        <put-attribute name="title" value="Radnik"/>
+        <put-attribute name="title" value="Status terminala"/>
         <put-attribute name="panel-title" value="Ažuriranje podataka o statusima terminala"/>
         <put-attribute name="body" value="/WEB-INF/jsp/devicestatus-grid.jsp"/>
     </definition>
@@ -103,5 +105,15 @@
         <put-attribute name="title" value="Terminal"/>
         <put-attribute name="panel-title" value="Ažuriranje podataka o terminalima"/>
         <put-attribute name="body" value="/WEB-INF/jsp/device-grid.jsp"/>
+    </definition>
+    <definition name="currency-view" extends="main-menu-form">
+        <put-attribute name="title" value="Valuta"/>
+        <put-attribute name="panel-title" value="Valuta"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/currency-table.jsp"/>
+    </definition>
+    <definition name="currency-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Valuta"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o valutama"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/currency-grid.jsp"/>
     </definition>
 </tiles-definitions>

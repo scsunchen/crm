@@ -2,6 +2,8 @@ package com.invado.masterdata.controller;
 
 import com.invado.core.domain.Employee;
 import com.invado.masterdata.service.EmployeeService;
+import com.invado.masterdata.service.JobService;
+import com.invado.masterdata.service.OrgUnitService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,11 @@ public class EmployeeConroller {
 
     @Autowired
     private EmployeeService service;
+    @Autowired
+    private JobService jobService;
+    @Autowired
+    private OrgUnitService orgUnitService;
+
 
 
     @RequestMapping("/employee/{page}")
@@ -59,6 +66,8 @@ public class EmployeeConroller {
             model.put("action", "create");
             return "employee-grid";
         } else {
+            item.setJob(jobService.read(item.getJob().getId()));
+            item.setOrgUnit(orgUnitService.read(item.getOrgUnit().getId()));
             this.service.create(item);
             status.setComplete();
         }

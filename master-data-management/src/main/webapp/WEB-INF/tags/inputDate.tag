@@ -3,6 +3,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ attribute name="name" required="true" rtexprvalue="true"
               description="Name of corresponding property in bean object" %>
+<%@ attribute name="placeholder" required="false" rtexprvalue="true"
+              description="Placeholder" %>
+<%@ attribute name="cssclass" required="false" rtexprvalue="true"
+              description="Added css class..." %>
 <%@ attribute name="label" required="true" rtexprvalue="true"
               description="Label appears in red color if input is considered as invalid after submission" %>
 <%@ attribute name="autofocus" required="false" rtexprvalue="true" type="java.lang.Boolean"
@@ -14,14 +18,14 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div class="form-group" id="datetimepickcontainer">
                     <label for="${name}">${label}</label>
 
                     <div class='input-group date' id='datetimepicker'>
                         <form:input id="${name}" path="${name}"
-                                    class="form-control ${status.error ? 'error' : '' }"
+                                    class="form-control ${cssclass} ${status.error ? 'error' : '' }"
                                     disabled="${disabled}"
-                                    autofocus="${autofocus}"/>
+                                    autofocus="${autofocus}" placeholder="${placeholder}"/>
              <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                      </span>
@@ -29,7 +33,7 @@
                 </div>
             </div>
             <script type="text/javascript">
-                $('#datetimepicker').datepicker({
+                $('#datetimepickcontainer div').datepicker({
                     todayBtn: true,
                     language: "sr-latin",
                     forceParse: false,

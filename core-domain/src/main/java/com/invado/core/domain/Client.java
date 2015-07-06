@@ -33,8 +33,9 @@ import org.hibernate.validator.constraints.Range;
     @NamedQuery(name = Client.COUNT,
             query = "SELECT COUNT(x) FROM Client x"),
     @NamedQuery(name = Client.READ_ALL_ORDERBY_ID,
-            query = "SELECT x FROM Client x ORDER BY x.id")
-
+            query = "SELECT x FROM Client x ORDER BY x.id"),
+        @NamedQuery(name = Client.READ_BY_COMPANY_NUMBER,
+                query = "SELECT x FROM Client x WHERE x.companyIDNumber = :companyIDNumber ORDER BY x.companyIDNumber")
 })
 public class Client implements Serializable {
 
@@ -45,11 +46,19 @@ public class Client implements Serializable {
     public static final String READ_BY_TOWNSHIP = "Client.ReadByTownship";
     public static final String COUNT = "Client.Count";
     public static final String READ_ALL_ORDERBY_ID = "Client.ReadAll";
+    public static final String READ_BY_COMPANY_NUMBER = "Client.ReadByCompanyNumber";
 
+    @TableGenerator(
+            name = "ClientTab",
+            table = "id_generator",
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "Client",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ClientTab")
     @Id
     @Column(name = "id")
-    @NotNull(message = "{Company.Id.NotNull}")
-    @Range(min = 1, max = 99, message = "{Company.Id.Range}")
     private Integer id;
     @NotBlank(message = "{Company.Name.NotBlank}")
     @Size(max = 100, message = "{Company.Name.Size}")
@@ -334,11 +343,8 @@ public class Client implements Serializable {
             return false;
         }
         final Client other = (Client) obj;
-        if (this.id != other.id && (this.id == null
-                || !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !(this.id != other.id && (this.id == null
+                || !this.id.equals(other.id)));
     }
 
     @Override

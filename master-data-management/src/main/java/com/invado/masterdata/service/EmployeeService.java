@@ -40,10 +40,6 @@ public class EmployeeService {
     private Validator validator;
     private final String username = "a";
 
-    @Autowired
-    private JobService jobService;
-    @Autowired
-    private OrgUnitService orgUnitService;
 
     @Transactional(rollbackFor = Exception.class)
     public Employee create(Employee a) throws IllegalArgumentException,
@@ -55,22 +51,16 @@ public class EmployeeService {
                     Utils.getMessage("Employee.IllegalArgumentEx"));
         }
         try {
-            if (dao.find(Employee.class, a.getId()) != null) {
-                throw new EntityExistsException(
-                        Utils.getMessage("Employee.EntityExistsEx", a.getId())
-                );
-            }
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            a.setJob(jobService.read(a.getJob().getId()));
-            a.setOrgUnit(orgUnitService.read(a.getOrgUnit().getId()));
+
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | EntityExistsException ex) {
+        } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

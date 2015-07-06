@@ -3,6 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ attribute name="name" required="true" rtexprvalue="true"
               description="Name of corresponding property in bean object" %>
+<%@ attribute name="placeholder" required="false" rtexprvalue="true"
+              description="Placeholder" %>
 <%@ attribute name="label" required="true" rtexprvalue="true"
               description="Label appears in red color if input is considered as invalid after submission" %>
 <%@ attribute name="autofocus" required="false" rtexprvalue="true" type="java.lang.Boolean"
@@ -21,7 +23,7 @@
                         <form:input id="${name}" path="${name}"
                                     class="form-control ${status.error ? 'error' : '' }"
                                     disabled="${disabled}"
-                                    autofocus="${autofocus}"/>
+                                    autofocus="${autofocus}" placeholder="${placeholder}"/>
              <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                      </span>

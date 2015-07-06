@@ -386,7 +386,7 @@ public class InvoiceService {
             }
             if(temp.getVersion().compareTo(dto.getVersion()) != 0) {
                 throw new OptimisticLockException();
-            };
+            }
             return temp.getVersion();
         } catch (EntityNotFoundException | ReferentialIntegrityException 
                 | IllegalArgumentException ex) {
@@ -522,7 +522,7 @@ public class InvoiceService {
             dao.remove(invoiceItem);
             if(invoice.getVersion().compareTo(version) != 0) {
                 throw new OptimisticLockException();
-            };
+            }
             return invoice.getVersion();
         } catch (EntityNotFoundException | ReferentialIntegrityException 
                 | IllegalArgumentException ex) {
@@ -657,7 +657,7 @@ public class InvoiceService {
             }
             if(invoice.getVersion().compareTo(dto.getInvoiceVersion()) != 0) {
                 throw new OptimisticLockException();
-            };
+            }
             return invoice.getVersion();
         } catch (IllegalArgumentException | ReferentialIntegrityException 
                 | EntityNotFoundException ex) {
@@ -807,7 +807,7 @@ public class InvoiceService {
             }
             if(invoice.getVersion().compareTo(dto.getInvoiceVersion()) != 0) {
                 throw new OptimisticLockException();
-            };
+            }
             return invoice.getVersion();
         } catch (IllegalArgumentException | ReferentialIntegrityException ex) {
             throw ex;
@@ -943,16 +943,8 @@ public class InvoiceService {
             result.bankName = temp.getBankName();
             result.bankAccount = temp.getBankAccountNumber();
 
-            if (temp.getInvoiceType() == InvoiceType.INVOICE) {
-                result.proforma = false;
-            } else {
-                result.proforma = true;
-            }
-            if (temp.getPartnerType() == InvoiceBusinessPartner.DOMESTIC) {
-                result.isDomesticPartner = true;
-            } else {
-                result.isDomesticPartner = false;
-            }
+            result.proforma = temp.getInvoiceType() != InvoiceType.INVOICE;
+            result.isDomesticPartner = temp.getPartnerType() == InvoiceBusinessPartner.DOMESTIC;
             BigDecimal invoiceTotal = BigDecimal.ZERO;
             BigDecimal rebateTotal = BigDecimal.ZERO;//sum rebate
             BigDecimal netPriceTotal = BigDecimal.ZERO;//sum net price

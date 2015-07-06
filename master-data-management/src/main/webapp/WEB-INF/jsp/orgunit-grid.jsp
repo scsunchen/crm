@@ -19,12 +19,9 @@
             <c:when test="${action == 'create'}">
                 <input:inputField label="Šifra *" name="id" autofocus="true"/>
             </c:when>
-            <c:otherwise>
-                <input:inputField label="Šifra *" name="id" disabled="true"/>
-            </c:otherwise>
         </c:choose>
     </div>
-
+    <input:inputField label="Korisnička Šifra *" name="customId"/>
     <input:inputField label="Naziv *" name="name"/>
 
     <div class="form-group">
@@ -34,6 +31,12 @@
         <div class="col-md-6">
             <input:inputField name="street" label="Ulica i broj"/>
         </div
+    </div>
+    <div class="form-group">
+        <label for="parentOrgUnitName">Nadređena jedinica</label>
+        <form:input id="parentOrgUnitName" class="typeahead form-control" type="text"
+                    path="parentOrgUnitName" style="margin-bottom:  15px;"/>
+        <form:hidden id="itemDescHidden" path="parentOrgUnitId"/>
     </div>
 
     <form:hidden path="version"/>
@@ -51,4 +54,25 @@
         </button>
     </div>
 </form:form>
+<script type="text/javascript">
+    $('#parentOrgUnitName').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'customId '+'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/orgunit/read-orgunit/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#parentOrgUnitName').bind('typeahead:selected', function (obj, datum, name) {
+        $('#parentOrgUnitName').val(datum['id']);
+    });
+</script>
 

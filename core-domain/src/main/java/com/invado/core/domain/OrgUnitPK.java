@@ -44,11 +44,8 @@ public class OrgUnitPK implements Serializable {
                 || !this.id.equals(other.id))) {
             return false;
         }
-        if (this.client != other.client && (this.client == null 
-                || !this.client.equals(other.client))) {
-            return false;
-        }
-        return true;
+        return !(this.client != other.client && (this.client == null
+                || !this.client.equals(other.client)));
     }
 
     @Override

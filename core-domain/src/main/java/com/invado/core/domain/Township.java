@@ -29,9 +29,9 @@ public class Township implements Serializable {
     public static final String COUNT_ALL = "Township.CountAll";
     public static final String READ_ALL_ORDERBY_CODE = "Township.ReadAllOrderByCode";
 
+
     @Id
     @Column(name = "code")
-    @NotNull(message = "{Township.Code.NotNull}")//
     @Size(max = 3, min = 3, message = "{Township.Code.Size}")
     @Pattern(regexp = "^\\d*$", message = "{Township.Code.Pattern}")
     private String code;
@@ -39,6 +39,9 @@ public class Township implements Serializable {
     @NotBlank(message = "{Township.Name.NotBlank}")
     @Size(max = 100, message = "{Township.Name.Size}")
     private String name;
+    @Column(name="post_code")
+    @NotBlank(message = "{Township.Name.NotBlank}")
+    private String postCode;
     @Version
     private Long version;
 
@@ -80,6 +83,14 @@ public class Township implements Serializable {
         return name;
     }
 
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -89,10 +100,7 @@ public class Township implements Serializable {
             return false;
         }
         final Township other = (Township) obj;
-        if ((this.code == null) ? (other.code != null) : !this.code.equals(other.code)) {
-            return false;
-        }
-        return true;
+        return !((this.code == null) ? (other.code != null) : !this.code.equals(other.code));
     }
 
     @Override

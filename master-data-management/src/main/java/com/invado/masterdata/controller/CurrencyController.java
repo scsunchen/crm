@@ -1,7 +1,7 @@
 package com.invado.masterdata.controller;
 
-import com.invado.core.domain.BankCreditor;
-import com.invado.masterdata.service.BankCreditorService;
+import com.invado.core.domain.Currency;
+import com.invado.masterdata.service.CurrencyService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,82 +16,81 @@ import org.springframework.web.bind.support.SessionStatus;
 import java.util.Map;
 
 /**
- * Created by NikolaB on 6/10/2015.
+ * Created by NikolaB on 6/28/2015.
  */
 @Controller
-public class BankCreditorController {
-
+public class CurrencyController {
     @Autowired
-    private BankCreditorService service;
+    private CurrencyService service;
 
 
-    @RequestMapping("/bank/{page}")
+    @RequestMapping("/currency/{page}")
     public String showItems(@PathVariable Integer page,
                             Map<String, Object> model)
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<BankCreditor> items = service.readPage(request);
+        ReadRangeDTO<Currency> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
-        return "bank-view";
+        //return "item-table";
+        return "currency-view";
     }
 
-    @RequestMapping(value = "/bank/{page}/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/currency/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        model.put("item", new BankCreditor());
+        model.put("item", new Currency());
         model.put("action", "create");
-        return "bank-grid";
+        return "currency-grid";
     }
 
-    @RequestMapping(value = "/bank/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") BankCreditor item,
+    @RequestMapping(value = "/currency/{page}/create", method = RequestMethod.POST)
+    public String processCreationForm(@ModelAttribute("item") Currency item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
             throws Exception {
-
         if (result.hasErrors()) {
             model.put("action", "create");
-            return "bank-grid";
+            return "currency-grid";
         } else {
             this.service.create(item);
-            model.put("message", item.getId()+" "+item.getName());
             status.setComplete();
         }
-        return "redirect:/bank/{page}/create";
+        return "redirect:/currency/{page}/create";
     }
 
-    @RequestMapping("/bank/{page}/{id}/delete.html")
-    public String delete(@PathVariable Integer id) throws Exception {
-        service.delete(id);
-        return "redirect:/bank/{page}";
+    @RequestMapping("/currency/{page}/{code}/delete.html")
+    public String delete(@PathVariable String code) throws Exception {
+        service.delete(code);
+        return "redirect:/currency/{page}";
     }
 
-    @RequestMapping(value = "/bank/{page}/update/{id}",
+    @RequestMapping(value = "/currency/{page}/update/{ISOCode}",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable Integer id,
+    public String initUpdateForm(@PathVariable String ISOCode,
                                  Map<String, Object> model)
             throws Exception {
-        BankCreditor item = service.read(id);
+        Currency item = service.read(ISOCode);
         model.put("item", item);
-        return "bank-grid";
+        return "currency-grid";
     }
 
-    @RequestMapping(value = "/bank/{page}/update/{code}",
+    @RequestMapping(value = "/currency/{page}/update/{ISOCode}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") BankCreditor item,
+    public String processUpdationForm(@ModelAttribute("item") Currency item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
             throws Exception {
         if (result.hasErrors()) {
-            return "bank-grid";
+            return "currency-grid";
         } else {
+
             this.service.update(item);
             status.setComplete();
         }
-        return "redirect:/bank/{page}";
+        return "redirect:/currency/{page}";
     }
 }

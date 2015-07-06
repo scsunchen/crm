@@ -87,10 +87,7 @@ public class Module implements ModuleServiceProviderInterface {
             return false;
         }
         final Module other = (Module) obj;
-        if (!Objects.equals(this.path, other.path)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.path, other.path);
     }
 
     @Override

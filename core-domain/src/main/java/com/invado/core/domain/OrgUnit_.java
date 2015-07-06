@@ -7,6 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public class OrgUnit_ { 
 
     public static volatile SingularAttribute<OrgUnit, Integer> id;
+    public static volatile SingularAttribute<OrgUnit, String> customId;
     public static volatile SingularAttribute<OrgUnit, Client> client;
     public static volatile SingularAttribute<OrgUnit, String> name;
     public static volatile SingularAttribute<OrgUnit, String> street;

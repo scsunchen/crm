@@ -66,10 +66,7 @@ public class Properties implements Serializable {
             return false;
         }
         Properties other = (Properties) object;
-        if ((this.key == null && other.key != null) || (this.key != null && !this.key.equals(other.key))) {
-            return false;
-        }
-        return true;
+        return !((this.key == null && other.key != null) || (this.key != null && !this.key.equals(other.key)));
     }
 
     @Override

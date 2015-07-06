@@ -85,12 +85,19 @@
           <element id="archive" name="core-service-provider-interface-1.0.jar">
             <element id="module-output" name="core-service-provider-interface" />
           </element>
+          <element id="archive" name="finance-1.0.jar">
+            <element id="module-output" name="finance" />
+          </element>
+          <element id="library" level="project" name="Maven: com.itextpdf:itextpdf:5.5.6" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.4" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="E:\Nikola\Invado\crm\master-data-management\target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/master-data-management/target/masterdata-1.0/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="master-data-management/web/Web" />
     </root>

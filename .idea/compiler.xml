@@ -25,18 +25,37 @@
         <module name="admin" />
         <module name="core-domain" />
         <module name="core-service-provider-interface" />
+      </profile>
+      <profile default="false" name="Annotation profile for customer-relationship-management" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="customer-relationship-management" />
+      </profile>
+      <profile default="false" name="Annotation profile for finance" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="finance" />
+      </profile>
+      <profile default="false" name="Annotation profile for master-data-management" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="master-data-management" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="admin" target="1.5" />
       <module name="core-domain" target="1.8" />
       <module name="core-service-provider-interface" target="1.8" />
+      <module name="crm" target="1.5" />
       <module name="customer-relationship-management" target="1.8" />
       <module name="finance" target="1.8" />
       <module name="master-data-management" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
-

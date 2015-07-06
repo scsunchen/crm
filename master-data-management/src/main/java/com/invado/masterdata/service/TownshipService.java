@@ -7,6 +7,8 @@ import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
+import com.invado.masterdata.service.exception.EntityExistsException;
+import com.invado.masterdata.service.exception.EntityNotFoundException;
 import com.invado.masterdata.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,19 +45,15 @@ public class TownshipService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Township create(Township a) throws com.invado.masterdata.service.exception.IllegalArgumentException,
-            javax.persistence.EntityExistsException {
+    public Township create(Township a) throws IllegalArgumentException,
+            EntityExistsException {
         //check CreateTownshipPermission
         if (a == null) {
-            throw new com.invado.masterdata.service.exception.IllegalArgumentException(
+            throw new IllegalArgumentException(
                     Utils.getMessage("Township.IllegalArgumentEx"));
         }
         try {
-            if (dao.find(Township.class, a.getCode()) != null) {
-                throw new javax.persistence.EntityExistsException(
-                        Utils.getMessage("Township.EntityExistsEx", a.getCode())
-                );
-            }
+
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -64,7 +62,7 @@ public class TownshipService {
             }
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
+        } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -76,7 +74,7 @@ public class TownshipService {
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public Township update(Township dto) throws ConstraintViolationException,
-            javax.persistence.EntityNotFoundException,
+            EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateTownshipPermission
         if (dto == null) {
@@ -92,7 +90,7 @@ public class TownshipService {
                     dto.getCode(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
-                throw new javax.persistence.EntityNotFoundException(
+                throw new EntityNotFoundException(
                         Utils.getMessage("Township.EntityNotFoundEx",
                                 dto.getCode())
                 );
@@ -109,7 +107,7 @@ public class TownshipService {
             }
             dao.flush();
             return item;
-        } catch (ConstraintViolationException | javax.persistence.EntityNotFoundException ex) {
+        } catch (ConstraintViolationException | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -140,13 +138,13 @@ public class TownshipService {
         try {
             Township service = dao.find(Township.class, code);
             if (service != null) {
-                if (dao.createNamedQuery("Client.GetByTownship")
+                if (dao.createNamedQuery("Client.ReadByTownship")
                         .setParameter("code", code)
                         .setFirstResult(0)
                         .setMaxResults(1)
                         .getResultList().isEmpty() == false) {
                     throw new ReferentialIntegrityException(Utils.getMessage(
-                            "Township.ReferentialIntegrityEx.InvoiceItem",
+                            "Township.ReferentialIntegrityEx.Client",
                             code)
                     );
                 }
@@ -164,22 +162,22 @@ public class TownshipService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Township read(String code) throws javax.persistence.EntityNotFoundException {
+    public Township read(String code) throws EntityNotFoundException {
         //TODO : check ReadTownshipPermission
         if (code == null) {
-            throw new javax.persistence.EntityNotFoundException(
+            throw new EntityNotFoundException(
                     Utils.getMessage("Township.IllegalArgumentEx.Code")
             );
         }
         try {
             Township Township = dao.find(Township.class, code);
             if (Township == null) {
-                throw new javax.persistence.EntityNotFoundException(
+                throw new EntityNotFoundException(
                         Utils.getMessage("Township.EntityNotFoundEx", code)
                 );
             }
             return Township;
-        } catch (javax.persistence.EntityNotFoundException ex) {
+        } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -193,11 +191,11 @@ public class TownshipService {
     public ReadRangeDTO<Township> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadTownshipPermission
-        Integer code = null;
+        String code = null;
         String name = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("code") && s.getValue() instanceof String) {
-                code = (Integer) s.getValue();
+                code =(String)s.getValue();
             }
             if (s.getKey().equals("name") && s.getValue() instanceof String) {
                 name = (String) s.getValue();
@@ -244,7 +242,7 @@ public class TownshipService {
 
     private Long count(
             EntityManager EM,
-            Integer code,
+            String code,
             String name) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
@@ -252,7 +250,7 @@ public class TownshipService {
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
         if (code != null) {
-            criteria.add(cb.equal(root.get(Township_.code),
+            criteria.add(cb.equal(cb.upper(root.get(Township_.code)),
                     cb.parameter(Integer.class, "code")));
         }
         if (name != null && name.isEmpty() == false) {
@@ -275,7 +273,7 @@ public class TownshipService {
     }
 
     private List<Township> search(EntityManager em,
-                                 Integer code,
+                                 String code,
                                  String name,
                                  int first,
                                  int pageSize) {
@@ -310,7 +308,7 @@ public class TownshipService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<Township> readAll(
-                                 Integer code,
+                                 String code,
                                  String name) {
         try {
             return this.search(dao, code, name, 0, 0);

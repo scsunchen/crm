@@ -21,6 +21,7 @@
     <tr>
       <th></th>
       <th>Šifra</th>
+      <th>Korisnička Šifra</th>
       <th>Naziv</th>
       <th>Mesto</th>
       <th>Ulica i broj</th>
@@ -38,7 +39,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                       aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel">Da li ste sigurni da želite da
-                obrišete ${item.name}?</h4>
+                obrišete ${item.customId}?</h4>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
@@ -58,6 +59,7 @@
           </div>
         </td>
         <td><c:out value="${item.id}"/></td>
+        <td><c:out value="${item.customId}"/></td>
         <td><c:out value="${item.name}"/></td>
         <td class="form-inline">
           <c:out value="${item.place}"/>

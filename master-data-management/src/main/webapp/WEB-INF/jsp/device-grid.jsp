@@ -14,30 +14,38 @@
 
 <form:form modelAttribute="item" method="post">
     <div class="form-group">
+
         <c:choose>
             <c:when test="${action == 'create'}">
-                <input:inputField label="Šifra *" name="id" autofocus="true"/>
+                <input:inputField label="Šifra *" name="id" disabled="true"/>
             </c:when>
-            <c:otherwise>
-                <input:inputField label="Šifra" name="id" disabled="true"/>
-            </c:otherwise>
         </c:choose>
         <input:inputField name="customCode" label="Korisnička šifra"/>
-        <input:inputField name="article" label="Tip terminala"/>
-        <input:inputField name="serialNumber" label="Serisjki Broj"/>
+        <div class="form-group">
+            <label for="itemDesc">Tip terminala</label>
+            <form:input id="itemDesc" class="typeahead form-control" type="text"
+                        path="articleDesc" style="margin-bottom:  15px;"/>
+            <form:hidden id="itemDescHidden" path="articleCode"/>
+        </div>
+
+        <input:inputField name="serialNumber" label="Serijski Broj"/>
         <spring:bind path="status.id">
             <div class="form-group">
-                <label for="status">Status terminala</label>
-                <form:select path="status" id="status" class="form-control" itemLabel="status">
+                <label for="status">Status</label>
+                <form:select path="deviceStatus" id="status" class="form-control" itemLabel="status">
                     <form:option value="">&nbsp;</form:option>
-                    <form:options items="${statuses}" itemLabel="name" itemValue="id"/>
+                    <form:options items="${deviceStatuses}" itemLabel="name" itemValue="id"/>
                 </form:select>
             </div>
         </spring:bind>
-        <input:inputDate name="creationDate" label="Datum Kreiranja"/>
-        <input:inputTime name="workingStartTime" label="Početak rada" />
-        <input:inputTime name="workingEndTime" label="Kraj rada" />
-        <input:inputField name="installedSoftwareVersion" label="Firmware verzija" />
+            <%--
+                <fmt:formatDate value="${yourObject.date}" var="dateString" pattern="dd/MM/yyyy" />
+                <form:input path="date" value="${dateString} .. />
+            --%>
+        <input:inputDate name="creationDate" label="Datum Kreiranja" placeholder="dd.mm.yyyy."/>
+        <input:inputTime name="workingStartTime" label="Početak rada" placeholder="hh:mi"/>
+        <input:inputTime name="workingEndTime" label="Kraj rada" placeholder="hh:mi"/>
+        <input:inputField name="installedSoftwareVersion" label="Firmware verzija"/>
         <form:hidden path="version"/>
     </div>
     <div class="form-group">
@@ -53,3 +61,25 @@
         </button>
     </div>
 </form:form>
+<script type="text/javascript">
+    $('#itemDesc').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'description',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/device/read-item/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#itemDesc').bind('typeahead:selected', function (obj, datum, name) {
+        $('#itemDescHidden').val(datum['code']);
+    });
+</script>
+

@@ -8,7 +8,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="E:\Nikola\Invado\crm\admin\target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/admin/target/admin/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="admin/web/Web" />
     </root>

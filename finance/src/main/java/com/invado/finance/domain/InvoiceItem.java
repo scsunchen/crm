@@ -211,11 +211,8 @@ public class InvoiceItem implements Serializable, Comparable<InvoiceItem> {
                 || !this.invoice.equals(other.invoice))) {
             return false;
         }
-        if (this.ordinal != other.ordinal && (this.ordinal == null 
-                || !this.ordinal.equals(other.ordinal))) {
-            return false;
-        }
-        return true;
+        return !(this.ordinal != other.ordinal && (this.ordinal == null
+                || !this.ordinal.equals(other.ordinal)));
     }
 
     @Override

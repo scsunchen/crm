@@ -94,7 +94,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="E:\Nikola\Invado\crm\finance\target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/finance/target/finance-1.0/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="finance/web/Web" />
     </root>

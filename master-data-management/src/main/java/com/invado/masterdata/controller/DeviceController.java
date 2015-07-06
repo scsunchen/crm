@@ -1,8 +1,11 @@
 package com.invado.masterdata.controller;
 
+import com.invado.core.domain.Article;
 import com.invado.core.domain.Device;
 import com.invado.core.domain.DeviceStatus;
 import com.invado.core.domain.Township;
+import com.invado.finance.service.ArticleService;
+import com.invado.finance.service.MasterDataService;
 import com.invado.masterdata.service.DeviceService;
 import com.invado.masterdata.service.DeviceStatusService;
 import com.invado.masterdata.service.TownshipService;
@@ -12,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Arrays;
@@ -32,6 +32,11 @@ public class DeviceController {
     private DeviceService deviceService;
     @Autowired
     private DeviceStatusService deviceStatusService;
+    @Autowired
+    private ArticleService articleService;
+    @Autowired
+    private MasterDataService masterDataService;
+
 
 
     @RequestMapping("/device/{page}")
@@ -52,8 +57,8 @@ public class DeviceController {
 
         model.put("item", new Device());
 
-        List<DeviceStatus> statuses = deviceStatusService.readAll(null, null);
-        model.put("statuses", statuses);
+        List<DeviceStatus> deviceStatuses = deviceStatusService.readAll(null, null);
+        model.put("deviceStatuses", deviceStatuses);
         model.put("action", "create");
 
         return "device-grid";
@@ -77,30 +82,33 @@ public class DeviceController {
             model.put("resulterror", resultErrorMessages);
             return "resulterror";
         } else {
+            System.out.println("Kod artikla je "+item.getArticleCode());
+            item.setArticle(articleService.read(item.getArticleCode()));
             this.deviceService.create(item);
             status.setComplete();
         }
         return "redirect:/device/{page}";
+
     }
 
 
-    @RequestMapping("/device/{page}/{code}/delete.html")
-    public String delete(@PathVariable String code) throws Exception {
-        deviceService.delete(code);
+    @RequestMapping("/device/{page}/{id}/delete.html")
+    public String delete(@PathVariable Integer id) throws Exception {
+        deviceService.delete(id);
         return "redirect:/device/{page}";
     }
 
-    @RequestMapping(value = "/device/{page}/update/{code}",
+    @RequestMapping(value = "/device/{page}/update/{id}",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String code,
+    public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        Device item = deviceService.read(code);
+        Device item = deviceService.read(id);
         model.put("item", item);
         return "device-grid";
     }
 
-    @RequestMapping(value = "/device/{page}/update/{code}",
+    @RequestMapping(value = "/device/{page}/update/{id}",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") Device item,
                                       BindingResult result,
@@ -114,5 +122,11 @@ public class DeviceController {
             status.setComplete();
         }
         return "redirect:/device/{page}";
+    }
+
+    @RequestMapping(value = "/device/read-item/{desc}")
+    public @ResponseBody
+    List<Article> findItemByDescription(@PathVariable String desc) {
+        return masterDataService.readItemByDescription(desc);
     }
 }

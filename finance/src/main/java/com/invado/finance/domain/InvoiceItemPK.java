@@ -44,10 +44,7 @@ public class InvoiceItemPK implements Serializable {
         if (this.invoice != other.invoice && (this.invoice == null || !this.invoice.equals(other.invoice))) {
             return false;
         }
-        if (this.ordinal != other.ordinal && (this.ordinal == null || !this.ordinal.equals(other.ordinal))) {
-            return false;
-        }
-        return true;
+        return !(this.ordinal != other.ordinal && (this.ordinal == null || !this.ordinal.equals(other.ordinal)));
     }
 
     @Override

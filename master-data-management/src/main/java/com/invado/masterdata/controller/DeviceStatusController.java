@@ -20,6 +20,7 @@ import java.util.Map;
  */
 @Controller
 public class DeviceStatusController {
+
     @Autowired
     private DeviceStatusService service;
 
@@ -58,16 +59,17 @@ public class DeviceStatusController {
             this.service.create(item);
             status.setComplete();
         }
+        //return "redirect:/devicestatus/{page}/create";
+        return "redirect:/devicestatus/{page}/create";
+    }
+
+    @RequestMapping("/devicestatus/{page}/{id}/delete.html")
+    public String delete(@PathVariable Integer id) throws Exception {
+        service.delete(id);
         return "redirect:/devicestatus/{page}";
     }
 
-    @RequestMapping("/devicestatus/{page}/{code}/delete.html")
-    public String delete(@PathVariable String code) throws Exception {
-        service.delete(code);
-        return "redirect:/devicestatus/{page}";
-    }
-
-    @RequestMapping(value = "/devicestatus/{page}/update/{code}",
+    @RequestMapping(value = "/devicestatus/{page}/update/{id}",
             method = RequestMethod.GET)
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
@@ -77,7 +79,7 @@ public class DeviceStatusController {
         return "devicestatus-grid";
     }
 
-    @RequestMapping(value = "/devicestatus/{page}/update/{code}",
+    @RequestMapping(value = "/devicestatus/{page}/update/{id}",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") DeviceStatus item,
                                       BindingResult result,
@@ -87,9 +89,10 @@ public class DeviceStatusController {
         if (result.hasErrors()) {
             return "devicestatus-grid";
         } else {
-            this.service.update(item);
+            service.update(item);
             status.setComplete();
         }
+        //return "redirect:/devicestatus/{page}";
         return "redirect:/devicestatus/{page}";
     }
 }

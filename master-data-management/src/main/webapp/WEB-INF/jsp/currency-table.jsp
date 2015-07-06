@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : menu-form
     Created on : May 8, 2015, 10:07:23 AM
     Author     : Bobic Dragan
@@ -8,22 +8,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<a class="btn btn-primary" href="/masterdata/bank/${page}/create"><span class="glyphicon glyphicon-plus"></span>
+<a class="btn btn-primary" href="/masterdata/currency/${page}/create"><span class="glyphicon glyphicon-plus"></span>
   Kreiraj</a>
 <br/>
 <br/>
-
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
     <tr>
       <th></th>
-      <th>Šifra</th>
+      <th>ISO kod</th>
+      <th>ISO broj</th>
       <th>Naziv</th>
-      <th>Adresa</th>
-      <th>Kontakt osoba</th>
-      <th>Funkcija kontakt osobe</th>
-      <th>Račun</th>
+      <th>Država</th>
     </tr>
     </thead>
     <tbody>
@@ -38,11 +35,11 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                       aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel">Da li ste sigurni da želite da
-                obrišete ${item.name}?</h4>
+                obrišete ${item.ISOCode}?</h4>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-              <a type="button" class="btn btn-danger" href="${page}/${item.id}/delete.html">Obriši</a>
+              <a type="button" class="btn btn-danger" href="${page}/${item.ISOCode}/delete.html">Obriši</a>
             </div>
           </div>
         </div>
@@ -50,23 +47,17 @@
       <tr>
         <td>
           <div class="btn-group btn-group-sm" role="group">
-            <a href="${page}/update/${item.id}" class="btn btn-primary"><span
+            <a href="${page}/update/${item.ISOCode}" class="btn btn-primary"><span
                     class="glyphicon glyphicon-search"></span> pregled</a>
             <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                     class="glyphicon glyphicon-trash"></span> brisanje
             </button>
           </div>
         </td>
-        <td><c:out value="${item.id}"/></td>
-        <td><c:out value="${item.name}"/></td>
-        <td class="form-inline">
-          <c:out value="${item.place}"/>
-          <c:out value="${item.street}"/>
-          <c:out value="${item.postCode}"/>
-        </td>
-        <td><c:out value="${item.contactPerson}"/></td>
-        <td><c:out value="${item.contactFunction}"></c:out></td>
-        <td><c:out value="${item.account}"/></td>
+        <td><c:out value="${item.ISOCode}"/></td>
+        <td><c:out value="${item.ISONumber}"/></td>
+        <td><c:out value="${item.currency}"/></td>
+        <td><c:out value="${item.state}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>
     </c:forEach>

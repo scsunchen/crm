@@ -421,10 +421,7 @@ public class Invoice implements Serializable {
         if (!Objects.equals(this.orgUnit, other.orgUnit)) {
             return false;
         }
-        if (!Objects.equals(this.document, other.document)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.document, other.document);
     }
 
     @Override

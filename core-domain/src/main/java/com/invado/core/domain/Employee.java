@@ -15,6 +15,15 @@ import java.time.LocalDate;
 @Table(name = "c_employee", schema = "devel")
 public class Employee  implements Serializable {
 
+    @TableGenerator(
+            name = "EmployeeTab",
+            table = "id_generator",
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "Employee",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "EmployeeTab")
     @Id
     private Integer id;
     @NotNull(message = "{Employee.Name.NotNull}")
@@ -187,10 +196,7 @@ public class Employee  implements Serializable {
         if (this.orgUnit != other.orgUnit && (this.orgUnit == null || !this.orgUnit.equals(other.orgUnit))) {
             return false;
         }
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !(this.id != other.id && (this.id == null || !this.id.equals(other.id)));
     }
 
     @Override

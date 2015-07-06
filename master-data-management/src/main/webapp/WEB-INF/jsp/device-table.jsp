@@ -61,7 +61,7 @@
         </td>
         <td><c:out value="${item.id}"/></td>
         <td><c:out value="${item.customCode}"/></td>
-        <td><c:out value="${item.article.name}"/></td>
+        <td><c:out value="${item.article.description}"/></td>
         <td><c:out value="${item.serialNumber}"/></td>
         <td><c:out value="${item.status.name}"/></td>
         <td> <c:out value="${item.creationDate}"/></td>

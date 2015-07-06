@@ -82,15 +82,10 @@
           <element id="archive" name="core-service-provider-interface-1.0.jar">
             <element id="module-output" name="core-service-provider-interface" />
           </element>
-          <element id="archive" name="masterdata-1.0.jar">
-            <element id="module-output" name="master-data-management" />
-          </element>
-          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
-          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="E:\Nikola\Invado\crm\customer-relationship-management\target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/customer-relationship-management/target/customer-relationship-management-1.0/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="customer-relationship-management/web/Web" />
     </root>

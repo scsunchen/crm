@@ -15,18 +15,18 @@
     <fieldset class="col-lg-12">
         <div class="form-group">
             <div class="col-lg-6">
-                <c:choose>
-                    <c:when test="${action == 'create'}">
-                        <input:inputField label="Matični broj *" name="companyIdNumber" autofocus="true"/>
-                    </c:when>
-                    <c:otherwise>
-                        <input:inputField label="Matični broj *" name="companyIdNumber" disabled="true"/>
-                    </c:otherwise>
-                </c:choose>
+                <div class="form-group">
+                    <c:choose>
+                        <c:when test="${action == 'create'}">
+                            <input:inputField label="Šifra *" name="id" disabled="true"/>
+                        </c:when>
+                    </c:choose>
+                </div>
                 <input:inputField label="Naziv *" name="name"/>
                 <input:inputField label="Dodatni Naziv" name="name1"/>
             </div>
             <div class="col-lg-3">
+                <input:inputField label="Matični broj" name="companyIdNumber"/>
                 <input:inputField name="address.country" label="Država"/>
                 <input:inputField name="address.place" label="Mesto"/>
                 <input:inputField name="address.street" label="Ulica i broj"/>
@@ -49,15 +49,12 @@
                 </spring:bind>
                 <input:inputField label="Rabat" name="rebate"/>
                 <input:inputField label="Beskamatni period" name="interestFreeDays"/>
-                <spring:bind path="parentBusinessPartner.companyIdNumber">
-                    <div class="form-group">
-                        <label for="parent">Nadređeni partner</label>
-                        <form:select path="parentBusinessPartner" id="parent" class="form-control" itemLabel="parent">
-                            <form:option value="">&nbsp;</form:option>
-                            <form:options items="${parents}" itemLabel="name" itemValue="companyIdNumber"/>
-                        </form:select>
-                    </div>
-                </spring:bind>
+                <div class="form-group">
+                    <label for="partnerName">Nadređeni partner</label>
+                    <form:input id="partnerName" class="typeahead form-control" type="text"
+                                path="parentPartnerName" style="margin-bottom:  15px;"/>
+                    <form:hidden id="itemDescHidden" path="parentCompanyIdNumber"/>
+                </div>
                 <div class="checkbox">
                     <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>
                 </div>
@@ -66,6 +63,7 @@
         </div>
     </fieldset>
     <div class="form-group">
+        <a class="btn btn-primary" href="/masterdata/partner/0">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -78,3 +76,24 @@
         </button>
     </div>
 </form:form>
+<script type="text/javascript">
+    $('#partnerName').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/read-partner/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#partnerName').bind('typeahead:selected', function (obj, datum, name) {
+        $('#partnerNameHidden').val(datum['id']);
+    });
+</script>

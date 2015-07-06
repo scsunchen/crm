@@ -340,4 +340,19 @@ public class OrgUnitService {
         }
     }
 
+    public List<OrgUnit> readOrgUnitByNameAndCustomId(String pattern){
+        try {
+            return dao.createNamedQuery(
+                    OrgUnit.READ_BY_NAME_AND_CUSTOM_ID,
+                    OrgUnit.class)
+                    .setParameter("pattern", ("%"+pattern+"%").toUpperCase())
+                    .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "BusinessPartner.Exception.ReadItemByDescription"),
+                    ex);
+        }
+    }
+
 }

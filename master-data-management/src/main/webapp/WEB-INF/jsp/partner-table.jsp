@@ -18,6 +18,7 @@
         <thead>
         <tr>
             <th></th>
+            <th>Šifra</th>
             <th>Matični broj</th>
             <th>Naziv</th>
             <th>Dodatni naziv</th>
@@ -51,7 +52,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-                            <a type="button" class="btn btn-danger" href="${page}/${item.companyIdNumber}/delete.html">Obriši</a>
+                            <a type="button" class="btn btn-danger" href="${page}/${item.id}/delete.html">Obriši</a>
                         </div>
                     </div>
                 </div>
@@ -59,13 +60,14 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="${page}/update/${item.companyIdNumber}" class="btn btn-primary"><span
+                        <a href="${page}/update/${item.id}" class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                                 class="glyphicon glyphicon-trash"></span> brisanje
                         </button>
                     </div>
                 </td>
+                <td><c:out value="${item.id}"/></td>
                 <td><c:out value="${item.companyIdNumber}"/></td>
                 <td><c:out value="${item.name}"/></td>
                 <td><c:out value="${item.name1}"/></td>
@@ -84,7 +86,16 @@
                 <td><c:out value="${item.activityCode}"/></td>
                 <td><c:out value="${item.rebate}"/></td>
                 <td><c:out value="${item.interestFreeDays}"/></td>
-                <td><c:out value="${item.VAT}"/></td>
+                <c:choose>
+                    <c:when test="${item.VAT == 'true'}">
+                        <td><c:out value="DA"/></td>
+                    </c:when>
+                    <c:when test="${item.VAT == 'false'}">
+                        <td><c:out value="NE"/></td>
+                    </c:when>
+
+                </c:choose>
+
                 <td><c:out value="${item.contactPerson.name}"/></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>

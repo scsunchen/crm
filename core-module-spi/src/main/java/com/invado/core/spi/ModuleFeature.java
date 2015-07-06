@@ -62,10 +62,7 @@ public class ModuleFeature {
             return false;
         }
         final ModuleFeature other = (ModuleFeature) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.name, other.name);
     }
 
     @Override
