@@ -13,38 +13,45 @@
 
 <form:form modelAttribute="item" method="post">
     <div class="form-group">
-    <div class="col-lg-6">
+        <c:choose>
+            <c:when test="${action == 'create'}">
+                <input:inputField label="Šifra *" name="id" autofocus="true" disabled="true"/>
+            </c:when>
+            <c:otherwise>
+                <form:hidden path="id"/>
+            </c:otherwise>
+        </c:choose>
         <input:inputField label="Ime *" name="name"/>
         <input:inputField label="Srednje ime" name="middleName"/>
         <input:inputField label="Prezime *" name="lastName"/>
-        <input:inputDate  label="Datum rođenja" name="dateOfBirth"/>
+        <input:inputDate  label="Datum rođenja" name="dateOfBirth" placeholder="dd.mm.yyyy."/>
         <input:inputField label="Telefon" name="phone"/>
         <input:inputField label="Email" name="email"/>
         <input:inputField label="Fotografija" name="picture"/>
         <spring:bind path="orgUnit.id">
             <div class="form-group">
                 <label for="orgunit">Organizaciona jedinica</label>
-                <form:select path="orgUnit" id="orgunit" class="form-control" itemLabel="orgUnit">
-                    <form:option value="">&nbsp;</form:option>
-                    <form:options items="${orgunits}" itemLabel="name" itemValue="id"/>
+                <form:select path="transientOrgUnitId" id="orgunit" class="form-control" itemLabel="orgUnit">
+                    <form:option value="${item.orgUnit.id}">${item.orgUnit.name}</form:option>
+                    <form:options items="${orgUnits}" itemLabel="name" itemValue="id"/>
                 </form:select>
             </div>
         </spring:bind>
-        <input:inputDate label="Datum zapošljenja" name="hireDate"/>
-        <input:inputDate label="Datum odlaska" name="endDate"/>
+        <input:inputDate label="Datum zapošljenja" name="hireDate" placeholder="dd.mm.yyyy."/>
+        <input:inputDate label="Datum odlaska" name="endDate" placeholder="dd.mm.yyyy."/>
         <spring:bind path="job.id">
             <div class="form-group">
                 <label for="job">Radno mesto</label>
-                <form:select path="job" id="job" class="form-control" itemLabel="job">
-                    <form:option value="">&nbsp;</form:option>
+                <form:select path="transientJobId" id="job" class="form-control" itemLabel="job">
+                    <form:option value="${item.job.id}">${item.job.name}</form:option>
                     <form:options items="${jobs}" itemLabel="name" itemValue="id"/>
                 </form:select>
             </div>
         </spring:bind>
         <input:inputField label="Država" name="address.country"/>
         <input:inputField label="Mesto" name="address.place"/>
-        <input:inputField label="Ulica i broj" name="address.street"/>
         <input:inputField label="Poštanski broj" name="address.postCode"/>
+        <input:inputField label="Ulica i broj" name="address.street"/>
         <form:hidden path="version"/>
     </div>
     <div class="form-group">

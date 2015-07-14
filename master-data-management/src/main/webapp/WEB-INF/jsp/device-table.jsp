@@ -23,8 +23,6 @@
       <th>Serijski Broj</th>
       <th>Status</th>
       <th>Datum kreiranja</th>
-      <th>Početak rada</th>
-      <th>Kraj rada</th>
       <th>Firmware verzija</th>
     </tr>
     </thead>
@@ -65,8 +63,6 @@
         <td><c:out value="${item.serialNumber}"/></td>
         <td><c:out value="${item.status.name}"/></td>
         <td> <c:out value="${item.creationDate}"/></td>
-        <td><c:out value="${item.workingStartTime}"/></td>
-        <td><c:out value="${item.workingEndTime}"/></td>
         <td><c:out value="${item.installedSoftwareVersion}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>

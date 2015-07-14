@@ -24,12 +24,11 @@
       <th>Datum rođenja</th>
       <th>Telefon</th>
       <th>Email</th>
-      <th>Fotografija</th>
       <th>Organizaciona celina</th>
       <th>Datum zapošljenja</th>
       <th>Datum odlaska</th>
       <th>Radno mesto</th>
-      <th>Adresa</th>
+      <th>Fotografija</th>
     </tr>
     </thead>
     <tbody>
@@ -70,12 +69,11 @@
         <td><c:out value="${item.dateOfBirth}"/></td>
         <td> <c:out value="${item.phone}"/></td>
         <td><c:out value="${item.email}"/></td>
-        <td><c:out value="${item.picture}"/></td>
         <td><c:out value="${item.orgUnit.name}"/></td>
         <td><c:out value="${item.hireDate}"/></td>
         <td><c:out value="${item.endDate}"></c:out></td>
         <td><c:out value="${item.job.name}"/></td>
-        <td><c:out value="${item.address.country+' '+item.address.place+' '+item.address.street+' '+item.address.postCode}"/></td>
+        <td><c:out value="${item.picture}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>
     </c:forEach>

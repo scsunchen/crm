@@ -22,6 +22,7 @@
       <th></th>
       <th>Šifra</th>
       <th>Naziv</th>
+      <th>Opis</th>
     </tr>
     </thead>
     <tbody>

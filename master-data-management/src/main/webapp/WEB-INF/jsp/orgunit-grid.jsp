@@ -14,34 +14,48 @@
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
 <form:form modelAttribute="item" method="post">
-    <div class="form-group">
-        <c:choose>
-            <c:when test="${action == 'create'}">
-                <input:inputField label="Šifra *" name="id" autofocus="true"/>
-            </c:when>
-        </c:choose>
-    </div>
-    <input:inputField label="Korisnička Šifra *" name="customId"/>
-    <input:inputField label="Naziv *" name="name"/>
 
     <div class="form-group">
         <div class="col-md-6">
-            <input:inputField name="place" label="Mesto"/>
+            <c:choose>
+                <c:when test="${action == 'create'}">
+                    <input:inputField label="Šifra *" name="id" autofocus="true" disabled="true"/>
+                </c:when>
+                <c:otherwise>
+                    <form:hidden path="id"/>
+                </c:otherwise>
+            </c:choose>
+            <input:inputField label="Korisnička Šifra *" name="customId"/>
+            <input:inputField label="Naziv *" name="name"/>
         </div>
-        <div class="col-md-6">
-            <input:inputField name="street" label="Ulica i broj"/>
-        </div
     </div>
-    <div class="form-group">
-        <label for="parentOrgUnitName">Nadređena jedinica</label>
-        <form:input id="parentOrgUnitName" class="typeahead form-control" type="text"
-                    path="parentOrgUnitName" style="margin-bottom:  15px;"/>
-        <form:hidden id="itemDescHidden" path="parentOrgUnitId"/>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <input:inputField name="place" label="Mesto"/>
+            <input:inputField name="street" label="Ulica i broj"/>
+            <spring:bind path="client.id">
+                <div class="form-group">
+                    <label for="client">Kompanija korisnik *</label>
+                    <form:select path="transClientId" id="client" class="form-control" itemLabel="client">
+                        <form:option value="${item.client.id}">${item.client.name}</form:option>
+                        <form:options items="${clients}" itemLabel="name" itemValue="id"/>
+                    </form:select>
+                </div>
+            </spring:bind>
+        </div>
+        <div class="form-group">
+            <label for="parentOrgUnitName">Nadređena OJ</label>
+            <form:input id="parentOrgUnitName" class="typeahead form-control" type="text"
+                        path="parentOrgUnitName" style="margin-bottom:  15px;"/>
+            <form:hidden id="itemDescHidden" path="parentOrgUnitId"/>
+        </div>
     </div>
 
     <form:hidden path="version"/>
 
-    <div class="form-group col-md-1">
+    <div class="form-group">
+        <a class="btn btn-primary" href="/masterdata/org-unit/0">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -61,18 +75,18 @@
         minLength: 1,
         limit: 1000
     }, {
-        display: 'customId '+'name',
+        display: 'name',
         source: new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/orgunit/read-orgunit/%QUERY',
+                url: '${pageContext.request.contextPath}/org-unit/read-orgunit/%QUERY',
                 wildcard: '%QUERY'
             }
         })
     });
     $('#parentOrgUnitName').bind('typeahead:selected', function (obj, datum, name) {
-        $('#parentOrgUnitName').val(datum['id']);
+        $('#itemDescHidden').val(datum['id']);
     });
 </script>
 

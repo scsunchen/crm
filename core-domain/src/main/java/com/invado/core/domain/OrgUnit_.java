@@ -12,6 +12,8 @@ public class OrgUnit_ {
     public static volatile SingularAttribute<OrgUnit, String> name;
     public static volatile SingularAttribute<OrgUnit, String> street;
     public static volatile SingularAttribute<OrgUnit, String> place;
+    public static volatile SingularAttribute<OrgUnit, OrgUnit> parentOrgUnit;
     public static volatile SingularAttribute<OrgUnit, Long> version;
+
 
 }

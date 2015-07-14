@@ -1,8 +1,6 @@
 package com.invado.masterdata.service;
 
-import com.invado.core.domain.ApplicationSetup;
-import com.invado.core.domain.Employee;
-import com.invado.core.domain.Employee_;
+import com.invado.core.domain.*;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -11,12 +9,14 @@ import com.invado.masterdata.service.exception.EntityExistsException;
 import com.invado.masterdata.service.exception.EntityNotFoundException;
 import com.invado.masterdata.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.ArrayList;
@@ -46,18 +46,20 @@ public class EmployeeService {
             EntityExistsException {
         //check CreateEmployeePermission
 
+
         if (a == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Employee.IllegalArgumentEx"));
         }
         try {
+            a.setOrgUnit(dao.find(OrgUnit.class, a.getTransientOrgUnitId()));
+            a.setJob(dao.find(Job.class, a.getTransientJobId()));
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-
             dao.persist(a);
             return a;
         } catch (IllegalArgumentException ex) {
@@ -79,7 +81,7 @@ public class EmployeeService {
             throw new ConstraintViolationException(
                     Utils.getMessage("Employee.IllegalArgumentEx"));
         }
-        if (dto.getId() == null ) {
+        if (dto.getId() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Employee.IllegalArgumentEx.Code"));
         }
@@ -100,11 +102,19 @@ public class EmployeeService {
             item.setEmail(dto.getEmail());
             item.setEndDate(dto.getEndDate());
             item.setHireDate(dto.getHireDate());
-            item.setJob(dto.getJob());
+            if (item.getTransientJobId() != null) {
+                item.setJob(dao.find(Job.class, item.getTransientJobId()));
+            }else{
+                item.setJob(dao.find(Job.class, item.getJob().getId()));
+            }
             item.setPhone(dto.getPhone());
             item.setLastName(dto.getLastName());
             item.setMiddleName(dto.getMiddleName());
-            item.setOrgUnit(dto.getOrgUnit());
+            if (item.getTransientOrgUnitId() != null){
+                item.setOrgUnit(dao.find(OrgUnit.class, item.getTransientOrgUnitId()));
+            }else{
+                item.setOrgUnit(dao.find(OrgUnit.class, item.getOrgUnit().getId()));
+            }
             item.setPhone(dto.getPhone());
             item.setPicture(dto.getPicture());
             List<String> msgs = validator.validate(item).stream()
@@ -135,16 +145,16 @@ public class EmployeeService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String companyIDNumber) throws IllegalArgumentException,
+    public void delete(Integer id) throws IllegalArgumentException,
             ReferentialIntegrityException {
         //TODO : check DeleteEmployeePermission
-        if (companyIDNumber == null) {
+        if (id == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Employee.IllegalArgumentEx.Code")
             );
         }
         try {
-            Employee service = dao.find(Employee.class, companyIDNumber);
+            Employee service = dao.find(Employee.class, id);
             if (service != null) {
                 dao.remove(service);
                 dao.flush();
@@ -158,18 +168,18 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Employee read(String companyIDNumber) throws EntityNotFoundException {
+    public Employee read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadEmployeePermission
-        if (companyIDNumber == null) {
+        if (id == null) {
             throw new EntityNotFoundException(
                     Utils.getMessage("Employee.IllegalArgumentEx.Code")
             );
         }
         try {
-            Employee Employee = dao.find(Employee.class, companyIDNumber);
+            Employee Employee = dao.find(Employee.class, id);
             if (Employee == null) {
                 throw new EntityNotFoundException(
-                        Utils.getMessage("Employee.EntityNotFoundEx", companyIDNumber)
+                        Utils.getMessage("Employee.EntityNotFoundEx", id)
                 );
             }
             return Employee;
@@ -187,12 +197,12 @@ public class EmployeeService {
     public ReadRangeDTO<Employee> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadEmployeePermission
-        String id = null;
+        Integer id = null;
         String name = null;
         String TIN = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("id") && s.getValue() instanceof String) {
-                id = (String) s.getValue();
+                id = (Integer) s.getValue();
             }
             if (s.getKey().equals("name") && s.getValue() instanceof String) {
                 name = (String) s.getValue();
@@ -248,14 +258,14 @@ public class EmployeeService {
 
     private Long count(
             EntityManager EM,
-            String id,
+            Integer id,
             String name) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<Employee> root = c.from(Employee.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
-        if (id != null ) {
+        if (id != null) {
             criteria.add(cb.equal(root.get(Employee_.id),
                     cb.parameter(String.class, "code")));
         }
@@ -266,8 +276,8 @@ public class EmployeeService {
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
-        if (id != null && id.isEmpty() == false) {
-            q.setParameter("id", id.toUpperCase() + "%");
+        if (id != null) {
+            q.setParameter("id", id);
         }
         if (name != null && name.isEmpty() == false) {
             q.setParameter("name", name.toUpperCase() + "%");
@@ -276,17 +286,17 @@ public class EmployeeService {
     }
 
     private List<Employee> search(EntityManager em,
-                                String id,
-                                String name,
-                                int first,
-                                int pageSize) {
+                                  Integer id,
+                                  String name,
+                                  int first,
+                                  int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Employee> query = cb.createQuery(Employee.class);
         Root<Employee> root = query.from(Employee.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
-        if (id != null ) {
-            criteria.add(cb.equal(root.get( Employee_.id),
+        if (id != null) {
+            criteria.add(cb.equal(root.get(Employee_.id),
                     cb.parameter(Integer.class, "id")));
         }
         if (name != null && name.isEmpty() == false) {
@@ -298,11 +308,11 @@ public class EmployeeService {
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(Employee_.id)));
         TypedQuery<Employee> typedQuery = em.createQuery(query);
-        if (id != null && id.isEmpty() == false) {
-            typedQuery.setParameter("id", id.toUpperCase() + "%");
+        if (id != null) {
+            typedQuery.setParameter("id", id);
         }
         if (name != null && name.isEmpty() == false) {
-            typedQuery.setParameter("desc", name.toUpperCase() + "%");
+            typedQuery.setParameter("name", name.toUpperCase() + "%");
         }
 
         typedQuery.setFirstResult(first);
@@ -311,10 +321,10 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Employee> readAll(String id,
-                                String name) {
+    public List<Employee> readAll(Integer id,
+                                  String name) {
         try {
-            return this.search(dao, id, name,  0, 0);
+            return this.search(dao, id, name, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",
