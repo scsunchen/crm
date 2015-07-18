@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author bdragan
  */
 @Entity
-@Table(name = "f_account")
+@Table(name = "f_account", schema="devel")
 @NamedQueries({
     @NamedQuery(name = Account.READ_ALL_ORDERBY_NUMBER, 
                 query = "SELECT x FROM Account x ORDER BY x.number")

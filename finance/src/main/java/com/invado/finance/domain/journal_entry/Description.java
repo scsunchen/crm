@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.Range;
  * @author bdragan
  */
 @Entity
-@Table(name = "f_description")
+@Table(name = "f_description", schema="devel")
 @NamedQueries({
     @NamedQuery(name = Description.COUNT_ALL, 
                 query = "SELECT COUNT(x) FROM Description x"),

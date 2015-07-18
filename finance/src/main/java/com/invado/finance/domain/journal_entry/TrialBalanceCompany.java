@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @author bdragan
  */
 @Entity
-@Table(name = "f_trial_balance_company")
+@Table(name = "f_trial_balance_company", schema="devel")
 @NamedQueries({
     @NamedQuery(name = TrialBalanceCompany.READ_BY_COMPANY_AND_ACCOUNT,
             query = "SELECT x FROM TrialBalanceCompany x JOIN x.client p "

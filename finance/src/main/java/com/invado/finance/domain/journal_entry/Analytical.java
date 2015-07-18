@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Vlada
  */
 @Entity
-@Table( name = "f_analytical")
+@Table( name = "f_analytical", schema="devel")
 @NamedQueries({
     @NamedQuery(name = Analytical.REMOVE_BY_JOURNAL_ENTRY,
             query = "DELETE FROM Analytical x WHERE "

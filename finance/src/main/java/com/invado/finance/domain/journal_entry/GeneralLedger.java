@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
  * @author Vlada
  */
 @Entity
-@Table(name = "f_general_ledger")
+@Table(name = "f_general_ledger", schema="devel")
 @NamedQueries({
     @NamedQuery(name = GeneralLedger.REMOVE_BY_JOURNAL_ENTRY,
             query = "DELETE FROM GeneralLedger x WHERE "

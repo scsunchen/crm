@@ -28,7 +28,7 @@ import org.hibernate.validator.constraints.Range;
  * @author bdragan
  */
 @Entity
-@Table(name = "f_journal_entry_type")
+@Table(name = "f_journal_entry_type", schema="devel")
 @IdClass(JournalEntryTypePK.class)
 @NamedQueries({
     // TODO : TEST 

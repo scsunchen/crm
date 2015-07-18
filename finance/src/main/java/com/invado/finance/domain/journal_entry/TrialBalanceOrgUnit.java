@@ -14,7 +14,7 @@ import javax.persistence.*;
  * @author bdragan
  */
 @Entity
-@Table(name = "f_trial_balance_orgunit")
+@Table(name = "f_trial_balance_orgunit", schema="devel")
 @NamedQueries({
     @NamedQuery(name = TrialBalanceOrgUnit.READ_BY_ORGUNIT_AND_ACCOUNT,
             query = "SELECT x FROM TrialBalanceOrgUnit x JOIN x.orgUnit o "

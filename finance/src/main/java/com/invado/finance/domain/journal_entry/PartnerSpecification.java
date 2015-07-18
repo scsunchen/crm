@@ -15,7 +15,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "f_partner_specification")
+@Table(name = "f_partner_specification", schema="devel")
 @NamedQueries({
     @NamedQuery(name = PartnerSpecification.READ_BY_ORGUNIT_AND_ACCOUNT_AND_PARTNER,
             query = "SELECT x FROM PartnerSpecification x JOIN x.orgUnit o "

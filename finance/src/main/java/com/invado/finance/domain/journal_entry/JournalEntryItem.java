@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "f_journal_entry_item")
+@Table(name = "f_journal_entry_item", schema="devel")
 @IdClass(JournalEntryItemPK.class)
 @NamedQueries({
     @NamedQuery(name = JournalEntryItem.COUNT_BY_JOURNAL_ENTRY,

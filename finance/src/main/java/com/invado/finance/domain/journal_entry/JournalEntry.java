@@ -20,7 +20,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "f_journal_entry")
+@Table(name = "f_journal_entry", schema="devel")
 @IdClass(JournalEntryPK.class)
 @NamedQueries({
     @NamedQuery(name = JournalEntry.READ_ALL_ORDER_BY_PRIMARY_KEY,
