@@ -15,23 +15,20 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.ArrayList;
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "f_journal_entry", schema="devel")
-@IdClass(JournalEntryPK.class)
 @NamedQueries({
     @NamedQuery(name = JournalEntry.READ_ALL_ORDER_BY_PRIMARY_KEY,
-            query = "SELECT x FROM JournalEntry x JOIN x.type t "
-                    + "ORDER BY t.client.id, t.id, x.number"),
+            query = "SELECT x FROM JournalEntry x ORDER BY x.pk.client, x.pk.type, x.pk.number"),
     @NamedQuery(name = JournalEntry.READ_BY_PRIMARY_KEY,
-            query = "SELECT x FROM JournalEntry x WHERE x.type.client.id = ?1 "
-                    + "AND x.type.id = ?2 AND x.number = ?3"),
+            query = "SELECT x FROM JournalEntry x WHERE x.pk.client = ?1 AND x.pk.type = ?2 AND x.pk.number = ?3"),
     @NamedQuery(name = JournalEntry.READ_BY_TYPE,
-            query = "SELECT x FROM JournalEntry x JOIN x.type t WHERE "
-            + "t.id = ?1 AND t.client.id = ?2")
+            query = "SELECT x FROM JournalEntry x WHERE x.pk.type = ?1 AND x.pk.client = ?2")
 })
 public class JournalEntry implements Serializable {
 
@@ -41,15 +38,11 @@ public class JournalEntry implements Serializable {
             "JournalEntry.ReadByPK";
     public static final String READ_BY_TYPE =
             "JournalEntry.ReadByType";
-    @Id
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    @ManyToOne
-    @NotNull(message = "{Invoice.Client.NotNull}")
-    private Client client;
-    @Id
-    @Column(name = "journal_entry_type_id")
-    @NotNull(message = "{Invoice.Type.NotNull}")
-    private Integer typeId;
+    
+    @EmbeddedId    
+    @Valid
+    private JournalEntryPK pk = new JournalEntryPK();
+    
     //Bug : https://hibernate.atlassian.net/browse/HHH-8333
     //AssertionFailure: Unexpected nested component on the referenced entity when mapping a @MapsId
     //    @NotNull(message = "{Invoice.OrgUnit.NotNull}")
@@ -62,16 +55,9 @@ public class JournalEntry implements Serializable {
                 referencedColumnName = "company_id", 
                 insertable = false, updatable = false)
     })
-    private JournalEntryType type;
-    @Id
-    @Column(name = "number")
-    @NotNull(message = "{JournalEntry.Number.NotNull}")
-    @DecimalMin(value = "1", message = "{JournalEntry.Number.Min}")
-    //proverava se u SO da li je veci od broja u tipu naloga 
-    private Integer number;
+    private JournalEntryType typeG;
     @Column(name = "record_date")
     @NotNull(message = "{JournalEntry.Date.NotNull}")
-    //u so proverava da li je u tekucoj godini poslovanja(Podesavanja.godina)
     @Convert(converter = LocalDateConverter.class)
     private LocalDate recordDate;
     @Digits(integer = 18, fraction = 2,
@@ -85,8 +71,9 @@ public class JournalEntry implements Serializable {
     @NotNull(message = "{JournalEntry.IsPosted.NotNull}")
     @Column(name = "is_posted")
     private Boolean posted;
-    @OneToMany(cascade = {CascadeType.ALL},
-            mappedBy = "journalEntry",
+    @OneToMany(
+            cascade = {CascadeType.ALL},
+            mappedBy="journalEntry",
             fetch = FetchType.LAZY)
     private List<JournalEntryItem> items = new ArrayList<>();
     @Version
@@ -96,22 +83,12 @@ public class JournalEntry implements Serializable {
     public JournalEntry() {
     }
 
-    public JournalEntry(Integer companyID, Integer typeID, Integer number) {
-        this.client = new Client(companyID);
-        this.typeId = typeID;
-        this.type = new JournalEntryType(companyID, typeID);
-        this.number = number;
-    }
-
     public JournalEntry(JournalEntryType type, Integer number) {
-        this.client = type.getClient();
-        this.typeId = type.getId();
-        this.type = type;
-        this.number = number;
+        this.pk = new JournalEntryPK(type.getClientID(),type.getId(), number);
     }
 
     public List<JournalEntryItem> getItems() {
-        return Collections.unmodifiableList(items);
+        return items;
     }
 
     public int getNumberOfItems() {
@@ -122,8 +99,8 @@ public class JournalEntry implements Serializable {
         items.add(item);
     }
 
-    public void removeItem(JournalEntryItem item) {
-        items.remove(item);
+    public boolean removeItem(JournalEntryItem item) {
+        return items.remove(item);
     }
 
     public Boolean getPosted() {
@@ -143,15 +120,15 @@ public class JournalEntry implements Serializable {
     }
 
     public Integer getNumber() {
-        return number;
+        return pk.getNumber();
     }
 
     public void setNumber(Integer number) {
-        this.number = number;
+        this.pk.setNumber(number);
     }
 
-    public JournalEntryType getType() {
-        return type;
+    public JournalEntryType getTypeG() {
+        return typeG;
     }
 
     public Long getVersion() {
@@ -179,37 +156,48 @@ public class JournalEntry implements Serializable {
     }
 
     public Integer getClientID() {
-        return client.getId();
+        return pk.getClient();
     }
 
-    public Integer getTypeId() {
-        return typeId;
+    public Integer getType() {
+        return pk.getType();
+    }
+
+    public void setType(Integer type) {
+        this.pk.setType(type);
+    }
+    
+    public void setClient(Integer clientId) {
+        this.pk.setClient(clientId);
+    }
+    
+    public Client getClient() {
+        return typeG.getClient();
     }
 
     public JournalEntryDTO getReadAllDTO() {
         JournalEntryDTO dto = new JournalEntryDTO();
-        dto.typeId = type.getId();
-        dto.clientId = type.getClientID();
-        dto.clientName = type.getClientName();
-        dto.typeNumber = type.getNumber();
-        dto.journalEntryNumber = number;
-        dto.month = recordDate.getMonth();
-        dto.day = recordDate.getDayOfMonth();
-        dto.typeName = type.getName();
-        dto.balanceDebit = balanceDebit;
-        dto.balanceCredit = balanceCredit;
-        dto.balance = balanceDebit.subtract(balanceCredit);
-        dto.isPosted = this.posted;
-        dto.version = version;
+        dto.setTypeId(typeG.getId());
+        dto.setClientId(typeG.getClientID());
+        dto.setClientName(typeG.getClientName());
+        dto.setTypeNumber(typeG.getNumber());
+        dto.setJournalEntryNumber(pk.getNumber());
+        dto.setRecordDate(recordDate);
+        dto.setTypeName(typeG.getName());
+        dto.setBalanceDebit(balanceDebit);
+        dto.setBalanceCredit(balanceCredit);
+        dto.setBalance(balanceDebit.subtract(balanceCredit));
+        dto.setIsPosted(this.posted);
+        dto.setVersion(version);
         return dto;
     }
 
     public JournalEntryReportDTO getPrintJournalEntryDTO(String companyName) {
         JournalEntryReportDTO dto = new JournalEntryReportDTO();
         dto.clientName = companyName;
-        dto.typeId = type.getId();
-        dto.typeName = type.getName();
-        dto.journalEntryNumber = number;
+        dto.typeId = typeG.getId();
+        dto.typeName = typeG.getName();
+        dto.journalEntryNumber = pk.getNumber();
         dto.date = this.recordDate;
         dto.generalLedgerDebit = BigDecimal.ZERO;
         dto.generalLedgerCredit = BigDecimal.ZERO;
@@ -278,17 +266,15 @@ public class JournalEntry implements Serializable {
                 break;
         }
     }
-    
-    // <editor-fold defaultstate="collapsed" desc="Object methods implementation">
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.client);
-        hash = 29 * hash + Objects.hashCode(this.typeId);
+        hash = 97 * hash + Objects.hashCode(this.pk);
         return hash;
     }
 
-    @Override    
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -297,10 +283,7 @@ public class JournalEntry implements Serializable {
             return false;
         }
         final JournalEntry other = (JournalEntry) obj;
-        if (!Objects.equals(this.client, other.client)) {
-            return false;
-        }
-        if (!Objects.equals(this.typeId, other.typeId)) {
+        if (!Objects.equals(this.pk, other.pk)) {
             return false;
         }
         return true;
@@ -308,7 +291,9 @@ public class JournalEntry implements Serializable {
 
     @Override
     public String toString() {
-        return "JournalEntry{" + "client=" + client + ", typeId=" + typeId + '}';
+        return "JournalEntry{" + "pk=" + pk + '}';
     }
-    // </editor-fold>
+    
+    
+    
 }

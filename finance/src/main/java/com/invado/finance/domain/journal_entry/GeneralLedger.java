@@ -23,11 +23,11 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "f_general_ledger", schema="devel")
 @NamedQueries({
-    @NamedQuery(name = GeneralLedger.REMOVE_BY_JOURNAL_ENTRY,
-            query = "DELETE FROM GeneralLedger x WHERE "
-            + "x.journalEntryType.client.id = :clientID AND "
-            + "x.journalEntryType.id = :typeID AND "
-            + "x.journalEntryNumber = :number"),
+//    @NamedQuery(name = GeneralLedger.REMOVE_BY_JOURNAL_ENTRY,
+//            query = "DELETE FROM GeneralLedger x WHERE "
+//            + "x.journalEntryType.client.id = :clientID AND "
+//            + "x.journalEntryType.id = :typeID AND "
+//            + "x.journalEntryNumber = :number"),
     @NamedQuery(name = GeneralLedger.READ_BY_ACCOUNT,
             query = "SELECT x FROM GeneralLedger x JOIN x.account k WHERE k.number = ?1"),
     @NamedQuery(name = GeneralLedger.READ_BY_USER,
@@ -116,7 +116,7 @@ public class GeneralLedger implements Serializable {
     private LocalDate valueDate;
     @NotNull(message = "{GeneralLedger.Determination.NotNull}")
     @Column(name = "determination")
-    private Determination determination;
+    private AccountDetermination determination;
     @NotNull(message = "{GeneralLedger.ChangeType.NotNull}")
     @Column(name = "change_type")
     private ChangeType changeType;
@@ -143,7 +143,7 @@ public class GeneralLedger implements Serializable {
     }
 
     public GeneralLedger(JournalEntryItem stavka) {
-        journalEntryType = stavka.getJournalEntryType();
+        journalEntryType = stavka.getJournalEntryTypeG();
         journalEntryNumber = stavka.getJournalEntryNumber();
         journalEntryItemOrdinalNumber = stavka.getOrdinalNumber();
         recordDate = stavka.getJournalEntry().getRecordDate();
@@ -255,11 +255,11 @@ public class GeneralLedger implements Serializable {
         this.valueDate = d;
     }
 
-    public void setDetermination(Determination d) {
+    public void setDetermination(AccountDetermination d) {
         this.determination = d;
     }
 
-    public Determination getDetermination() {
+    public AccountDetermination getDetermination() {
         return this.determination;
     }
 
@@ -302,7 +302,7 @@ public class GeneralLedger implements Serializable {
     }
 
     public void setGLSumItem(JournalEntryItem stavka) {
-        journalEntryType = stavka.getJournalEntryType();
+        journalEntryType = stavka.getJournalEntryTypeG();
         journalEntryNumber = stavka.getJournalEntryNumber();
         journalEntryItemOrdinalNumber = stavka.getOrdinalNumber();
         recordDate = stavka.getJournalEntry().getRecordDate();

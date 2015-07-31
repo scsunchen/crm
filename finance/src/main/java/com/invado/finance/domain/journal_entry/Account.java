@@ -4,6 +4,7 @@
  */
 package com.invado.finance.domain.journal_entry;
 
+import com.invado.core.utils.Utils;
 import com.invado.finance.service.dto.AccountDTO;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -19,12 +20,16 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "f_account", schema="devel")
 @NamedQueries({
     @NamedQuery(name = Account.READ_ALL_ORDERBY_NUMBER, 
-                query = "SELECT x FROM Account x ORDER BY x.number")
+                query = "SELECT x FROM Account x ORDER BY x.number"),
+    @NamedQuery(name = Account.READ_BY_NUMBER_ORDERBY_NUMBER, 
+                query = "SELECT x FROM Account x WHERE x.number LIKE UPPER(:number) ORDER BY x.number")
+    
 })
 public class Account implements Serializable {
 
     public static final String READ_ALL_ORDERBY_NUMBER = 
             "Account.ReadAllOrderByNumber";
+    public static final String READ_BY_NUMBER_ORDERBY_NUMBER = "Account.ReadByNumberOrderByNumber";
     
     @Id
     @Column(name = "number")
@@ -37,10 +42,10 @@ public class Account implements Serializable {
     private String description;
     @NotNull(message = "{Account.Determination.NotBlank}")
     @Column(name = "determination")
-    private Determination determination;
+    private AccountDetermination determination;
     @NotNull(message = "{Account.Type.NotBlank}")
     @Column(name = "type")
-    private Type type;
+    private AccountType type;
     @Version
     @Column(name="version")
     private Long version;
@@ -58,8 +63,8 @@ public class Account implements Serializable {
 
     public Account(String number, 
                    String desc, 
-                   Determination determination, 
-                   Type type) {
+                   AccountDetermination determination, 
+                   AccountType type) {
         this.number = number;
         this.description = desc;
         this.determination = determination;
@@ -88,19 +93,19 @@ public class Account implements Serializable {
      * izracunavanja strukture naloga knjizenja ( u sistemskoj operaciji <code> StampaNaloga</code>).
      * @return pripadnost konta
      */
-    public Determination getDetermination() {
+    public AccountDetermination getDetermination() {
         return determination;
     }
 
-    public void setDetermination(Determination determination) {
+    public void setDetermination(AccountDetermination determination) {
         this.determination = determination;
     }
     
-    public Type getType() {
+    public AccountType getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(AccountType type) {
         this.type = type;
     }
     
@@ -112,17 +117,9 @@ public class Account implements Serializable {
         this.version = version;
     }
     
-//*****************************************************************************//
-    public static enum Type {
-
-        // FIXME !!!
-        SINTETICKI,
-        // FIXME !!!
-        ANALITICKI;
-    }
     
     public boolean jeSinteticki() {
-        if (type.equals(Type.SINTETICKI)) {
+        if (type.equals(AccountType.SINTETICKI)) {
             return true;
         }
         return false;

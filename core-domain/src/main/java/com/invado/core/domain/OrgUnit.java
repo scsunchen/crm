@@ -31,10 +31,13 @@ import org.hibernate.validator.constraints.NotBlank;
         query="SELECT x FROM OrgUnit x JOIN x.client p WHERE p.id = ?1"),
     @NamedQuery(name = OrgUnit.READ_BY_NAME_ORDERBY_NAME, 
         query="SELECT x FROM OrgUnit x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
+    @NamedQuery(name = OrgUnit.READ_BY_CLIENT_AND_NAME_ORDERBY_NAME, 
+        query="SELECT x FROM OrgUnit x WHERE x.client.id = :clientId AND UPPER(x.name) LIKE :name ORDER BY x.name"),
     @NamedQuery(name = OrgUnit.COUNT_ALL, query="SELECT COUNT(x) FROM OrgUnit x")
 })
 public class OrgUnit implements Serializable {
 
+    public static final String READ_BY_CLIENT_AND_NAME_ORDERBY_NAME = "OrgUnit.ReadByClientAndNameOrderByName";
     public static final String READ_BY_NAME_ORDERBY_NAME = "OrgUnit.ReadByNameOrderByName";
     public static final String READ_BY_CLIENT = "OrgUnit.ReadByClient";
     public static final String READ_ALL_ORDERBY_PK = "OrgUnit.ReadAllOrderByPK";

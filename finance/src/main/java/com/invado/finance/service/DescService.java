@@ -24,20 +24,21 @@ import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.validation.Validator;
 import com.invado.finance.service.exception.DescriptionConstraintViolationException;
-import com.invado.finance.service.exception.DescriptionExistsException;
 import com.invado.finance.service.exception.DescriptionNotFoundException;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import static com.invado.finance.Utils.getMessage;
+import javax.persistence.LockModeType;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Bobic Dragan
  */
-@Transactional(rollbackFor = Exception.class)
-public class DescServicesImpl {
+@Service
+public class DescService {
 
     private static final Logger LOG = Logger.getLogger(
             ArticleService.class.getName());
@@ -46,7 +47,8 @@ public class DescServicesImpl {
     private EntityManager EM;
     @Autowired
     private Validator validator;
-
+    
+    @Transactional(rollbackFor = Exception.class)
     public Long update(DescDTO dto) throws DescriptionConstraintViolationException,
                                            DescriptionNotFoundException {
         try {
@@ -55,8 +57,8 @@ public class DescServicesImpl {
                         getMessage("Desc.DescNotExists", dto.getId())
                 );
             }
-            Description temp = EM.find(Description.class, dto.getId());
-            temp.set(dto);
+            Description temp = EM.find(Description.class, dto.getId(), LockModeType.OPTIMISTIC);
+            temp.setName(dto.getName());
             //validacija identifikatora opisa
             List<String> messages = validator.validate(temp).stream()
                     .map(ConstraintViolation::getMessage)
@@ -76,18 +78,18 @@ public class DescServicesImpl {
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
                 throw new SystemException(
-                        getMessage("Desc.OptimisticLock", dto.getId())
+                        getMessage("Desc.OptimisticLock", dto.getId()),ex
                 );
             } else {
                 LOG.log(Level.WARNING, "", ex);
-                throw new SystemException(getMessage("Desc.Persistence.Update"));
+                throw new SystemException(getMessage("Desc.Persistence.Update"),ex);
             }
         } 
     }
-
+    
+    @Transactional(rollbackFor = Exception.class)
     public void create(DescDTO dto)
-            throws DescriptionConstraintViolationException,
-            DescriptionExistsException {
+            throws DescriptionConstraintViolationException {
         try {
             Description temp = new Description();
             temp.set(dto);
@@ -100,20 +102,16 @@ public class DescServicesImpl {
                         getMessage("Desc.ConstraintViolationEx"),
                         messages);
             }
-            Integer id = temp.getId();
-            if (EM.find(Description.class, id) != null) {
-                throw new DescriptionExistsException(
-                        getMessage("Desc.DescExists", id));
-            }
             EM.persist(temp);
-        } catch (DescriptionConstraintViolationException | DescriptionExistsException ex) {
+        } catch (DescriptionConstraintViolationException  ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(getMessage("Desc.Persistence.Create"));
+            throw new SystemException(getMessage("Desc.Persistence.Create"),ex);
         } 
     }
-
+    
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Integer id)
             throws DescriptionNotFoundException,
             ReferentialIntegrityException {
@@ -148,10 +146,11 @@ public class DescServicesImpl {
         } catch (DescriptionNotFoundException | ReferentialIntegrityException iz) {
             throw iz;
         } catch (Exception iz) {
-            LOG.log(Level.WARNING, "Desc.Persistence.Delete", iz);
-            throw new SystemException(getMessage("Desc.Persistence.Delete"));
+            LOG.log(Level.WARNING, "", iz);
+            throw new SystemException(getMessage("Desc.Persistence.Delete"),iz);
         } 
     }
+    
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public DescDTO read(Integer id) throws DescriptionNotFoundException {
         try {
@@ -165,7 +164,7 @@ public class DescServicesImpl {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "Desc.Persistence.Read", ex);
-            throw new SystemException(getMessage("Desc.Persistence.Read"));
+            throw new SystemException(getMessage("Desc.Persistence.Read"),ex);
         } 
     }
 
@@ -213,8 +212,7 @@ public class DescServicesImpl {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(
-                    getMessage("Desc.Persistence.ReadAll"));
+            throw new SystemException(getMessage("Desc.Persistence.ReadAll"),ex);
         } 
     }
 

@@ -14,8 +14,9 @@ import com.invado.finance.service.dto.JournalEntryItemDTO;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,32 +24,21 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "f_journal_entry_item", schema="devel")
-@IdClass(JournalEntryItemPK.class)
 @NamedQueries({
     @NamedQuery(name = JournalEntryItem.COUNT_BY_JOURNAL_ENTRY,
-            query = "SELECT COUNT(x) FROM JournalEntryItem x JOIN "
-            + "x.journalEntry n WHERE n.type.client.id = ?1 AND n.type.id = ?2 "
-            + "AND n.number = ?3"),
+            query = "SELECT COUNT(x) FROM JournalEntryItem x WHERE x.pk.client = ?1 AND x.pk.type = ?2 AND x.pk.number = ?3"),
     @NamedQuery(name = JournalEntryItem.READ_BY_JOURNAL_ENTRY_ORDER_BY_ORDINAL,
-            query = "SELECT x FROM JournalEntryItem x JOIN x.journalEntry n "
-            + "WHERE n.type.client.id = ?1 AND n.type.id = ?2 AND n.number = ?3 "
-            + "ORDER BY x.ordinalNumber"),
+            query = "SELECT x FROM JournalEntryItem x  WHERE x.pk.client = ?1 AND x.pk.type = ?2 AND x.pk.number = ?3 ORDER BY x.pk.ordinalNumber"),
     @NamedQuery(name = JournalEntryItem.READ_BY_ACCOUNT,
-            query = "SELECT x FROM JournalEntryItem x JOIN x.account k WHERE "
-            + "k.number = ?1"),
+            query = "SELECT x FROM JournalEntryItem x JOIN x.account k WHERE k.number = ?1"),
     @NamedQuery(name = JournalEntryItem.READ_BY_USER,
-            query = "SELECT x FROM JournalEntryItem x JOIN x.user k WHERE "
-            + "k.id = ?1"),
+            query = "SELECT x FROM JournalEntryItem x JOIN x.user k WHERE k.id = ?1"),
     @NamedQuery(name = JournalEntryItem.READ_BY_DESCRIPTION,
-            query = "SELECT x FROM JournalEntryItem x JOIN x.desc o "
-            + "WHERE o.id = ?1"),
+            query = "SELECT x FROM JournalEntryItem x JOIN x.desc o WHERE o.id = ?1"),
     @NamedQuery(name = JournalEntryItem.READ_BY_ORGUNIT,
-            query = "SELECT x FROM JournalEntryItem x JOIN x.orgUnit o "
-            + "WHERE o.id = ?1 AND o.client.id = ?2"),
+            query = "SELECT x FROM JournalEntryItem x JOIN x.orgUnit o WHERE o.id = ?1 AND o.client.id = ?2"),
     @NamedQuery(name = JournalEntryItem.READ_JOURNAL_ENTRY_MAX_ITEM_ORDINAL,
-            query = "SELECT MAX(x.ordinalNumber) FROM JournalEntryItem x "
-            + "WHERE x.journalEntry.type.client.id = ?1 AND "
-            + "x.journalEntry.type.id = ?2 AND x.journalEntry.number = ?3"),
+            query = "SELECT MAX(x.pk.ordinalNumber) FROM JournalEntryItem x WHERE x.pk.client = ?1 AND x.pk.type = ?2 AND x.pk.number = ?3"),
     @NamedQuery(name = JournalEntryItem.READ_BY_BUSINESS_PARTNER,
             query = "SELECT x FROM JournalEntryItem x JOIN x.partner s "
             + "WHERE s.companyIdNumber = ?1")
@@ -68,23 +58,24 @@ public class JournalEntryItem implements Serializable, Comparable {
             "JournalEntryItem.ReadJournalEntryMaxOrdinal";
     public static final String READ_BY_BUSINESS_PARTNER =
             "JournalEntryItem.ReadByBusinessPartner";
-    @Id
+    @EmbeddedId
+    @Valid
+    private JournalEntryItemPK pk = new JournalEntryItemPK();
+    
     @ManyToOne
     @NotNull(message = "{JournalEntryItem.JournalEntry.NotNull}")
     @JoinColumns({
         @JoinColumn(name = "journal_entry_company",//idpreduzeca_naloga
-                referencedColumnName = "company_id"),//idpreduzeca
+                referencedColumnName = "company_id",
+                insertable = false, updatable = false),//idpreduzeca
         @JoinColumn(name = "journal_entry_type",//idtipanaloga
-                referencedColumnName = "journal_entry_type_id"),//idtipanaloga
+                referencedColumnName = "journal_entry_type_id",
+                insertable = false, updatable = false),//idtipanaloga
         @JoinColumn(name = "journal_entry_number",//brojnaloga
-                referencedColumnName = "number")//brojnaloga
+                referencedColumnName = "number",
+                insertable = false, updatable = false)//brojnaloga
     })
     private JournalEntry journalEntry;
-    @Id
-    @Column(name = "ordinal")
-    @NotNull(message = "{JournalEntryItem.Ordinal.NotNull}")
-    @DecimalMin(value = "1", message = "{JournalEntryItem.Ordinal.Min}")//>=1
-    private Integer ordinalNumber;
     @NotNull(message = "{JournalEntryItem.OrgUnit.NotNull}")
     @ManyToOne
     @JoinColumns({
@@ -125,7 +116,7 @@ public class JournalEntryItem implements Serializable, Comparable {
     private LocalDate valueDate;//greater than datumDPO
     @NotNull(message = "{JournalEntryItem.Determination.NotNull}")
     @Column(name = "determination")
-    private Determination determination;
+    private AccountDetermination determination;
     @NotNull(message = "{JournalEntryItem.ChangeType.NotNull}")
     @Column(name = "change_type")
     private ChangeType changeType;
@@ -146,31 +137,31 @@ public class JournalEntryItem implements Serializable, Comparable {
     }
 
     public JournalEntryItem(JournalEntry journalEntry) {
+        
         this.journalEntry = journalEntry;
+        this.pk.setClient(journalEntry.getClientID());
+        this.pk.setType(journalEntry.getType());
+        this.pk.setNumber(journalEntry.getNumber());
     }
 
     public JournalEntryItem(JournalEntry journalEntry, Integer ordinalNumber) {
         this.journalEntry = journalEntry;
-        this.ordinalNumber = ordinalNumber;
-    }
-
-    public JournalEntryItem(Integer companyID,
-            Integer typeID,
-            Integer number,
-            Integer ordinal) {
-        this.journalEntry = new JournalEntry(companyID, typeID, number);
-        this.ordinalNumber = ordinal;
+        this.pk.setClient(journalEntry.getClientID());
+        this.pk.setType(journalEntry.getType());
+        this.pk.setNumber(journalEntry.getNumber());
+        this.pk.setOrdinalNumber(ordinalNumber);
     }
 
     //************************************************************************//    
     // GET/SET METHODS //
     //************************************************************************//
+    
     public JournalEntry getJournalEntry() {
         return journalEntry;
     }
 
     public Integer getOrdinalNumber() {
-        return ordinalNumber;
+        return pk.getOrdinalNumber();
     }
 
     public OrgUnit getOrgUnit() {
@@ -237,11 +228,11 @@ public class JournalEntryItem implements Serializable, Comparable {
         this.valueDate = valuta;
     }
 
-    public Determination getDetermination() {
+    public AccountDetermination getDetermination() {
         return determination;
     }
 
-    public void setDetermination(Determination determination) {
+    public void setDetermination(AccountDetermination determination) {
         this.determination = determination;
     }
 
@@ -282,7 +273,7 @@ public class JournalEntryItem implements Serializable, Comparable {
     }
 
     public Integer getJournalEntryNumber() {
-        return journalEntry.getNumber();
+        return pk.getNumber();
     }
 
     public Integer getOrgUnitID() {
@@ -298,11 +289,11 @@ public class JournalEntryItem implements Serializable, Comparable {
     }
 
     public Integer getTypeID() {
-        return journalEntry.getTypeId();
+        return pk.getType();
     }
 
-    public JournalEntryType getJournalEntryType() {
-        return journalEntry.getType();
+    public JournalEntryType getJournalEntryTypeG() {
+        return journalEntry.getTypeG();
     }
 
     public String getPartnerID() {
@@ -351,7 +342,7 @@ public class JournalEntryItem implements Serializable, Comparable {
     }
 
     public boolean isGL() {
-        if (determination == Determination.GENERAL_LEDGER) {
+        if (determination == AccountDetermination.GENERAL_LEDGER) {
             return true;
         }
         return false;
@@ -359,69 +350,59 @@ public class JournalEntryItem implements Serializable, Comparable {
 
     public JournalEntryItemDTO getDTO() {
         JournalEntryItemDTO rezultat = new JournalEntryItemDTO();
-        rezultat.clientId = journalEntry.getClientID();
-        rezultat.journalEntryNumber = journalEntry.getNumber();
-        rezultat.typeId = journalEntry.getTypeId();
-        rezultat.ordinalNumber = this.ordinalNumber;
-        rezultat.creditDebitRelationDate = this.creditDebitRelationDate;
-        rezultat.document = this.document;
+        rezultat.setClientId(journalEntry.getClientID());
+        rezultat.setJournalEntryNumber(journalEntry.getNumber());
+        rezultat.setTypeId(journalEntry.getType());
+        rezultat.setOrdinalNumber(this.pk.getOrdinalNumber());
+        rezultat.setCreditDebitRelationDate(this.creditDebitRelationDate);
+        rezultat.setDocument(this.document);
         desc.setJournalEntryItemDTO(rezultat);
         if (orgUnit != null) {
-            rezultat.unitId = orgUnit.getId();
-            rezultat.unitName = orgUnit.getName();
+            rezultat.setUnitId(orgUnit.getId());
+            rezultat.setUnitName(orgUnit.getName());
         }
-        rezultat.type = this.changeType;
-        rezultat.internalDocument = this.internalDocument;
+        rezultat.setInternalDocument(this.internalDocument);
 //        rezultat.note = this.note;
-        rezultat.accountCode = account.getNumber();
-        rezultat.accountName = account.getDescription();
+        rezultat.setAccountCode(account.getNumber());
+        rezultat.setAccountName(account.getDescription());
         if (partner != null) {
-            rezultat.partnerCompanyId = partner.getCompanyIdNumber();
-            rezultat.partnerName = partner.getName();
+            rezultat.setPartnerCompanyId(partner.getCompanyIdNumber());
+            rezultat.setPartnerName( partner.getName() );
         }
-        rezultat.valueDate = this.valueDate;
-        rezultat.amount = this.amount;
-        rezultat.username = user.getUsername();
-        rezultat.password = user.getPassword();
-        rezultat.determination = determination;
-        return rezultat;
-    }
+        rezultat.setValueDate(this.valueDate);
+        switch (changeType) {
+            case DEBIT:
+                rezultat.setDebit(this.amount);
+                rezultat.setCredit(BigDecimal.ZERO);
+                break;
+            case CREDIT:
+                rezultat.setDebit(BigDecimal.ZERO);
+                rezultat.setCredit(this.amount);
+                break;
 
-    public void set(JournalEntryItemDTO dto,
-            JournalEntry nalog,
-            Description o,
-            OrgUnit oj,
-            BusinessPartner s,
-            Account k,
-            ApplicationUser kor) {
-        this.journalEntry = nalog;
-        this.ordinalNumber = dto.ordinalNumber;
-        this.creditDebitRelationDate = dto.creditDebitRelationDate;
-        this.document = dto.document;
-        this.desc = o;
-        this.orgUnit = oj;
-        this.changeType = dto.type!= null ? dto.type : null;
-        this.internalDocument = dto.internalDocument;
-        this.partner = s;
-//        this.note = dto.note;
-        this.account = k;
-        if (k != null) {
-            this.determination = k.getDetermination();
         }
-        this.valueDate = dto.valueDate;
-        this.amount = dto.amount;
-        this.user = kor;
+        rezultat.setUsername(user.getUsername());
+        rezultat.setDetermination(determination);
+        return rezultat;
     }
 
     @Override
     public int compareTo(Object o) {
         JournalEntryItem stavka = (JournalEntryItem) o;
-        return this.ordinalNumber.compareTo(stavka.ordinalNumber);
+        return this.pk.getOrdinalNumber().compareTo(stavka.pk.getOrdinalNumber());
     }
 
     //************************************************************************//    
     // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.pk);
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -431,26 +412,16 @@ public class JournalEntryItem implements Serializable, Comparable {
             return false;
         }
         final JournalEntryItem other = (JournalEntryItem) obj;
-        if (this.journalEntry != other.journalEntry && (this.journalEntry == null || !this.journalEntry.equals(other.journalEntry))) {
-            return false;
-        }
-        if (this.ordinalNumber != other.ordinalNumber && (this.ordinalNumber == null || !this.ordinalNumber.equals(other.ordinalNumber))) {
+        if (!Objects.equals(this.pk, other.pk)) {
             return false;
         }
         return true;
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + (this.journalEntry != null ? this.journalEntry.hashCode() : 0);
-        hash = 83 * hash + (this.ordinalNumber != null ? this.ordinalNumber.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
     public String toString() {
-        return "JournalEntryItem{" + "journalEntry=" + journalEntry
-                + ", ordinalNumber=" + ordinalNumber + '}';
+        return "JournalEntryItem{" + "pk=" + pk + '}';
     }
+    
+    
 }

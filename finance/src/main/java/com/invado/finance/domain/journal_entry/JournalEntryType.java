@@ -22,7 +22,6 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
 
 /**
  * @author bdragan
@@ -32,6 +31,8 @@ import org.hibernate.validator.constraints.Range;
 @IdClass(JournalEntryTypePK.class)
 @NamedQueries({
     // TODO : TEST 
+    @NamedQuery(name = JournalEntryType.READ_MAXID_BY_CLIENT,
+            query = "SELECT MAX(x.id) FROM JournalEntryType x WHERE x.client.id = ?1 "),
     @NamedQuery(name = JournalEntryType.READ_BY_CLIENT_ORDERBY_PK,
             query = "SELECT x FROM JournalEntryType x WHERE x.client.id = ?1 "
             + "ORDER BY x.client.id, x.id"),
@@ -40,6 +41,10 @@ import org.hibernate.validator.constraints.Range;
     @NamedQuery(name = JournalEntryType.READ_BY_CLIENT,
             query = "SELECT x FROM JournalEntryType x JOIN x.client p "
             + "WHERE p.id = ?1"),
+    @NamedQuery(name = JournalEntryType.READ_BY_CLIENT_AND_NAME,
+            query = "SELECT x FROM JournalEntryType x WHERE x.client.id = :clientId AND UPPER(x.name) LIKE :name"),
+    @NamedQuery(name = JournalEntryType.READ_BY_NAME,
+            query = "SELECT x FROM JournalEntryType x WHERE UPPER(x.name) LIKE :name"),
     @NamedQuery(name = JournalEntryType.COUNT_BY_CLIENT,
             query = "SELECT COUNT(x) FROM JournalEntryType x WHERE x.client.id = ?1"),
     @NamedQuery(name = JournalEntryType.COUNT_ALL,
@@ -48,7 +53,10 @@ import org.hibernate.validator.constraints.Range;
 })
 public class JournalEntryType implements Serializable {
 
+    public static final String READ_MAXID_BY_CLIENT = "JournalEntryType.ReadMaxIdByClient";
     public static final String READ_BY_CLIENT = "JournalEntryType.ReadByClient";
+    public static final String READ_BY_CLIENT_AND_NAME = "JournalEntryType.ReadByClientAndName";
+    public static final String READ_BY_NAME = "JournalEntryType.ReadByName";
     public static final String READ_ALL_ORDERBY_CLIENT_AND_TYPEID = "JournalEntryOrderType.ReadAll";
     public static final String READ_BY_CLIENT_ORDERBY_PK =
             "JournalEntryOrderType.ReadByClientOrderByPK";
@@ -66,7 +74,6 @@ public class JournalEntryType implements Serializable {
     @Id
     @Column(name = "type_id")
     @NotNull(message = "{JournalEntryType.Id.NotNull}")
-    @Range(min = 1, max = 99, message = "{JournalEntryType.Range.NotNull}")
     private Integer id;
     @NotBlank(message = "{JournalEntryType.Name.NotBlank}")
     @Size(max = 40, message = "{JournalEntryType.Name.Size}")
@@ -110,6 +117,14 @@ public class JournalEntryType implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

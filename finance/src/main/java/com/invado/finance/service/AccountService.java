@@ -10,20 +10,17 @@ import com.invado.core.exception.PageNotExistsException;
 import com.invado.core.exception.ReferentialIntegrityException;
 import com.invado.core.exception.SystemException;
 import com.invado.finance.domain.journal_entry.Account;
+import com.invado.finance.domain.journal_entry.AccountType;
 import com.invado.finance.domain.journal_entry.Account_;
 import com.invado.finance.domain.journal_entry.Analytical;
-import com.invado.finance.domain.journal_entry.Determination;
+import com.invado.finance.domain.journal_entry.AccountDetermination;
 import com.invado.finance.domain.journal_entry.GeneralLedger;
 import com.invado.finance.domain.journal_entry.JournalEntryItem;
-import com.invado.finance.domain.journal_entry.PartnerSpecification;
-import com.invado.finance.domain.journal_entry.TrialBalanceCompany;
-import com.invado.finance.domain.journal_entry.TrialBalanceOrgUnit;
 import com.invado.finance.service.dto.AccountDTO;
 import com.invado.finance.service.dto.PageRequestDTO;
 import com.invado.finance.service.dto.ReadRangeDTO;
 import com.invado.finance.service.exception.AccountConstraintViolationException;
 import com.invado.finance.service.exception.AccountExistsException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -39,25 +36,27 @@ import javax.persistence.criteria.Root;
 import javax.security.auth.login.AccountNotFoundException;
 import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import static com.invado.finance.Utils.getMessage;
 import com.invado.finance.service.dto.ReadAllDTO;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import org.springframework.transaction.annotation.Transactional;
+import static com.invado.finance.Utils.getMessage;
+import org.springframework.stereotype.Service;
 /**
  *
  * @author Bobic Dragan
  */
-@Transactional(rollbackFor = Exception.class)
-public class AccountServicesImpl {
+@Service
+public class AccountService {
 
-    private static final Logger LOG = Logger.getLogger(AccountServicesImpl.class.getName());
+    private static final Logger LOG = Logger.getLogger(AccountService.class.getName());
 
     @PersistenceContext(name = "unit")
     private EntityManager EM;
     @Autowired
     private Validator validator;
-
+    
+    @Transactional(rollbackFor = Exception.class)
     public void delete(String accountNumber) throws AccountNotFoundException,
                                                     ReferentialIntegrityException {
         try {
@@ -68,27 +67,6 @@ public class AccountServicesImpl {
                                 accountNumber));
             }
             if (!EM.createNamedQuery(Analytical.READ_BY_ACCOUNT)
-                    .setParameter(1, accountNumber)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("Account.ReferentialIntegrity.RecordedJournalEntry",
-                                accountNumber));
-            }
-            if (!EM.createNamedQuery(TrialBalanceCompany.READ_BY_ACCOUNT)
-                    .setParameter(1, accountNumber)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("Account.ReferentialIntegrity.RecordedJournalEntry",
-                                accountNumber));
-            }
-            if (!EM.createNamedQuery(TrialBalanceOrgUnit.READ_BY_ACCOUNT)
-                    .setParameter(1, accountNumber)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("Account.ReferentialIntegrity.RecordedJournalEntry",
-                                accountNumber));
-            }
-            if (!EM.createNamedQuery(PartnerSpecification.READ_BY_ACCOUNT)
                     .setParameter(1, accountNumber)
                     .getResultList().isEmpty()) {
                 throw new ReferentialIntegrityException(
@@ -113,13 +91,12 @@ public class AccountServicesImpl {
         } catch (AccountNotFoundException | ReferentialIntegrityException e) {
             throw e;
         } catch (Exception e) {
-            LOG.log(Level.WARNING,
-                    "Account.Persistence.Delete",
-                    e);
-            throw new SystemException(getMessage("Account.Persistence.Delete"));
+            LOG.log(Level.WARNING, "", e);
+            throw new SystemException(getMessage("Account.Persistence.Delete"),e);
         } 
     }
-
+    
+    @Transactional(rollbackFor = Exception.class)
     public void create(AccountDTO dto) throws AccountConstraintViolationException,
                                               AccountExistsException {
         try{
@@ -143,7 +120,7 @@ public class AccountServicesImpl {
             throw iz;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(getMessage("Account.Persistence.Create"));
+            throw new SystemException(getMessage("Account.Persistence.Create"),ex);
         } 
     }
     
@@ -160,10 +137,11 @@ public class AccountServicesImpl {
             throw iz;
         } catch (Exception e) {
             LOG.log(Level.WARNING, "", e);
-            throw new SystemException(getMessage("Account.Persistence.Read"));
+            throw new SystemException(getMessage("Account.Persistence.Read"),e);
         } 
     }
-
+    
+    @Transactional(rollbackFor = Exception.class)
     public Long update(AccountDTO DTO) throws AccountConstraintViolationException,
                                               AccountNotFoundException {
         try {
@@ -171,7 +149,7 @@ public class AccountServicesImpl {
                 throw new AccountNotFoundException(
                         getMessage("Account.AccountNotExists", DTO.getNumber()));
             }
-            Account temp = EM.find(Account.class, DTO.getNumber());
+            Account temp = new Account();
             temp.set(DTO);
             //validacija identifikatora konta    
             List<String> messages = validator.validate(temp).stream()
@@ -182,6 +160,7 @@ public class AccountServicesImpl {
                         getMessage("Account.ConstraintViolationEx"),
                         messages);
             }
+            EM.merge(temp);
             return temp.getVersion();
         } catch (AccountConstraintViolationException | AccountNotFoundException ex) {
             throw ex;
@@ -189,16 +168,16 @@ public class AccountServicesImpl {
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
                 throw new SystemException(getMessage("Account.OptimisticLock",
-                        DTO.getNumber()));
+                        DTO.getNumber()),ex);
             } else {
                 LOG.log(Level.WARNING, "", ex);
-                throw new SystemException(getMessage("Account.Persistence.Update"));
+                throw new SystemException(getMessage("Account.Persistence.Update"),ex);
             }
         } 
     }
     
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public ReadAllDTO<AccountDTO> readAll() throws RemoteException {
+    public ReadAllDTO<AccountDTO> readAll() {
         try {
             List<Account> list = EM.createNamedQuery(
                     Account.READ_ALL_ORDERBY_NUMBER)
@@ -211,17 +190,14 @@ public class AccountServicesImpl {
             } else {
                 clientName = EM.find(Client.class, 1).getName();
             }
-            EM.getTransaction().commit();
             List<AccountDTO> result = new ArrayList<>();
             for (Account account : list) {
                 result.add(account.getDTO());
             }
             return new ReadAllDTO(result, clientName);
         } catch (Exception e) {
-            LOG.log(Level.WARNING,
-                    "Account.Persistence.ReadAll",
-                    e);
-            throw new SystemException(getMessage("Account.Persistence.ReadAll"));
+            LOG.log(Level.WARNING, "", e);
+            throw new SystemException(getMessage("Account.Persistence.ReadAll"),e);
         } 
     }
     
@@ -271,14 +247,12 @@ public class AccountServicesImpl {
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
-            EM.getTransaction().commit();
             return result;
         } catch (PageNotExistsException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(
-                    getMessage("Account.Persistence.ReadAll"));
+            throw new SystemException(getMessage("Account.Persistence.ReadAll"),ex);
         } 
 
     }
@@ -290,7 +264,8 @@ public class AccountServicesImpl {
         }
         return result;
     }
-
+    
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Account> readAccounts(EntityManager em,
             int start,
             int rangeSize,
@@ -309,18 +284,18 @@ public class AccountServicesImpl {
         }
         if (analytic != null && analytic.equals(Boolean.TRUE)) {
             criteria = cb.and(criteria,
-                    cb.equal(root.get(Account_.type/*Konto_.vrsta*/), Account.Type.ANALITICKI));
+                    cb.equal(root.get(Account_.type/*Konto_.vrsta*/), AccountType.ANALITICKI));
         } else if (analytic != null && analytic.equals(Boolean.FALSE)) {
             criteria = cb.and(criteria,
-                    cb.equal(root.get(Account_.type/*Konto_.vrsta*/), Account.Type.SINTETICKI));
+                    cb.equal(root.get(Account_.type/*Konto_.vrsta*/), AccountType.SINTETICKI));
         }
 
         if (generalLedger != null && generalLedger.equals(Boolean.TRUE)) {
             criteria = cb.and(criteria,
-                    cb.equal(root.get(Account_.determination/*Konto_.pripadnost*/), Determination.GENERAL_LEDGER));
+                    cb.equal(root.get(Account_.determination/*Konto_.pripadnost*/), AccountDetermination.GENERAL_LEDGER));
         } else if (generalLedger != null && generalLedger.equals(Boolean.FALSE)) {
             criteria = cb.and(criteria,
-                    cb.notEqual(root.get(Account_.determination/*Konto_.pripadnost*/), Determination.GENERAL_LEDGER));
+                    cb.notEqual(root.get(Account_.determination/*Konto_.pripadnost*/), AccountDetermination.GENERAL_LEDGER));
         }
         query.where(criteria);
         TypedQuery<Account> q = em.createQuery(query);
@@ -346,17 +321,17 @@ public class AccountServicesImpl {
         }
         if (analytic != null && analytic.equals(Boolean.TRUE)) {
             criteria = cb.and(criteria,
-                    cb.equal(root.get(Account_.type), Account.Type.ANALITICKI));
+                    cb.equal(root.get(Account_.type), AccountType.ANALITICKI));
         } else if (analytic != null && analytic.equals(Boolean.FALSE)) {
             criteria = cb.and(criteria,
-                    cb.equal(root.get(Account_.type), Account.Type.SINTETICKI));
+                    cb.equal(root.get(Account_.type), AccountType.SINTETICKI));
         }
         if (generalLedger != null && generalLedger.equals(Boolean.TRUE)) {
             criteria = cb.and(criteria,
-                    cb.equal(root.get(Account_.determination), Determination.GENERAL_LEDGER));
+                    cb.equal(root.get(Account_.determination), AccountDetermination.GENERAL_LEDGER));
         } else if (generalLedger != null && generalLedger.equals(Boolean.FALSE)) {
             criteria = cb.and(criteria,
-                    cb.notEqual(root.get(Account_.determination), Determination.GENERAL_LEDGER));
+                    cb.notEqual(root.get(Account_.determination), AccountDetermination.GENERAL_LEDGER));
         }
         query.where(criteria);
         TypedQuery<Long> q = em.createQuery(query);

@@ -1,6 +1,5 @@
 package com.invado.finance.domain.journal_entry;
 
-import com.invado.core.domain.Client;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.metamodel.ListAttribute;
@@ -10,10 +9,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(JournalEntry.class)
 public class JournalEntry_ { 
 
-    public static volatile SingularAttribute<JournalEntry, Client> client;
-    public static volatile SingularAttribute<JournalEntry, Integer> typeId;
-    public static volatile SingularAttribute<JournalEntry, JournalEntryType> type;
-    public static volatile SingularAttribute<JournalEntry, Integer> number;
+    public static volatile SingularAttribute<JournalEntry, JournalEntryPK> pk;
+    public static volatile SingularAttribute<JournalEntry, JournalEntryType> typeG;
     public static volatile SingularAttribute<JournalEntry, LocalDate> recordDate;
     public static volatile SingularAttribute<JournalEntry, BigDecimal> balanceCredit;
     public static volatile SingularAttribute<JournalEntry, BigDecimal> balanceDebit;

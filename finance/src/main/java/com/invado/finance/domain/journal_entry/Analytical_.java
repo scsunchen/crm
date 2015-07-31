@@ -15,7 +15,7 @@ public class Analytical_ {
     public static volatile SingularAttribute<Analytical, LocalDate> valueDate;
     public static volatile SingularAttribute<Analytical, Integer> journalEntryItemOrdinalNumber;
     public static volatile SingularAttribute<Analytical, Status> status;
-    public static volatile SingularAttribute<Analytical, Determination> determination;
+    public static volatile SingularAttribute<Analytical, AccountDetermination> determination;
     public static volatile SingularAttribute<Analytical, JournalEntryType> journalEntryType;
     public static volatile SingularAttribute<Analytical, OrgUnit> orgUnit;
     public static volatile SingularAttribute<Analytical, String> internalDocument;

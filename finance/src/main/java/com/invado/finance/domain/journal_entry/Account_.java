@@ -6,7 +6,7 @@
 
 package com.invado.finance.domain.journal_entry;
 
-import com.invado.finance.domain.journal_entry.Account.Type;
+import com.invado.finance.domain.journal_entry.AccountType;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -18,9 +18,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 public class Account_ { 
 
     public static volatile SingularAttribute<Account, String> description;
-    public static volatile SingularAttribute<Account, Determination> determination;
+    public static volatile SingularAttribute<Account, AccountDetermination> determination;
     public static volatile SingularAttribute<Account, String> number;
-    public static volatile SingularAttribute<Account, Type> type;
+    public static volatile SingularAttribute<Account, AccountType> type;
     public static volatile SingularAttribute<Account, Long> version;
 
 }

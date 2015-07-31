@@ -8,10 +8,8 @@ import com.invado.finance.service.dto.DescDTO;
 import com.invado.finance.service.dto.JournalEntryItemDTO;
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
 
 /**
  *
@@ -23,17 +21,27 @@ import org.hibernate.validator.constraints.Range;
     @NamedQuery(name = Description.COUNT_ALL, 
                 query = "SELECT COUNT(x) FROM Description x"),
     @NamedQuery(name = Description.READ_ALL_ORDERBY_ID, 
-                query = "SELECT x FROM Description x ORDER BY x.id")
+                query = "SELECT x FROM Description x ORDER BY x.id"),
+    @NamedQuery(name = Description.READ_BY_NAME_ORDERBY_NAME, 
+                query = "SELECT x FROM Description x WHERE UPPER(x.name) LIKE :name ORDER BY x.name")
 })
 public class Description implements Serializable {
     
     public static final String COUNT_ALL = "Description.CountAll"; 
     public static final String READ_ALL_ORDERBY_ID = "Description.ReadAllOrderById"; 
+    public static final String READ_BY_NAME_ORDERBY_NAME = "Description.ReadByNameOrderByName"; 
     
     @Id
     @Column(name = "id")
-    @NotNull(message = "{Desc.Id.NotNull}")
-    @Range(min=1, max = 99, message = "{Desc.Id.Range}")
+    @GeneratedValue(generator = "DescriptionGenerator")
+    @TableGenerator(
+            name = "DescriptionGenerator",
+            table = "id_generator",            
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "description",
+            allocationSize = 1
+    )
     private Integer id;
     @NotBlank(message = "{Desc.Name.NotBlank}")
     @Size(max = 40, message = "{Desc.Name.Size}")
@@ -88,8 +96,8 @@ public class Description implements Serializable {
     }
 
     void setJournalEntryItemDTO(JournalEntryItemDTO rezultat) {
-        rezultat.descId = id;
-        rezultat.descName = name;
+        rezultat.setDescId(id);
+        rezultat.setDescName(name);
     }
 
     @Override

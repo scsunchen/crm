@@ -13,7 +13,7 @@ public class JournalEntryItem_ {
 
     public static volatile SingularAttribute<JournalEntryItem, LocalDate> valueDate;
     public static volatile SingularAttribute<JournalEntryItem, Description> desc;
-    public static volatile SingularAttribute<JournalEntryItem, Determination> determination;
+    public static volatile SingularAttribute<JournalEntryItem, AccountDetermination> determination;
     public static volatile SingularAttribute<JournalEntryItem, JournalEntry> journalEntry;
     public static volatile SingularAttribute<JournalEntryItem, OrgUnit> orgUnit;
     public static volatile SingularAttribute<JournalEntryItem, String> internalDocument;

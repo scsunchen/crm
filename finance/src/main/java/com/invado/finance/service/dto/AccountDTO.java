@@ -4,8 +4,8 @@
  */
 package com.invado.finance.service.dto;
 
-import com.invado.finance.domain.journal_entry.Account;
-import com.invado.finance.domain.journal_entry.Determination;
+import com.invado.finance.domain.journal_entry.AccountType;
+import com.invado.finance.domain.journal_entry.AccountDetermination;
 
 
 /**
@@ -16,8 +16,8 @@ public class AccountDTO {
 
     private String number;
     private String name;
-    private Determination determination;
-    private Account.Type type;
+    private AccountDetermination determination;
+    private AccountType type;
     private Long version;
 
     public String getNumber() {
@@ -36,19 +36,19 @@ public class AccountDTO {
         this.name = name;
     }
 
-    public Determination getDetermination() {
+    public AccountDetermination getDetermination() {
         return determination;
     }
 
-    public void setDetermination(Determination determination) {
+    public void setDetermination(AccountDetermination determination) {
         this.determination = determination;
     }
 
-    public Account.Type getType() {
+    public AccountType getType() {
         return type;
     }
 
-    public void setType(Account.Type type) {
+    public void setType(AccountType type) {
         this.type = type;
     }
 

@@ -25,10 +25,10 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table( name = "f_analytical", schema="devel")
 @NamedQueries({
-    @NamedQuery(name = Analytical.REMOVE_BY_JOURNAL_ENTRY,
-            query = "DELETE FROM Analytical x WHERE "
-            + "x.journalEntryType.client.id = :clientID AND "
-            + "x.journalEntryType.id = :typeID AND x.journalEntryNumber = :number"),
+//    @NamedQuery(name = Analytical.REMOVE_BY_JOURNAL_ENTRY,
+//            query = "DELETE FROM Analytical x WHERE "
+//            + "x.journalEntryType.client.id = :clientID AND "
+//            + "x.journalEntryType.id = :typeID AND x.journalEntryNumber = :number"),
     @NamedQuery(name = Analytical.READ_BY_STATUS,
             query = "SELECT x FROM Analytical x WHERE x.status = ?1"),
     @NamedQuery(name = Analytical.READ_BY_ACCOUNT,
@@ -119,7 +119,7 @@ public class Analytical implements Serializable {
     private String document;
     @NotNull(message = "{Analytical.Determination.NotNull}")
     @Column(name = "determination")
-    private Determination determination;
+    private AccountDetermination determination;
     @NotNull(message = "{Analytical.Desc.NotNull}")
     @ManyToOne
     @JoinColumn(name = "desc_id")
@@ -173,7 +173,7 @@ public class Analytical implements Serializable {
     }
 
     public Analytical(JournalEntryItem item) {
-        journalEntryType = item.getJournalEntryType();
+        journalEntryType = item.getJournalEntryTypeG();
         journalEntryNumber = item.getJournalEntryNumber();
         journalEntryItemOrdinalNumber = item.getOrdinalNumber();
         recordDate = item.getJournalEntry().getRecordDate();
@@ -255,11 +255,11 @@ public class Analytical implements Serializable {
         this.document = document;
     }
 
-    public Determination getDetermination() {
+    public AccountDetermination getDetermination() {
         return this.determination;
     }
 
-    public void setDetermination(Determination d) {
+    public void setDetermination(AccountDetermination d) {
         this.determination = d;
     }
 

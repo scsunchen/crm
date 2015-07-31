@@ -4,14 +4,13 @@
  */
 package com.invado.finance.service.dto;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author draganbob
  */
-public class ReadAllDTO<T> implements Serializable {
+public class ReadAllDTO<T> {
 
     public List<T> list;
     public String clientName;

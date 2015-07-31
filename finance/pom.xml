@@ -13,6 +13,13 @@
     <packaging>war</packaging>
     <name>finance</name>
     <version>1.0</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java-version>1.8</java-version>
+        <io.spring.platform-version>1.1.1.RELEASE</io.spring.platform-version>        
+        <jstl-version>1.2</jstl-version>        
+        <el-impl-version>2.2.4</el-impl-version>        
+    </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -85,6 +92,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <!-- slf4j-log4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
         </dependency>
         <!--JDBC driver - MENJACE SE U ORACLE!-->
         <dependency>

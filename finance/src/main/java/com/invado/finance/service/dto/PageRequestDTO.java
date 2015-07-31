@@ -18,6 +18,13 @@ public class PageRequestDTO {
     private Integer page;
     private final List<SearchCriterion> list = new ArrayList<>();
 
+    public PageRequestDTO() {
+    }
+
+    public PageRequestDTO(Integer page) {
+        this.page = page;
+    }
+
     public Integer getPage() {
         return page;
     }

@@ -15,6 +15,83 @@
         <put-attribute name="panel-title" value="DTM"/>
         <put-attribute name="body" value="/WEB-INF/jsp/logo.jsp"/>
     </definition>
+    <definition name="open-item-statements-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Otvorene stavke"/>
+        <put-attribute name="panel-title" value="Otvorene stavke"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/open-item-statements-grid.jsp"/>
+    </definition>
+    <definition name="partner-specification-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Specifikacija"/>
+        <put-attribute name="panel-title" value="Specifikacija kupaca i dobavljača"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-specification-grid.jsp"/>
+    </definition>
+    <definition name="receivable-payable-customer-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Analitička kartica"/>
+        <put-attribute name="panel-title" value="Analitička kartica kupaca"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/receivable-payable-grid.jsp"/>
+    </definition>
+    <definition name="receivable-payable-supplier-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Analitička kartica"/>
+        <put-attribute name="panel-title" value="Analitička kartica dobavljača"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/receivable-payable-grid.jsp"/>
+    </definition>
+    <definition name="GL-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Glavna knjiga"/>
+        <put-attribute name="panel-title" value="Kartica glavne knjige"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/GL-grid.jsp"/>
+    </definition>
+    <definition name="journal-entry-type-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Tip naloga"/>
+        <put-attribute name="panel-title" value="Tip naloga"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/journal-entry-type-grid.jsp"/>
+    </definition>
+    <definition name="journal-entry-type-view" extends="main-menu-form">
+        <put-attribute name="title" value="Tip naloga "/>
+        <put-attribute name="panel-title" value="Pregled tipova naloga za knjiženje"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/journal-entry-type-table.jsp"/>
+    </definition>
+    <definition name="journal-entry-create-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Nalog za knjiženje"/>
+        <put-attribute name="panel-title" value="Kreiranje naloga za knjiženje"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/journal-entry-create-grid.jsp"/>
+    </definition>
+    <definition name="journal-entry-view" extends="main-menu-form">
+        <put-attribute name="title" value="Nalog za knjiženje"/>
+        <put-attribute name="panel-title" value="Pregled naloga za knjiženje"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/journal-entry-table.jsp"/>
+    </definition>
+    <definition name="journal-entry-update-master-detail" extends="main-menu-form">
+        <put-attribute name="head" value=""/>
+        <put-attribute name="title" value="Nalog za knjiženje"/>
+        <put-attribute name="panel-title" value="Nalog za knjiženje"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="master-toolbar" value="/WEB-INF/jsp/journal-entry-update-toolbar.jsp" />
+                <put-attribute name="master-grid" value="/WEB-INF/jsp/journal-entry-update-grid.jsp" />
+                <put-attribute name="details-table" value="/WEB-INF/jsp/journal-entry-update-table.jsp" />
+            </definition>
+        </put-attribute>
+    </definition>
+    <definition name="account-view" extends="main-menu-form">
+        <put-attribute name="title" value="Konto"/>
+        <put-attribute name="panel-title" value="Pregled konta"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/account-table.jsp"/>
+    </definition>
+    <definition name="account-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Konto"/>
+        <put-attribute name="panel-title" value="Konto"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/account-grid.jsp"/>
+    </definition>
+    <definition name="desc-view" extends="main-menu-form">
+        <put-attribute name="title" value="Opis"/>
+        <put-attribute name="panel-title" value="Pregled opisa"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/desc-table.jsp"/>
+    </definition>
+    <definition name="desc-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Opis"/>
+        <put-attribute name="panel-title" value="Opis"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/desc-grid.jsp"/>
+    </definition>
     <definition name="item-view" extends="main-menu-form">
         <put-attribute name="title" value="Artikal"/>
         <put-attribute name="panel-title" value="Pregled artikala"/>

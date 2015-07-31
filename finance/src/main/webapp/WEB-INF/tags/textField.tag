@@ -17,7 +17,7 @@
         <label for="${name}"  ><spring:message code="${label}"/></label>            
         <form:input id="${name}" path="${name}" 
                     class="form-control"
-                    disabled="${disabled}"
+                    readonly="${disabled}"
                     autofocus="${autofocus}" />
         <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
     </div>

@@ -36,6 +36,10 @@ public class Utils {
     public static String getMessage(String key) {
         return PROPERTY_BUNDLE.getString(key);
     }
+    
+    public static boolean containsKey(String key) {
+        return PROPERTY_BUNDLE.containsKey(key);
+    }
 
     public static String getMessage(String key, Object... args) {
         return MessageFormat.format(PROPERTY_BUNDLE.getString(key), args);

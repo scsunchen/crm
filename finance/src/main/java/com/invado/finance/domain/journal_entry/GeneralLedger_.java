@@ -12,7 +12,7 @@ public class GeneralLedger_ {
 
     public static volatile SingularAttribute<GeneralLedger, LocalDate> valueDate;
     public static volatile SingularAttribute<GeneralLedger, Integer> journalEntryItemOrdinalNumber;
-    public static volatile SingularAttribute<GeneralLedger, Determination> determination;
+    public static volatile SingularAttribute<GeneralLedger, AccountDetermination> determination;
     public static volatile SingularAttribute<GeneralLedger, JournalEntryType> journalEntryType;
     public static volatile SingularAttribute<GeneralLedger, OrgUnit> orgUnit;
     public static volatile SingularAttribute<GeneralLedger, String> internalDocument;

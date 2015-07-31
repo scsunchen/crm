@@ -13,6 +13,8 @@ import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
 import com.invado.finance.Utils;
 import com.invado.core.exception.SystemException;
+import com.invado.finance.domain.journal_entry.Account;
+import com.invado.finance.domain.journal_entry.Description;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +62,21 @@ public class MasterDataService {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(
                     "MasterDataService.Exception.ReadClientByName"),
+                    ex);
+        }
+    }
+    
+    @Transactional(readOnly = true)
+    public List<OrgUnit> readOrgUnitByClientAndName(Integer clientId, String name) {
+        try {
+            return dao.createNamedQuery(OrgUnit.READ_BY_CLIENT_AND_NAME_ORDERBY_NAME, OrgUnit.class)
+                    .setParameter("clientId", clientId)
+                    .setParameter("name", ("%"+name+"%").toUpperCase())
+                    .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadOrgUnitByName"),
                     ex);
         }
     }
@@ -118,6 +135,38 @@ public class MasterDataService {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(
                     "MasterDataService.Exception.ReadItemByDescription"),
+                    ex);
+        }
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Account> readAccountByCode(String code) {
+        try {
+            return dao.createNamedQuery(
+                    Account.READ_BY_NUMBER_ORDERBY_NUMBER, 
+                    Account.class)
+                    .setParameter("number", ("%"+code+"%").toUpperCase())
+                    .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadAccountByCode"),
+                    ex);
+        }
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Description> readDescByName(String name) {
+        try {
+            return dao.createNamedQuery(
+                    Description.READ_BY_NAME_ORDERBY_NAME, 
+                    Description.class)
+                    .setParameter("name", ("%"+name+"%").toUpperCase())
+                    .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadDescByName"),
                     ex);
         }
     }

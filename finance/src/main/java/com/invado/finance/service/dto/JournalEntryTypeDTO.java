@@ -4,6 +4,8 @@
  */
 package com.invado.finance.service.dto;
 
+import org.springframework.format.annotation.NumberFormat;
+
 
 /**
  * @author bdragan
@@ -14,6 +16,7 @@ public class JournalEntryTypeDTO {
     private String clientName;
     private Integer typeId;
     private String name;
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
     private Integer journalEntryNumber;
     private Long version;
 

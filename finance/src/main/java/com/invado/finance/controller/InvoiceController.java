@@ -16,11 +16,13 @@ import com.invado.finance.domain.InvoiceBusinessPartner;
 import com.invado.finance.domain.InvoiceType;
 import com.invado.finance.service.MasterDataService;
 import com.invado.finance.service.InvoiceService;
+import com.invado.finance.service.RecordInvoiceService;
 import com.invado.finance.service.dto.InvoiceDTO;
 import com.invado.finance.service.dto.InvoiceItemDTO;
 import com.invado.finance.service.dto.InvoiceReportDTO;
 import com.invado.finance.service.dto.PageRequestDTO;
 import com.invado.finance.service.dto.ReadRangeDTO;
+import com.invado.finance.service.dto.RecordInvoiceDTO;
 import com.itextpdf.awt.DefaultFontMapper;
 import com.itextpdf.awt.PdfGraphics2D;
 import com.itextpdf.text.Rectangle;
@@ -61,6 +63,8 @@ public class InvoiceController {
     @Inject
     private InvoiceService invoiceService;
     @Inject
+    private RecordInvoiceService recordService;
+    @Inject
     private MasterDataService masterDataservice;
     
 
@@ -87,10 +91,11 @@ public class InvoiceController {
         invoiceService.deleteInvoice(clientId, unitId, document);
         return "redirect:/invoice/{page}";
     }
-
+    
     @RequestMapping(value = "/invoice/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
         model.put("invoice", new InvoiceDTO());
+        model.put("page", page);
         model.put("partnerTypes", InvoiceBusinessPartner.values());
         model.put("invoiceTypes", InvoiceType.values());
         return "invoice-create-grid";
