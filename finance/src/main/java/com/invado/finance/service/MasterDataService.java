@@ -13,8 +13,12 @@ import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
 import com.invado.finance.Utils;
 import com.invado.core.exception.SystemException;
+import static com.invado.finance.Utils.getMessage;
 import com.invado.finance.domain.journal_entry.Account;
 import com.invado.finance.domain.journal_entry.Description;
+import com.invado.finance.domain.journal_entry.JournalEntryType;
+import com.invado.finance.service.dto.JournalEntryTypeDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -170,4 +174,28 @@ public class MasterDataService {
                     ex);
         }
     }
+    
+    @Transactional(readOnly = true)
+    public List<JournalEntryTypeDTO> readJournalEntryTypeByNameAndClient(
+            Integer clientId,
+            String name) {
+        try {
+            List<JournalEntryType> result
+                    = dao.createNamedQuery(JournalEntryType.READ_BY_CLIENT_AND_NAME,
+                            JournalEntryType.class)
+                    .setParameter("clientId", clientId)
+                    .setParameter("name", ("%" + name + "%").toUpperCase())
+                    .getResultList();
+
+            List<JournalEntryTypeDTO> dto = new ArrayList<>();
+            for (JournalEntryType result1 : result) {
+                dto.add(result1.getDTO());
+            }
+            return dto;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(getMessage("MasterDataService.Exception.ReadJournalEntryType"),ex);
+        }
+    }
+    
 }

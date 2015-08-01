@@ -49,6 +49,6 @@
     </spring:bind>
     <form:hidden path="version" />    
     <div class="form-group">
-        <button type="submit" class="btn btn-primary <c:if test="${journalEntry.isPosted == true}">disabled</c:if>" ><spring:message code="JournalEntry.Button.Update" /></button>
+        <button type="submit" class="btn btn-primary " <c:if test="${journalEntry.isPosted == true}">disabled</c:if>><spring:message code="JournalEntry.Button.Update" /></button>
     </div>
 </form:form>

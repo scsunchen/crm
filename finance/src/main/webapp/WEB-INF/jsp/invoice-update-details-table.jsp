@@ -70,8 +70,8 @@
             </script>
         </c:if>      
     </form:form>                
-    <a data-toggle="modal" data-target="#dialogAddItem" class="btn btn-primary" >
-        <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoice.Button.AddItem" /></a>
+    <button data-toggle="modal" data-target="#dialogAddItem" class="btn btn-primary" <c:if test="${invoice.recorded == true}">disabled</c:if>>
+        <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoice.Button.AddItem" /></button>
     <br/>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -113,7 +113,7 @@
                 <!--*********************************************************-->
                 <tr>
                     <td>
-                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#dialog${item.ordinal}"><span class="glyphicon glyphicon-trash"></span> brisanje</button>
+                    <button class="btn btn-danger btn-sm" <c:if test="${invoice.recorded == true}">disabled="true"</c:if> data-toggle="modal" data-target="#dialog${item.ordinal}"><span class="glyphicon glyphicon-trash"></span> brisanje</button>
                     </td>
                     <td><spring:eval expression="item.ordinal" /></td>
                     <td><c:out value="${item.articleDesc}"/></td>

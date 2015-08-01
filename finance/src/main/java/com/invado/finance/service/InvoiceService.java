@@ -334,10 +334,11 @@ public class InvoiceService {
                     .setParameter(1, dto.getUsername())
                     .getSingleResult();
             Currency currency = null;
-            if (dto.getIsDomesticCurrency()) {
+            String ISOCode = dao.find(Properties.class, "domestic_currency")
+                    .getValue();
+            if (dto.getCurrencyISOCode().equals(ISOCode)) {
+                temp.setIsDomesticCurrency(Boolean.TRUE);
                 //read domestic currency ISO code from application properties
-                String ISOCode = dao.find(Properties.class, "domestic_currency")
-                        .getValue();
                 currency = dao.find(Currency.class, ISOCode);
                 //if domestic currency does not exists in database create it
                 if (currency == null) {
@@ -347,6 +348,7 @@ public class InvoiceService {
                     dao.flush();
                 }
             } else {
+                temp.setIsDomesticCurrency(Boolean.FALSE);
                 currency = dao.find(Currency.class, dto.getCurrencyISOCode());
                 if (currency == null) {
                     throw new ReferentialIntegrityException(

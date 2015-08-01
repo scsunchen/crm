@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
  * @author root
  */
 @Entity
-@Table( name = "r_entry_accounts_properties")
+@Table( name = "r_entry_accounts_properties", schema="devel")
 public class RecordInvoiceAccount implements Serializable {
 
     @Id

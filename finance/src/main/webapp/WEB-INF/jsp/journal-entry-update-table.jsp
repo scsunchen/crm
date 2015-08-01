@@ -5,8 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<a data-toggle="modal" data-target="#dialogAddItem" class="btn btn-primary <c:if test="${journalEntry.isPosted == true}">disabled</c:if>" >
-    <span class="glyphicon glyphicon-plus"></span><spring:message code="JournalEntry.Button.AddItem" /></a>
+<button data-toggle="modal" data-target="#dialogAddItem" class="btn btn-primary" <c:if test="${journalEntry.isPosted == true}">disabled</c:if>>
+    <span class="glyphicon glyphicon-plus"></span><spring:message code="JournalEntry.Button.AddItem" /></button>
 <br/>
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
@@ -151,7 +151,7 @@
             <!--*********************************************************-->
             <tr>
                 <td>
-                    <button class="btn btn-danger btn-sm <c:if test="${journalEntry.isPosted == true}">disabled</c:if>" data-toggle="modal" data-target="#dialog${item.ordinalNumber}"><span class="glyphicon glyphicon-trash"></span> brisanje</button>
+                    <button class="btn btn-danger btn-sm" <c:if test="${journalEntry.isPosted == true}">disabled</c:if> data-toggle="modal" data-target="#dialog${item.ordinalNumber}"><span class="glyphicon glyphicon-trash"></span> brisanje</button>
                 </td>
                 <td><spring:eval expression="item.ordinalNumber" /></td>
                 <td><c:out value="${item.unitName}"/></td>

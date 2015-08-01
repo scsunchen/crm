@@ -30,15 +30,18 @@ import com.invado.finance.domain.journal_entry.Description;
 import com.invado.finance.domain.journal_entry.RecordInvoiceAccount;
 import com.invado.finance.domain.journal_entry.JournalEntry;
 import com.invado.finance.domain.journal_entry.JournalEntryItem;
+import com.invado.finance.domain.journal_entry.JournalEntryPK;
 import com.invado.finance.domain.journal_entry.JournalEntryType;
 import com.invado.finance.domain.journal_entry.JournalEntryTypePK;
-import com.invado.finance.service.dto.RecordInvoiceDTO;
+import com.invado.finance.service.dto.RequestInvoiceRecordingDTO;
 import com.invado.finance.service.exception.JournalEntryExistsException;
 import com.invado.finance.service.exception.PostedInvoiceException;
 import com.invado.finance.service.exception.ProformaInvoicePostingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -68,7 +71,7 @@ public class RecordInvoiceService {
     private Validator validator; 
    
     @Transactional(rollbackFor = Exception.class)
-    public void perform(RecordInvoiceDTO dto) throws EntityNotFoundException,
+    public void perform(RequestInvoiceRecordingDTO dto) throws EntityNotFoundException,
                                                      JournalEntryExistsException,
                                                      PostedInvoiceException,
                                                      ProformaInvoicePostingException,
@@ -81,11 +84,11 @@ public class RecordInvoiceService {
         }
         try {
             Invoice invoice = EM.find(Invoice.class, 
-                    new InvoicePK(dto.clientId, dto.orgUnitId, dto.document));
+                    new InvoicePK(dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()));
             if (invoice == null) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("RecordInvoice.EntityNotFoundEx.Invoice",
-                        dto.clientId, dto.orgUnitId, dto.document)
+                        dto.getClientId(), dto.getOrgUnitId(), dto.getDocument())
                 );
             }
             
@@ -93,9 +96,9 @@ public class RecordInvoiceService {
             if(invoice.isRecorded() == true) {
                 throw new PostedInvoiceException(
                         Utils.getMessage("RecordInvoice.IllegalArgument.RecordedInvoice",
-                                         dto.clientId, 
-                                         dto.orgUnitId, 
-                                         dto.document)
+                                         dto.getClientId(), 
+                                         dto.getOrgUnitId(), 
+                                         dto.getDocument())
                 ); 
             }
             
@@ -104,48 +107,50 @@ public class RecordInvoiceService {
                 throw new ProformaInvoicePostingException(
                         Utils.getMessage("RecordInvoice.IllegalArgument.ProformaPosting")); 
             }
-            
+            if(EM.find(JournalEntry.class, new JournalEntryPK(dto.getClientId(), 
+                                         dto.getEntryOrderType(),
+                                         dto.getJournalEntryNumber())) != null) {
+                throw new JournalEntryExistsException(
+                        Utils.getMessage("RecordInvoice.JournalEntryExists"));
+            }
             BusinessPartner partner = EM.find(BusinessPartner.class, 
                                                invoice.getPartnerID());// ne moze biti null           
             OrgUnit orgUnit = EM.find(OrgUnit.class,
-                    new OrgUnitPK(dto.orgUnitId, dto.clientId));//ne moze biti null
-            Description opis = EM.find(Description.class, dto.description);
+                    new OrgUnitPK(dto.getOrgUnitId(), dto.getClientId()));//ne moze biti null
+            Description opis = EM.find(Description.class, dto.getDescription());
             if (opis == null) {
                 //dao.rollbackTransaction();
                 throw new EntityNotFoundException(
                         Utils.getMessage("RecordInvoice.EntityNotFoundEx.Desc", 
-                        dto.description));
+                        dto.getDescription()));
             }
             List<ApplicationUser> userList = EM.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME, 
                     ApplicationUser.class)
-                    .setParameter(1, dto.user)
+                    .setParameter(1, dto.getUser())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("RecordInvoice.EntityNotFoundEx.User",
-                        dto.user)
+                        dto.getUser())
                 );
             }
             ApplicationUser user = userList.get(0);
             //add currency exchange rate code
             JournalEntry order = new JournalEntry();
             JournalEntryType tip = EM.find(JournalEntryType.class,
-                    new JournalEntryTypePK(dto.entryOrderType, dto.clientId));
+                    new JournalEntryTypePK(dto.getEntryOrderType(), dto.getClientId()));
             if (tip == null) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("RecordInvoice.EntityNotFound.OrderType",
-                                dto.entryOrderType, dto.clientId)
+                                dto.getEntryOrderType(), dto.getClientId())
                 );
             }
-            Integer year = EM.find(ApplicationSetup.class, 1).getYear();//mora da postoji
             order.setClient(tip.getClient().getId());
             order.setType(tip.getId());
-            order.setNumber(dto.entryOrderNumber);
-            order.setRecordDate(LocalDate.of(year,
-                    dto.entryMonthDay.getMonth(),
-                    dto.entryMonthDay.getDayOfMonth())
-            );
+            order.setNumber(dto.getJournalEntryNumber());
+            order.setRecordDate(dto.getRecordDate());
+            order.setPosted(Boolean.FALSE);
             order.setBalanceDebit(BigDecimal.ZERO);
             order.setBalanceCredit(BigDecimal.ZERO);
             BigDecimal total = BigDecimal.ZERO;//zadužujem kupca
@@ -182,7 +187,7 @@ public class RecordInvoiceService {
                     //dao.rollbackTransaction();
                     throw new EntityNotFoundException(
                             Utils.getMessage("RecordInvoice.EntityNotFoundEx.ExchangeRate",
-                            invoice.getCreditRelationDate(),
+                            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(invoice.getCreditRelationDate()),
                             invoice.getCurrencyISOCode()));
                 }
                 total = total.multiply(rate.getMiddle());
@@ -386,9 +391,10 @@ public class RecordInvoiceService {
                                            user
                 );
             }
+            invoice.setRecorded(Boolean.TRUE);
             EM.persist(order);
         } catch(EntityNotFoundException | PostedInvoiceException | 
-                ProformaInvoicePostingException  ex) {
+                ProformaInvoicePostingException | JournalEntryExistsException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

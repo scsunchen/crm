@@ -32,7 +32,7 @@
         </div>
     </div>
 </div>
-<button class="btn btn-default <c:if test="${journalEntry.isPosted == true}">disabled</c:if>" data-toggle="modal" data-target="#dialogDelete">
+<button class="btn btn-default" <c:if test="${journalEntry.isPosted == true}">disabled</c:if> data-toggle="modal" data-target="#dialogDelete">
     <span class="glyphicon glyphicon-trash"></span> <spring:message code="JournalEntry.Button.Delete" /></button>
 <a href=
    "${pageContext.request.contextPath}/journal-entry/${journalEntry.clientId}/${journalEntry.typeId}/${journalEntry.journalEntryNumber}/print.html" 
@@ -58,8 +58,8 @@
         </div>
     </div>
 </div>
-                   <a data-toggle="modal" data-target="#dialogRecord" class="btn btn-default <c:if test="${journalEntry.isPosted == true}">disabled</c:if>" >
+<button data-toggle="modal" data-target="#dialogRecord" class="btn btn-default" <c:if test="${journalEntry.isPosted == true}">disabled</c:if>>
     <span class="glyphicon glyphicon-pencil"></span> <spring:message code="JournalEntry.Button.Record" />
-</a>
+</button>
 <a href="${pageContext.request.contextPath}/journal-entry/${page}" class="btn btn-default" >
     <span class="glyphicon glyphicon-backward"></span> <spring:message code="JournalEntry.Button.Back" /></a>
