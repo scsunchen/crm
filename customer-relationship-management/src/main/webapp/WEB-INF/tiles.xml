@@ -23,14 +23,25 @@
         <put-attribute name="panel-title" value="Greška prilikom izvršavanja programa"/>
         <put-attribute name="body" value="/WEB-INF/jsp/result-exception.jsp"/>
     </definition>
-    <definition name="terms-view" extends="main-menu-form">
+    <definition name="terms-table" extends="main-menu-form">
         <put-attribute name="title" value="Uslovi poslovanja"/>
         <put-attribute name="body" value="/WEB-INF/jsp/terms-table.jsp"/>
     </definition>
     <definition name="terms-grid" extends="main-menu-form">
         <put-attribute name="title" value="Uslovi poslovanja"/>
         <put-attribute name="panel-title" value="Ažuriranje uslova poslovanja"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/terms-grid.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/terms-create-grid.jsp"/>
     </definition>
-
+    <definition name="terms-update-master-detail" extends="main-menu-form">
+        <put-attribute name="head" value=""/>
+        <put-attribute name="title" value="Uslovi poslovanja"/>
+        <put-attribute name="panel-title" value="Uslovi poslovanja"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="master-toolbar" value="/WEB-INF/jsp/terms-update-master-toolbar.jsp" />
+                <put-attribute name="master-grid" value="/WEB-INF/jsp/terms-update-master-grid.jsp" />
+                <put-attribute name="details-table" value="/WEB-INF/jsp/terms-update-details-table.jsp" />
+            </definition>
+        </put-attribute>
+    </definition>
 </tiles-definitions>

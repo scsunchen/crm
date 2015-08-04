@@ -1,3 +1,4 @@
+<%@tag pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -11,13 +12,13 @@
               description="When present, it specifies that an <input> element is disabled." %>
 
 <spring:bind path="${name}">
-    
-    <div class="form-group">
-        <label for="${name}" >${label}</label>
-        <form:input id="${name}" path="${name}" 
-                    class="form-control ${status.error ? 'error' : '' }"
+
+    <div class="form-group" >
+        <label for="${name}"  ><spring:message code="${label}"/></label>
+        <form:input id="${name}" path="${name}"
+                    class="form-control"
                     disabled="${disabled}"
                     autofocus="${autofocus}" />
-        <span class="help-inline">${status.errorMessage}</span>
+        <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
     </div>
 </spring:bind>

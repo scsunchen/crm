@@ -7,6 +7,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
 <a class="btn btn-primary" href="/masterdata/device/${page}/create"><span class="glyphicon glyphicon-plus"></span>
   Kreiraj</a>
@@ -62,7 +63,12 @@
         <td><c:out value="${item.article.description}"/></td>
         <td><c:out value="${item.serialNumber}"/></td>
         <td><c:out value="${item.status.name}"/></td>
-        <td> <c:out value="${item.creationDate}"/></td>
+        <fmt:parseDate value="${item.creationDate}" pattern="yyyy-MM-dd"
+                       var="parsedDate" type="date" />
+        <fmt:formatDate value="${parsedDate}" var="stdDatum"
+                        type="date" pattern="dd.MM.yyyy" />
+        <td><c:out value="${stdDatum}"/></td>
+
         <td><c:out value="${item.installedSoftwareVersion}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>

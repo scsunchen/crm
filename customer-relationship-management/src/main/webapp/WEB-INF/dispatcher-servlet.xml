@@ -16,31 +16,21 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.invado.customer.relationship.controller"></context:component-scan>
-
     <!-- all resources inside folder src/main/webapp/resources are mapped so they can be refered to inside JSP files
     (see header.jsp for more details) -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
-    <!-- zamenićemo za tiles
-    <bean
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix">
-            <value>/WEB-INF/jsp/</value>
-        </property>
-        <property name="suffix">
-            <value>.jsp</value>
-        </property>
-    </bean>
-                            -->
-
-
     <bean id="viewResolverTiles" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass">
-            <value>
-                org.springframework.web.servlet.view.tiles3.TilesView
-            </value>
+            <value>org.springframework.web.servlet.view.tiles3.TilesView</value>
         </property>
     </bean>
+    <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean" />
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions">
             <list>
@@ -51,30 +41,32 @@
                   value="org.springframework.web.servlet.view.tiles3.SimpleSpringPreparerFactory">
         </property>
     </bean>
-
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="sr_RS" />
+        <property name="defaultTimeZone" value="Europe/Belgrade" />
+    </bean>
+    <bean id="localeChangeInterceptor"
+          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="siteLanguage"/>
+    </bean>
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames" value="com.invado.customer.relationship.bundle.server-strings">
+        </property>
+    </bean>
     <!--
         - This bean resolves specific types of exceptions to corresponding logical 
         - view names for error views.
     -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <!-- view name resolved using bean of type InternalResourceViewResolver 
-        (declared in mvc-view-config.xml)
-        <property name="defaultErrorView" value="exception"/>
-                                          -->
+(declared in mvc-view-config.xml)
+<property name="defaultErrorView" value="exception"/>
+        -->
         <property name="exceptionMappings">
             <props>
                 <prop key="java.lang.Throwable">error</prop>
             </props>
         </property>
-    </bean>
-
-    <bean id="servicePropertyConfig"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:com.invado.customer.relationship/bundle/server-strings.properties</value>
-            </list>
-        </property>
-        <property name="placeholderPrefix" value="$properties{"/>
     </bean>
 </beans>

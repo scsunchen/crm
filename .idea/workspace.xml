@@ -2,41 +2,49 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eeba6398-9634-4954-91ca-f897aba000a8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTermsItems.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/OrgUnitHierarchyDto.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ArticleService.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ArticleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Device.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Device.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Employee.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Employee.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/EmployeeConroller.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/EmployeeConroller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/EmployeeService.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/EmployeeService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/OrgUnitController.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/OrgUnitController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnitPK.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnitPK.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit_.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit_.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/BusinessPartnerRelationshipTermsController.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/BusinessPartnerRelationshipTermsController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTermsItems.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTermsItems.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/BusinessPartnerRelationshipTermsService.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/BusinessPartnerRelationshipTermsService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/Utils.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/Utils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/admin.iml" afterPath="$PROJECT_DIR$/admin/admin.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/application-context.xml" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/application-context.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-table.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/js/bootstrap-datepicker.js" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/js/bootstrap-datepicker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker.min.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/js/bootstrap-datepicker.min.js" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/js/bootstrap-datepicker.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker.standalone.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker.standalone.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker.standalone.min.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker.standalone.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker3.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker3.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker3.min.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker3.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker3.standalone.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker3.standalone.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker3.standalone.min.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datepicker3.standalone.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datetimepicker.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datetimepicker.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datetimepicker.min.css" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/css/bootstrap-datetimepicker.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/js/bootstrap-datetimepicker.min.js" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/js/bootstrap-datetimepicker.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/css/bootstrap-theme.min.css" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/css/bootstrap-theme.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/META-INF/context.xml" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/META-INF/context.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/core-domain.iml" afterPath="$PROJECT_DIR$/core-domain/core-domain.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/core-service-provider-interface.iml" afterPath="$PROJECT_DIR$/core-module-spi/core-service-provider-interface.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/customer-relationship-management.iml" afterPath="$PROJECT_DIR$/customer-relationship-management/customer-relationship-management.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/customer_relationship_management_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/customer_relationship_management_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/device-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/device-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-grid.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-grid.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/employee-table.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/finance_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/finance_war.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/finance_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/finance_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/job-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/job-table.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputField.tag" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputField.tag" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/master-data-management.iml" afterPath="$PROJECT_DIR$/master-data-management/master-data-management.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/master_data_management_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/master_data_management_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/resources/META-INF/masterdata-persistence.xml" afterPath="$PROJECT_DIR$/master-data-management/src/main/resources/META-INF/masterdata-persistence.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/js/masterdata.js" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/resources/js/masterdata.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/layouts/menu-form.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/layouts/menu-form.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-grid.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-grid.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/resources/com/invado/core/bundle/strings.properties" afterPath="$PROJECT_DIR$/core-domain/src/main/resources/com/invado/core/bundle/strings.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/web.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="crm.iws" />
@@ -75,16 +83,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="OrgUnitService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="OrgUnitService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5935374">
-              <caret line="436" column="42" selection-start-line="436" selection-start-column="42" selection-end-line="436" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="442" column="5" selection-start-line="442" selection-start-column="5" selection-end-line="442" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#17023#17032#0" expanded="true" />
                 <marker date="1436909517276" expanded="true" signature="17128:17319" placeholder="select ou.* ..c_org_unit..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application-context.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6287129">
+              <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -92,7 +109,7 @@
       <file leaf-file-name="orgunit-table.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-table.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.769231">
+            <state vertical-scroll-proportion="0.0">
               <caret line="67" column="58" selection-start-line="67" selection-start-column="58" selection-end-line="67" selection-end-column="58" />
               <folding />
             </state>
@@ -137,76 +154,6 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="110" column="12" selection-start-line="110" selection-start-column="12" selection-end-line="110" selection-end-column="12" />
               <folding>
-                <element signature="e#6328#6329#0" expanded="true" />
-                <element signature="e#6363#6364#0" expanded="true" />
-                <element signature="e#7134#7135#0" expanded="true" />
-                <element signature="e#7163#7164#0" expanded="true" />
-                <element signature="e#7193#7194#0" expanded="true" />
-                <element signature="e#7218#7219#0" expanded="true" />
-                <element signature="e#7255#7256#0" expanded="true" />
-                <element signature="e#7283#7284#0" expanded="true" />
-                <element signature="e#7314#7315#0" expanded="true" />
-                <element signature="e#7341#7342#0" expanded="true" />
-                <element signature="e#7381#7382#0" expanded="true" />
-                <element signature="e#7413#7414#0" expanded="true" />
-                <element signature="e#7445#7446#0" expanded="true" />
-                <element signature="e#7473#7474#0" expanded="true" />
-                <element signature="e#7515#7516#0" expanded="true" />
-                <element signature="e#7549#7550#0" expanded="true" />
-                <element signature="e#7582#7583#0" expanded="true" />
-                <element signature="e#7611#7612#0" expanded="true" />
-                <element signature="e#7655#7656#0" expanded="true" />
-                <element signature="e#7691#7692#0" expanded="true" />
-                <element signature="e#7724#7725#0" expanded="true" />
-                <element signature="e#7754#7755#0" expanded="true" />
-                <element signature="e#7798#7799#0" expanded="true" />
-                <element signature="e#7836#7837#0" expanded="true" />
-                <element signature="e#7877#7878#0" expanded="true" />
-                <element signature="e#7913#7914#0" expanded="true" />
-                <element signature="e#7972#7973#0" expanded="true" />
-                <element signature="e#8022#8023#0" expanded="true" />
-                <element signature="e#8066#8067#0" expanded="true" />
-                <element signature="e#8102#8103#0" expanded="true" />
-                <element signature="e#8137#8138#0" expanded="true" />
-                <element signature="e#8168#8169#0" expanded="true" />
-                <element signature="e#8216#8217#0" expanded="true" />
-                <element signature="e#8256#8257#0" expanded="true" />
-                <element signature="e#8299#8300#0" expanded="true" />
-                <element signature="e#8337#8338#0" expanded="true" />
-                <element signature="e#8400#8401#0" expanded="true" />
-                <element signature="e#8454#8455#0" expanded="true" />
-                <element signature="e#8498#8499#0" expanded="true" />
-                <element signature="e#8538#8539#0" expanded="true" />
-                <element signature="e#8604#8605#0" expanded="true" />
-                <element signature="e#8662#8663#0" expanded="true" />
-                <element signature="e#8703#8704#0" expanded="true" />
-                <element signature="e#8739#8740#0" expanded="true" />
-                <element signature="e#8798#8799#0" expanded="true" />
-                <element signature="e#8848#8849#0" expanded="true" />
-                <element signature="e#9074#9075#0" expanded="true" />
-                <element signature="e#9111#9112#0" expanded="true" />
-                <element signature="e#9147#9148#0" expanded="true" />
-                <element signature="e#9202#9203#0" expanded="true" />
-                <element signature="e#9239#9240#0" expanded="true" />
-                <element signature="e#9278#9279#0" expanded="true" />
-                <element signature="e#9314#9315#0" expanded="true" />
-                <element signature="e#9352#9353#0" expanded="true" />
-                <element signature="e#9391#9392#0" expanded="true" />
-                <element signature="e#9432#9433#0" expanded="true" />
-                <element signature="e#9473#9474#0" expanded="true" />
-                <element signature="e#9516#9517#0" expanded="true" />
-                <element signature="e#9554#9555#0" expanded="true" />
-                <element signature="e#9594#9595#0" expanded="true" />
-                <element signature="e#9642#9643#0" expanded="true" />
-                <element signature="e#9692#9693#0" expanded="true" />
-                <element signature="e#9729#9730#0" expanded="true" />
-                <element signature="e#9768#9769#0" expanded="true" />
-                <element signature="e#9822#9823#0" expanded="true" />
-                <element signature="e#9875#9876#0" expanded="true" />
-                <element signature="e#9929#9930#0" expanded="true" />
-                <element signature="e#9982#9983#0" expanded="true" />
-                <element signature="e#10949#10950#0" expanded="true" />
-                <element signature="e#11024#11025#0" expanded="true" />
                 <marker date="1436906295393" expanded="true" signature="2799:3067" placeholder="select ou.OR..c_org_unit..." />
                 <marker date="1436906295393" expanded="true" signature="3050:3067" placeholder="select * fro..c_org_unit..." />
                 <marker date="1436906295393" expanded="true" signature="3154:3626" placeholder="select ou.OR..c_org_unit..." />
@@ -275,7 +222,6 @@
         <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/InvoiceService.java" />
         <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnitPK.java" />
         <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ArticleService.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/resources/META-INF/masterdata-persistence.xml" />
         <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit_.java" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" />
@@ -300,6 +246,7 @@
         <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/OrgUnitHierarchyDto.java" />
         <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml" />
       </list>
     </option>
   </component>
@@ -333,54 +280,6 @@
           <option name="myItemId" value="" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="master-data Maven Webapp" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="master-data Maven Webapp" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Lifecycle" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="core-domain" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="core-domain" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Lifecycle" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
-        </PATH_ELEMENT>
       </PATH>
     </treeState>
   </component>
@@ -388,10 +287,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -446,6 +345,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -624,6 +524,32 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="master-data-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="bundle" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -731,431 +657,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="customer-relationship-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="customer-relationship-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="customer-relationship-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="relationship" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="customer-relationship-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="relationship" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-module-spi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -1168,7 +671,7 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/ojdbc6.jar!/" />
     <property name="recentsLimit" value="5" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -1181,7 +684,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
@@ -1419,10 +922,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
@@ -1446,9 +945,6 @@
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -1597,6 +1093,7 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="Unnamed_crm_4" />
+        <option name="HTTP_PORT" value="8090" />
       </server-settings>
       <predefined_log_file id="Tomcat" enabled="true" />
       <predefined_log_file id="Tomcat Catalina" enabled="true" />
@@ -1763,6 +1260,8 @@
       <workItem from="1436779289830" duration="7316000" />
       <workItem from="1436866602884" duration="2115000" />
       <workItem from="1436871169732" duration="21723000" />
+      <workItem from="1438536098326" duration="2485000" />
+      <workItem from="1438721192286" duration="432000" />
     </task>
     <task id="LOCAL-00001" summary="Materdata izmene....">
       <created>1436180082408</created>
@@ -1774,42 +1273,42 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="396030000" />
+    <option name="totallyTimeSpent" value="398947000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1050" extended-state="1" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32480535" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24164811" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26362625" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1684435" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17272727" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2858732" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18710022" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19144385" sideWeight="0.49599084" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39933258" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19144385" sideWeight="0.5040092" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39933258" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32480535" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32703003" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1959,7 +1458,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="84" column="42" selection-start-line="84" selection-start-column="42" selection-end-line="84" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1989,14 +1487,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.5555553">
-          <caret line="12" column="96" selection-start-line="12" selection-start-column="96" selection-end-line="12" selection-end-column="96" />
           <folding />
         </state>
       </provider>
@@ -2131,7 +1621,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2139,7 +1628,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-15.896552">
           <caret line="123" column="35" selection-start-line="123" selection-start-column="35" selection-end-line="123" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2154,7 +1642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.5384617">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="26" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2176,9 +1663,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.137931">
           <caret line="105" column="63" selection-start-line="105" selection-start-column="63" selection-end-line="105" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2186,9 +1670,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <element signature="e#871#872#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2203,11 +1684,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="186" column="0" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
-          <folding>
-            <element signature="e#3548#3549#0" expanded="false" />
-            <element signature="e#3574#3575#0" expanded="false" />
-            <element signature="e#4466#4467#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2223,7 +1699,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="96" column="40" selection-start-line="96" selection-start-column="19" selection-end-line="96" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2231,13 +1706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#830#831#0" expanded="false" />
-            <element signature="e#859#860#0" expanded="false" />
-            <element signature="e#3935#3936#0" expanded="false" />
-            <element signature="e#3989#3990#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2255,7 +1723,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="51" selection-start-line="55" selection-start-column="39" selection-end-line="55" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2263,7 +1730,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="71" selection-start-line="45" selection-start-column="71" selection-end-line="45" selection-end-column="71" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2289,13 +1755,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-table.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.769231">
+        <state vertical-scroll-proportion="0.0">
           <caret line="67" column="58" selection-start-line="67" selection-start-column="58" selection-end-line="67" selection-end-column="58" />
           <folding />
         </state>
@@ -2315,36 +1780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13776337">
           <caret line="7" column="56" selection-start-line="7" selection-start-column="56" selection-end-line="7" selection-end-column="56" />
-          <folding>
-            <element signature="e#385#386#0" expanded="true" />
-            <element signature="e#410#411#0" expanded="true" />
-            <element signature="e#446#447#0" expanded="true" />
-            <element signature="e#474#475#0" expanded="true" />
-            <element signature="e#509#510#0" expanded="true" />
-            <element signature="e#540#541#0" expanded="true" />
-            <element signature="e#588#589#0" expanded="true" />
-            <element signature="e#628#629#0" expanded="true" />
-            <element signature="e#659#660#0" expanded="true" />
-            <element signature="e#686#687#0" expanded="true" />
-            <element signature="e#726#727#0" expanded="true" />
-            <element signature="e#758#759#0" expanded="true" />
-            <element signature="e#790#791#0" expanded="true" />
-            <element signature="e#818#819#0" expanded="true" />
-            <element signature="e#860#861#0" expanded="true" />
-            <element signature="e#894#895#0" expanded="true" />
-            <element signature="e#927#928#0" expanded="true" />
-            <element signature="e#956#957#0" expanded="true" />
-            <element signature="e#1000#1001#0" expanded="true" />
-            <element signature="e#1036#1037#0" expanded="true" />
-            <element signature="e#1070#1071#0" expanded="true" />
-            <element signature="e#1100#1101#0" expanded="true" />
-            <element signature="e#1146#1147#0" expanded="true" />
-            <element signature="e#1184#1185#0" expanded="true" />
-            <element signature="e#1228#1229#0" expanded="true" />
-            <element signature="e#1268#1269#0" expanded="true" />
-            <element signature="e#1334#1335#0" expanded="true" />
-            <element signature="e#1392#1393#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2377,76 +1812,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="110" column="12" selection-start-line="110" selection-start-column="12" selection-end-line="110" selection-end-column="12" />
           <folding>
-            <element signature="e#6328#6329#0" expanded="true" />
-            <element signature="e#6363#6364#0" expanded="true" />
-            <element signature="e#7134#7135#0" expanded="true" />
-            <element signature="e#7163#7164#0" expanded="true" />
-            <element signature="e#7193#7194#0" expanded="true" />
-            <element signature="e#7218#7219#0" expanded="true" />
-            <element signature="e#7255#7256#0" expanded="true" />
-            <element signature="e#7283#7284#0" expanded="true" />
-            <element signature="e#7314#7315#0" expanded="true" />
-            <element signature="e#7341#7342#0" expanded="true" />
-            <element signature="e#7381#7382#0" expanded="true" />
-            <element signature="e#7413#7414#0" expanded="true" />
-            <element signature="e#7445#7446#0" expanded="true" />
-            <element signature="e#7473#7474#0" expanded="true" />
-            <element signature="e#7515#7516#0" expanded="true" />
-            <element signature="e#7549#7550#0" expanded="true" />
-            <element signature="e#7582#7583#0" expanded="true" />
-            <element signature="e#7611#7612#0" expanded="true" />
-            <element signature="e#7655#7656#0" expanded="true" />
-            <element signature="e#7691#7692#0" expanded="true" />
-            <element signature="e#7724#7725#0" expanded="true" />
-            <element signature="e#7754#7755#0" expanded="true" />
-            <element signature="e#7798#7799#0" expanded="true" />
-            <element signature="e#7836#7837#0" expanded="true" />
-            <element signature="e#7877#7878#0" expanded="true" />
-            <element signature="e#7913#7914#0" expanded="true" />
-            <element signature="e#7972#7973#0" expanded="true" />
-            <element signature="e#8022#8023#0" expanded="true" />
-            <element signature="e#8066#8067#0" expanded="true" />
-            <element signature="e#8102#8103#0" expanded="true" />
-            <element signature="e#8137#8138#0" expanded="true" />
-            <element signature="e#8168#8169#0" expanded="true" />
-            <element signature="e#8216#8217#0" expanded="true" />
-            <element signature="e#8256#8257#0" expanded="true" />
-            <element signature="e#8299#8300#0" expanded="true" />
-            <element signature="e#8337#8338#0" expanded="true" />
-            <element signature="e#8400#8401#0" expanded="true" />
-            <element signature="e#8454#8455#0" expanded="true" />
-            <element signature="e#8498#8499#0" expanded="true" />
-            <element signature="e#8538#8539#0" expanded="true" />
-            <element signature="e#8604#8605#0" expanded="true" />
-            <element signature="e#8662#8663#0" expanded="true" />
-            <element signature="e#8703#8704#0" expanded="true" />
-            <element signature="e#8739#8740#0" expanded="true" />
-            <element signature="e#8798#8799#0" expanded="true" />
-            <element signature="e#8848#8849#0" expanded="true" />
-            <element signature="e#9074#9075#0" expanded="true" />
-            <element signature="e#9111#9112#0" expanded="true" />
-            <element signature="e#9147#9148#0" expanded="true" />
-            <element signature="e#9202#9203#0" expanded="true" />
-            <element signature="e#9239#9240#0" expanded="true" />
-            <element signature="e#9278#9279#0" expanded="true" />
-            <element signature="e#9314#9315#0" expanded="true" />
-            <element signature="e#9352#9353#0" expanded="true" />
-            <element signature="e#9391#9392#0" expanded="true" />
-            <element signature="e#9432#9433#0" expanded="true" />
-            <element signature="e#9473#9474#0" expanded="true" />
-            <element signature="e#9516#9517#0" expanded="true" />
-            <element signature="e#9554#9555#0" expanded="true" />
-            <element signature="e#9594#9595#0" expanded="true" />
-            <element signature="e#9642#9643#0" expanded="true" />
-            <element signature="e#9692#9693#0" expanded="true" />
-            <element signature="e#9729#9730#0" expanded="true" />
-            <element signature="e#9768#9769#0" expanded="true" />
-            <element signature="e#9822#9823#0" expanded="true" />
-            <element signature="e#9875#9876#0" expanded="true" />
-            <element signature="e#9929#9930#0" expanded="true" />
-            <element signature="e#9982#9983#0" expanded="true" />
-            <element signature="e#10949#10950#0" expanded="true" />
-            <element signature="e#11024#11025#0" expanded="true" />
             <marker date="1436906295393" expanded="true" signature="2799:3067" placeholder="select ou.OR..c_org_unit..." />
             <marker date="1436906295393" expanded="true" signature="3050:3067" placeholder="select * fro..c_org_unit..." />
             <marker date="1436906295393" expanded="true" signature="3154:3626" placeholder="select ou.OR..c_org_unit..." />
@@ -2456,13 +1821,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5935374">
-          <caret line="436" column="42" selection-start-line="436" selection-start-column="42" selection-end-line="436" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="442" column="5" selection-start-line="442" selection-start-column="5" selection-end-line="442" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#17023#17032#0" expanded="true" />
             <marker date="1436909517276" expanded="true" signature="17128:17319" placeholder="select ou.* ..c_org_unit..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/application-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6287129">
+          <caret line="48" column="12" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
