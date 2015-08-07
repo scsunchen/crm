@@ -39,6 +39,10 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.validation.SchemaFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -323,7 +327,42 @@ public class JournalEntryController {
             return byteStream.toByteArray();
         }
     }
-
+    
+    @RequestMapping(value = "/journal-entry/{clientId}/{typeId}/{number}/export.html")
+    public ResponseEntity<byte[]> exportJournalEntry(
+            @PathVariable Integer clientId,
+            @PathVariable Integer typeId,
+            @PathVariable Integer number)
+            throws Exception {
+        JournalEntryReportDTO dto = service.printJournalEntry(clientId,
+                typeId,
+                number);
+        JAXBContext context = JAXBContext.newInstance(
+                JournalEntryReportDTO.class
+        );
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(
+                Marshaller.JAXB_FORMATTED_OUTPUT,
+                Boolean.TRUE
+        );
+        SchemaFactory sf = SchemaFactory.newInstance(
+                W3C_XML_SCHEMA_NS_URI
+        );
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        marshaller.marshal(
+                dto,
+                byteStream
+        );
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/xml"));
+        String filename = String.format("%snalog", dto.date.toString());
+        headers.add("content-disposition", "attachment;filename=" + filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<byte[]> response = new ResponseEntity<>(
+                byteStream.toByteArray(), headers, HttpStatus.OK);
+        return response;
+    }
+    
     @RequestMapping(value = "/journal-entry/read-orgunit/{name}")
     public @ResponseBody
     List<OrgUnit> findOrganizationalUnitByName(@PathVariable String name) {

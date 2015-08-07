@@ -4,9 +4,11 @@
  */
 package com.invado.finance.service.dto;
 
+import com.invado.finance.controller.LocalDateXMLAdapter;
 import com.invado.finance.domain.journal_entry.AccountDetermination;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -96,6 +98,7 @@ public class JournalEntryItemDTO {
         return creditDebitRelationDate;
     }
 
+    @XmlJavaTypeAdapter( LocalDateXMLAdapter.class )
     public void setCreditDebitRelationDate(LocalDate creditDebitRelationDate) {
         this.creditDebitRelationDate = creditDebitRelationDate;
     }
@@ -168,6 +171,7 @@ public class JournalEntryItemDTO {
         return valueDate;
     }
 
+    @XmlJavaTypeAdapter( LocalDateXMLAdapter.class )
     public void setValueDate(LocalDate valueDate) {
         this.valueDate = valueDate;
     }

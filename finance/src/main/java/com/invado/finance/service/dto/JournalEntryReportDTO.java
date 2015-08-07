@@ -4,17 +4,22 @@
  */
 package com.invado.finance.service.dto;
 
+import com.invado.finance.controller.LocalDateXMLAdapter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
  * @author Vlada
  */
+@XmlRootElement
 public class JournalEntryReportDTO {
-
+    
+    @XmlJavaTypeAdapter( LocalDateXMLAdapter.class )
     public LocalDate date;
     public String typeName;
     public Integer typeId;

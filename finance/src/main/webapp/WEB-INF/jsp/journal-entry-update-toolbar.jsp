@@ -61,5 +61,7 @@
 <button data-toggle="modal" data-target="#dialogRecord" class="btn btn-default" <c:if test="${journalEntry.isPosted == true}">disabled</c:if>>
     <span class="glyphicon glyphicon-pencil"></span> <spring:message code="JournalEntry.Button.Record" />
 </button>
+<a href="${pageContext.request.contextPath}/journal-entry/${journalEntry.clientId}/${journalEntry.typeId}/${journalEntry.journalEntryNumber}/export.html" class="btn btn-default" >
+    <span class="glyphicon glyphicon-download"></span> <spring:message code="JournalEntry.Button.Export" /></a>
 <a href="${pageContext.request.contextPath}/journal-entry/${page}" class="btn btn-default" >
     <span class="glyphicon glyphicon-backward"></span> <spring:message code="JournalEntry.Button.Back" /></a>
