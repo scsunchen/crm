@@ -18,6 +18,7 @@ import com.invado.core.exception.EntityNotFoundException;
 import com.invado.core.exception.PageNotExistsException;
 import com.invado.core.exception.ReferentialIntegrityException;
 import com.invado.core.exception.SystemException;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,7 +45,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *  
  * @author root
  */
 @Service
@@ -143,7 +143,7 @@ public class ArticleService {
             }
             dao.merge(dto);
             return item;
-        } catch (com.invado.core.exception.ConstraintViolationException 
+        } catch (com.invado.core.exception.ConstraintViolationException
                 | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -336,23 +336,23 @@ public class ArticleService {
         }
         if (dateFrom != null) {
             criteria.add(cb.greaterThanOrEqualTo(
-                    root.get(Article_.updated),
-                    cb.parameter(Date.class, "updatedFrom"))
+                            root.get(Article_.updated),
+                            cb.parameter(Date.class, "updatedFrom"))
             );
         }
         if (dateTo != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Article_.updated),
-                    cb.parameter(Date.class, "updatedTo"))
+                            cb.parameter(Date.class, "updatedTo"))
             );
         }
         if (stockFrom != null) {
             criteria.add(cb.greaterThanOrEqualTo(root.get(Article_.unitsInStock),
-                    cb.parameter(BigDecimal.class, "stockFrom"))
+                            cb.parameter(BigDecimal.class, "stockFrom"))
             );
         }
         if (stockTo != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Article_.unitsInStock),
-                    cb.parameter(BigDecimal.class, "stockTo"))
+                            cb.parameter(BigDecimal.class, "stockTo"))
             );
         }
         c.where(cb.and(criteria.toArray(new Predicate[0])));
@@ -379,14 +379,14 @@ public class ArticleService {
     }
 
     private List<Article> search(EntityManager em,
-            String code,
-            String desc,
-            LocalDate updatedFrom,
-            LocalDate updatedTo,
-            BigDecimal stockFrom,
-            BigDecimal stockTo,
-            int first,
-            int pageSize) {
+                                 String code,
+                                 String desc,
+                                 LocalDate updatedFrom,
+                                 LocalDate updatedTo,
+                                 BigDecimal stockFrom,
+                                 BigDecimal stockTo,
+                                 int first,
+                                 int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Article> query = cb.createQuery(Article.class);
         Root<Article> root = query.from(Article.class);
@@ -406,17 +406,17 @@ public class ArticleService {
         }
         if (updatedTo != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Article_.updated),
-                    cb.parameter(Date.class, "updatedTo"))
+                            cb.parameter(Date.class, "updatedTo"))
             );
         }
         if (stockFrom != null) {
             criteria.add(cb.greaterThanOrEqualTo(root.get(Article_.unitsInStock),
-                    cb.parameter(BigDecimal.class, "stockFrom"))
+                            cb.parameter(BigDecimal.class, "stockFrom"))
             );
         }
         if (stockTo != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Article_.unitsInStock),
-                    cb.parameter(BigDecimal.class, "stockTo"))
+                            cb.parameter(BigDecimal.class, "stockTo"))
             );
         }
         query.where(criteria.toArray(new Predicate[0]))
@@ -447,11 +447,11 @@ public class ArticleService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<Article> readAll(String code,
-            String desc,
-            LocalDate updatedFrom,
-            LocalDate updatedTo,
-            BigDecimal stockFrom,
-            BigDecimal stockTo) {
+                                 String desc,
+                                 LocalDate updatedFrom,
+                                 LocalDate updatedTo,
+                                 BigDecimal stockFrom,
+                                 BigDecimal stockTo) {
         try {
             return this.search(dao, code, desc, updatedFrom, updatedTo, stockFrom, stockTo, 0, 0);
         } catch (Exception ex) {

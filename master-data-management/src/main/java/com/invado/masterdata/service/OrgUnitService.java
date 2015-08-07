@@ -9,6 +9,8 @@ import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
 import com.invado.masterdata.service.exception.IllegalArgumentException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,7 +23,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,17 +56,16 @@ public class OrgUnitService {
                     Utils.getMessage("OrgUnit.IllegalArgumentEx"));
         }
         try {
-            if (dao.find(OrgUnit.class, a.getId()) != null) {
-                throw new javax.persistence.EntityExistsException(
-                        Utils.getMessage("OrgUnit.EntityExistsEx", a.getId())
-                );
-            }
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
+            a.setClient(dao.find(Client.class, a.getTransClientId()));
+            a.setId(readMaxOrgUnitId(a.getClient()));
+            if (a.getParentOrgUnitId() != null)
+                a.setParentOrgUnit(dao.find(OrgUnit.class, a.getParentOrgUnitId()));
             dao.persist(a);
             return a;
         } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
@@ -84,7 +87,7 @@ public class OrgUnitService {
             throw new ConstraintViolationException(
                     Utils.getMessage("OrgUnit.IllegalArgumentEx"));
         }
-        if (dto.getId() == null ) {
+        if (dto.getId() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("OrgUnit.IllegalArgumentEx.Code"));
         }
@@ -100,6 +103,14 @@ public class OrgUnitService {
             }
             dao.lock(item, LockModeType.OPTIMISTIC);
             item.setName(dto.getName());
+            item.setCustomId(dto.getCustomId());
+            item.setPlace(dto.getPlace());
+            item.setStreet(dto.getStreet());
+            item.setClient(dao.find(Client.class, item.getClient().getId() != item.getTransClientId() ? item.getTransClientId() : item.getClient().getId()));
+            if (item.getParentOrgUnit() != null || item.getParentOrgUnitId() != null)
+                item.setParentOrgUnit(dao.find(OrgUnit.class, item.getParentOrgUnit().getId() != item.getParentOrgUnitId() ?
+                        item.getParentOrgUnitId() : item.getParentOrgUnit().getId()));
+
             /*Dodaj ovde ostalo*/
             item.setVersion(dto.getVersion());
             List<String> msgs = validator.validate(item).stream()
@@ -130,25 +141,35 @@ public class OrgUnitService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String companyIdNumber) throws IllegalArgumentException,
+    public void delete(Integer id) throws IllegalArgumentException,
             ReferentialIntegrityException {
         //TODO : check DeleteOrgUnitPermission
-        if (companyIdNumber == null) {
+        if (id == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("OrgUnit.IllegalArgumentEx.Code")
             );
         }
         try {
-            OrgUnit service = dao.find(OrgUnit.class, companyIdNumber);
+            OrgUnit service = dao.find(OrgUnit.class, id);
             if (service != null) {
-                if (dao.createNamedQuery("Invoice.GetByPartner")
-                        .setParameter("companyIdNumber", companyIdNumber)
+                if (dao.createNamedQuery("Invoice.GetByOrgUnit")
+                        .setParameter("orgUnit", id)
                         .setFirstResult(0)
                         .setMaxResults(1)
                         .getResultList().isEmpty() == false) {
                     throw new ReferentialIntegrityException(Utils.getMessage(
                             "OrgUnit.ReferentialIntegrityEx.InvoiceItem",
-                            companyIdNumber)
+                            id)
+                    );
+                }
+                if (dao.createNamedQuery("Employee.ReadByOrgUnit")
+                        .setParameter("orgUnit", id)
+                        .setFirstResult(0)
+                        .setMaxResults(1)
+                        .getResultList().isEmpty() == false) {
+                    throw new ReferentialIntegrityException(Utils.getMessage(
+                            "OrgUnit.ReferentialIntegrityEx.Employee",
+                            id)
                     );
                 }
                 dao.remove(service);
@@ -226,7 +247,7 @@ public class OrgUnitService {
                 //if page number is -1 read last page
                 //first OrgUnit = last page number * OrgUnits per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao, client, id, name,  start, pageSize));
+                result.setData(this.search(dao, client, id, name, start, pageSize));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
@@ -271,13 +292,13 @@ public class OrgUnitService {
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
-        if (id != null ) {
+        if (id != null) {
             q.setParameter("id", id);
         }
         if (name != null && name.isEmpty() == false) {
             q.setParameter("name", name.toUpperCase() + "%");
         }
-        if (client != null ) {
+        if (client != null) {
             q.setParameter("client", client);
         }
 
@@ -288,19 +309,19 @@ public class OrgUnitService {
                                  Client client,
                                  Integer id,
                                  String name,
-                                         int first,
-                                         int pageSize) {
+                                 int first,
+                                 int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<OrgUnit> query = cb.createQuery(OrgUnit.class);
         Root<OrgUnit> root = query.from(OrgUnit.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
-        if (id != null ) {
+        if (id != null) {
             criteria.add(cb.equal(root.get(OrgUnit_.id),
                     cb.parameter(Integer.class, "id")));
         }
         if (client != null) {
-            criteria.add(cb.equal(root.get(OrgUnit_.client),"client"));
+            criteria.add(cb.equal(root.get(OrgUnit_.client), "client"));
         }
         if (name != null && name.isEmpty() == false) {
             criteria.add(cb.like(root.get(OrgUnit_.name),
@@ -310,13 +331,13 @@ public class OrgUnitService {
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(OrgUnit_.id)));
         TypedQuery<OrgUnit> typedQuery = em.createQuery(query);
-        if (id != null ) {
+        if (id != null) {
             typedQuery.setParameter("id", id);
         }
         if (name != null && name.isEmpty() == false) {
             typedQuery.setParameter("name", name.toUpperCase() + "%");
         }
-        if (client != null ) {
+        if (client != null) {
             typedQuery.setParameter("client", client);
         }
 
@@ -327,8 +348,8 @@ public class OrgUnitService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<OrgUnit> readAll(Client client,
-                                Integer id,
-                                String name) {
+                                 Integer id,
+                                 String name) {
         try {
             return this.search(dao, client, id, name, 0, 0);
         } catch (Exception ex) {
@@ -340,14 +361,15 @@ public class OrgUnitService {
         }
     }
 
-    public List<OrgUnit> readOrgUnitByNameAndCustomId(String pattern){
+    public List<OrgUnit> readOrgUnitByNameAndCustomId(String pattern, Integer clientid) {
         try {
             return dao.createNamedQuery(
-                    OrgUnit.READ_BY_NAME_AND_CUSTOM_ID,
+                    OrgUnit.READ_BY_NAME_AND_CUSTOM_ID_PER_CLIENT,
                     OrgUnit.class)
-                    .setParameter("pattern", ("%"+pattern+"%").toUpperCase())
+                    .setParameter("pattern", ("%" + pattern + "%").toUpperCase())
+                    .setParameter("clientId", clientid)
                     .getResultList();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(
                     "BusinessPartner.Exception.ReadItemByDescription"),
@@ -355,4 +377,115 @@ public class OrgUnitService {
         }
     }
 
+    public List<OrgUnit> readOrgUnitByNameAndCustomId(String pattern) {
+        try {
+            return dao.createNamedQuery(
+                    OrgUnit.READ_BY_NAME_AND_CUSTOM_ID,
+                    OrgUnit.class)
+                    .setParameter("pattern", ("%" + pattern + "%").toUpperCase())
+                    .getResultList();
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "BusinessPartner.Exception.ReadItemByDescription"),
+                    ex);
+        }
+    }
+
+    public Integer readMaxOrgUnitId(Client client) {
+        Integer id;
+        try {
+            id = dao.createNamedQuery(
+                    OrgUnit.READ_MAX_ID,
+                    Integer.class)
+                    .setParameter("client", client)
+                    .getFirstResult();
+
+            return id == null ? 1 : id + 1;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "BusinessPartner.Exception.ReadOrgUnitMaxId"),
+                    ex);
+        }
+    }
+
+    public List<OrgUnit> redByHierarchy() {
+
+        Query q = dao.createNamedQuery(OrgUnit.READ_HIERARCHY);
+        List<OrgUnit> orgUnitList = q.getResultList();
+        return orgUnitList;
+    }
+
+    private List<OrgUnit> searchHierarchy(EntityManager em,
+                                          int first,
+                                          int pageSize) {
+
+        List<OrgUnit> orgUnitList = new ArrayList<OrgUnit>();
+        Session s = (Session) em.getDelegate();
+
+        SQLQuery query = s.createSQLQuery("select ou.* " +
+                " from c_org_unit ou " +
+                " start with ou.orgunit_id_parent is null" +
+                " connect by prior ou.org_unit_id =  ou.orgunit_id_parent");
+        query.setFirstResult(first);
+        query.setMaxResults(pageSize);
+        query.addEntity(OrgUnit.class);
+        List list = query.list();
+        for (Object object : list) {
+            OrgUnit orgUnit = (OrgUnit) object;
+            if (orgUnit.getParentOrgUnit() != null)
+                orgUnit.setParentOrgUnitName(dao.find(OrgUnit.class, orgUnit.getParentOrgUnit().getId()).getName());
+            orgUnitList.add(orgUnit);
+        }
+
+        return orgUnitList;
+    }
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public ReadRangeDTO<OrgUnit> readPageHierarchy(PageRequestDTO p)
+            throws PageNotExistsException {
+        //TODO : check ReadOrgUnitPermission
+        try {
+            Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
+            CriteriaBuilder cb = dao.getCriteriaBuilder();
+            CriteriaQuery<Long> c = cb.createQuery(Long.class);
+            Root<OrgUnit> root = c.from(OrgUnit.class);
+            c.select(cb.count(root));
+            TypedQuery<Long> q = dao.createQuery(c);
+
+            Long countEntities = Long.valueOf(q.getFirstResult());
+            Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
+                    ? (countEntities / pageSize - 1) : countEntities / pageSize;
+            Integer pageNumber = p.getPage();
+            if (pageNumber.compareTo(-1) == -1
+                    || pageNumber.compareTo(numberOfPages.intValue()) == 1) {
+                //page number cannot be less than -1 or greater than numberOfPages
+                throw new PageNotExistsException(
+                        Utils.getMessage("OrgUnit.PageNotExists", pageNumber));
+            }
+            ReadRangeDTO<OrgUnit> result = new ReadRangeDTO<>();
+            if (pageNumber.equals(-1)) {
+                //if page number is -1 read last page
+                //first OrgUnit = last page number * OrgUnits per page
+                int start = numberOfPages.intValue() * pageSize;
+                result.setData(this.searchHierarchy(dao, start, pageSize));
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(numberOfPages.intValue());
+            } else {
+                List<OrgUnit> resultOrgUntiList = this.searchHierarchy(dao, p.getPage() * pageSize, pageSize);
+                result.setData(resultOrgUntiList);
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(pageNumber);
+            }
+            return result;
+        } catch (PageNotExistsException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(
+                    Utils.getMessage("OrgUnit.PersistenceEx.ReadPage", ex)
+            );
+        }
+    }
 }

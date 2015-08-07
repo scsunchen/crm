@@ -4,6 +4,9 @@
  */
 package com.invado.core.domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.TableGenerator;
 import java.io.Serializable;
 
 /**

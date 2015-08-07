@@ -20,22 +20,23 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *
  * @author root
  */
 @Entity
 @Table(name = "r_invoice", schema = "devel")
 @NamedQueries({
-    @NamedQuery(name = "Invoice.GetMaxOrdinalNumber",
-            query = "SELECT MAX(x.ordinal) FROM InvoiceItem x WHERE "
-            + "x.invoice.document = :document AND x.invoice.orgUnitE = :orgUnit"),
-    @NamedQuery(name = "Invoice.GetAll",
-            query = "SELECT x FROM Invoice x ORDER BY x.orgUnit.client.id,"
-            + "x.orgUnit.id, x.document"),
-    @NamedQuery(
-            name = "Invoice.GetByPartner",
-            query = "SELECT x FROM Invoice x WHERE x.partner.companyIdNumber = :companyIdNumber"
-    )
+        @NamedQuery(name = "Invoice.GetMaxOrdinalNumber",
+                query = "SELECT MAX(x.ordinal) FROM InvoiceItem x WHERE "
+                        + "x.invoice.document = :document AND x.invoice.orgUnitE = :orgUnit"),
+        @NamedQuery(name = "Invoice.GetAll",
+                query = "SELECT x FROM Invoice x ORDER BY x.orgUnit.client.id,"
+                        + "x.orgUnit.id, x.document"),
+        @NamedQuery(name = "Invoice.GetByOrgUnit",
+                query = "SELECT x FROM Invoice x WHERE x.orgUnit = :orgUnit"),
+        @NamedQuery(
+                name = "Invoice.GetByPartner",
+                query = "SELECT x FROM Invoice x WHERE x.partner.companyIdNumber = :companyIdNumber"
+        )
 })
 @IdClass(InvoicePK.class)
 public class Invoice implements Serializable {
@@ -49,13 +50,13 @@ public class Invoice implements Serializable {
     @Column(name = "unit_id")
     @NotNull(message = "{Invoice.OrgUnit.NotNull}")
     private Integer orgUnit;
-//Bug : https://hibernate.atlassian.net/browse/HHH-8333
+    //Bug : https://hibernate.atlassian.net/browse/HHH-8333
 //AssertionFailure: Unexpected nested component on the referenced entity when mapping a @MapsId
 //    @NotNull(message = "{Invoice.OrgUnit.NotNull}")
     @ManyToOne()
     @JoinColumns({
-        @JoinColumn(name = "company_id", referencedColumnName = "company_id", insertable = false, updatable = false),
-        @JoinColumn(name = "unit_id", referencedColumnName = "org_unit_id", insertable = false, updatable = false)
+            @JoinColumn(name = "company_id", referencedColumnName = "company_id", insertable = false, updatable = false),
+            @JoinColumn(name = "unit_id", referencedColumnName = "org_unit_id", insertable = false, updatable = false)
     })
     private OrgUnit orgUnitE;
     @NotBlank(message = "{Invoice.Document.NotBlank}")
@@ -178,6 +179,7 @@ public class Invoice implements Serializable {
     public Integer getClientId() {
         return client.getId();
     }
+
     public InvoiceDTO getDTO() {
         InvoiceDTO result = new InvoiceDTO();
         result.setClientId(this.getClientId());
@@ -205,19 +207,19 @@ public class Invoice implements Serializable {
         result.setBankName(bank.getName());
         return result;
     }
-    
-    public String getBankName(){
+
+    public String getBankName() {
         return bank.getName();
     }
-    
-    public String getBankAccountNumber(){
+
+    public String getBankAccountNumber() {
         return bank.getAccount();
     }
-            
+
     public Boolean isDomesticCurrency() {
         return isDomesticCurrency;
     }
-    
+
 //
 //    public String getOrgUnitName() {
 //        return orgUnitE.getName();

@@ -95,6 +95,7 @@ public class BusinessPartner implements Serializable {
 
     @Transient
     private String parentCompanyIdNumber;
+    @Transient
     private String parentPartnerName;
     
     //************************************************************************//    

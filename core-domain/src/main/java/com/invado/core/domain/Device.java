@@ -50,7 +50,9 @@ public class Device implements Serializable {
 
     @Transient
     private String deviceStatus;
+    @Transient
     private String articleDesc;
+    @Transient
     private String articleCode;
 
     public Integer getId() {

@@ -18,21 +18,13 @@
         <thead>
         <tr>
             <th></th>
-            <th>Šifra</th>
             <th>Matični broj</th>
             <th>Naziv</th>
             <th>Dodatni naziv</th>
             <th>Adresa</th>
             <th>Telefon</th>
-            <th>Fax</th>
             <th>email</th>
-            <th>PIB</th>
-            <th>Valuta</th>
             <th>Račun</th>
-            <th>Šifra delatnosti</th>
-            <th>Rabat</th>
-            <th>Broj dana valute</th>
-            <th>PDV</th>
             <th>Kontakt osoba</th>
         </tr>
         </thead>
@@ -67,7 +59,6 @@
                         </button>
                     </div>
                 </td>
-                <td><c:out value="${item.id}"/></td>
                 <td><c:out value="${item.companyIdNumber}"/></td>
                 <td><c:out value="${item.name}"/></td>
                 <td><c:out value="${item.name1}"/></td>
@@ -78,24 +69,8 @@
                     <c:out value="${item.address.postCode}"/>
                 </td>
                 <td><c:out value="${item.phone}"/></td>
-                <td><c:out value="${item.fax}"></c:out></td>
                 <td><c:out value="${item.EMail}"/></td>
-                <td><c:out value="${item.TIN}"/></td>
-                <td><c:out value="${item.currencyDesignation}"/></td>
                 <td><c:out value="${item.currentAccount}"/></td>
-                <td><c:out value="${item.activityCode}"/></td>
-                <td><c:out value="${item.rebate}"/></td>
-                <td><c:out value="${item.interestFreeDays}"/></td>
-                <c:choose>
-                    <c:when test="${item.VAT == 'true'}">
-                        <td><c:out value="DA"/></td>
-                    </c:when>
-                    <c:when test="${item.VAT == 'false'}">
-                        <td><c:out value="NE"/></td>
-                    </c:when>
-
-                </c:choose>
-
                 <td><c:out value="${item.contactPerson.name}"/></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>

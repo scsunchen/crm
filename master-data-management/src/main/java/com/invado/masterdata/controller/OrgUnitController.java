@@ -32,7 +32,7 @@ public class OrgUnitController {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<OrgUnit> items = service.readPage(request);
+        ReadRangeDTO<OrgUnit> items = service.readPageHierarchy(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -60,19 +60,20 @@ public class OrgUnitController {
             model.put("action", "create");
             return "orgunit-grid";
         } else {
+
             this.service.create(item);
             status.setComplete();
         }
-        return "redirect:/orgunit/{page}";
+        return "redirect:/org-unit/{page}/create";
     }
 
-    @RequestMapping("/org-unit/{page}/{code}/delete.html")
-    public String delete(@PathVariable String code) throws Exception {
-        service.delete(code);
-        return "redirect:/orgunit/{page}";
+    @RequestMapping("/org-unit/{page}/{id}/delete.html")
+    public String delete(@PathVariable Integer id) throws Exception {
+        service.delete(id);
+        return "redirect:/org-unit/{page}";
     }
 
-    @RequestMapping(value = "/org-unit/{page}/update/{code}",
+    @RequestMapping(value = "/org-unit/{page}/update/{id}",
             method = RequestMethod.GET)
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
@@ -95,10 +96,16 @@ public class OrgUnitController {
             this.service.update(item);
             status.setComplete();
         }
-        return "redirect:/orgunit/{page}";
+        return "redirect:/org-unit/{page}";
     }
 
-    @RequestMapping(value = "/orgunit/read-orgunit/{name}")
+    @RequestMapping(value = "/org-unit/read-orgunit/{name}/{clientId}")
+    public @ResponseBody
+    List<OrgUnit> findItemByDescriptionPerClient(@PathVariable String name, @PathVariable Integer clientId) {
+        return service.readOrgUnitByNameAndCustomId(name, clientId);
+    }
+
+    @RequestMapping(value = "/org-unit/read-orgunit/{name}")
     public @ResponseBody
     List<OrgUnit> findItemByDescription(@PathVariable String name) {
         return service.readOrgUnitByNameAndCustomId(name);

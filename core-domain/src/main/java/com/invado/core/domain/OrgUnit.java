@@ -15,9 +15,8 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author bdragan
  */
 @Entity
-@Table(name = "c_org_unit", schema = "devel", uniqueConstraints=
+@Table(name = "c_org_unit", schema = "devel", uniqueConstraints =
 @UniqueConstraint(columnNames = {"company_id", "custom_id"}))
-@IdClass(OrgUnitPK.class)
 @NamedQueries({
         // TODO : TEST
         @NamedQuery(name = OrgUnit.COUNT_BY_CLIENT,
@@ -30,12 +29,38 @@ import org.hibernate.validator.constraints.NotBlank;
                 query = "SELECT x FROM OrgUnit x ORDER BY x.client.id, x.id"),
         @NamedQuery(name = OrgUnit.READ_BY_CLIENT,
                 query = "SELECT x FROM OrgUnit x JOIN x.client p WHERE p.id = ?1"),
+        @NamedQuery(name = OrgUnit.READ_BY_ID_ORDERBY_NAME,
+                query = "SELECT x FROM OrgUnit x WHERE x.id = :id AND x.client.id = :clientId ORDER BY x.name"),
         @NamedQuery(name = OrgUnit.READ_BY_NAME_ORDERBY_NAME,
                 query = "SELECT x FROM OrgUnit x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
+        @NamedQuery(name = OrgUnit.READ_BY_NAME_AND_CUSTOM_ID_PER_CLIENT,
+                query = "SELECT x FROM OrgUnit x WHERE UPPER(CONCAT(x.customId, x.name)) LIKE :pattern AND x.client.id = :clientId ORDER BY x.name"),
         @NamedQuery(name = OrgUnit.READ_BY_NAME_AND_CUSTOM_ID,
                 query = "SELECT x FROM OrgUnit x WHERE UPPER(CONCAT(x.customId, x.name)) LIKE :pattern ORDER BY x.name"),
-        @NamedQuery(name = OrgUnit.COUNT_ALL, query = "SELECT COUNT(x) FROM OrgUnit x")
+        @NamedQuery(name = OrgUnit.COUNT_ALL, query = "SELECT COUNT(x) FROM OrgUnit x"),
+        @NamedQuery(name = OrgUnit.READ_MAX_ID, query = "SELECT MAX(x.id) FROM OrgUnit x where x.client = :client")
 })
+@SqlResultSetMapping(name = "hierarchy", entities = {@EntityResult(entityClass = com.invado.core.domain.OrgUnit.class,
+        fields = {
+                @FieldResult(name = "id", column = "ORG_UNIT_ID"),
+                @FieldResult(name = "customId", column = "CUSTOM_ID"),
+                @FieldResult(name = "name", column = "NAME"),
+                @FieldResult(name = "place", column = "PLACE"),
+                @FieldResult(name = "street", column = "STREET"),
+                @FieldResult(name = "version", column = "VERSION")})},
+                columns = {@ColumnResult(name = "parentOrgUnitName")})
+@NamedNativeQueries({
+        @NamedNativeQuery(name = OrgUnit.READ_HIERARCHY, query = "select ou.ORG_UNIT_ID, ou.CUSTOM_ID, ou.NAME, ou.PLACE, ou.STREET, NULL parentOrgUnitName" +
+                " from c_org_unit ou " +
+                " start with ou.orgunit_id_parent is null" +
+                " connect by prior ou.org_unit_id =  ou.orgunit_id_parent", resultSetMapping = "hierarchy"),
+        @NamedNativeQuery(name = "orig2", query = "select ou.ORG_UNIT_ID, ou.CUSTOM_ID, ou.NAME, ou.PLACE, ou.STREET, " +
+                " ou.VERSION, ou.COMPANY_ID, ou.ORGUNIT_ID_PARENT, NULL parentOrgUnitId, NULL transClientId, ouparent.NAME parentOrgUnitName" +
+                " from c_org_unit ou left OUTER JOIN c_org_unit ouparent on ou.orgunit_id_parent = ouparent.ORG_UNIT_ID" +
+                " start with ou.orgunit_id_parent is null" +
+                " connect by prior ou.org_unit_id =  ou.orgunit_id_parent", resultSetMapping = "hierarchy")})
+
+
 public class OrgUnit implements Serializable {
 
     public static final String READ_BY_NAME_ORDERBY_NAME = "OrgUnit.ReadByNameOrderByName";
@@ -45,7 +70,10 @@ public class OrgUnit implements Serializable {
     public static final String COUNT_BY_CLIENT = "OrgUnit.CountByClient";
     public static final String COUNT_ALL = "OrgUnit.CountAll";
     public static final String READ_BY_NAME_AND_CUSTOM_ID = "OrgUnit.ReabByNameAndCustomId";
-
+    public static final String READ_MAX_ID = "OrgUnit.ReadMaxOrgUnitId";
+    public static final String READ_BY_NAME_AND_CUSTOM_ID_PER_CLIENT = "OrgUnit.ReadByNameAndCustomIdPerClient";
+    public static final String READ_BY_ID_ORDERBY_NAME = "OrgUnit.ReadByIdOrderByName";
+    public static final String READ_HIERARCHY = "orgUnit.ReadHierarchy";
 
     @TableGenerator(
             name = "OrgUnitTab",
@@ -58,13 +86,11 @@ public class OrgUnit implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "OrgUnitTab")
     @Id
     @Column(name = "org_unit_id")
-    @NotNull(message = "{OrgUnit.Id.NotNull}")
 //    @Range(min = 1, max = 99, message = "{OrgUnit.Id.Range}")
     private Integer id;
     @ManyToOne
-    @Id
-    @NotNull(message = "{OrgUnit.Company.NotNull}")
     @JoinColumn(name = "company_id", referencedColumnName = "id")
+    @AttributeOverride(name = "id", column = @Column(name = "COMPANY_ID"))
     private Client client;
     @NotNull(message = "{OrgUnit.UserId.NotNull}")
     @Column(name = "custom_id")
@@ -80,18 +106,18 @@ public class OrgUnit implements Serializable {
     @Size(max = 60, message = "{OrgUnit.Street.Size}")
     private String street;
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "client_id_parent"),
-            @JoinColumn(name = "orgunit_id_parent")
-    })
-    private OrgUnit orgUnit;
+    @JoinColumn(name = "orgunit_id_parent")
+    private OrgUnit parentOrgUnit;
     @Version
     @Column(name = "version")
     private Long version;
 
     @Transient
     private Integer parentOrgUnitId;
+    @Transient
     private String parentOrgUnitName;
+    @Transient
+    private Integer transClientId;
 
 
     //************************************************************************//
@@ -111,7 +137,7 @@ public class OrgUnit implements Serializable {
                    String name,
                    String place,
                    String street,
-                   OrgUnit orgUnit,
+                   OrgUnit parentOrgUnit,
                    Long version) {
         this.client = client;
         this.id = orgUnitID;
@@ -119,13 +145,14 @@ public class OrgUnit implements Serializable {
         this.name = name;
         this.place = place;
         this.street = street;
-        this.orgUnit = orgUnit;
+        this.parentOrgUnit = parentOrgUnit;
         this.version = version;
     }
 
     //************************************************************************//    
     // GET/SET METHODS //
     //************************************************************************//
+
 
     public Client getClient() {
         return client;
@@ -172,12 +199,12 @@ public class OrgUnit implements Serializable {
         this.version = version;
     }
 
-    public OrgUnit getOrgUnit() {
-        return orgUnit;
+    public OrgUnit getParentOrgUnit() {
+        return parentOrgUnit;
     }
 
-    public void setOrgUnit(OrgUnit orgUnit) {
-        this.orgUnit = orgUnit;
+    public void setParentOrgUnit(OrgUnit parentOrgUnit) {
+        this.parentOrgUnit = parentOrgUnit;
     }
 
     public void setClient(Client client) {
@@ -206,6 +233,14 @@ public class OrgUnit implements Serializable {
 
     public void setParentOrgUnitName(String parentOrgUnitName) {
         this.parentOrgUnitName = parentOrgUnitName;
+    }
+
+    public Integer getTransClientId() {
+        return transClientId;
+    }
+
+    public void setTransClientId(Integer transClientId) {
+        this.transClientId = transClientId;
     }
 
     //************************************************************************//

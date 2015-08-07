@@ -1,6 +1,8 @@
 package com.invado.masterdata.controller;
 
 import com.invado.core.domain.Employee;
+import com.invado.core.domain.Job;
+import com.invado.core.domain.OrgUnit;
 import com.invado.masterdata.service.EmployeeService;
 import com.invado.masterdata.service.JobService;
 import com.invado.masterdata.service.OrgUnitService;
@@ -32,7 +34,6 @@ public class EmployeeConroller {
     private OrgUnitService orgUnitService;
 
 
-
     @RequestMapping("/employee/{page}")
     public String showItems(@PathVariable Integer page,
                             Map<String, Object> model)
@@ -50,7 +51,10 @@ public class EmployeeConroller {
 
     @RequestMapping(value = "/employee/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        System.out.println("u pravom smo kodu");
+        List<OrgUnit> orgUnits = orgUnitService.readAll(null, null, null);
+        model.put("orgUnits", orgUnits);
+        List<Job> jobs = jobService.readAll(null, null);
+        model.put("jobs", jobs);
         model.put("item", new Employee());
         model.put("action", "create");
         return "employee-grid";
@@ -66,33 +70,32 @@ public class EmployeeConroller {
             model.put("action", "create");
             return "employee-grid";
         } else {
-            item.setJob(jobService.read(item.getJob().getId()));
-            item.setOrgUnit(orgUnitService.read(item.getOrgUnit().getId()));
             this.service.create(item);
             status.setComplete();
         }
+        return "redirect:/employee/{page}/create";
+    }
+
+    @RequestMapping("/employee/{page}/{id}/delete.html")
+    public String delete(@PathVariable Integer id) throws Exception {
+        service.delete(id);
         return "redirect:/employee/{page}";
     }
 
-    @RequestMapping("/employee/{page}/{code}/delete.html")
-    public String delete(@PathVariable String code) throws Exception {
-        service.delete(code);
-        return "redirect:/employee/{page}";
-    }
-
-    @RequestMapping(value = "/employee/{page}/update/{code}",
+    @RequestMapping(value = "/employee/{page}/update/{id}",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String code,
+    public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        Employee item = service.read(code);
+        Employee item = service.read(id);
         model.put("item", item);
         return "employee-grid";
     }
 
-    @RequestMapping(value = "/employee/{page}/update/{code}",
+    @RequestMapping(value = "/employee/{page}/update/{id}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") Employee item,
+    public String processUpdationForm(@PathVariable Integer id,
+                                      @ModelAttribute("item") Employee item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -100,10 +103,13 @@ public class EmployeeConroller {
         if (result.hasErrors()) {
             return "employee-grid";
         } else {
+            System.out.println("ovo je poruka iz "+item.getId());
+            if (item.getId() == null)
+                item.setId(id);
             this.service.update(item);
             status.setComplete();
         }
         return "redirect:/employee/{page}";
     }
-    
+
 }

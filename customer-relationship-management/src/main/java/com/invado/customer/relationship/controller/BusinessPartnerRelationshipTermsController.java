@@ -3,6 +3,8 @@ package com.invado.customer.relationship.controller;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
 import com.invado.customer.relationship.service.BusinessPartnerRelationshipTermsService;
+import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsDTO;
+import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsItemsDTO;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.BusinessPartnerService;
@@ -28,7 +30,7 @@ public class BusinessPartnerRelationshipTermsController {
     @Autowired
     private BusinessPartnerService partnerService;
     @Autowired
-    private BusinessPartnerRelationshipTermsService service;
+    private BusinessPartnerRelationshipTermsService businessPartnerRelationshipTermsService;
 
 
     @RequestMapping("home")
@@ -42,21 +44,19 @@ public class BusinessPartnerRelationshipTermsController {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<BusinessPartnerRelationshipTerms> items = service.readPage(request);
+        ReadRangeDTO<BusinessPartnerRelationshipTermsDTO> items = businessPartnerRelationshipTermsService.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
-        return "terms-view";
+        return "terms-table";
     }
 
     @RequestMapping(value = "/terms/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
 
-        System.out.println("to je to ");
         model.put("item", new BusinessPartnerRelationshipTerms());
-        List<BusinessPartner> partners = partnerService.readAll(null, null, null);
+        List<BusinessPartner> partners = partnerService.readAll(null, null, null, null);
         model.put("partners", partners);
-        System.out.println("to je to "+partners.size());
 
         model.put("action", "create");
 
@@ -81,7 +81,7 @@ public class BusinessPartnerRelationshipTermsController {
             model.put("resulterror", resultErrorMessages);
             return "resulterror";
         } else {
-            this.service.create(item);
+            this.businessPartnerRelationshipTermsService.create(item);
             status.setComplete();
         }
         return "redirect:/terms/{page}";
@@ -101,21 +101,48 @@ public class BusinessPartnerRelationshipTermsController {
   */
     @RequestMapping("/terms/{page}/{code}/delete.html")
     public String delete(@PathVariable Integer id) throws Exception {
-        service.delete(id);
+        businessPartnerRelationshipTermsService.delete(id);
         return "redirect:/terms/{page}";
     }
 
-    @RequestMapping(value = "/terms/{page}/update/{code}",
+    @RequestMapping(value = "/terms/{page}/update/{id}",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String code,
+    public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        BusinessPartnerRelationshipTerms item = service.read(code);
+        BusinessPartnerRelationshipTerms item = businessPartnerRelationshipTermsService.read(id);
         model.put("item", item);
         return "terms-grid";
     }
 
-    @RequestMapping(value = "/terms/{page}/update/{code}",
+    @RequestMapping(value = "/terms/{page}/{id}/update.html",
+            method = RequestMethod.GET)
+    public String initUpdateForm(@PathVariable String page,
+                                 @PathVariable Integer id,
+                                 Map<String, Object> model)
+            throws Exception {
+        BusinessPartnerRelationshipTermsDTO tmp = businessPartnerRelationshipTermsService.read(id).getDTO();
+        return initUpdateForm(page, tmp, null, model);
+    }
+
+    private String initUpdateForm(String page,
+                                  BusinessPartnerRelationshipTermsDTO dto,
+                                  Exception ex,
+                                  Map<String, Object> model)
+            throws Exception {
+        BusinessPartnerRelationshipTermsItemsDTO itemDTO = new BusinessPartnerRelationshipTermsItemsDTO();
+        itemDTO.setBusinessPartnerRelationshipTermsId(dto.getBusinessPartnerId());
+        itemDTO.setBusinessPartnerRelationshipTermsVersion(dto.getVersion());
+        model.put("page", page);
+        model.put("invoiceItem", itemDTO);
+        model.put("invoice", dto);
+        model.put("items", businessPartnerRelationshipTermsService.readTermsItems(dto.getId()));
+        model.put("exception", ex);
+        return "terms-update-master-detail";
+    }
+
+
+    @RequestMapping(value = "/terms/{page}/update/{id}",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") BusinessPartnerRelationshipTerms item,
                                       BindingResult result,
@@ -125,7 +152,7 @@ public class BusinessPartnerRelationshipTermsController {
         if (result.hasErrors()) {
             return "terms-grid";
         } else {
-            this.service.update(item);
+            this.businessPartnerRelationshipTermsService.update(item);
             status.setComplete();
         }
         return "redirect:/terms/{page}";

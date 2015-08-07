@@ -82,6 +82,7 @@
           <element id="archive" name="core-service-provider-interface-1.0.jar">
             <element id="module-output" name="core-service-provider-interface" />
           </element>
+          <element id="library" level="application" name="ojdbc6" />
         </element>
       </element>
       <element id="directory" name="META-INF">

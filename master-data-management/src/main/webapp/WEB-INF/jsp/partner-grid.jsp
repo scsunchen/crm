@@ -53,7 +53,7 @@
                     <label for="partnerName">Nadređeni partner</label>
                     <form:input id="partnerName" class="typeahead form-control" type="text"
                                 path="parentPartnerName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="itemDescHidden" path="parentCompanyIdNumber"/>
+                    <form:hidden id="partnerNameHidden" path="parentCompanyIdNumber"/>
                 </div>
                 <div class="checkbox">
                     <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>

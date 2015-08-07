@@ -13,7 +13,7 @@
 <spring:bind path="${name}">
 
     <div class="form-group">
-        <label for="${name}" >${label}</label>
+        <label for="${name}"  ><spring:message code="${label}"/></label>
         <form:textarea id="${name}" path="${name}"
                     class="form-control ${status.error ? 'error' : '' }"
                     disabled="${disabled}"
