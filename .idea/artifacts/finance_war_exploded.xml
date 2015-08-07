@@ -21,6 +21,8 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:3.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.1.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:3.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:3.2.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:3.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-extras:3.0.5" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-core:3.0.5" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-api:3.0.5" />

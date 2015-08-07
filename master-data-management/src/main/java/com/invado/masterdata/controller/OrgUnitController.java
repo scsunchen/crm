@@ -1,6 +1,8 @@
 package com.invado.masterdata.controller;
 
+import com.invado.core.domain.Client;
 import com.invado.core.domain.OrgUnit;
+import com.invado.masterdata.service.ClientService;
 import com.invado.masterdata.service.OrgUnitService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -20,6 +22,8 @@ import java.util.Map;
 public class OrgUnitController {
     @Autowired
     private OrgUnitService service;
+    @Autowired
+    private ClientService clientService;
 
 
     @RequestMapping("/org-unit/{page}")
@@ -38,7 +42,10 @@ public class OrgUnitController {
 
     @RequestMapping(value = "/org-unit/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
+
         model.put("item", new OrgUnit());
+        List<Client> clients = clientService.readAll(null, null, null, null);
+        model.put("clients", clients);
         model.put("action", "create");
         return "orgunit-grid";
     }

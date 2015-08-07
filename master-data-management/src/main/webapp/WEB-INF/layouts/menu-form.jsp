@@ -23,9 +23,9 @@
     <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/Moment.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/Moment.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/locales/bootstrap-datepicker.sr-latin.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/typeahead/typeahead.bundle.min.js"></script>
