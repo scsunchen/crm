@@ -10,6 +10,9 @@
           <element id="archive" name="master-data-1.0.jar">
             <element id="module-output" name="master-data-management" />
           </element>
+          <element id="archive" name="masterdata-1.0.jar">
+            <element id="module-output" name="master-data-management" />
+          </element>
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.1.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.4.RELEASE" />
@@ -91,12 +94,14 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:3.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:3.2.5.RELEASE" />
           <element id="library" level="project" name="Maven: com.itextpdf:itextpdf:5.5.6" />
+          <element id="archive" name="HR-1.0.jar">
+            <element id="module-output" name="HR" />
+          </element>
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.4" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.4" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.4" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
-          <element id="library" level="application" name="ojdbc6" />
         </element>
       </element>
       <element id="directory" name="META-INF">

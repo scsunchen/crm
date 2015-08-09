@@ -2,6 +2,7 @@ package com.invado.masterdata.controller;
 
 import com.invado.core.domain.Client;
 import com.invado.core.domain.OrgUnit;
+import com.invado.core.dto.OrgUnitDTO;
 import com.invado.masterdata.service.ClientService;
 import com.invado.masterdata.service.OrgUnitService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
@@ -42,7 +43,7 @@ public class OrgUnitController {
 
     @RequestMapping(value = "/org-unit/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        model.put("item", new OrgUnit());
+        model.put("item", new OrgUnitDTO());
         List<Client> clients = clientService.readAll(null, null, null, null);
         model.put("clients", clients);
         model.put("action", "create");
@@ -50,7 +51,7 @@ public class OrgUnitController {
     }
 
     @RequestMapping(value = "/org-unit/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") OrgUnit item,
+    public String processCreationForm(@ModelAttribute("item") OrgUnitDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -77,14 +78,17 @@ public class OrgUnitController {
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        OrgUnit item = service.read(id);
+        model.put("action", "update");
+        OrgUnitDTO item = service.read(id);
         model.put("item", item);
+        List<Client> clients = clientService.readAll(null, null, null, null);
+        model.put("clients", clients);
         return "orgunit-grid";
     }
 
-    @RequestMapping(value = "/org-unit/{page}/update/{code}",
+    @RequestMapping(value = "/org-unit/{page}/update/{id}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") OrgUnit item,
+    public String processUpdationForm(@ModelAttribute("item") OrgUnitDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -92,17 +96,13 @@ public class OrgUnitController {
         if (result.hasErrors()) {
             return "orgunit-grid";
         } else {
+            System.out.println("evo ga id "+item.getId());
             this.service.update(item);
             status.setComplete();
         }
         return "redirect:/org-unit/{page}";
     }
 
-    @RequestMapping(value = "/org-unit/read-orgunit/{name}/{clientId}")
-    public @ResponseBody
-    List<OrgUnit> findItemByDescriptionPerClient(@PathVariable String name, @PathVariable Integer clientId) {
-        return service.readOrgUnitByNameAndCustomId(name, clientId);
-    }
 
     @RequestMapping(value = "/org-unit/read-orgunit/{name}")
     public @ResponseBody

@@ -12,7 +12,7 @@ import java.time.LocalDate;
  * Created by NikolaB on 6/14/2015.
  */
 @NamedQueries({
-        @NamedQuery(name = Employee.READ_BY_ORGUNIT, query = "SELECT x FROM Employee x WHERE orgUnit = :orgUnit")
+        @NamedQuery(name = Employee.READ_BY_ORGUNIT, query = "SELECT x FROM Employee x WHERE orgUnit.id = :orgUnit")
 })
 @Entity
 @Table(name = "c_employee", schema = "devel")

@@ -1,13 +1,13 @@
-package com.invado.masterdata.service;
+package com.invado.hr.service;
 
 import com.invado.core.domain.*;
-import com.invado.masterdata.Utils;
-import com.invado.masterdata.service.dto.PageRequestDTO;
-import com.invado.masterdata.service.dto.ReadRangeDTO;
-import com.invado.masterdata.service.exception.*;
-import com.invado.masterdata.service.exception.EntityExistsException;
-import com.invado.masterdata.service.exception.EntityNotFoundException;
-import com.invado.masterdata.service.exception.IllegalArgumentException;
+import com.invado.hr.Utils;
+import com.invado.hr.service.dto.PageRequestDTO;
+import com.invado.hr.service.dto.ReadRangeDTO;
+import com.invado.hr.service.exception.*;
+import com.invado.hr.service.exception.EntityExistsException;
+import com.invado.hr.service.exception.EntityNotFoundException;
+import com.invado.hr.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
@@ -74,7 +74,7 @@ public class EmployeeService {
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public Employee update(Employee dto) throws ConstraintViolationException,
-            EntityNotFoundException,
+            com.invado.hr.service.exception.EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateEmployeePermission
         if (dto == null) {
@@ -168,22 +168,22 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Employee read(Integer id) throws EntityNotFoundException {
+    public Employee read(Integer id) throws com.invado.hr.service.exception.EntityNotFoundException {
         //TODO : check ReadEmployeePermission
         if (id == null) {
-            throw new EntityNotFoundException(
+            throw new com.invado.hr.service.exception.EntityNotFoundException(
                     Utils.getMessage("Employee.IllegalArgumentEx.Code")
             );
         }
         try {
             Employee Employee = dao.find(Employee.class, id);
             if (Employee == null) {
-                throw new EntityNotFoundException(
+                throw new com.invado.hr.service.exception.EntityNotFoundException(
                         Utils.getMessage("Employee.EntityNotFoundEx", id)
                 );
             }
             return Employee;
-        } catch (EntityNotFoundException ex) {
+        } catch (com.invado.hr.service.exception.EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

@@ -18,12 +18,9 @@
     <div class="form-group">
         <div class="col-md-6">
             <c:choose>
-                <c:when test="${action == 'create'}">
+                <c:when test="${action == 'update'}">
                     <input:inputField label="Šifra *" name="id" autofocus="true" disabled="true"/>
                 </c:when>
-                <c:otherwise>
-                    <form:hidden path="id"/>
-                </c:otherwise>
             </c:choose>
             <input:inputField label="Korisnička Šifra *" name="customId"/>
             <input:inputField label="Naziv *" name="name"/>
@@ -34,11 +31,11 @@
         <div class="form-group">
             <input:inputField name="place" label="Mesto"/>
             <input:inputField name="street" label="Ulica i broj"/>
-            <spring:bind path="client.id">
+            <spring:bind path="clientId">
                 <div class="form-group">
-                    <label for="client">Kompanija korisnik *</label>
-                    <form:select path="transClientId" id="client" class="form-control" itemLabel="client">
-                        <form:option value="${item.client.id}">${item.client.name}</form:option>
+                    <label for="clientId">Kompanija korisnik *</label>
+                    <form:select path="clientId" id="clientId" class="form-control" itemLabel="clientId">
+                        <form:option value="${clientId}">${clientName}</form:option>
                         <form:options items="${clients}" itemLabel="name" itemValue="id"/>
                     </form:select>
                 </div>

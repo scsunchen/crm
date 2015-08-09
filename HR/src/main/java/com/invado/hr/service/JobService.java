@@ -1,15 +1,15 @@
-package com.invado.masterdata.service;
+package com.invado.hr.service;
 
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.Job;
 import com.invado.core.domain.Job_;
-import com.invado.masterdata.Utils;
-import com.invado.masterdata.service.dto.PageRequestDTO;
-import com.invado.masterdata.service.dto.ReadRangeDTO;
-import com.invado.masterdata.service.exception.*;
-import com.invado.masterdata.service.exception.EntityExistsException;
-import com.invado.masterdata.service.exception.EntityNotFoundException;
-import com.invado.masterdata.service.exception.IllegalArgumentException;
+import com.invado.hr.Utils;
+import com.invado.hr.service.dto.PageRequestDTO;
+import com.invado.hr.service.dto.ReadRangeDTO;
+import com.invado.hr.service.exception.*;
+import com.invado.hr.service.exception.EntityExistsException;
+import com.invado.hr.service.exception.EntityNotFoundException;
+import com.invado.hr.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

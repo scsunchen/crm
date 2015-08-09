@@ -4,10 +4,13 @@ import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.Client;
 import com.invado.core.domain.OrgUnit;
 import com.invado.core.domain.OrgUnit_;
+import com.invado.core.dto.OrgUnitDTO;
+import com.invado.finance.service.dto.InvoiceDTO;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
+import com.invado.masterdata.service.exception.EntityExistsException;
 import com.invado.masterdata.service.exception.IllegalArgumentException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -48,27 +51,55 @@ public class OrgUnitService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public OrgUnit create(OrgUnit a) throws com.invado.masterdata.service.exception.IllegalArgumentException,
-            javax.persistence.EntityExistsException {
+    public OrgUnit create(OrgUnitDTO dto) throws IllegalArgumentException,
+            EntityExistsException, ConstraintViolationException {
         //check CreateOrgUnitPermission
-        if (a == null) {
+        if (dto == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("OrgUnit.IllegalArgumentEx"));
         }
+        if (dto.getCustomId() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("OrgUnit.IllegalArgumentException.CustomId"));
+        }
+        if (dto.getClientId() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("OrgUnit.IllegalArgumentException.Client"));
+        }
+        if (dto.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("OrgUnit.IllegalArgumentException.Name"));
+        }
         try {
-            List<String> msgs = validator.validate(a).stream()
+            try {
+                OrgUnit temp = dao.createNamedQuery(OrgUnit.READ_BY_CUSTOM_ID, OrgUnit.class)
+                        .setParameter("pattern", dto.getCustomId())
+                        .getSingleResult();
+                if (temp != null) {
+                    throw new EntityExistsException(
+                            Utils.getMessage("OrgUnit.EntityExistsException", dto.getId()));
+                }
+            } catch (NoResultException ex) {
+                System.out.println("Nema problema "+ex.getMessage());
+            }
+            OrgUnit item = new OrgUnit();
+            item.setClient(dao.find(Client.class, dto.getClientId()));
+            if (dto.getParentOrgUnitId() != null)
+                item.setParentOrgUnit(dao.find(OrgUnit.class, dto.getParentOrgUnitId()));
+            item.setStreet(dto.getStreet());
+            item.setPlace(dto.getPlace());
+            item.setCustomId(dto.getCustomId());
+            item.setName(dto.getName());
+            List<String> msgs = validator.validate(dto).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            a.setClient(dao.find(Client.class, a.getTransClientId()));
-            a.setId(readMaxOrgUnitId(a.getClient()));
-            if (a.getParentOrgUnitId() != null)
-                a.setParentOrgUnit(dao.find(OrgUnit.class, a.getParentOrgUnitId()));
-            dao.persist(a);
-            return a;
-        } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
+            dao.persist(item);
+            return item;
+        } catch (IllegalArgumentException | EntityExistsException ex) {
+            LOG.log(Level.WARNING, "", ex);
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -79,7 +110,7 @@ public class OrgUnitService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public OrgUnit update(OrgUnit dto) throws ConstraintViolationException,
+    public OrgUnit update(OrgUnitDTO dto) throws ConstraintViolationException,
             javax.persistence.EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateOrgUnitPermission
@@ -106,10 +137,9 @@ public class OrgUnitService {
             item.setCustomId(dto.getCustomId());
             item.setPlace(dto.getPlace());
             item.setStreet(dto.getStreet());
-            item.setClient(dao.find(Client.class, item.getClient().getId() != item.getTransClientId() ? item.getTransClientId() : item.getClient().getId()));
-            if (item.getParentOrgUnit() != null || item.getParentOrgUnitId() != null)
-                item.setParentOrgUnit(dao.find(OrgUnit.class, item.getParentOrgUnit().getId() != item.getParentOrgUnitId() ?
-                        item.getParentOrgUnitId() : item.getParentOrgUnit().getId()));
+            item.setClient(dao.find(Client.class, item.getClient().getId() != dto.getClientId() ? item.getClient().getId() : dto.getClientId()));
+            if (dto.getParentOrgUnitId() != null)
+                item.setParentOrgUnit(dao.find(OrgUnit.class, dto.getParentOrgUnitId()));
 
             /*Dodaj ovde ostalo*/
             item.setVersion(dto.getVersion());
@@ -133,6 +163,7 @@ public class OrgUnitService {
                 );
             } else {
                 LOG.log(Level.WARNING, "", ex);
+                LOG.log(Level.ALL, ex.getMessage());
                 throw new SystemException(
                         Utils.getMessage("OrgUnit.PersistenceEx.Update"),
                         ex);
@@ -186,7 +217,7 @@ public class OrgUnitService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public OrgUnit read(Integer id) throws javax.persistence.EntityNotFoundException {
+    public OrgUnitDTO read(Integer id) throws javax.persistence.EntityNotFoundException {
         //TODO : check ReadOrgUnitPermission
         if (id == null) {
             throw new javax.persistence.EntityNotFoundException(
@@ -200,7 +231,7 @@ public class OrgUnitService {
                         Utils.getMessage("OrgUnit.EntityNotFoundEx", id)
                 );
             }
-            return OrgUnit;
+            return OrgUnit.getDTO();
         } catch (javax.persistence.EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -212,7 +243,7 @@ public class OrgUnitService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<OrgUnit> readPage(PageRequestDTO p)
+    public ReadRangeDTO<OrgUnitDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadOrgUnitPermission
         Integer id = null;
@@ -242,18 +273,18 @@ public class OrgUnitService {
                 throw new PageNotExistsException(
                         Utils.getMessage("OrgUnit.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<OrgUnit> result = new ReadRangeDTO<>();
+            ReadRangeDTO<OrgUnitDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first OrgUnit = last page number * OrgUnits per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao, client, id, name, start, pageSize));
+                result.setData(this.convertToDTO(this.search(dao, client, id, name, start, pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao, client, id, name,
+                result.setData(this.convertToDTO(this.search(dao, client, id, name,
                         p.getPage() * pageSize,
-                        pageSize));
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -267,6 +298,15 @@ public class OrgUnitService {
             );
         }
     }
+
+    private List<OrgUnitDTO> convertToDTO(List<OrgUnit> lista) {
+        List<OrgUnitDTO> listaDTO = new ArrayList<>();
+        for (OrgUnit pr : lista) {
+            listaDTO.add(pr.getDTO());
+        }
+        return listaDTO;
+    }
+
 
     private Long count(
             EntityManager EM,

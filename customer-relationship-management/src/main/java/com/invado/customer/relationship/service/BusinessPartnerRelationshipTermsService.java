@@ -16,7 +16,6 @@ import com.invado.customer.relationship.service.exception.IllegalArgumentExcepti
 import com.invado.customer.relationship.service.exception.PageNotExistsException;
 import com.invado.customer.relationship.service.exception.ReferentialIntegrityException;
 import com.invado.customer.relationship.service.exception.SystemException;
-import com.invado.masterdata.service.BusinessPartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

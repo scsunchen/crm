@@ -47,6 +47,13 @@
         <processorPath useClasspath="true" />
         <module name="master-data-management" />
       </profile>
+      <profile default="false" name="Annotation profile for HR" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="HR" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="admin" target="1.5" />
@@ -55,6 +62,7 @@
       <module name="crm" target="1.5" />
       <module name="customer-relationship-management" target="1.8" />
       <module name="finance" target="1.8" />
+      <module name="HR" target="1.8" />
       <module name="master-data-management" target="1.8" />
     </bytecodeTargetLevel>
   </component>

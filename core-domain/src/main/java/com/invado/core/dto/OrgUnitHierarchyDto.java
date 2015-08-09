@@ -5,7 +5,8 @@ import java.io.Serializable;
 /**
  * Created by nikola on 14.07.2015.
  */
-public class OrgUnitHierarchyDto implements Serializable{
+public class OrgUnitHierarchyDTO implements Serializable{
+
     private String id;
     private String customId;
     private String name;

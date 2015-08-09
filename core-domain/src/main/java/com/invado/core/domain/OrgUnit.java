@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.invado.core.dto.OrgUnitDTO;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -37,6 +38,8 @@ import org.hibernate.validator.constraints.NotBlank;
                 query = "SELECT x FROM OrgUnit x WHERE UPPER(CONCAT(x.customId, x.name)) LIKE :pattern AND x.client.id = :clientId ORDER BY x.name"),
         @NamedQuery(name = OrgUnit.READ_BY_NAME_AND_CUSTOM_ID,
                 query = "SELECT x FROM OrgUnit x WHERE UPPER(CONCAT(x.customId, x.name)) LIKE :pattern ORDER BY x.name"),
+        @NamedQuery(name = OrgUnit.READ_BY_CUSTOM_ID,
+                query = "SELECT x FROM OrgUnit x WHERE x.customId = :pattern"),
         @NamedQuery(name = OrgUnit.COUNT_ALL, query = "SELECT COUNT(x) FROM OrgUnit x"),
         @NamedQuery(name = OrgUnit.READ_MAX_ID, query = "SELECT MAX(x.id) FROM OrgUnit x where x.client = :client")
 })
@@ -48,7 +51,7 @@ import org.hibernate.validator.constraints.NotBlank;
                 @FieldResult(name = "place", column = "PLACE"),
                 @FieldResult(name = "street", column = "STREET"),
                 @FieldResult(name = "version", column = "VERSION")})},
-                columns = {@ColumnResult(name = "parentOrgUnitName")})
+        columns = {@ColumnResult(name = "parentOrgUnitName")})
 @NamedNativeQueries({
         @NamedNativeQuery(name = OrgUnit.READ_HIERARCHY, query = "select ou.ORG_UNIT_ID, ou.CUSTOM_ID, ou.NAME, ou.PLACE, ou.STREET, NULL parentOrgUnitName" +
                 " from c_org_unit ou " +
@@ -74,6 +77,7 @@ public class OrgUnit implements Serializable {
     public static final String READ_BY_NAME_AND_CUSTOM_ID_PER_CLIENT = "OrgUnit.ReadByNameAndCustomIdPerClient";
     public static final String READ_BY_ID_ORDERBY_NAME = "OrgUnit.ReadByIdOrderByName";
     public static final String READ_HIERARCHY = "orgUnit.ReadHierarchy";
+    public static final String READ_BY_CUSTOM_ID = "orgUnti.ReadByCustomId";
 
     @TableGenerator(
             name = "OrgUnitTab",
@@ -291,6 +295,24 @@ public class OrgUnit implements Serializable {
         return client.getTownship().getName();
     }
 
+    public OrgUnitDTO getDTO() {
+        OrgUnitDTO orgUnitDTO = new OrgUnitDTO();
+
+        orgUnitDTO.setId(this.id);
+        orgUnitDTO.setClientId(this.getClientID());
+        orgUnitDTO.setClientName(this.getClientName());
+        orgUnitDTO.setCustomId(this.getCustomId());
+        orgUnitDTO.setName(this.getName());
+        if (this.getParentOrgUnit() != null) {
+            orgUnitDTO.setParentOrgUnitId(this.getParentOrgUnit().getId());
+            orgUnitDTO.setParentOrgUnitName(this.getParentOrgUnit().getName());
+        }
+        orgUnitDTO.setPlace(this.getPlace());
+        orgUnitDTO.setStreet(this.getStreet());
+        orgUnitDTO.setVersion(this.getVersion());
+
+        return orgUnitDTO;
+    }
 
     //************************************************************************//
     // OVERRIDEN OBJECT METHODS  //

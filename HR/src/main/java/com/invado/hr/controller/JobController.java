@@ -1,9 +1,9 @@
-package com.invado.masterdata.controller;
+package com.invado.hr.controller;
 
 import com.invado.core.domain.Job;
-import com.invado.masterdata.service.JobService;
-import com.invado.masterdata.service.dto.PageRequestDTO;
-import com.invado.masterdata.service.dto.ReadRangeDTO;
+import com.invado.hr.service.JobService;
+import com.invado.hr.service.dto.PageRequestDTO;
+import com.invado.hr.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

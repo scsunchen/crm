@@ -7,6 +7,7 @@
     <file type="web" url="file://$PROJECT_DIR$/admin" />
     <file type="web" url="file://$PROJECT_DIR$/customer-relationship-management" />
     <file type="web" url="file://$PROJECT_DIR$/finance" />
+    <file type="web" url="file://$PROJECT_DIR$/HR" />
     <file type="web" url="file://$PROJECT_DIR$/master-data-management" />
   </component>
   <component name="IdProvider" IDEtalkID="B520C55E5C74204658DAF7C7A76F1454" />
@@ -15,6 +16,7 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/master-data-management/pom.xml" />
+        <option value="$PROJECT_DIR$/HR/pom.xml" />
       </list>
     </option>
   </component>
