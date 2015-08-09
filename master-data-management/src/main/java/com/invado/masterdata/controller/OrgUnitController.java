@@ -43,7 +43,12 @@ public class OrgUnitController {
 
     @RequestMapping(value = "/org-unit/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
+<<<<<<< HEAD
         model.put("item", new OrgUnitDTO());
+=======
+
+        model.put("item", new OrgUnit());
+>>>>>>> origin/master
         List<Client> clients = clientService.readAll(null, null, null, null);
         model.put("clients", clients);
         model.put("action", "create");

@@ -3,7 +3,6 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/HR" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/HR/src/main/java/com/invado/hr/MenuFormPreparer.java" charset="windows-1250" />
     <file url="file://$PROJECT_DIR$/admin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core-domain" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core-module-spi" charset="UTF-8" />
