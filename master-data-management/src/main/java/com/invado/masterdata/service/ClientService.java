@@ -1,6 +1,7 @@
 package com.invado.masterdata.service;
 
 import com.invado.core.domain.*;
+import com.invado.core.dto.ClientDTO;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -44,28 +45,72 @@ public class ClientService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Client create(Client a) throws com.invado.masterdata.service.exception.IllegalArgumentException,
-            EntityExistsException {
+    public Client create(ClientDTO dto) throws IllegalArgumentException,
+            EntityExistsException, ConstraintViolationException {
         //check CreateClientPermission
 
-        if (a == null) {
+        if (dto == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Client.IllegalArgumentEx"));
         }
+        if (dto.getTIN() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Client.IllegalArgumentException.TIN"));
+        }
+        if (dto.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Client.IllegalArgumentException.Name"));
+        }
+        if (dto.getTownshipCode() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Client.IllegalArgumentException.Township"));
+        }
         try {
-            if (this.readAll(null, a.getCompanyIDNumber(), null, null).size() != 0) {
-                throw new EntityExistsException(
-                        Utils.getMessage("Client.DuplicateUniqueValue.CompanyIdNumber", a.getCompanyIDNumber())
-                );
+            try {
+                Client temp = dao.createNamedQuery(Client.READ_BY_ID, Client.class)
+                        .setParameter("pattern", dto.getId())
+                        .getSingleResult();
+                if (temp != null) {
+                    throw new EntityExistsException(
+                            Utils.getMessage("OrgUnit.EntityExistsException", dto.getId()));
+                }
+            } catch (NoResultException ex) {
+                System.out.println("Nema problema " + ex.getMessage());
             }
-            List<String> msgs = validator.validate(a).stream()
+
+            Client client = new Client();
+            client.setName(dto.getName());
+            client.setPlace(dto.getPlace());
+            client.setStreet(dto.getStreet());
+            client.setBank(dao.find(BankCreditor.class, dto.getBankId()));
+            client.setBankAccount(dto.getBankAccount());
+            client.setBusinessActivityCode(dto.getBusinessActivityCode());
+            client.setCompanyIDNumber(dto.getCompanyIDNumber());
+            client.setCountry(dto.getCountry());
+            client.setEMail(dto.getEMail());
+            client.setEmployee(dto.getEmployee());
+            client.setFax(dto.getFax());
+            client.setInitialCapital(dto.getInitialCapital());
+            client.setLogo(dto.getLogo());
+            client.setPhone(dto.getPhone());
+            client.setTownship(dao.find(Township.class, dto.getTownshipCode()));
+            client.setTIN(dto.getTIN());
+            client.setStatus(dto.getStatus());
+            client.setPostCode(dto.getPostCode());
+            client.setType(dto.getType());
+            client.setCompanyIDNumber(dto.getCompanyIDNumber());
+            client.setRegistrationNumber(dto.getRegistrationNumber());
+            client.setVatCertificateNumber(dto.getVatCertificateNumber());
+
+
+            List<String> msgs = validator.validate(client).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            dao.persist(a);
-            return a;
+            dao.persist(client);
+            return client;
         } catch (IllegalArgumentException | EntityExistsException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -77,7 +122,7 @@ public class ClientService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public Client update(Client dto) throws ConstraintViolationException,
+    public Client update(ClientDTO dto) throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateClientPermission
@@ -88,6 +133,18 @@ public class ClientService {
         if (dto.getId() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Client.IllegalArgumentEx.Id"));
+        }
+        if (dto.getTIN() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Client.IllegalArgumentException.TIN"));
+        }
+        if (dto.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Client.IllegalArgumentException.Name"));
+        }
+        if (dto.getTownshipCode() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Client.IllegalArgumentException.Township"));
         }
         try {
             Client item = dao.find(Client.class,
@@ -103,18 +160,30 @@ public class ClientService {
             item.setName(dto.getName());
             item.setCountry(dto.getCountry());
             item.setPlace(dto.getPlace());
-            item.setTownship(dto.getTownship());
+            item.setTownship(dao.find(Township.class, dto.getTownshipCode()));
             item.setStreet(dto.getStreet());
             item.setPostCode(dto.getPostCode());
             item.setEMail(dto.getEMail());
             item.setFax(dto.getFax());
             item.setPhone(dto.getPhone());
-            item.setBank(dto.getBank());
+            item.setBank(dao.find(BankCreditor.class, dto.getBankId()));
             item.setStatus(dto.getStatus());
             item.setVersion(dto.getVersion());
             item.setType(dto.getType());
-            item.setBank(dao.find(BankCreditor.class, Integer.valueOf(dto.getBankCreditor())));
-            item.setTownship(dao.find(Township.class, dto.getTownship().getCode()));
+            item.setBankAccount(dto.getBankAccount());
+            item.setBusinessActivityCode(dto.getBusinessActivityCode());
+            item.setCompanyIDNumber(dto.getCompanyIDNumber());
+            item.setEmployee(dto.getEmployee());
+            item.setFax(dto.getFax());
+            item.setInitialCapital(dto.getInitialCapital());
+            item.setLogo(dto.getLogo());
+            item.setTIN(dto.getTIN());
+            item.setStatus(dto.getStatus());
+            item.setType(dto.getType());
+            item.setCompanyIDNumber(dto.getCompanyIDNumber());
+            item.setRegistrationNumber(dto.getRegistrationNumber());
+
+
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -166,7 +235,7 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Client read(Integer id) throws EntityNotFoundException {
+    public ClientDTO read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadClientPermission
         if (id == null) {
             throw new EntityNotFoundException(
@@ -174,13 +243,13 @@ public class ClientService {
             );
         }
         try {
-            Client Client = dao.find(Client.class, id);
-            if (Client == null) {
+            Client client = dao.find(Client.class, id);
+            if (client == null) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("Client.EntityNotFoundEx", id)
                 );
             }
-            return Client;
+            return client.getDTO();
         } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -192,7 +261,7 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<Client> readPage(PageRequestDTO p)
+    public ReadRangeDTO<ClientDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadClientPermission
         Integer id = null;
@@ -230,28 +299,19 @@ public class ClientService {
                 throw new PageNotExistsException(
                         Utils.getMessage("Client.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<Client> result = new ReadRangeDTO<>();
+            ReadRangeDTO<ClientDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first Client = last page number * Clients per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao,
-                        id,
-                        companyIDNumber,
-                        name,
-                        TIN,
-                        start,
-                        pageSize));
+                List<ClientDTO> listClient = convertToDTO(this.search(dao, id, companyIDNumber, name, TIN, start, pageSize));
+
+                result.setData(listClient);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao,
-                        id,
-                        companyIDNumber,
-                        name,
-                        TIN,
-                        p.getPage() * pageSize,
-                        pageSize));
+                List<ClientDTO> listClient = convertToDTO(this.search(dao, id, companyIDNumber, name, TIN, p.getPage() * pageSize, pageSize));
+                result.setData(listClient);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -266,6 +326,14 @@ public class ClientService {
         }
     }
 
+    private List<ClientDTO> convertToDTO(List<Client> lista) {
+        List<ClientDTO> listaDTO = new ArrayList<>();
+        for (Client pr : lista) {
+            listaDTO.add(pr.getDTO());
+        }
+        return listaDTO;
+    }
+
     private Long count(
             EntityManager EM,
             Integer id,
@@ -277,7 +345,7 @@ public class ClientService {
         Root<Client> root = c.from(Client.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
-        if (id != null ) {
+        if (id != null) {
             criteria.add(cb.equal(root.get(Client_.id),
                     cb.parameter(String.class, "id")));
         }
@@ -298,7 +366,7 @@ public class ClientService {
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
-        if (id != null ) {
+        if (id != null) {
             q.setParameter("id", id);
         }
         if (companyIDNumber != null && companyIDNumber.isEmpty() == false) {
@@ -326,7 +394,7 @@ public class ClientService {
         Root<Client> root = query.from(Client.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
-        if (id != null ) {
+        if (id != null) {
             criteria.add(cb.equal(root.get(Client_.id),
                     cb.parameter(Integer.class, "id")));
         }
@@ -346,7 +414,7 @@ public class ClientService {
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(Client_.companyIDNumber)));
         TypedQuery<Client> typedQuery = em.createQuery(query);
-        if (id != null ) {
+        if (id != null) {
             typedQuery.setParameter("id", id);
         }
         if (companyIDNumber != null && companyIDNumber.isEmpty() == false) {
@@ -365,12 +433,12 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Client> readAll(Integer id,
-                                String companyIDNumber,
-                                String name,
-                                String TIN) {
+    public List<ClientDTO> readAll(Integer id,
+                                   String companyIDNumber,
+                                   String name,
+                                   String TIN) {
         try {
-            return this.search(dao, id, companyIDNumber, name, TIN, 0, 0);
+            return convertToDTO(this.search(dao, id, companyIDNumber, name, TIN, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

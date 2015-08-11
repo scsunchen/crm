@@ -5,6 +5,8 @@
     <file url="file://$PROJECT_DIR$/HR" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/admin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core-domain" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/ClientDTO.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/core-module-spi" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/customer-relationship-management" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" charset="windows-1250" />

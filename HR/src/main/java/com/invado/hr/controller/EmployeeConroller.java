@@ -5,7 +5,7 @@ import com.invado.core.domain.Job;
 import com.invado.core.domain.OrgUnit;
 import com.invado.hr.service.EmployeeService;
 import com.invado.hr.service.JobService;
-import com.invado.masterdata.service.OrgUnitService;
+import com.invado.hr.service.MasterDataService;
 import com.invado.hr.service.dto.PageRequestDTO;
 import com.invado.hr.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class EmployeeConroller {
     @Autowired
     private JobService jobService;
     @Autowired
-    private OrgUnitService orgUnitService;
+    private MasterDataService masterDataService;
 
 
     @RequestMapping("/employee/{page}")
@@ -51,8 +51,6 @@ public class EmployeeConroller {
 
     @RequestMapping(value = "/employee/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        List<OrgUnit> orgUnits = orgUnitService.readAll(null, null, null);
-        model.put("orgUnits", orgUnits);
         List<Job> jobs = jobService.readAll(null, null);
         model.put("jobs", jobs);
         model.put("item", new Employee());
