@@ -435,6 +435,16 @@ public class Client implements Serializable {
     public enum Type {
 
         SMALL_COMPANY,
-        LARGE_COMPANY
+        LARGE_COMPANY;
+
+        public String getDescription() {
+            switch (this) {
+                case SMALL_COMPANY:
+                    return Utils.getMessage("Client.Small_Company");
+                case LARGE_COMPANY:
+                    return Utils.getMessage("Client.Large_Company");
+            }
+            return "";
+        }
     }
 }

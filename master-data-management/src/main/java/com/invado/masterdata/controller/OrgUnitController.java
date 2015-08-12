@@ -2,6 +2,7 @@ package com.invado.masterdata.controller;
 
 import com.invado.core.domain.Client;
 import com.invado.core.domain.OrgUnit;
+import com.invado.core.dto.ClientDTO;
 import com.invado.core.dto.OrgUnitDTO;
 import com.invado.masterdata.service.ClientService;
 import com.invado.masterdata.service.OrgUnitService;
@@ -46,7 +47,7 @@ public class OrgUnitController {
 
         model.put("item", new OrgUnitDTO());
         model.put("item", new OrgUnit());
-        List<Client> clients = clientService.readAll(null, null, null, null);
+        List<ClientDTO> clients = clientService.readAll(null, null, null, null);
         model.put("clients", clients);
         model.put("action", "create");
         return "orgunit-grid";
@@ -83,7 +84,7 @@ public class OrgUnitController {
         model.put("action", "update");
         OrgUnitDTO item = service.read(id);
         model.put("item", item);
-        List<Client> clients = clientService.readAll(null, null, null, null);
+        List<ClientDTO> clients = clientService.readAll(null, null, null, null);
         model.put("clients", clients);
         return "orgunit-grid";
     }

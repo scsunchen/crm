@@ -68,7 +68,7 @@ public class ClientService {
         try {
             try {
                 Client temp = dao.createNamedQuery(Client.READ_BY_ID, Client.class)
-                        .setParameter("pattern", dto.getId())
+                        .setParameter("id", dto.getId())
                         .getSingleResult();
                 if (temp != null) {
                     throw new EntityExistsException(

@@ -3,6 +3,7 @@ package com.invado.masterdata.controller;
 import com.invado.core.domain.BankCreditor;
 import com.invado.core.domain.Client;
 import com.invado.core.domain.Township;
+import com.invado.core.dto.ClientDTO;
 import com.invado.masterdata.service.BankCreditorService;
 import com.invado.masterdata.service.ClientService;
 import com.invado.masterdata.service.TownshipService;
@@ -42,7 +43,7 @@ public class ClientController {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<Client> items = service.readPage(request);
+        ReadRangeDTO<ClientDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -52,7 +53,7 @@ public class ClientController {
     @RequestMapping(value = "/client/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
 
-        model.put("item", new Client());
+        model.put("item", new ClientDTO());
 
         List<Client.Status> statuses = Arrays.asList(Client.Status.values());
         model.put("statuses", statuses);
@@ -69,7 +70,7 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/client/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") Client item,
+    public String processCreationForm(@ModelAttribute("item") ClientDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -83,8 +84,6 @@ public class ClientController {
             model.put("resulterror", resultErrorMessages);
             return "resulterror";
         } else {
-            item.setTownship(townshipService.read(item.getTownship().getCode()));
-            item.setBank(bankCreditorService.read(Integer.parseInt(item.getBankCreditor())));
             this.service.create(item);
             status.setComplete();
         }
@@ -112,14 +111,14 @@ public class ClientController {
         List<BankCreditor> bankCreditors = bankCreditorService.readAll(null, null);
         model.put("banks", bankCreditors);
 
-        Client item = service.read(id);
+        ClientDTO item = service.read(id);
         model.put("item", item);
         return "client-grid";
     }
 
     @RequestMapping(value = "/client/{page}/update/{id}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") Client item,
+    public String processUpdationForm(@ModelAttribute("item") ClientDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)

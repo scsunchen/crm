@@ -8,23 +8,25 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
+
+import com.invado.core.dto.BusinessPartnerDTO;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author bdragan
  */
 @Entity
-@Table( name = "c_business_partner", schema = "devel")
+@Table(name = "c_business_partner", schema = "devel")
 @NamedQueries({
-    @NamedQuery(name = BusinessPartner.READ_BY_TIN , 
-        query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.TIN) LIKE  ?1"),
-    @NamedQuery(name = BusinessPartner.READ_BY_NAME_ORDERBY_NAME , 
-        query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
+        @NamedQuery(name = BusinessPartner.READ_BY_TIN,
+                query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.TIN) LIKE  ?1"),
+        @NamedQuery(name = BusinessPartner.READ_BY_NAME_ORDERBY_NAME,
+                query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
         @NamedQuery(name = BusinessPartner.READ_PARENT,
-        query = "SELECT x FROM BusinessPartner x where x.parentBusinessPartner is null")
+                query = "SELECT x FROM BusinessPartner x where x.parentBusinessPartner is null")
 })
 public class BusinessPartner implements Serializable {
-    
+
     public static final String READ_BY_TIN = "BusinessPartner.ReadByTIN";
     public static final String READ_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadByNameOrderByName";
     public static final String READ_PARENT = "BusinessPartner.ReadParentPartners";
@@ -89,7 +91,7 @@ public class BusinessPartner implements Serializable {
     @Embedded
     private ContactPerson contactPerson;
     @Version
-    @Column(name="version")
+    @Column(name = "version")
     private Long version;
 
 
@@ -97,11 +99,11 @@ public class BusinessPartner implements Serializable {
     private String parentCompanyIdNumber;
     @Transient
     private String parentPartnerName;
-    
+
     //************************************************************************//    
-                           // CONSTRUCTORS //
+    // CONSTRUCTORS //
     //************************************************************************//
-    
+
     public BusinessPartner() {
     }
 
@@ -114,9 +116,9 @@ public class BusinessPartner implements Serializable {
         this.TIN = TIN;
         this.name = name;
     }
-    
+
     //************************************************************************//    
-                           // GET/SET METHODS //
+    // GET/SET METHODS //
     //************************************************************************//
 
 
@@ -159,7 +161,7 @@ public class BusinessPartner implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
-    
+
     public String getPhone() {
         return phone;
     }
@@ -167,15 +169,15 @@ public class BusinessPartner implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
     public String getFax() {
         return fax;
     }
-    
+
     public void setFax(String fax) {
         this.fax = fax;
     }
-    
+
     public String getEMail() {
         return EMail;
     }
@@ -183,7 +185,7 @@ public class BusinessPartner implements Serializable {
     public void setEMail(String EMail) {
         this.EMail = EMail;
     }
-    
+
     public String getTIN() {
         return TIN;
     }
@@ -301,10 +303,42 @@ public class BusinessPartner implements Serializable {
         this.parentPartnerName = parentPartnerName;
     }
 
+
+    public BusinessPartnerDTO getDTO() {
+
+        BusinessPartnerDTO businessPartnerDTO = new BusinessPartnerDTO();
+
+        businessPartnerDTO.setId(this.getId());
+        businessPartnerDTO.setActivityCode(this.getActivityCode());
+        businessPartnerDTO.setInterestFreeDays(this.getInterestFreeDays());
+        businessPartnerDTO.setPhone(this.getPhone());
+        businessPartnerDTO.setFax(this.getFax());
+        businessPartnerDTO.setTIN(this.getTIN());
+        businessPartnerDTO.setEMail(this.getEMail());
+        businessPartnerDTO.setVersion(this.getVersion());
+        businessPartnerDTO.setCompanyIdNumber(this.getCompanyIdNumber());
+        businessPartnerDTO.setCurrencyDesignation(this.getCurrencyDesignation());
+        businessPartnerDTO.setCountry(this.getAddress().getCountry());
+        businessPartnerDTO.setPlace(this.getAddress().getPlace());
+        businessPartnerDTO.setStreet(this.getAddress().getStreet());
+        businessPartnerDTO.setPostCode(this.getPostCode());
+        businessPartnerDTO.setCurrentAccount(this.getCurrentAccount());
+        businessPartnerDTO.setName(this.getName());
+        businessPartnerDTO.setRebate(this.getRebate());
+        businessPartnerDTO.setVAT(this.getVAT());
+        businessPartnerDTO.setName1(this.getName1());
+        businessPartnerDTO.setContactPersoneName(this.getContactPerson().getName());
+        businessPartnerDTO.setContactPersonePhone(this.getContactPerson().getName());
+        businessPartnerDTO.setContactPersoneFunction(this.getContactPerson().getFunction());
+        businessPartnerDTO.setParentBusinessPartnerId(this.getParentBusinessPartner().getId());
+        businessPartnerDTO.setParentBusinesspartnerName(this.getParentBusinessPartner().getName());
+
+        return businessPartnerDTO;
+    }
     //************************************************************************//
-                           // OVERRIDEN OBJECT METHODS  //
+    // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -324,7 +358,7 @@ public class BusinessPartner implements Serializable {
         hash = 37 * hash + (this.companyIdNumber != null ? this.companyIdNumber.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public String toString() {
         return "BusinessPartner{" + "companyIdNumber=" + companyIdNumber + '}';

@@ -64,7 +64,7 @@
                 <td><c:out value="${item.name}"/></td>
                 <td><c:out value="${item.country}"/></td>
                 <td><c:out value="${item.place}"/></td>
-                <td><c:out value="${item.township.name}"/></td>
+                <td><c:out value="${item.townshipName}"/></td>
                 <td><c:out value="${item.street}"/></td>
                 <td><c:out value="${item.phone}"/></td>
                 <td><c:out value="${item.EMail}"/></td>

@@ -32,11 +32,11 @@
         <div class="col-lg-3">
             <input:inputField name="country" label="Država"/>
             <input:inputField name="place" label="Mesto"/>
-            <spring:bind path="township.code">
+            <spring:bind path="townshipCode">
                 <div class="form-group">
                     <label for="township">Opština</label>
-                    <form:select path="township" id="township" class="form-control" itemLabel="township" >
-                        <form:option value="${item.township.code}">${item.township.name}</form:option>
+                    <form:select path="townshipCode" id="township" class="form-control" itemLabel="township" >
+                        <form:option value="${townshipCode}">${townshipName}</form:option>
                         <form:options items="${townships}" itemLabel="name" itemValue="code"/>
                     </form:select>
                 </div>
@@ -50,11 +50,11 @@
         <div class="col-lg-3">
             <input:inputField label="PIB" name="TIN"/>
             <input:inputField label="Šifra delatnosti" name="businessActivityCode"/>
-            <spring:bind path="bank.id">
+            <spring:bind path="bankId">
                 <div class="form-group">
                     <label for="bank">Banka</label>
-                    <form:select path="bankCreditor" id="bank" class="form-control" itemLabel="bank">
-                        <form:option value="${item.bank.id}">${item.bank.name}</form:option>
+                    <form:select path="bankId" id="bank" class="form-control" itemLabel="bank">
+                        <form:option value="${bankId}">${bankName}</form:option>
                         <form:options items="${banks}" itemLabel="name" itemValue="id"/>
                     </form:select>
                 </div>
@@ -64,7 +64,7 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <form:select path="status" id="status" class="form-control" itemLabel="status">
-                    <form:option value="${item.status}">${item.status.description}</form:option>
+                    <form:option value="${status}">${statusDescription}</form:option>
                     <form:options items="${statuses}" itemLabel="description"/>
                 </form:select>
             </div>

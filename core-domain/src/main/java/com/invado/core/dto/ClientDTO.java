@@ -19,9 +19,11 @@ public class ClientDTO {
     private String businessActivityCode;
     private String EMail;
     private Client.Status status;
+    private String statusDescription;
     private String street;
     private String postCode;
     private Client.Type type;
+    private String typeDescription;
     private String companyIDNumber;
     private String country;
     private Long version;
@@ -234,5 +236,21 @@ public class ClientDTO {
 
     public void setBankAccount(String bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    public String getStatusDescription() {
+        return statusDescription;
+    }
+
+    public void setStatusDescription(String statusDescription) {
+        this.statusDescription = statusDescription;
+    }
+
+    public String getTypeDescription() {
+        return typeDescription;
+    }
+
+    public void setTypeDescription(String typeDescription) {
+        this.typeDescription = typeDescription;
     }
 }

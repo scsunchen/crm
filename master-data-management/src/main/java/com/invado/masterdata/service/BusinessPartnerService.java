@@ -1,8 +1,7 @@
 package com.invado.masterdata.service;
 
-import com.invado.core.domain.ApplicationSetup;
-import com.invado.core.domain.BusinessPartner;
-import com.invado.core.domain.BusinessPartner_;
+import com.invado.core.domain.*;
+import com.invado.core.dto.BusinessPartnerDTO;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -48,27 +47,51 @@ public class BusinessPartnerService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public BusinessPartner create(BusinessPartner a) throws IllegalArgumentException,
-            EntityExistsException {
+    public BusinessPartner create(BusinessPartnerDTO a) throws IllegalArgumentException,
+            EntityExistsException, ConstraintViolationException {
         //check CreateBusinessPartnerPermission
         if (a == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx"));
         }
+        if (a.getCompanyIdNumber() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("BusinessPartner.IllegalArgumentException.CompanyIdNumber"));
+        }
+        if (a.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("BusinessPartner.IllegalArgumentException.Name"));
+        }
         try {
+
+            BusinessPartner businessPartner = new BusinessPartner();
+
+            businessPartner.setCompanyIdNumber(a.getCompanyIdNumber());
+            businessPartner.setName(a.getName());
+            businessPartner.setName1(a.getName1());
+            businessPartner.setAddress(new Address(a.getCountry(), a.getPlace(), a.getStreet(), a.getPostCode()));
+            businessPartner.setPhone(a.getPhone());
+            businessPartner.setFax(a.getStreet());
+            businessPartner.setEMail(a.getEMail());
+            businessPartner.setTIN(a.getTIN());
+            businessPartner.setCurrencyDesignation(a.getCurrencyDesignation());
+            businessPartner.setCurrentAccount(a.getCurrentAccount());
+            businessPartner.setActivityCode(a.getActivityCode());
+            businessPartner.setRebate(a.getRebate());
+            businessPartner.setInterestFreeDays(a.getInterestFreeDays());
+            businessPartner.setVAT(a.getVAT());
+            businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
+            businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction()));
+
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            if (a.getParentBusinessPartner() != null) {
-                a.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartner().getId()));
-            }else{
-                a.setParentBusinessPartner(null);
-            }
-            dao.persist(a);
-            return a;
+
+            dao.persist(businessPartner);
+            return businessPartner;
         } catch (IllegalArgumentException | EntityExistsException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -80,7 +103,7 @@ public class BusinessPartnerService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public BusinessPartner update(BusinessPartner dto) throws ConstraintViolationException,
+    public BusinessPartner update(BusinessPartnerDTO dto) throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateBusinessPartnerPermission
@@ -91,6 +114,14 @@ public class BusinessPartnerService {
         if (dto.getId() == null ) {
             throw new ConstraintViolationException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx.Code"));
+        }
+        if (dto.getCompanyIdNumber() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("BusinessPartner.IllegalArgumentException.CompanyIdNumber"));
+        }
+        if (dto.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("BusinessPartner.IllegalArgumentException.Name"));
         }
         try {
             BusinessPartner item = dao.find(BusinessPartner.class,
@@ -104,8 +135,8 @@ public class BusinessPartnerService {
             }
             dao.lock(item, LockModeType.OPTIMISTIC);
             item.setName(dto.getName());
-            item.setAddress(dto.getAddress());
-            item.setContactPerson(dto.getContactPerson());
+            item.setAddress(new Address(dto.getCountry(), dto.getPlace(), dto.getStreet(), dto.getPostCode()));
+            item.setContactPerson(new ContactPerson(dto.getContactPersoneName(), dto.getContactPersonePhone(), dto.getContactPersoneFunction()));
             item.setCurrentAccount(dto.getCurrentAccount());
             item.setEMail(dto.getEMail());
             item.setFax(dto.getFax());
@@ -208,7 +239,7 @@ public class BusinessPartnerService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<BusinessPartner> readPage(PageRequestDTO p)
+    public ReadRangeDTO<BusinessPartnerDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadBusinessPartnerPermission
         Integer id = null;
@@ -246,28 +277,18 @@ public class BusinessPartnerService {
                 throw new PageNotExistsException(
                         Utils.getMessage("BusinessPartner.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<BusinessPartner> result = new ReadRangeDTO<>();
+            ReadRangeDTO<BusinessPartnerDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first BusinessPartner = last page number * BusinessPartners per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao,
-                        id,
-                        companyIdNumber,
-                        name,
-                        TIN,
-                        start,
-                        pageSize));
+                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, start, pageSize));
+                result.setData(businessPartnerDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao,
-                        id,
-                        companyIdNumber,
-                        name,
-                        TIN,
-                        p.getPage() * pageSize,
-                        pageSize));
+                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, p.getPage() * pageSize, pageSize));
+                result.setData(businessPartnerDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -280,6 +301,14 @@ public class BusinessPartnerService {
                     Utils.getMessage("BusinessPartner.PersistenceEx.ReadPage", ex)
             );
         }
+    }
+
+    private List<BusinessPartnerDTO> convertToDTO(List<BusinessPartner> lista) {
+        List<BusinessPartnerDTO> listaDTO = new ArrayList<>();
+        for (BusinessPartner pr : lista) {
+            listaDTO.add(pr.getDTO());
+        }
+        return listaDTO;
     }
 
     private Long count(
