@@ -318,20 +318,26 @@ public class BusinessPartner implements Serializable {
         businessPartnerDTO.setVersion(this.getVersion());
         businessPartnerDTO.setCompanyIdNumber(this.getCompanyIdNumber());
         businessPartnerDTO.setCurrencyDesignation(this.getCurrencyDesignation());
-        businessPartnerDTO.setCountry(this.getAddress().getCountry());
-        businessPartnerDTO.setPlace(this.getAddress().getPlace());
-        businessPartnerDTO.setStreet(this.getAddress().getStreet());
-        businessPartnerDTO.setPostCode(this.getPostCode());
+        if (this.getAddress() != null) {
+            businessPartnerDTO.setCountry(this.getAddress().getCountry());
+            businessPartnerDTO.setPlace(this.getAddress().getPlace());
+            businessPartnerDTO.setStreet(this.getAddress().getStreet());
+            businessPartnerDTO.setPostCode(this.getPostCode());
+        }
         businessPartnerDTO.setCurrentAccount(this.getCurrentAccount());
         businessPartnerDTO.setName(this.getName());
         businessPartnerDTO.setRebate(this.getRebate());
         businessPartnerDTO.setVAT(this.getVAT());
         businessPartnerDTO.setName1(this.getName1());
-        businessPartnerDTO.setContactPersoneName(this.getContactPerson().getName());
-        businessPartnerDTO.setContactPersonePhone(this.getContactPerson().getName());
-        businessPartnerDTO.setContactPersoneFunction(this.getContactPerson().getFunction());
-        businessPartnerDTO.setParentBusinessPartnerId(this.getParentBusinessPartner().getId());
-        businessPartnerDTO.setParentBusinesspartnerName(this.getParentBusinessPartner().getName());
+        if (this.getContactPerson() != null) {
+            businessPartnerDTO.setContactPersoneName(this.getContactPerson().getName());
+            businessPartnerDTO.setContactPersonePhone(this.getContactPerson().getName());
+            businessPartnerDTO.setContactPersoneFunction(this.getContactPerson().getFunction());
+        }
+        if (this.getParentBusinessPartner() != null) {
+            businessPartnerDTO.setParentBusinessPartnerId(this.getParentBusinessPartner().getId());
+            businessPartnerDTO.setParentBusinesspartnerName(this.getParentBusinessPartner().getName());
+        }
 
         return businessPartnerDTO;
     }

@@ -27,10 +27,10 @@
             </div>
             <div class="col-lg-3">
                 <input:inputField label="Matični broj" name="companyIdNumber"/>
-                <input:inputField name="address.country" label="Država"/>
-                <input:inputField name="address.place" label="Mesto"/>
-                <input:inputField name="address.street" label="Ulica i broj"/>
-                <input:inputField name="address.postCode" label="Poštanski Broj"/>
+                <input:inputField name="country" label="Država"/>
+                <input:inputField name="place" label="Mesto"/>
+                <input:inputField name="street" label="Ulica i broj"/>
+                <input:inputField name="postCode" label="Poštanski Broj"/>
                 <input:inputField label="Telefon" name="phone"/>
                 <input:inputField label="Fax" name="fax"/>
                 <input:inputField label="email" name="EMail"/>
@@ -52,8 +52,8 @@
                 <div class="form-group">
                     <label for="partnerName">Nadređeni partner</label>
                     <form:input id="partnerName" class="typeahead form-control" type="text"
-                                path="parentPartnerName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="partnerNameHidden" path="parentCompanyIdNumber"/>
+                                path="parentBusinesspartnerName" style="margin-bottom:  15px;"/>
+                    <form:hidden id="partnerNameHidden" path="parentBusinessPartnerId"/>
                 </div>
                 <div class="checkbox">
                     <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>

@@ -63,15 +63,15 @@
                 <td><c:out value="${item.name}"/></td>
                 <td><c:out value="${item.name1}"/></td>
                 <td class="form-inline">
-                    <c:out value="${item.address.country}"/>
-                    <c:out value="${item.address.place}"/>
-                    <c:out value="${item.address.street}"/>
-                    <c:out value="${item.address.postCode}"/>
+                    <c:out value="${item.country}"/>
+                    <c:out value="${item.place}"/>
+                    <c:out value="${item.street}"/>
+                    <c:out value="${item.postCode}"/>
                 </td>
                 <td><c:out value="${item.phone}"/></td>
                 <td><c:out value="${item.EMail}"/></td>
                 <td><c:out value="${item.currentAccount}"/></td>
-                <td><c:out value="${item.contactPerson.name}"/></td>
+                <td><c:out value="${item.contactPersoneName}"/></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>

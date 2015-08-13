@@ -97,7 +97,7 @@ public class BusinessPartnerService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
-                    Utils.getMessage("BusinessPartner.PersistenceEx.Create"+ex.getMessage(), ex)
+                    Utils.getMessage("BusinessPartner.PersistenceEx.Create" + ex.getMessage(), ex)
             );
         }
     }
@@ -111,7 +111,7 @@ public class BusinessPartnerService {
             throw new ConstraintViolationException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx"));
         }
-        if (dto.getId() == null ) {
+        if (dto.getId() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx.Code"));
         }
@@ -135,14 +135,25 @@ public class BusinessPartnerService {
             }
             dao.lock(item, LockModeType.OPTIMISTIC);
             item.setName(dto.getName());
-            item.setAddress(new Address(dto.getCountry(), dto.getPlace(), dto.getStreet(), dto.getPostCode()));
-            item.setContactPerson(new ContactPerson(dto.getContactPersoneName(), dto.getContactPersonePhone(), dto.getContactPersoneFunction()));
+            item.setName1(dto.getName1());
+            if (dto.getCountry() != null)
+                item.setAddress(new Address(dto.getCountry(), dto.getPlace(), dto.getStreet(), dto.getPostCode()));
+            if (dto.getContactPersoneName() != null)
+                item.setContactPerson(new ContactPerson(dto.getContactPersoneName(), dto.getContactPersonePhone(), dto.getContactPersoneFunction()));
             item.setCurrentAccount(dto.getCurrentAccount());
             item.setEMail(dto.getEMail());
             item.setFax(dto.getFax());
             item.setPhone(dto.getPhone());
             item.setRebate(dto.getRebate());
             item.setVersion(dto.getVersion());
+            item.setActivityCode(dto.getActivityCode());
+            item.setInterestFreeDays(dto.getInterestFreeDays());
+            item.setTIN(dto.getTIN());
+            item.setCompanyIdNumber(dto.getCompanyIdNumber());
+            item.setCurrencyDesignation(dto.getCurrencyDesignation());
+            if (dto.getParentBusinessPartnerId() != null)
+                item.setParentBusinessPartner(dao.find(BusinessPartner.class, dto.getParentBusinessPartnerId()));
+
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -169,11 +180,12 @@ public class BusinessPartnerService {
             }
         }
     }
+
     @Transactional
-    public List<BusinessPartner> readParentPartners(){
+    public List<BusinessPartner> readParentPartners() {
         Query parent = dao.createNamedQuery(BusinessPartner.READ_PARENT);
         List<BusinessPartner> parents = parent.getResultList();
-       return parents;
+        return parents;
     }
 
 
@@ -213,7 +225,7 @@ public class BusinessPartnerService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public BusinessPartner read(Integer id) throws EntityNotFoundException {
+    public BusinessPartnerDTO read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadBusinessPartnerPermission
         if (id == null) {
             throw new EntityNotFoundException(
@@ -221,13 +233,13 @@ public class BusinessPartnerService {
             );
         }
         try {
-            BusinessPartner BusinessPartner = dao.find(BusinessPartner.class, id);
-            if (BusinessPartner == null) {
+            BusinessPartner businessPartner = dao.find(BusinessPartner.class, id);
+            if (businessPartner == null) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("BusinessPartner.EntityNotFoundEx", id)
                 );
             }
-            return BusinessPartner;
+            return businessPartner.getDTO();
         } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -343,7 +355,7 @@ public class BusinessPartnerService {
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
-        if (id != null ) {
+        if (id != null) {
             q.setParameter("id", companyIdNumber.toUpperCase() + "%");
         }
         if (companyIdNumber != null && companyIdNumber.isEmpty() == false) {
@@ -371,7 +383,7 @@ public class BusinessPartnerService {
         Root<BusinessPartner> root = query.from(BusinessPartner.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
-        if (id != null ) {
+        if (id != null) {
             criteria.add(cb.equal(root.get(BusinessPartner_.companyIdNumber),
                     cb.parameter(Integer.class, "id")));
         }
@@ -391,7 +403,7 @@ public class BusinessPartnerService {
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(BusinessPartner_.companyIdNumber)));
         TypedQuery<BusinessPartner> typedQuery = em.createQuery(query);
-        if (id != null ) {
+        if (id != null) {
             typedQuery.setParameter("id", id);
         }
         if (companyIdNumber != null && companyIdNumber.isEmpty() == false) {
@@ -431,9 +443,9 @@ public class BusinessPartnerService {
             return dao.createNamedQuery(
                     BusinessPartner.READ_BY_NAME_ORDERBY_NAME,
                     BusinessPartner.class)
-                    .setParameter("name", ("%"+name+"%").toUpperCase())
+                    .setParameter("name", ("%" + name + "%").toUpperCase())
                     .getResultList();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(
                     "BusinessPartner.Exception.ReadItemByDescription"),

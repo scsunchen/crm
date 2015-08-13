@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/crm.iml" filepath="$PROJECT_DIR$/crm.iml" />
       <module fileurl="file://$PROJECT_DIR$/customer-relationship-management/customer-relationship-management.iml" filepath="$PROJECT_DIR$/customer-relationship-management/customer-relationship-management.iml" />
       <module fileurl="file://$PROJECT_DIR$/finance/finance.iml" filepath="$PROJECT_DIR$/finance/finance.iml" />
+      <module fileurl="file://$PROJECT_DIR$/finance/finance.iml" filepath="$PROJECT_DIR$/finance/finance.iml" />
       <module fileurl="file://$PROJECT_DIR$/master-data-management/master-data-management.iml" filepath="$PROJECT_DIR$/master-data-management/master-data-management.iml" />
     </modules>
   </component>

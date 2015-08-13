@@ -1,6 +1,7 @@
 package com.invado.masterdata.controller;
 
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.dto.BusinessPartnerDTO;
 import com.invado.masterdata.service.BusinessPartnerService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -35,7 +36,7 @@ public class BusinessPartnerController {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<BusinessPartner> items = service.readPage(request);
+        ReadRangeDTO<BusinessPartnerDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -56,7 +57,7 @@ public class BusinessPartnerController {
     }
 
     @RequestMapping(value = "/partner/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") BusinessPartner item,
+    public String processCreationForm(@ModelAttribute("item") BusinessPartnerDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -82,14 +83,14 @@ public class BusinessPartnerController {
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        BusinessPartner item = service.read(id);
+        BusinessPartnerDTO item = service.read(id);
         model.put("item", item);
         return "partner-grid";
     }
 
     @RequestMapping(value = "/partner/{page}/update/{id}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") BusinessPartner item,
+    public String processUpdationForm(@ModelAttribute("item") BusinessPartnerDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
