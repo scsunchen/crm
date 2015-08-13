@@ -80,7 +80,8 @@ public class BusinessPartnerService {
             businessPartner.setRebate(a.getRebate());
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
             businessPartner.setVAT(a.getVAT());
-            businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
+            if (a.getParentBusinessPartnerId() != null)
+                businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction()));
 
             List<String> msgs = validator.validate(a).stream()

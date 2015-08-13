@@ -3,7 +3,9 @@ package com.invado.masterdata.controller;
 import com.invado.core.domain.BankCreditor;
 import com.invado.core.domain.Client;
 import com.invado.core.domain.Township;
+import com.invado.core.dto.BankCreditorDTO;
 import com.invado.core.dto.ClientDTO;
+import com.invado.core.dto.TownshipDTO;
 import com.invado.masterdata.service.BankCreditorService;
 import com.invado.masterdata.service.ClientService;
 import com.invado.masterdata.service.TownshipService;
@@ -58,10 +60,10 @@ public class ClientController {
         List<Client.Status> statuses = Arrays.asList(Client.Status.values());
         model.put("statuses", statuses);
 
-        List<Township> townships = townshipService.readAll(null, null);
+        List<TownshipDTO> townships = townshipService.readAll(null, null);
         model.put("townships", townships);
 
-        List<BankCreditor> bankCreditors = bankCreditorService.readAll(null, null);
+        List<BankCreditorDTO> bankCreditors = bankCreditorService.readAll(null, null);
         model.put("banks", bankCreditors);
 
         model.put("action", "create");
@@ -105,10 +107,10 @@ public class ClientController {
         List<Client.Status> statuses = Arrays.asList(Client.Status.values());
         model.put("statuses", statuses);
 
-        List<Township> townships = townshipService.readAll(null, null);
+        List<TownshipDTO> townships = townshipService.readAll(null, null);
         model.put("townships", townships);
 
-        List<BankCreditor> bankCreditors = bankCreditorService.readAll(null, null);
+        List<BankCreditorDTO> bankCreditors = bankCreditorService.readAll(null, null);
         model.put("banks", bankCreditors);
 
         ClientDTO item = service.read(id);

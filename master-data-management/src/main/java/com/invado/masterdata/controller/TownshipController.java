@@ -1,6 +1,7 @@
 package com.invado.masterdata.controller;
 
 import com.invado.core.domain.Township;
+import com.invado.core.dto.TownshipDTO;
 import com.invado.masterdata.service.TownshipService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -30,7 +31,7 @@ public class TownshipController {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<Township> items = service.readPage(request);
+        ReadRangeDTO<TownshipDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -40,13 +41,13 @@ public class TownshipController {
 
     @RequestMapping(value = "/township/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        model.put("item", new Township());
+        model.put("item", new TownshipDTO());
         model.put("action", "create");
         return "township-grid";
     }
 
     @RequestMapping(value = "/township/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") Township item,
+    public String processCreationForm(@ModelAttribute("item") TownshipDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -74,14 +75,14 @@ public class TownshipController {
     public String initUpdateForm(@PathVariable String code,
                                  Map<String, Object> model)
             throws Exception {
-        Township item = service.read(code);
+        TownshipDTO item = service.read(code).getDTO();
         model.put("item", item);
         return "township-grid";
     }
 
     @RequestMapping(value = "/township/{page}/update/{code}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") Township item,
+    public String processUpdationForm(@ModelAttribute("item") TownshipDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)

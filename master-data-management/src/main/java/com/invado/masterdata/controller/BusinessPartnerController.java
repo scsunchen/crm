@@ -47,10 +47,8 @@ public class BusinessPartnerController {
 
     @RequestMapping(value = "/partner/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        System.out.println("u pravom smo kodu");
-        model.put("item", new BusinessPartner());
+        model.put("item", new BusinessPartnerDTO());
         List<BusinessPartner> parents = service.readParentPartners();
-        System.out.println("Evo je lista "+parents.size());
         model.put("parents", parents);
         model.put("action", "create");
         return "partner-grid";

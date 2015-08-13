@@ -3,6 +3,7 @@ package com.invado.masterdata.service;
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.Township;
 import com.invado.core.domain.Township_;
+import com.invado.core.dto.TownshipDTO;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -45,14 +46,31 @@ public class TownshipService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Township create(Township a) throws IllegalArgumentException,
-            EntityExistsException {
+    public Township create(TownshipDTO a) throws IllegalArgumentException,
+            EntityExistsException, ConstraintViolationException {
         //check CreateTownshipPermission
         if (a == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Township.IllegalArgumentEx"));
         }
+        if (a.getCode() == null ) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Township.IllegalArgumentEx.Code"));
+        }
+        if (a.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Township.IllegalArgumentException.Name"));
+        }
+        if (a.getPostCode() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Township.IllegalArgumentException.PostCode"));
+        }
         try {
+            Township township = new Township();
+
+            township.setCode(a.getCode());
+            township.setName(a.getName());
+            township.setPostCode(a.getPostCode());
 
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
@@ -60,8 +78,8 @@ public class TownshipService {
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            dao.persist(a);
-            return a;
+            dao.persist(township);
+            return township;
         } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -73,7 +91,7 @@ public class TownshipService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public Township update(Township dto) throws ConstraintViolationException,
+    public Township update(TownshipDTO dto) throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateTownshipPermission
@@ -85,7 +103,14 @@ public class TownshipService {
             throw new ConstraintViolationException(
                     Utils.getMessage("Township.IllegalArgumentEx.Code"));
         }
-        try {
+        if (dto.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Township.IllegalArgumentException.Name"));
+        }
+        if (dto.getPostCode() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Township.IllegalArgumentException.PostCode"));
+        }       try {
             Township item = dao.find(Township.class,
                     dto.getCode(),
                     LockModeType.OPTIMISTIC);
@@ -95,6 +120,10 @@ public class TownshipService {
                                 dto.getCode())
                 );
             }
+
+            item.setPostCode(dto.getPostCode());
+            item.setName(dto.getName());
+            item.setCode(dto.getCode());
             dao.lock(item, LockModeType.OPTIMISTIC);
             item.setName(dto.getName());
             /*Dodaj ovde ostalo*/
@@ -188,7 +217,7 @@ public class TownshipService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<Township> readPage(PageRequestDTO p)
+    public ReadRangeDTO<TownshipDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadTownshipPermission
         String code = null;
@@ -214,18 +243,19 @@ public class TownshipService {
                 throw new PageNotExistsException(
                         Utils.getMessage("Township.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<Township> result = new ReadRangeDTO<>();
+            ReadRangeDTO<TownshipDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first Township = last page number * Townships per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao, code, name,  start, pageSize));
+
+                result.setData(convertToDTO(this.search(dao, code, name,  start, pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao, code, name,
+                result.setData(convertToDTO(this.search(dao, code, name,
                         p.getPage() * pageSize,
-                        pageSize));
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -240,6 +270,13 @@ public class TownshipService {
         }
     }
 
+    private List<TownshipDTO> convertToDTO(List<Township> lista) {
+        List<TownshipDTO> listaDTO = new ArrayList<>();
+        for (Township pr : lista) {
+            listaDTO.add(pr.getDTO());
+        }
+        return listaDTO;
+    }
     private Long count(
             EntityManager EM,
             String code,
@@ -307,11 +344,11 @@ public class TownshipService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Township> readAll(
+    public List<TownshipDTO> readAll(
                                  String code,
                                  String name) {
         try {
-            return this.search(dao, code, name, 0, 0);
+            return convertToDTO(this.search(dao, code, name, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

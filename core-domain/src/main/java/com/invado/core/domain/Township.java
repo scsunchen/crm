@@ -4,6 +4,7 @@
  */
 package com.invado.core.domain;
 
+import com.invado.core.dto.TownshipDTO;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -39,7 +40,7 @@ public class Township implements Serializable {
     @NotBlank(message = "{Township.Name.NotBlank}")
     @Size(max = 100, message = "{Township.Name.Size}")
     private String name;
-    @Column(name="post_code")
+    @Column(name = "post_code")
     @NotBlank(message = "{Township.Name.NotBlank}")
     private String postCode;
     @Version
@@ -89,6 +90,16 @@ public class Township implements Serializable {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public TownshipDTO getDTO() {
+        TownshipDTO townshipDTO = new TownshipDTO();
+
+        townshipDTO.setCode(this.getCode());
+        townshipDTO.setName(this.getName());
+        townshipDTO.setPostCode(this.getPostCode());
+        townshipDTO.setVersion(this.getVersion());
+        return townshipDTO;
     }
 
     @Override

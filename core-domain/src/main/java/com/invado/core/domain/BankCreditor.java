@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.invado.core.dto.BankCreditorDTO;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -165,6 +167,24 @@ public class BankCreditor implements Serializable {
         this.version = version;
     }
 
+    public BankCreditorDTO getDTO(){
+
+        BankCreditorDTO bankCreditorDTO = new BankCreditorDTO();
+
+        bankCreditorDTO.setPostCode(this.getPostCode());
+        bankCreditorDTO.setName(this.getName());
+        bankCreditorDTO.setVersion(this.getVersion());
+        bankCreditorDTO.setAccount(this.getAccount());
+        bankCreditorDTO.setContactFunction(this.getContactFunction());
+        bankCreditorDTO.setContactPerson(this.getContactPerson());
+        bankCreditorDTO.setContactPhone(this.getContactPhone());
+        bankCreditorDTO.setId(this.getId());
+        bankCreditorDTO.setPlace(this.getPlace());
+        bankCreditorDTO.setStreet(this.getName());
+
+        return bankCreditorDTO;
+
+    }
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

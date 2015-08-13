@@ -3,6 +3,7 @@ package com.invado.masterdata.service;
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.BankCreditor;
 import com.invado.core.domain.BankCreditor_;
+import com.invado.core.dto.BankCreditorDTO;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -45,14 +46,30 @@ public class BankCreditorService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public BankCreditor create(BankCreditor a) throws IllegalArgumentException,
-            javax.persistence.EntityExistsException {
+    public BankCreditor create(BankCreditorDTO a) throws IllegalArgumentException,
+            EntityExistsException, ConstraintViolationException {
         //check CreateBankCreditorPermission
         if (a == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("BankCreditor.IllegalArgumentEx"));
         }
+        if (a.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("BankCreditor.IllegalArgumentException.name"));
+        }
         try {
+
+            BankCreditor bankCreditor = new BankCreditor();
+
+            bankCreditor.setPostCode(a.getPostCode());
+            bankCreditor.setName(a.getName());
+            bankCreditor.setAccount(a.getAccount());
+            bankCreditor.setContactFunction(a.getContactFunction());
+            bankCreditor.setContactPerson(a.getContactPerson());
+            bankCreditor.setContactPhone(a.getContactPhone());
+            bankCreditor.setId(a.getId());
+            bankCreditor.setPlace(a.getPlace());
+            bankCreditor.setStreet(a.getName());
 
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
@@ -60,8 +77,8 @@ public class BankCreditorService {
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            dao.persist(a);
-            return a;
+            dao.persist(bankCreditor);
+            return bankCreditor;
         } catch (IllegalArgumentException | javax.persistence.EntityExistsException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -73,21 +90,21 @@ public class BankCreditorService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public BankCreditor update(BankCreditor dto) throws ConstraintViolationException,
-            javax.persistence.EntityNotFoundException,
+    public BankCreditor update(BankCreditorDTO dto) throws ConstraintViolationException,
+            EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateBankCreditorPermission
         if (dto == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("BankCreditor.IllegalArgumentEx"));
         }
-        if (dto.getId() == null) {
-            System.out.println("evo ga problem jbt "+dto.getContactPerson());
+        if (dto.getName() == null) {
             throw new ConstraintViolationException(
-                    Utils.getMessage("BankCreditor.IllegalArgumentEx.Code"));
+                    Utils.getMessage("BankCreditor.IllegalArgumentException.name"));
         }
         try {
-            BankCreditor item = dao.find(BankCreditor.class,
+
+           BankCreditor item = dao.find(BankCreditor.class,
                     dto.getId(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
@@ -155,7 +172,7 @@ public class BankCreditorService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public BankCreditor read(Integer id) throws javax.persistence.EntityNotFoundException {
+    public BankCreditorDTO read(Integer id) throws javax.persistence.EntityNotFoundException {
         //TODO : check ReadBankCreditorPermission
         if (id == null) {
             throw new javax.persistence.EntityNotFoundException(
@@ -169,7 +186,7 @@ public class BankCreditorService {
                         Utils.getMessage("BankCreditor.EntityNotFoundEx", id)
                 );
             }
-            return BankCreditor;
+            return BankCreditor.getDTO();
         } catch (javax.persistence.EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -181,7 +198,7 @@ public class BankCreditorService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<BankCreditor> readPage(PageRequestDTO p)
+    public ReadRangeDTO<BankCreditorDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadBankCreditorPermission
         Integer id = null;
@@ -210,24 +227,24 @@ public class BankCreditorService {
                 throw new PageNotExistsException(
                         Utils.getMessage("BankCreditor.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<BankCreditor> result = new ReadRangeDTO<>();
+            ReadRangeDTO<BankCreditorDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first BankCreditor = last page number * BankCreditors per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao,
+                result.setData(convertToDTO(this.search(dao,
                         id,
                         name,
                         start,
-                        pageSize));
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao,
+                result.setData(convertToDTO(this.search(dao,
                         id,
                         name,
                         p.getPage() * pageSize,
-                        pageSize));
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -242,6 +259,13 @@ public class BankCreditorService {
         }
     }
 
+    private List<BankCreditorDTO> convertToDTO(List<BankCreditor> lista) {
+        List<BankCreditorDTO> listaDTO = new ArrayList<>();
+        for (BankCreditor pr : lista) {
+            listaDTO.add(pr.getDTO());
+        }
+        return listaDTO;
+    }
     private Long count(
             EntityManager EM,
             Integer id,
@@ -309,10 +333,10 @@ public class BankCreditorService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<BankCreditor> readAll(Integer id,
+    public List<BankCreditorDTO> readAll(Integer id,
                                          String name) {
         try {
-            return this.search(dao, id, name, 0, 0);
+            return convertToDTO(this.search(dao, id, name, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

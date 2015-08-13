@@ -31,7 +31,6 @@
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="customer-relationship-management" />
       </profile>
       <profile default="false" name="Annotation profile for finance" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
@@ -45,14 +44,12 @@
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="master-data-management" />
       </profile>
       <profile default="false" name="Annotation profile for HR" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="HR" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

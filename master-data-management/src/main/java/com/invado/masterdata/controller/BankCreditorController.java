@@ -1,6 +1,7 @@
 package com.invado.masterdata.controller;
 
 import com.invado.core.domain.BankCreditor;
+import com.invado.core.dto.BankCreditorDTO;
 import com.invado.masterdata.service.BankCreditorService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -31,7 +32,7 @@ public class BankCreditorController {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<BankCreditor> items = service.readPage(request);
+        ReadRangeDTO<BankCreditorDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -40,13 +41,13 @@ public class BankCreditorController {
 
     @RequestMapping(value = "/bank/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        model.put("item", new BankCreditor());
+        model.put("item", new BankCreditorDTO());
         model.put("action", "create");
         return "bank-grid";
     }
 
     @RequestMapping(value = "/bank/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") BankCreditor item,
+    public String processCreationForm(@ModelAttribute("item") BankCreditorDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -74,14 +75,14 @@ public class BankCreditorController {
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        BankCreditor item = service.read(id);
+        BankCreditorDTO item = service.read(id);
         model.put("item", item);
         return "bank-grid";
     }
 
     @RequestMapping(value = "/bank/{page}/update/{code}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") BankCreditor item,
+    public String processUpdationForm(@ModelAttribute("item") BankCreditorDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
