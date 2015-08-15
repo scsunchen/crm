@@ -4,13 +4,11 @@
  */
 package com.invado.finance.service;
 
-import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.ApplicationUser;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.ExchangeRate;
 import com.invado.core.domain.ExchangeRatePK;
 import com.invado.core.domain.OrgUnit;
-import com.invado.core.domain.OrgUnitPK;
 import static com.invado.core.domain.VatPercent.GENERAL_RATE;
 import static com.invado.core.domain.VatPercent.LOWER_RATE;
 import com.invado.core.exception.ConstraintViolationException;
@@ -115,8 +113,7 @@ public class RecordInvoiceService {
             }
             BusinessPartner partner = EM.find(BusinessPartner.class, 
                                                invoice.getPartnerID());// ne moze biti null           
-            OrgUnit orgUnit = EM.find(OrgUnit.class,
-                    new OrgUnitPK(dto.getOrgUnitId(), dto.getClientId()));//ne moze biti null
+            OrgUnit orgUnit = EM.find(OrgUnit.class,dto.getOrgUnitId());//ne moze biti null
             Description opis = EM.find(Description.class, dto.getDescription());
             if (opis == null) {
                 //dao.rollbackTransaction();

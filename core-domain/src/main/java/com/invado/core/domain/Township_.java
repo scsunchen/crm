@@ -8,7 +8,8 @@ import javax.persistence.metamodel.StaticMetamodel;
  */
 @StaticMetamodel(Township.class)
 public class Township_ {
-    public static volatile SingularAttribute<Township, Integer> code;
+    public static volatile SingularAttribute<Township, String> code;
     public static volatile SingularAttribute<Township, String> name;
+    public static volatile SingularAttribute<Township, String> postCode;
     public static volatile SingularAttribute<Township, Long> version;
 }

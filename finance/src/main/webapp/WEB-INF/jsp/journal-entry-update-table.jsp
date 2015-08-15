@@ -69,7 +69,7 @@
                         <label for="partnerName" style="margin-top:  15px;"><spring:message code="JournalEntryItem.Label.Partner" /></label>
                         <form:input id="partnerName" class="typeahead form-control" 
                                     type="text" path="partnerName" />
-                        <form:hidden id="partnerCompanyId" path="partnerCompanyId"/>
+                        <form:hidden id="partnerId" path="partnerId"/>
                     </div>
                     <div class="form-group" >
                         <label for="internalDocument" style="margin-top:  15px;"><spring:message code="JournalEntryItem.Label.Document1" /></label>
@@ -241,6 +241,6 @@
         })
     });
     $('#partnerName').bind('typeahead:selected', function (obj, datum, name) {
-        $('#partnerCompanyId').val(datum['companyIdNumber']);
+        $('#partnerId').val(datum['id']);
     });
 </script>

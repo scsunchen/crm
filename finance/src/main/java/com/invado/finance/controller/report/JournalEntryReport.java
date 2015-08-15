@@ -181,7 +181,7 @@ public class JournalEntryReport implements Printable,Pageable {
         }
         
         float interDocumentHeight = 0;
-        if(DTO.getInternalDocument().isEmpty() == false) {
+        if(DTO.getInternalDocument() != null && DTO.getInternalDocument().isEmpty() == false) {
             iterator = new AttributedString(
                     DTO.getInternalDocument(),
                     map).getIterator();
@@ -335,13 +335,13 @@ public class JournalEntryReport implements Printable,Pageable {
                     (float) (pageWidth * 31.75 / 100),
                     rowDrawStart);
             this.drawMultiLineText(g2d,
-                    itemDTO.getInternalDocument(),
+                    itemDTO.getInternalDocument() == null ? "" : itemDTO.getInternalDocument(),
                     (float)(pageWidth * 41.5 / 100),
                     rowDrawStart,
                     (float) (pageWidth * 11.5 / 100));
             g2d.drawString(
-                    itemDTO.getPartnerCompanyId() == null 
-                    ? "" : itemDTO.getPartnerCompanyId(),
+                    itemDTO.getBusinessPartnerCompanyId()== null 
+                    ? "" : itemDTO.getBusinessPartnerCompanyId(),
                     (float) (pageWidth * 53.75 / 100),
                     rowDrawStart);
             g2d.drawString(dateFormat.format(itemDTO.getValueDate()),

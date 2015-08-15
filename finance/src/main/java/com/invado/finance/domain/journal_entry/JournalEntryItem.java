@@ -72,19 +72,13 @@ public class JournalEntryItem implements Serializable, Comparable {
                 referencedColumnName = "journal_entry_type_id",
                 insertable = false, updatable = false),//idtipanaloga
         @JoinColumn(name = "journal_entry_number",//brojnaloga
-                referencedColumnName = "number",
+                referencedColumnName = "journal_entry_number",
                 insertable = false, updatable = false)//brojnaloga
     })
     private JournalEntry journalEntry;
     @NotNull(message = "{JournalEntryItem.OrgUnit.NotNull}")
     @ManyToOne
-    @JoinColumns({
-        //idorgjedinice
-        @JoinColumn(name = "org_unit_id",
-                referencedColumnName = "org_unit_id"),
-        @JoinColumn(name = "org_unit_company_id",
-                referencedColumnName = "company_id")
-    })
+    @JoinColumn(name = "org_unit_id")
     private OrgUnit orgUnit;
     @NotNull(message = "{JournalEntryItem.DebitCreditRelationDate.NotNull}")
     @Column(name = "credit_relation_date")
@@ -105,7 +99,7 @@ public class JournalEntryItem implements Serializable, Comparable {
     @JoinColumn(name = "account_number")
     private Account account;
     @ManyToOne
-    @JoinColumn(name = "business_partner_regnumber")
+    @JoinColumn(name = "business_partner_id")
     private BusinessPartner partner;
     @Size(max = 35, message = "{JournalEntryItem.InternalDocument.Size}")
     @Column(name = "internal_document")
@@ -296,9 +290,6 @@ public class JournalEntryItem implements Serializable, Comparable {
         return journalEntry.getTypeG();
     }
 
-    public String getPartnerID() {
-        return partner.getCompanyIdNumber();
-    }
 
     public Integer getDescID() {
         return desc.getId();
@@ -366,7 +357,8 @@ public class JournalEntryItem implements Serializable, Comparable {
         rezultat.setAccountCode(account.getNumber());
         rezultat.setAccountName(account.getDescription());
         if (partner != null) {
-            rezultat.setPartnerCompanyId(partner.getCompanyIdNumber());
+            rezultat.setPartnerId(partner.getId());
+            rezultat.setBusinessPartnerCompanyId(partner.getCompanyIdNumber());
             rezultat.setPartnerName( partner.getName() );
         }
         rezultat.setValueDate(this.valueDate);

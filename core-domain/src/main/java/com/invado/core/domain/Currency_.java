@@ -8,6 +8,9 @@ public class Currency_ {
 
     public static volatile SingularAttribute<Currency, String> description;
     public static volatile SingularAttribute<Currency, String> ISOCode;
+    public static volatile SingularAttribute<Currency, Integer> ISONumber;
+    public static volatile SingularAttribute<Currency, String> state;
+    public static volatile SingularAttribute<Currency, String> currency;
     public static volatile SingularAttribute<Currency, Long> version;
 
 }

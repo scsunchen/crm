@@ -11,6 +11,15 @@ import java.io.Serializable;
 @Table(name = "c_job", schema = "devel")
 public class Job implements Serializable {
 
+    @TableGenerator(
+            name = "JobTab",
+            table = "id_generator",
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "Job",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "JobTab")
     @Id
     private Integer id;
     @NotNull(message = "{Job.Name.NotNull}")

@@ -103,10 +103,7 @@ public class Analytical implements Serializable {
     //u so proverava da li je u tekucoj godini poslovanja(Podesavanja.godina)
     private LocalDate recordDate;
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "org_unit_id", referencedColumnName = "org_unit_id"),
-        @JoinColumn(name = "org_unit_company", referencedColumnName = "company_id")
-    })
+    @JoinColumn(name = "org_unit_id")
     @NotNull(message = "{Analytical.OrgUnit.NotNull}")
     private OrgUnit orgUnit;
     @NotNull(message = "{Analytical.CreditDebitRelationDate.NotNull}")
@@ -130,7 +127,7 @@ public class Analytical implements Serializable {
     private Account account;
     @NotNull(message = "{Analytical.BusinessPartner.NotNull}")
     @ManyToOne
-    @JoinColumn(name = "business_partner_regnumber")
+    @JoinColumn(name = "business_partner_id")
     private BusinessPartner partner;
     @Column(name = "internal_document")
     @Size(max = 35, message = "{Analytical.InterDocument.Size}")
@@ -358,7 +355,7 @@ public class Analytical implements Serializable {
         return account.getNumber();
     }
 
-    public String getPartnerID() {
+    public String getPartnerCompanyID() {
         return partner.getCompanyIdNumber();
     }
 

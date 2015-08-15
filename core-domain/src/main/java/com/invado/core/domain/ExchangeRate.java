@@ -136,10 +136,7 @@ public class ExchangeRate implements Serializable {
         if (this.applicationDate != other.applicationDate && (this.applicationDate == null || !this.applicationDate.equals(other.applicationDate))) {
             return false;
         }
-        if (this.toCurrency != other.toCurrency && (this.toCurrency == null || !this.toCurrency.equals(other.toCurrency))) {
-            return false;
-        }
-        return true;
+        return !(this.toCurrency != other.toCurrency && (this.toCurrency == null || !this.toCurrency.equals(other.toCurrency)));
     }
 
     @Override

@@ -44,10 +44,7 @@ public class ExchangeRatePK implements Serializable {
         if (this.applicationDate != other.applicationDate && (this.applicationDate == null || !this.applicationDate.equals(other.applicationDate))) {
             return false;
         }
-        if ((this.toCurrency == null) ? (other.toCurrency != null) : !this.toCurrency.equals(other.toCurrency)) {
-            return false;
-        }
-        return true;
+        return !((this.toCurrency == null) ? (other.toCurrency != null) : !this.toCurrency.equals(other.toCurrency));
     }
 
     @Override

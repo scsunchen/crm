@@ -4,8 +4,9 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @StaticMetamodel(BusinessPartner.class)
-public class BusinessPartner_ { 
+public class BusinessPartner_ {
 
+    public static volatile SingularAttribute<BusinessPartner, Integer> id;
     public static volatile SingularAttribute<BusinessPartner, String> activityCode;
     public static volatile SingularAttribute<BusinessPartner, Integer> interestFreeDays;
     public static volatile SingularAttribute<BusinessPartner, String> phone;

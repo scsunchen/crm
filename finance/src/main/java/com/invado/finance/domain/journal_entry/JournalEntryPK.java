@@ -25,7 +25,7 @@ public class JournalEntryPK implements Serializable{
     @Column(name = "journal_entry_type_id")
     @NotNull(message = "{JournalEntry.Type.NotNull}")
     private Integer type;
-    @Column(name = "number")
+    @Column(name = "journal_entry_number")
     @NotNull(message = "{JournalEntry.Number.NotNull}")
     @DecimalMin(value = "1", message = "{JournalEntry.Number.Min}")
     private Integer number;

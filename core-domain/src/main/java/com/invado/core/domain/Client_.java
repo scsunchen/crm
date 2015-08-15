@@ -8,7 +8,8 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @StaticMetamodel(Client.class)
-public class Client_ { 
+public class Client_ {
+
 
     public static volatile SingularAttribute<Client, byte[]> logo;
     public static volatile SingularAttribute<Client, String> phone;

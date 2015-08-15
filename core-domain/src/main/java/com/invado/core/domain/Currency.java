@@ -5,13 +5,7 @@
 package com.invado.core.domain;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -36,13 +30,21 @@ public class Currency implements Serializable {
             "Currency.ReadAllOrderByISOCode";
     public static final String READ_BY_ISOCODE_ORDERBY_ISOCODE = 
             "Currency.ReadByISOCodeOrderByISOCode";
+
+
     @Id
     @Column(name = "iso_code")
     @NotNull(message = "{Currency.ISOCode.NotNull}")
     @Size(min = 3, max = 3, message = "{Currency.ISOCode.Size}")
     private String ISOCode;
+    @Column(name = "currency_name")
+    private String currency;
+    @Column(name = "iso_nuumber")
+    private Integer ISONumber;
     @Column(name = "description")
     private String description;
+    @Column
+    private String state;
     @Version
     private Long version;
 
@@ -77,6 +79,30 @@ public class Currency implements Serializable {
         this.version = version;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public Integer getISONumber() {
+        return ISONumber;
+    }
+
+    public void setISONumber(Integer ISONumber) {
+        this.ISONumber = ISONumber;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -86,10 +112,7 @@ public class Currency implements Serializable {
             return false;
         }
         final Currency other = (Currency) obj;
-        if ((this.ISOCode == null) ? (other.ISOCode != null) : !this.ISOCode.equals(other.ISOCode)) {
-            return false;
-        }
-        return true;
+        return !((this.ISOCode == null) ? (other.ISOCode != null) : !this.ISOCode.equals(other.ISOCode));
     }
 
     @Override

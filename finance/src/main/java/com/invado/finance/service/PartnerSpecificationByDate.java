@@ -60,8 +60,8 @@ public class PartnerSpecificationByDate  {
                 throw new EntityNotFoundException(
                         getMessage("PartnerSpecification.ClientNotExists"));
             }
-            if (DTO.getOrgUnitID() != null && dao.find(OrgUnit.class,
-                    new OrgUnitPK(DTO.getOrgUnitID(), DTO.getClientID())) == null) {
+            if (DTO.getOrgUnitID() != null && 
+                    dao.find(OrgUnit.class, DTO.getOrgUnitID()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("PartnerSpecification.OrgUnitNotExists",
                         DTO.getClientID(), DTO.getOrgUnitID()));
@@ -181,9 +181,7 @@ public class PartnerSpecificationByDate  {
         dto.accountNumber = accountNumber;
         dto.orgUnitID = orgUnitID;
         if (orgUnitID != null) {
-            dto.orgUnitName = dao.find(OrgUnit.class,
-                    new OrgUnitPK(orgUnitID, clientID))
-                    .getName();
+            dto.orgUnitName = dao.find(OrgUnit.class,orgUnitID).getName();
         } else {
             dto.orgUnitName = "";
         }
@@ -210,7 +208,7 @@ public class PartnerSpecificationByDate  {
 
                 if (analitika.getAccountNumber().equals(analitika1.getAccountNumber()) == true
                         && analitika.getOrgUnitID().equals(analitika1.getOrgUnitID()) == true
-                        && analitika.getPartnerID().equals(analitika1.getPartnerID()) == true) {
+                        && analitika.getPartnerCompanyID().equals(analitika1.getPartnerCompanyID()) == true) {
                     debit = debit.add(analitika1.getDebit());
                     credit = credit.add(analitika1.getCredit());
                     obradjeni.add(analitika1);
@@ -222,7 +220,7 @@ public class PartnerSpecificationByDate  {
             StavkaSpecifikacijeDTO item = new StavkaSpecifikacijeDTO();
             item.idOrgJedinice = analitika.getOrgUnitID();
             item.businessPartnerName = analitika.getPartnerName();
-            item.businessPartnerRegNo = analitika.getPartnerID();
+            item.businessPartnerRegNo = analitika.getPartnerCompanyID();
             item.sifraKonta = analitika.getAccountNumber();
             item.credit = credit;
             item.debit = debit;

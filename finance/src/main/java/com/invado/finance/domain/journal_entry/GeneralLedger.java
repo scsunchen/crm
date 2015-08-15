@@ -85,12 +85,7 @@ public class GeneralLedger implements Serializable {
     @Convert(converter = LocalDateConverter.class)
     private LocalDate recordDate;
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "org_unit_id",
-                referencedColumnName = "org_unit_id"),
-        @JoinColumn(name = "org_unit_company",
-                referencedColumnName = "company_id")
-    })
+    @JoinColumn(name = "org_unit_id")
     @NotNull(message = "{GeneralLedger.OrgUnit.NotNull}")
     private OrgUnit orgUnit;
     @NotNull(message = "{GeneralLedger.CreditDebitRelationDate.NotNull}")

@@ -265,6 +265,7 @@ public class JournalEntryController {
             @PathVariable Integer typeId,
             @PathVariable Integer number)
             throws Exception {
+        try {
         JournalEntryReportDTO dto = service.printJournalEntry(clientId,
                 typeId,
                 number);
@@ -278,6 +279,11 @@ public class JournalEntryController {
         ResponseEntity<byte[]> response = new ResponseEntity<>(
                 getPDFFile(report), headers, HttpStatus.OK);
         return response;
+        }catch(Exception e) {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+e.getLocalizedMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @RequestMapping(value = "/journal-entry/{page}/{clientId}/{typeId}/{number}/{version}/record.html")
@@ -334,7 +340,8 @@ public class JournalEntryController {
             @PathVariable Integer typeId,
             @PathVariable Integer number)
             throws Exception {
-        JournalEntryReportDTO dto = service.printJournalEntry(clientId,
+        
+            JournalEntryReportDTO dto = service.printJournalEntry(clientId,
                 typeId,
                 number);
         JAXBContext context = JAXBContext.newInstance(
@@ -361,6 +368,7 @@ public class JournalEntryController {
         ResponseEntity<byte[]> response = new ResponseEntity<>(
                 byteStream.toByteArray(), headers, HttpStatus.OK);
         return response;
+        
     }
     
     @RequestMapping(value = "/journal-entry/read-orgunit/{name}")

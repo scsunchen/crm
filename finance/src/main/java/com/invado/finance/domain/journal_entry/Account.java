@@ -32,7 +32,7 @@ public class Account implements Serializable {
     public static final String READ_BY_NUMBER_ORDERBY_NUMBER = "Account.ReadByNumberOrderByNumber";
     
     @Id
-    @Column(name = "number")
+    @Column(name = "account_number")
     @Size(max = 10, message = "{Account.Id.Size}")
     @NotBlank(message = "{Account.Id.NotBlank}")
     private String number;

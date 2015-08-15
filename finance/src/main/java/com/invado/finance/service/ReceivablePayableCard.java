@@ -70,8 +70,7 @@ public class ReceivablePayableCard  {
                         getMessage("LedgerCard.ClientNotExists",
                         dto.getClientID()));
             }
-            if (dto.getOrgUnitID() != null && dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.getOrgUnitID(), dto.getClientID())) == null) {
+            if (dto.getOrgUnitID() != null && dao.find(OrgUnit.class, dto.getOrgUnitID()) == null) {
                 throw new EntityNotFoundException(getMessage(
                         "LedgerCard.OrgUnitNotExists", dto.getClientID(), dto.getOrgUnitID()));
             }
@@ -133,7 +132,7 @@ public class ReceivablePayableCard  {
 
         //group items by business partner registration number
         for (Analytical item : stavke) {
-            if (partners.contains(item.getPartnerID()) == true) {
+            if (partners.contains(item.getPartnerCompanyID()) == true) {
                 continue;
             }
             BigDecimal balanceTotal = BigDecimal.ZERO;
@@ -143,10 +142,10 @@ public class ReceivablePayableCard  {
                     new ArrayList<>();
             LedgerCardDTO dto = this.getLedgerCardDTO(EM, requestDTO,
                     requestDTO.getAccountNumber(),
-                    item.getPartnerID());
+                    item.getPartner().getId());
             //add items with same business partner registration number
             for (Analytical item1 : stavke) {
-                if (item.getPartnerID().equals(item1.getPartnerID())) {
+                if (item.getPartnerCompanyID().equals(item1.getPartnerCompanyID())) {
                     LedgerCardItemDTO itemDTO = new LedgerCardItemDTO();
                     itemDTO.typeID = item1.getJournalEntryTypeID();
                     itemDTO.journalEntryNumber = item1.getJournalEntryNumber();
@@ -222,7 +221,7 @@ public class ReceivablePayableCard  {
             dto.debitTotal = debitTotal;
             dto.creditTotal = creditTotal;
             dto.balanceTotal = debitTotal.subtract(creditTotal);
-            partners.add(item.getPartnerID());
+            partners.add(item.getPartnerCompanyID());
             resultList.add(dto);
         }
         ReadLedgerCardsDTO result = new ReadLedgerCardsDTO();
@@ -275,12 +274,11 @@ public class ReceivablePayableCard  {
             EntityManager dao,
             RequestLedgerCardDTO requestDTO,
             String accountNumber,
-            String partnerID) {
+            Integer partnerID) {
         LedgerCardDTO dto = new LedgerCardDTO();
         dto.clientName = dao.find(Client.class,requestDTO.getClientID()).getName();
         if (requestDTO.getOrgUnitID() != null) {
-            OrgUnit orgUnit = dao.find(OrgUnit.class,
-                    new OrgUnitPK(requestDTO.getOrgUnitID(), requestDTO.getClientID()));
+            OrgUnit orgUnit = dao.find(OrgUnit.class, requestDTO.getOrgUnitID());
             dto.orgUnitID = orgUnit.getId();
             dto.orgUnitName = orgUnit.getName();
         }
@@ -289,7 +287,7 @@ public class ReceivablePayableCard  {
             dto.accountNumber = account.getNumber();
             dto.accountName = account.getDescription();
         }
-        if (partnerID != null && partnerID.isEmpty() == false) {
+        if (partnerID != null ) {
             BusinessPartner partner = dao.find(BusinessPartner.class, partnerID);
             dto.partnerRegistrationNumber = partner.getCompanyIdNumber();
             dto.partnerName = partner.getName();

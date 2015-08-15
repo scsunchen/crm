@@ -11,7 +11,6 @@ import com.invado.core.domain.Client_;
 import com.invado.core.domain.ExchangeRate;
 import com.invado.core.domain.ExchangeRatePK;
 import com.invado.core.domain.OrgUnit;
-import com.invado.core.domain.OrgUnitPK;
 import com.invado.core.domain.OrgUnit_;
 import com.invado.core.exception.EntityNotFoundException;
 import com.invado.core.exception.SystemException;
@@ -84,8 +83,7 @@ public class GLCard{
                         getMessage("LedgerCard.ClientNotExists",
                         dto.getClientID()));
             }
-            if (dto.getOrgUnitID() != null && dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.getOrgUnitID(), dto.getClientID())) == null) {
+            if (dto.getOrgUnitID() != null && dao.find(OrgUnit.class, dto.getOrgUnitID()) == null) {
                 throw new EntityNotFoundException(getMessage(
                         "LedgerCard.OrgUnitNotExists", dto.getClientID(), dto.getOrgUnitID()));
             }
@@ -236,8 +234,7 @@ public class GLCard{
         LedgerCardDTO dto = new LedgerCardDTO();
         dto.clientName = EM.find(Client.class, requestDTO.getClientID()).getName();
         if (requestDTO.getOrgUnitID() != null) {
-            OrgUnit oj = EM.find(OrgUnit.class,
-                    new OrgUnitPK(requestDTO.getOrgUnitID(), requestDTO.getClientID()));
+            OrgUnit oj = EM.find(OrgUnit.class, requestDTO.getOrgUnitID());
             dto.orgUnitID = oj.getId();
             dto.orgUnitName = oj.getName();
         }

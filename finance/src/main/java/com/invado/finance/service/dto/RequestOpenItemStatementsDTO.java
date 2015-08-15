@@ -26,7 +26,7 @@ public class RequestOpenItemStatementsDTO  {
     private Integer orgUnitID;
     private String orgUnitName;
     private String accountNumber;
-    private String partnerID;
+    private Integer partnerID;
     private String partnerName;
     private Amount i;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
@@ -99,11 +99,11 @@ public class RequestOpenItemStatementsDTO  {
         this.accountNumber = accountNumber;
     }
 
-    public String getPartnerID() {
+    public Integer getPartnerID() {
         return partnerID;
     }
 
-    public void setPartnerID(String partnerID) {
+    public void setPartnerID(Integer partnerID) {
         this.partnerID = partnerID;
     }
 

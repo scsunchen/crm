@@ -13,28 +13,30 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.invado.core.dto.ClientDTO;
 import com.invado.core.utils.Utils;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
 
 /**
- *
  * @author bdragan
  */
 @Entity
 @Table(name = "c_client", schema = "devel")
 @NamedQueries({
-    @NamedQuery(name = Client.READ_BY_TOWNSHIP,
-            query = "SELECT x FROM Client x WHERE x.township.code = :code"),
-    @NamedQuery(name = Client.READ_BY_TIN,
-            query = "SELECT x FROM Client x WHERE x.TIN =?1"),
-    @NamedQuery(name = Client.READ_BY_NAME_ORDERBY_NAME,
-            query = "SELECT x FROM Client x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
-    @NamedQuery(name = Client.COUNT,
-            query = "SELECT COUNT(x) FROM Client x"),
-    @NamedQuery(name = Client.READ_ALL_ORDERBY_ID,
-            query = "SELECT x FROM Client x ORDER BY x.id")
-
+        @NamedQuery(name = Client.READ_BY_TOWNSHIP,
+                query = "SELECT x FROM Client x WHERE x.township.code = :code"),
+        @NamedQuery(name = Client.READ_BY_ID,
+                query = "SELECT x FROM Client x WHERE x.id = :id"),
+        @NamedQuery(name = Client.READ_BY_TIN,
+                query = "SELECT x FROM Client x WHERE x.TIN =?1"),
+        @NamedQuery(name = Client.READ_BY_NAME_ORDERBY_NAME,
+                query = "SELECT x FROM Client x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
+        @NamedQuery(name = Client.COUNT,
+                query = "SELECT COUNT(x) FROM Client x"),
+        @NamedQuery(name = Client.READ_ALL_ORDERBY_ID,
+                query = "SELECT x FROM Client x ORDER BY x.id"),
+        @NamedQuery(name = Client.READ_BY_COMPANY_NUMBER,
+                query = "SELECT x FROM Client x WHERE x.companyIDNumber = :companyIDNumber ORDER BY x.companyIDNumber")
 })
 public class Client implements Serializable {
 
@@ -45,11 +47,20 @@ public class Client implements Serializable {
     public static final String READ_BY_TOWNSHIP = "Client.ReadByTownship";
     public static final String COUNT = "Client.Count";
     public static final String READ_ALL_ORDERBY_ID = "Client.ReadAll";
+    public static final String READ_BY_COMPANY_NUMBER = "Client.ReadByCompanyNumber";
+    public static final String READ_BY_ID = " Client.ReadById";
 
+    @TableGenerator(
+            name = "ClientTab",
+            table = "id_generator",
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "Client",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ClientTab")
     @Id
     @Column(name = "id")
-    @NotNull(message = "{Company.Id.NotNull}")
-    @Range(min = 1, max = 99, message = "{Company.Id.Range}")
     private Integer id;
     @NotBlank(message = "{Company.Name.NotBlank}")
     @Size(max = 100, message = "{Company.Name.Size}")
@@ -120,7 +131,7 @@ public class Client implements Serializable {
 
     @Transient
     private String bankCreditor;
-    
+
     //************************************************************************//    
     // CONSTRUCTORS //
     //************************************************************************//
@@ -256,7 +267,6 @@ public class Client implements Serializable {
     }
 
 
-
     public Type getType() {
         return type;
     }
@@ -322,6 +332,49 @@ public class Client implements Serializable {
         this.bankCreditor = bankCreditor;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public ClientDTO getDTO() {
+
+        ClientDTO clientDTO = new ClientDTO();
+
+
+        clientDTO.setLogo(this.getLogo());
+        clientDTO.setPhone(this.getPhone());
+        clientDTO.setTownshipCode(this.getTownship().getCode());
+        clientDTO.setTownshipName(this.getTownship().getName());
+        clientDTO.setTIN(this.getTIN());
+        clientDTO.setFax(this.getFax());
+        clientDTO.setBusinessActivityCode(this.getBusinessActivityCode());
+        clientDTO.setEMail(this.getEMail());
+        clientDTO.setStatus(this.getStatus());
+        clientDTO.setStreet(this.getStreet());
+        clientDTO.setPostCode(this.getPostCode());
+        clientDTO.setType(this.getType());
+        clientDTO.setCompanyIDNumber(this.getCompanyIDNumber());
+        clientDTO.setCountry(this.getCountry());
+        clientDTO.setVersion(this.getVersion());
+        clientDTO.setId(this.getId());
+        clientDTO.setRegistrationNumber(this.getRegistrationNumber());
+        clientDTO.setName(this.getName());
+        clientDTO.setPlace(this.getPlace());
+        clientDTO.setInitialCapital(this.getInitialCapital());
+        clientDTO.setEmployee(this.getEmployee());
+        clientDTO.setVatCertificateNumber(this.getVatCertificateNumber());
+        clientDTO.setBankId(this.getBank().getId());
+        clientDTO.setBankName(this.getBank().getName());
+        clientDTO.setBankAccount(this.getBankAccount());
+
+        return clientDTO;
+
+    }
+
     //************************************************************************//
     // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//
@@ -334,11 +387,8 @@ public class Client implements Serializable {
             return false;
         }
         final Client other = (Client) obj;
-        if (this.id != other.id && (this.id == null
-                || !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !(this.id != other.id && (this.id == null
+                || !this.id.equals(other.id)));
     }
 
     @Override
@@ -371,9 +421,12 @@ public class Client implements Serializable {
 
         public String getDescription() {
             switch (this) {
-                case LEGAL_ENTITY  : return Utils.getMessage("Client.Legal_Entity");
-                case ENTREPRENEUR : return Utils.getMessage("Client.Enterpreneur");
-                case LEGAL_ENTITY_BUDGET : return Utils.getMessage("Client.Legal_Entity_Budget");
+                case LEGAL_ENTITY:
+                    return Utils.getMessage("Client.Legal_Entity");
+                case ENTREPRENEUR:
+                    return Utils.getMessage("Client.Enterpreneur");
+                case LEGAL_ENTITY_BUDGET:
+                    return Utils.getMessage("Client.Legal_Entity_Budget");
             }
             return "";
         }
@@ -382,6 +435,16 @@ public class Client implements Serializable {
     public enum Type {
 
         SMALL_COMPANY,
-        LARGE_COMPANY
+        LARGE_COMPANY;
+
+        public String getDescription() {
+            switch (this) {
+                case SMALL_COMPANY:
+                    return Utils.getMessage("Client.Small_Company");
+                case LARGE_COMPANY:
+                    return Utils.getMessage("Client.Large_Company");
+            }
+            return "";
+        }
     }
 }

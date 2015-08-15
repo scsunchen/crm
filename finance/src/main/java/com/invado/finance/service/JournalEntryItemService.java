@@ -9,7 +9,6 @@ import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.ApplicationUser;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.OrgUnit;
-import com.invado.core.domain.OrgUnitPK;
 import com.invado.core.exception.PageNotExistsException;
 import com.invado.core.exception.ReferentialIntegrityException;
 import com.invado.core.exception.SystemException;
@@ -485,10 +484,8 @@ public class JournalEntryItemService  {
             journalEntry.setVersion(journalEntryVersion);
             //check referential integrity***************************************
             OrgUnit orgUnit = null;
-            if (dto.getClientId() != null && dto.getUnitId() != null) {
-                orgUnit = EM.find(OrgUnit.class, new OrgUnitPK(
-                        dto.getUnitId(),
-                        dto.getClientId()));
+            if (dto.getUnitId() != null) {
+                orgUnit = EM.find(OrgUnit.class, dto.getUnitId());
                 if (orgUnit == null) {
                     throw new ReferentialIntegrityException(
                             getMessage("JournalEntry.OrgUnitNotExists",
@@ -515,13 +512,13 @@ public class JournalEntryItemService  {
                 }
             }
             BusinessPartner businessPartner = null;
-            if (dto.getPartnerCompanyId() != null && !dto.getPartnerCompanyId().isEmpty()) {
-                businessPartner = EM.find(BusinessPartner.class, dto.getPartnerCompanyId());
+            if (dto.getPartnerId() != null) {
+                businessPartner = EM.find(BusinessPartner.class, dto.getPartnerId());
                 if (businessPartner == null) {
                     //if user enter business partner that not exists
                     throw new ReferentialIntegrityException(
                             getMessage("JournalEntry.BusinessPartnerNotExists",
-                            dto.getPartnerCompanyId()));
+                            dto.getPartnerId()));
                 }
             }
             List<ApplicationUser> userList = EM.createNamedQuery(

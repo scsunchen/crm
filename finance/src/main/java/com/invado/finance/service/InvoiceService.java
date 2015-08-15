@@ -13,7 +13,6 @@ import com.invado.core.domain.Client;
 import com.invado.core.domain.Client_;
 import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
-import com.invado.core.domain.OrgUnitPK;
 import com.invado.finance.Utils;
 import com.invado.core.domain.Article;
 import com.invado.core.domain.Article_;
@@ -113,8 +112,7 @@ public class InvoiceService {
                         Utils.getMessage("Invoice.EntityExistsException",
                         dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()));
             }
-            OrgUnit unit = dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.getOrgUnitId(), dto.getClientId()));
+            OrgUnit unit = dao.find(OrgUnit.class, dto.getOrgUnitId());
             if (unit == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.OrgUnit",
@@ -719,8 +717,7 @@ public class InvoiceService {
                         Utils.getMessage("Invoice.ReferentialIntegrityException.User",
                                 dto.getUsername()));
             }
-            OrgUnit unit = dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.getUnitId(), dto.getClientId()));
+            OrgUnit unit = dao.find(OrgUnit.class, dto.getUnitId());
             if (unit == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.OrgUnit",
@@ -906,7 +903,7 @@ public class InvoiceService {
             Client client = dao.find(Client.class, temp.getClientId());//mora da postoji
             InvoiceReportDTO result = new InvoiceReportDTO();
             result.creditRelationDate = temp.getCreditRelationDate();
-            result.partnerID = temp.getPartnerID();
+            result.partnerID = temp.getPartner().getCompanyIdNumber();
             result.partnerName = temp.getPartnerName();
             result.partnerAddress = temp.getPartnerStreet();
             result.partnerPost = temp.getPartnerPost();

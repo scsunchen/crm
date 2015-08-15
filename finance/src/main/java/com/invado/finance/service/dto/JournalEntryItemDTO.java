@@ -32,7 +32,8 @@ public class JournalEntryItemDTO {
     private String descName;
     private String accountCode;
     private String accountName;
-    private String partnerCompanyId;
+    private Integer partnerId;
+    private String businessPartnerCompanyId;
     private String partnerName;
     private String internalDocument;
     @DateTimeFormat(style = "M-")
@@ -143,16 +144,24 @@ public class JournalEntryItemDTO {
         this.accountName = accountName;
     }
 
-    public String getPartnerCompanyId() {
-        return partnerCompanyId;
+    public Integer getPartnerId() {
+        return partnerId;
     }
 
-    public void setPartnerCompanyId(String partnerCompanyId) {
-        this.partnerCompanyId = partnerCompanyId;
+    public void setPartnerId(Integer partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getPartnerName() {
         return partnerName;
+    }
+
+    public String getBusinessPartnerCompanyId() {
+        return businessPartnerCompanyId;
+    }
+
+    public void setBusinessPartnerCompanyId(String businessPartnerCompanyId) {
+        this.businessPartnerCompanyId = businessPartnerCompanyId;
     }
 
     public void setPartnerName(String partnerName) {

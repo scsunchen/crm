@@ -209,6 +209,6 @@
         })
     });
     $('#businessPartnerName').bind('typeahead:selected', function (obj, datum, name) {
-        $('#businessPartnerRegNo').val(datum['companyIdNumber']);
+        $('#partnerID').val(datum['id']);
     });    
 </script>

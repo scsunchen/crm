@@ -18,7 +18,7 @@
 
     <bean id="jpaVendorAdapter"
           class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+        <property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/>
         <property name="showSql" value="true"/>
     </bean>
 
@@ -35,18 +35,12 @@
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
         <property name="jpaDialect" ref="jpaDialect" />
     </bean>
-
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="url" value="jdbc:postgresql://localhost:5432/invado" />
-        <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="username" value="bdragan" />
-    </bean>    
-    <!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+        <property name="url" value="jdbc:oracle:thin:@94.127.3.157:1521:xe" />
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
         <property name="username" value="devel" />
         <property name="password" value="devel" />
-    </bean>-->
+    </bean>
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
     <bean id="userService" class="com.invado.finance.service.UserDataService" />
 </beans>

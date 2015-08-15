@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence                    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="unit" transaction-type="RESOURCE_LOCAL">
+    <shared-cache-mode>ALL</shared-cache-mode>
+    <!-- ***************CORE*************************************-->
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>com.invado.core.domain.Township</class>
+    <class>com.invado.core.domain.ApplicationSetup</class>
+    <class>com.invado.core.domain.OrgUnit</class>
+    <class>com.invado.core.domain.BusinessPartner</class>
+    <class>com.invado.core.domain.ApplicationUser</class>
+    <class>com.invado.core.domain.Role</class>
+    <class>com.invado.core.domain.Client</class>
+    <class>com.invado.core.domain.Currency</class>
+    <class>com.invado.core.domain.ExchangeRate</class>
+    <class>com.invado.core.domain.BankCreditor</class>
+    <class>com.invado.core.domain.Job</class>
+    <class>com.invado.core.domain.Employee</class>
+    <class>com.invado.core.domain.DeviceStatus</class>
+    <class>com.invado.core.domain.Device</class>
+    <class>com.invado.core.domain.Article</class>
+    <!-- ***************FINANCE*************************************-->
+    <class>com.invado.core.domain.Article</class>
+    <!--    <class>com.invado.core.domain.Employee</class>
+    <class>com.invado.core.domain.Job</class>-->
+    <class>com.invado.finance.domain.Invoice</class>
+    <class>com.invado.finance.domain.InvoiceItem</class>
+    <class>com.invado.finance.domain.Properties</class>
+    <class>com.invado.finance.domain.journal_entry.RecordInvoiceAccount</class>
+    <class>com.invado.finance.domain.journal_entry.Account</class>
+    <class>com.invado.finance.domain.journal_entry.Analytical</class>
+    <class>com.invado.finance.domain.journal_entry.Description</class>
+    <class>com.invado.finance.domain.journal_entry.GeneralLedger</class>
+    <class>com.invado.finance.domain.journal_entry.JournalEntryType</class>
+    <class>com.invado.finance.domain.journal_entry.JournalEntry</class>
+    <class>com.invado.finance.domain.journal_entry.JournalEntryItem</class>
+    <class>com.invado.finance.domain.journal_entry.PartnerSpecification</class>
+  </persistence-unit>
+</persistence>

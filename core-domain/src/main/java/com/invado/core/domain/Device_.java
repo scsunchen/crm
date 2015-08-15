@@ -19,5 +19,7 @@ public class Device_ {
     public static volatile SingularAttribute<Device, Date> workingStartTime;
     public static volatile SingularAttribute<Device, Date> workingEndTime;
     public static volatile SingularAttribute<Device, String> installedSoftwareVersion;
+    public static volatile SingularAttribute<Device, String> articleDesc;
+    public static volatile SingularAttribute<Device, String> articleCode;
     public static volatile SingularAttribute<Device, Long> version;
 }

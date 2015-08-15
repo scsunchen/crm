@@ -117,10 +117,7 @@ public class ApplicationSetup implements Serializable {
             return false;
         }
         final ApplicationSetup other = (ApplicationSetup) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !(this.id != other.id && (this.id == null || !this.id.equals(other.id)));
     }
 
     @Override
@@ -128,13 +125,13 @@ public class ApplicationSetup implements Serializable {
         return "ApplicationSetup{" + "id=" + id + '}';
     }
     
-    public static enum ApplicationVersion implements Serializable {
+    public enum ApplicationVersion implements Serializable {
 
         ACCOUNTING_AGENCY,
-        COMPANY_ACCOUNTING;
+        COMPANY_ACCOUNTING
     }
     
-    public static enum ApplicationUser implements Serializable {
+    public enum ApplicationUser implements Serializable {
 
         PRVI, NULTI
         //UNDEFINED;

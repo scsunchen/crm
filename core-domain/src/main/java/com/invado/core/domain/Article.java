@@ -236,11 +236,8 @@ public class Article implements Serializable {
             return false;
         }
         final Article other = (Article) obj;
-        if ((this.code == null) ? (other.code != null)
-                : !this.code.equals(other.code)) {
-            return false;
-        }
-        return true;
+        return !((this.code == null) ? (other.code != null)
+                : !this.code.equals(other.code));
     }
 
     @Override

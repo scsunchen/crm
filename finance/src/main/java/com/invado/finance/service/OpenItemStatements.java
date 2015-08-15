@@ -4,11 +4,9 @@
  */
 package com.invado.finance.service;
 
-import com.invado.core.domain.BankCreditor;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
 import com.invado.core.domain.OrgUnit;
-import com.invado.core.domain.OrgUnitPK;
 import com.invado.core.exception.ConstraintViolationException;
 import com.invado.core.exception.EntityNotFoundException;
 import com.invado.core.exception.SystemException;
@@ -20,8 +18,6 @@ import com.invado.finance.service.dto.RequestOpenItemStatementsDTO;
 import static com.invado.finance.service.dto.RequestOpenItemStatementsDTO.Amount.OPSEG;
 import static com.invado.finance.service.dto.RequestOpenItemStatementsDTO.Prikaz.ANALYTIC;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -58,8 +54,7 @@ public class OpenItemStatements {
         this.checkInputArgument(dto);
         List<OpenItemStatementsDTO> listDTO = null;
         try {
-            if (dto.getOrgUnitID() != null && dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.getOrgUnitID(), dto.getClientID())) == null) {
+            if (dto.getOrgUnitID() != null && dao.find(OrgUnit.class, dto.getOrgUnitID()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("OpenItem.OrgUnitNotExists",
                                 dto.getClientID(),
@@ -135,19 +130,17 @@ public class OpenItemStatements {
             queryCondition = queryCondition + " AND o.id = "
                     + dto.getOrgUnitID();
         }
-        if (dto.getPartnerID() != null && dto.getPartnerID().equals("") == false) {
-            queryCondition = queryCondition + " AND s.companyIdNumber = '"
-                    + escapeSQLInjectionCharacters(dto.getPartnerID()) + "'";
+        if (dto.getPartnerID() != null ) {
+            queryCondition = queryCondition + " AND s.id = "+ dto.getPartnerID() ;
         }
         if (dto.getValueDate() != null) {
-            queryCondition = queryCondition + " AND x.valueDate <= '"
-                    + df.format(dto.getValueDate()) + "'";
+            queryCondition = queryCondition + " AND x.valueDate <=  ?2";
         }
         if (dto.getI() == OPSEG) {
             queryCondition = queryCondition + " AND x.amount >= " + dto.getMin()
                     + " AND x.amount <= " + dto.getMax();
         }
-        return this.vratiStavke(EM, queryCondition, Analytical.Status.OPEN);
+        return this.vratiStavke(EM, queryCondition, Analytical.Status.OPEN, dto.getValueDate());
     }
 
     private List<Analytical> vratiStavke(EntityManager EM, String uslov, Object... s) {
@@ -156,7 +149,7 @@ public class OpenItemStatements {
 //                + " ORDER BY s.companyIdNumber, k.number, x.recordDate";
 //        System.out.println(upit1);
         Query upit = EM.createQuery("SELECT x FROM Analytical x JOIN x.account k JOIN x.partner s JOIN x.orgUnit o  " + uslov
-                + " ORDER BY s.companyIdNumber, k.number, x.recordDate");
+                + " ORDER BY s.id, k.number, x.recordDate");
         for (int i = 0; i < s.length; i++) {
             upit.setParameter(i + 1, s[i]);
         }
@@ -196,10 +189,10 @@ public class OpenItemStatements {
         }
 
         //pravi se izvod za sve poslovne partnere
-        Map<String, List<Analytical>> map = groupItemsByBusinessPartner(analytics);
-        Iterator<String> it = map.keySet().iterator();
+        Map<Integer, List<Analytical>> map = groupItemsByBusinessPartner(analytics);
+        Iterator<Integer> it = map.keySet().iterator();
         while (it.hasNext()) {
-            String partnerID = it.next();
+            Integer partnerID = it.next();
             OpenItemStatementsDTO DTO = getOpenItemStatementsDTO(account,
                     dao.find(BusinessPartner.class, partnerID),
                     client);
@@ -233,19 +226,19 @@ public class OpenItemStatements {
         return dto;
     }
 
-    private Map<String, List<Analytical>> groupItemsByBusinessPartner(
+    private Map<Integer, List<Analytical>> groupItemsByBusinessPartner(
             List<Analytical> stavke) {
-        Map<String, List<Analytical>> map = new HashMap<>();
+        Map<Integer, List<Analytical>> map = new HashMap<>();
         for (Analytical a : stavke) {
-            if (!map.containsKey(a.getPartnerID())) {
+            if (!map.containsKey(a.getPartner().getId())) {
                 List<Analytical> lista = new ArrayList<>();
                 lista.add(a);
                 for (Analytical a1 : stavke) {
-                    if (a.getPartnerID().equals(a1.getPartnerID()) && !a.equals(a1)) {
+                    if (a.getPartner().getId().equals(a1.getPartner().getId()) && !a.equals(a1)) {
                         lista.add(a1);
                     }
                 }
-                map.put(a.getPartnerID(), lista);
+                map.put(a.getPartner().getId(), lista);
             }
         }
         return map;

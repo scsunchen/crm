@@ -128,7 +128,7 @@ public class AnalyticalTransactionsStatus {
             return false;
         }
         if (a.getAccountNumber().equals(a1.getAccountNumber())
-                && a.getPartnerID().equals(a1.getPartnerID())
+                && a.getPartnerCompanyID().equals(a1.getPartnerCompanyID())
                 && a.getDocument().equals(a1.getDocument())) {
             return true;
         }

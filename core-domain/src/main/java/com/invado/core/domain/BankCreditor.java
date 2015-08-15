@@ -5,17 +5,12 @@
 package com.invado.core.domain;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.invado.core.dto.BankCreditorDTO;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -40,10 +35,20 @@ public class BankCreditor implements Serializable {
     public static final String READ_BY_NAME_ORDERBY_NAME = "BankCreditor.ReadByNameOrderByName";
     
     private static final long serialVersionUID = 1L;
-    
+
+
+    @TableGenerator(
+            name = "BankaTab",
+            table = "id_generator",
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "Banka",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "BankaTab")
     @Id
     @Column(name = "id")
-    @NotNull(message = "{Bank.Id.NotNull}")
+    //@NotNull(message = "{Bank.Id.NotNull}")
     @DecimalMin(value="1", message = "{Bank.Id.DecimalMin}")
     private Integer id;
     @NotBlank(message = "{Bank.Name.NotBlank}")
@@ -157,7 +162,29 @@ public class BankCreditor implements Serializable {
     public Long getVersion() {
         return version;
     }
-    
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public BankCreditorDTO getDTO(){
+
+        BankCreditorDTO bankCreditorDTO = new BankCreditorDTO();
+
+        bankCreditorDTO.setPostCode(this.getPostCode());
+        bankCreditorDTO.setName(this.getName());
+        bankCreditorDTO.setVersion(this.getVersion());
+        bankCreditorDTO.setAccount(this.getAccount());
+        bankCreditorDTO.setContactFunction(this.getContactFunction());
+        bankCreditorDTO.setContactPerson(this.getContactPerson());
+        bankCreditorDTO.setContactPhone(this.getContactPhone());
+        bankCreditorDTO.setId(this.getId());
+        bankCreditorDTO.setPlace(this.getPlace());
+        bankCreditorDTO.setStreet(this.getName());
+
+        return bankCreditorDTO;
+
+    }
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -167,10 +194,7 @@ public class BankCreditor implements Serializable {
             return false;
         }
         final BankCreditor other = (BankCreditor) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !(this.id != other.id && (this.id == null || !this.id.equals(other.id)));
     }
 
     @Override

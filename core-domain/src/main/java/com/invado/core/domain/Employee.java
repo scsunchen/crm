@@ -11,53 +11,73 @@ import java.time.LocalDate;
 /**
  * Created by NikolaB on 6/14/2015.
  */
+@NamedQueries({
+        @NamedQuery(name = Employee.READ_BY_ORGUNIT, query = "SELECT x FROM Employee x WHERE orgUnit.id = :orgUnit")
+})
 @Entity
 @Table(name = "c_employee", schema = "devel")
-public class Employee  implements Serializable {
+public class Employee implements Serializable {
 
+    public final static String READ_BY_ORGUNIT = "Employee.ReadByOrgUnit";
+
+    @TableGenerator(
+            name = "EmployeeTab",
+            table = "id_generator",
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "Employee",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "EmployeeTab")
     @Id
     private Integer id;
     @NotNull(message = "{Employee.Name.NotNull}")
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
     @Column(name = "middle_name")
     private String middleName;
     @NotNull(message = "{Employee.LastName.NotNull}")
-    @Column(name="last_name")
+    @Column(name = "last_name")
     private String lastName;
     @NotNull(message = "{Employee.DateOFBirth.NotNull}")
+    @Column(name = "date_of_birth")
     @Convert(converter = LocalDateConverter.class)
-    @Column(name="date_of_birth")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate dateOfBirth;
     @Column(name = "phone")
     private String phone;
     @Column(name = "email")
     private String email;
-    @Column(name="picture")
+    @Column(name = "picture")
     private byte[] picture;
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name="org_unit_company_id", referencedColumnName="company_id"),
-            @JoinColumn(name="org_unit_id", referencedColumnName="org_unit_id")
-    })
+    @JoinColumn(name = "org_unit_id", referencedColumnName = "org_unit_id")
     @NotNull(message = "{Employee.OrgUnit.NotNull}")
     private OrgUnit orgUnit;
     @NotNull(message = "{Employee.OrgUnit.NotNull}")
     @Convert(converter = LocalDateConverter.class)
-    @Column(name="hire_date")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @Column(name = "hire_date")
     private LocalDate hireDate;
     @Convert(converter = LocalDateConverter.class)
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Column(name = "end_date")
     private LocalDate endDate;
     @ManyToOne
-    @JoinColumn(name="job_id")
+    @JoinColumn(name = "job_id")
     private Job job;
     @Embedded
     private Address address;
     @Version
     private Long version;
 
-    public Employee(){}
+    @Transient
+    private Integer transientJobId;
+    @Transient
+    private Integer transientOrgUnitId;
+
+    public Employee() {
+    }
 
     public Integer getId() {
         return id;
@@ -163,6 +183,22 @@ public class Employee  implements Serializable {
         this.picture = picture;
     }
 
+    public Integer getTransientJobId() {
+        return transientJobId;
+    }
+
+    public void setTransientJobId(Integer transientJobId) {
+        this.transientJobId = transientJobId;
+    }
+
+    public Integer getTransientOrgUnitId() {
+        return transientOrgUnitId;
+    }
+
+    public void setTransientOrgUnitId(Integer transientOrgUnitId) {
+        this.transientOrgUnitId = transientOrgUnitId;
+    }
+
     public Long getVersion() {
         return version;
     }
@@ -187,10 +223,7 @@ public class Employee  implements Serializable {
         if (this.orgUnit != other.orgUnit && (this.orgUnit == null || !this.orgUnit.equals(other.orgUnit))) {
             return false;
         }
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !(this.id != other.id && (this.id == null || !this.id.equals(other.id)));
     }
 
     @Override
