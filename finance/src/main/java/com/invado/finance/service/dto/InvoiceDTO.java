@@ -20,7 +20,7 @@ public class InvoiceDTO  {
     private Integer orgUnitId;
     private String orgUnitDesc;
     private String document;
-    private String partnerID;
+    private Integer partnerID;
     private String partnerName;
     @DateTimeFormat(style = "M-")
     private LocalDate invoiceDate;
@@ -85,11 +85,11 @@ public class InvoiceDTO  {
         this.document = document;
     }
 
-    public String getPartnerID() {
+    public Integer getPartnerID() {
         return partnerID;
     }
 
-    public void setPartnerID(String partnerID) {
+    public void setPartnerID(Integer partnerID) {
         this.partnerID = partnerID;
     }
 

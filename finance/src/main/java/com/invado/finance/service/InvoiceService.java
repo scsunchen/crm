@@ -13,7 +13,6 @@ import com.invado.core.domain.Client;
 import com.invado.core.domain.Client_;
 import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
-import com.invado.core.domain.OrgUnitPK;
 import com.invado.finance.Utils;
 import com.invado.core.domain.Article;
 import com.invado.core.domain.Article_;
@@ -113,8 +112,7 @@ public class InvoiceService {
                         Utils.getMessage("Invoice.EntityExistsException",
                         dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()));
             }
-            OrgUnit unit = dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.getOrgUnitId(), dto.getClientId()));
+            OrgUnit unit = dao.find(OrgUnit.class, dto.getOrgUnitId());
             if (unit == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.OrgUnit",
@@ -334,10 +332,11 @@ public class InvoiceService {
                     .setParameter(1, dto.getUsername())
                     .getSingleResult();
             Currency currency = null;
-            if (dto.getIsDomesticCurrency()) {
+            String ISOCode = dao.find(Properties.class, "domestic_currency")
+                    .getValue();
+            if (dto.getCurrencyISOCode().equals(ISOCode)) {
+                temp.setIsDomesticCurrency(Boolean.TRUE);
                 //read domestic currency ISO code from application properties
-                String ISOCode = dao.find(Properties.class, "domestic_currency")
-                        .getValue();
                 currency = dao.find(Currency.class, ISOCode);
                 //if domestic currency does not exists in database create it
                 if (currency == null) {
@@ -347,6 +346,7 @@ public class InvoiceService {
                     dao.flush();
                 }
             } else {
+                temp.setIsDomesticCurrency(Boolean.FALSE);
                 currency = dao.find(Currency.class, dto.getCurrencyISOCode());
                 if (currency == null) {
                     throw new ReferentialIntegrityException(
@@ -717,8 +717,7 @@ public class InvoiceService {
                         Utils.getMessage("Invoice.ReferentialIntegrityException.User",
                                 dto.getUsername()));
             }
-            OrgUnit unit = dao.find(OrgUnit.class,
-                    new OrgUnitPK(dto.getUnitId(), dto.getClientId()));
+            OrgUnit unit = dao.find(OrgUnit.class, dto.getUnitId());
             if (unit == null) {
                 throw new ReferentialIntegrityException(
                         Utils.getMessage("Invoice.ReferentialIntegrityException.OrgUnit",
@@ -904,7 +903,7 @@ public class InvoiceService {
             Client client = dao.find(Client.class, temp.getClientId());//mora da postoji
             InvoiceReportDTO result = new InvoiceReportDTO();
             result.creditRelationDate = temp.getCreditRelationDate();
-            result.partnerID = temp.getPartnerID();
+            result.partnerID = temp.getPartner().getCompanyIdNumber();
             result.partnerName = temp.getPartnerName();
             result.partnerAddress = temp.getPartnerStreet();
             result.partnerPost = temp.getPartnerPost();

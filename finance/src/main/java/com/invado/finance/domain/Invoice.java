@@ -298,8 +298,8 @@ public class Invoice implements Serializable {
         return partner.getPlace();
     }
 
-    public String getPartnerID() {
-        return partner.getCompanyIdNumber();
+    public Integer getPartnerID() {
+        return partner.getId();
     }
 
     public String getPartnerName() {

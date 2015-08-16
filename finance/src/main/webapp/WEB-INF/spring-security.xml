@@ -6,9 +6,17 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
     <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/home" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/item/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/invoice/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/desc/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/account/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/journal-entry-type/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/journal-entry/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/open-item-statements/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/gl-card/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/partner-specification/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/receivable-payable-card/**" access="hasRole('ROLE_ADMIN')" />
         <form-login login-page="/login" default-target-url="/home" 
             authentication-failure-url="/login?error=0"
             username-parameter="username" password-parameter="password" />

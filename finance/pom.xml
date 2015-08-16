@@ -89,12 +89,18 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
         </dependency>
-        <!--JDBC driver - MENJACE SE U ORACLE!-->
+        <!-- slf4j-log4j -->
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+        <!--JDBC driver - MENJACE SE U ORACLE!-->
+<!--        <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.1-901-1.jdbc4</version>
-        </dependency>
+        </dependency>-->
         <!-- Validation *****************************************************-->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -146,6 +152,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>6</version>
         </dependency>
     </dependencies>
     <build>

@@ -162,7 +162,7 @@
         })
     });
     $('#businessPartner').bind('typeahead:selected', function (obj, datum, name) {
-        $('#businessPartner-hidden').val(datum['companyIdNumber']);
+        $('#businessPartner-hidden').val(datum['id']);
     });
     $('#client').typeahead({
         hint: false,
