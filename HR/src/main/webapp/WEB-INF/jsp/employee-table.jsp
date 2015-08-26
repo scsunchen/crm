@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<a class="btn btn-primary" href="/masterdata/employee/${page}/create"><span class="glyphicon glyphicon-plus"></span>
+<a class="btn btn-primary" href="/HR/employee/${page}/create"><span class="glyphicon glyphicon-plus"></span>
   Kreiraj</a>
 <br/>
 <br/>
@@ -69,10 +69,10 @@
         <td><c:out value="${item.dateOfBirth}"/></td>
         <td> <c:out value="${item.phone}"/></td>
         <td><c:out value="${item.email}"/></td>
-        <td><c:out value="${item.orgUnit.name}"/></td>
+        <td><c:out value="${item.orgUnitName}"/></td>
         <td><c:out value="${item.hireDate}"/></td>
         <td><c:out value="${item.endDate}"></c:out></td>
-        <td><c:out value="${item.job.name}"/></td>
+        <td><c:out value="${item.jobName}"/></td>
         <td><c:out value="${item.picture}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>

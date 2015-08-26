@@ -3,6 +3,9 @@ package com.invado.hr.controller;
 import com.invado.core.domain.Employee;
 import com.invado.core.domain.Job;
 import com.invado.core.domain.OrgUnit;
+import com.invado.core.dto.EmployeeDTO;
+import com.invado.core.dto.JobDTO;
+import com.invado.core.dto.OrgUnitDTO;
 import com.invado.hr.service.EmployeeService;
 import com.invado.hr.service.JobService;
 import com.invado.hr.service.MasterDataService;
@@ -40,7 +43,7 @@ public class EmployeeConroller {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<Employee> items = service.readPage(request);
+        ReadRangeDTO<EmployeeDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -51,15 +54,17 @@ public class EmployeeConroller {
 
     @RequestMapping(value = "/employee/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        List<Job> jobs = jobService.readAll(null, null);
+        List<JobDTO> jobs = jobService.readAll(null, null);
         model.put("jobs", jobs);
-        model.put("item", new Employee());
+        List<OrgUnit> orgUnits = masterDataService.readAllOrgUnits();
+        model.put("orgUnits", orgUnits);
         model.put("action", "create");
+        model.put("item", new EmployeeDTO());
         return "employee-grid";
     }
 
     @RequestMapping(value = "/employee/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") Employee item,
+    public String processCreationForm(@ModelAttribute("item") EmployeeDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -85,7 +90,7 @@ public class EmployeeConroller {
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        Employee item = service.read(id);
+        EmployeeDTO item = service.read(id);
         model.put("item", item);
         return "employee-grid";
     }
@@ -93,7 +98,7 @@ public class EmployeeConroller {
     @RequestMapping(value = "/employee/{page}/update/{id}",
             method = RequestMethod.POST)
     public String processUpdationForm(@PathVariable Integer id,
-                                      @ModelAttribute("item") Employee item,
+                                      @ModelAttribute("item") EmployeeDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)

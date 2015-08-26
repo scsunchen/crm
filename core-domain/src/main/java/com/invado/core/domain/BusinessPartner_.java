@@ -24,5 +24,10 @@ public class BusinessPartner_ {
     public static volatile SingularAttribute<BusinessPartner, String> name1;
     public static volatile SingularAttribute<BusinessPartner, ContactPerson> contactPerson;
     public static volatile SingularAttribute<BusinessPartner, BusinessPartner> parentBusinessPartner;
+    public static volatile SingularAttribute<BusinessPartner, BusinessPartner.Type> type;
+    public static volatile SingularAttribute<BusinessPartner, Integer> longitude;
+    public static volatile SingularAttribute<BusinessPartner, Integer> latitude;
+
+
 
 }

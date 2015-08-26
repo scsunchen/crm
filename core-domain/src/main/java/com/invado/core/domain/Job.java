@@ -1,5 +1,7 @@
 package com.invado.core.domain;
 
+import com.invado.core.dto.JobDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.io.Serializable;
  * Created by NikolaB on 6/14/2015.
  */
 @Entity
-@Table(name = "c_job", schema = "devel")
+@Table(name = "hr_job", schema = "devel")
 public class Job implements Serializable {
 
     @TableGenerator(
@@ -60,5 +62,16 @@ public class Job implements Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public JobDTO getDTO(){
+        JobDTO jobDTO = new JobDTO();
+
+        jobDTO.setId(this.getId());
+        jobDTO.setDescription(this.getDescription());
+        jobDTO.setName(this.getName());
+        jobDTO.setVersion(this.getVersion());
+
+        return jobDTO;
     }
 }

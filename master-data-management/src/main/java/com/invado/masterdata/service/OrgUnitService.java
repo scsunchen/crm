@@ -384,11 +384,11 @@ public class OrgUnitService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<OrgUnit> readAll(Client client,
+    public List<OrgUnitDTO> readAll(Client client,
                                  Integer id,
                                  String name) {
         try {
-            return this.search(dao, client, id, name, 0, 0);
+            return convertToDTO(this.search(dao, client, id, name, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

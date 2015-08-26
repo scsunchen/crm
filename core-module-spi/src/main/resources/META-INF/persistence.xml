@@ -16,8 +16,8 @@
     <class>com.invado.core.domain.BankCreditor</class>
     <class>com.invado.core.domain.Job</class>
     <class>com.invado.core.domain.Employee</class>
-    <class>com.invado.core.domain.DeviceStatus</class>
-    <class>com.invado.core.domain.Device</class>
+    <class>com.invado.customer.relationship.domain.DeviceStatus</class>
+    <class>com.invado.customer.relationship.domain.Device</class>
     <class>com.invado.core.domain.Article</class>
     <!-- ***************FINANCE*************************************-->
     <class>com.invado.finance.domain.Invoice</class>

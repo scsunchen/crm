@@ -11,7 +11,8 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.invado.customer.relationship.service, com.invado.masterdata.service"/>
+    <context:component-scan base-package="com.invado.customer.relationship.service, com.invado.masterdata.service,
+    com.invado.finance.service"/>
 
     <bean id="validator"
           class="com.invado.customer.relationship.MasterdataValidator"
@@ -31,7 +32,7 @@
     </bean>
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
+        <property name="persistenceXmlLocation" value="classpath:META-INF/crm-persistence.xml"/>
         <property name="persistenceUnitName" value="unit"/>
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>

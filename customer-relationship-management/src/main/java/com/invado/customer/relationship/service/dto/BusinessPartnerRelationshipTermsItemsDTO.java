@@ -1,8 +1,5 @@
 package com.invado.customer.relationship.service.dto;
 
-import com.invado.core.domain.Article;
-import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
-
 import java.math.BigDecimal;
 
 /**

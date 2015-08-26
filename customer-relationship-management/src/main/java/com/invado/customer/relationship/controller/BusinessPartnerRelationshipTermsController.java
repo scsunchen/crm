@@ -1,12 +1,10 @@
 package com.invado.customer.relationship.controller;
 
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.dto.BusinessPartnerDTO;
 import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
 import com.invado.customer.relationship.service.BusinessPartnerRelationshipTermsService;
-import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsDTO;
-import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsItemsDTO;
-import com.invado.customer.relationship.service.dto.PageRequestDTO;
-import com.invado.customer.relationship.service.dto.ReadRangeDTO;
+import com.invado.customer.relationship.service.dto.*;
 import com.invado.masterdata.service.BusinessPartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +37,20 @@ public class BusinessPartnerRelationshipTermsController {
         return "home";
     }
 
-    @RequestMapping("/terms/{page}")
-    public String showItems(@PathVariable Integer page,
+    @RequestMapping(value = "/terms/read-terms.html")
+    public String prepareShowItems(Map<String, Object> model)
+            throws Exception {
+
+        System.out.println("izvrsava se kontroler ");
+        //BusinessTermsRequestDTO businessTermsRequestDTO = new BusinessTermsRequestDTO();
+        model.put("partnerData", new BusinessPartnerDTO());
+        model.put("termsData", new ArrayList<BusinessPartnerRelationshipTermsItemsDTO>());
+        model.put("requestData", new BusinessTermsRequestDTO());
+        return "terms-table";
+    }
+
+    @RequestMapping(value = "/terms/{page}", method = RequestMethod.POST)
+    public String showItems(@ModelAttribute Integer page,
                             Map<String, Object> model)
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
@@ -50,6 +61,7 @@ public class BusinessPartnerRelationshipTermsController {
         model.put("numberOfPages", items.getNumberOfPages());
         return "terms-table";
     }
+
 
     @RequestMapping(value = "/terms/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {

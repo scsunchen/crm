@@ -10,10 +10,9 @@
     http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
-    <context:component-scan base-package="com.invado.masterdata.service, com.invado.core.domain, com.invado.finance.domain"/>
-    <context:component-scan base-package="com.invado.finance.service"/>
+    <context:component-scan base-package="com.invado.hr.service, com.invado.core.domain"/>
     <bean id="validator"
-          class="com.invado.masterdata.MasterdataValidator"
+          class="com.invado.hr.MasterdataValidator"
           factory-method="get"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
@@ -31,7 +30,7 @@
     </bean>
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="classpath:META-INF/masterdata-persistence.xml"/>
+        <property name="persistenceXmlLocation" value="classpath:META-INF/hr-persistence.xml"/>
         <property name="persistenceUnitName" value="baza"/>
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>

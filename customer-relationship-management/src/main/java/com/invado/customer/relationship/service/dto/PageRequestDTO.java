@@ -10,13 +10,13 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
  * @author Bobic Dragan
  */
 public class PageRequestDTO {
 
     private Integer page;
     private final List<SearchCriterion> list = new ArrayList<>();
+    private final SearchCriterion[] listCriteria = new SearchCriterion[20];
 
     public Integer getPage() {
         return page;
@@ -30,27 +30,45 @@ public class PageRequestDTO {
         list.add(s);
     }
 
+    public void addCriterion(SearchCriterion sc) {
+        for (int i = 0; i < listCriteria.length; i++) {
+            if (listCriteria[i] == null) {
+                listCriteria[i] = sc;
+                break;
+            }
+        }
+    }
+
     public List<SearchCriterion> readAllSearchCriterions() {
         return Collections.unmodifiableList(list);
     }
+
+    public List<SearchCriterion> getList() {
+        return list;
+    }
+
+    public SearchCriterion[] getListCriteria() {
+        return listCriteria;
+    }
+
 
     public static class SearchCriterion implements Serializable {
 
         private String key;
         private Object value;
-//        private Condition c;
 
         public SearchCriterion(String key, Object value) {
             this.key = key;
             this.value = value;
-//            this.c = Condition.EQUAL;
         }
 
-//        public SearchCriterion(String key, Object value, Condition c) {
-//            this.key = key;
-//            this.value = value;
-//            this.c = c;
-//        }
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
 
         public String getKey() {
             return key;
@@ -60,18 +78,7 @@ public class PageRequestDTO {
             return value;
         }
 
-//        public Condition getC() {
-//            return c;
-//        }
     }
 
-//    public static enum Condition implements Serializable {
-//        
-//        EQUAL,
-//        NOT_EQUAL,
-//        GREATER,
-//        LESS,
-//        LESS_OR_EQUAL,
-//        GREATER_OR_EQUAL;
-//    }
+
 }

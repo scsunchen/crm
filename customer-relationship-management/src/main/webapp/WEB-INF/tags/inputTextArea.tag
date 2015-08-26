@@ -1,3 +1,4 @@
+%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -13,7 +14,7 @@
 <spring:bind path="${name}">
 
     <div class="form-group">
-        <label for="${name}"  ><spring:message code="${label}"/></label>
+        <label for="${name}" >${label}</label>
         <form:textarea id="${name}" path="${name}"
                     class="form-control ${status.error ? 'error' : '' }"
                     disabled="${disabled}"

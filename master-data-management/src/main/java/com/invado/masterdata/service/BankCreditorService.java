@@ -114,6 +114,7 @@ public class BankCreditorService {
                 );
             }
             dao.lock(item, LockModeType.OPTIMISTIC);
+            item.setName(dto.getName());
             item.setPlace(dto.getPlace());
             item.setStreet(dto.getStreet());
             item.setPostCode(dto.getPostCode());
@@ -121,6 +122,7 @@ public class BankCreditorService {
             item.setAccount(dto.getAccount());
             item.setContactPhone(dto.getContactPhone());
             item.setContactFunction(dto.getContactFunction());
+
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());

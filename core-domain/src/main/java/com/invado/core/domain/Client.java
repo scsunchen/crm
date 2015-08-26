@@ -31,6 +31,8 @@ import org.hibernate.validator.constraints.NotBlank;
                 query = "SELECT x FROM Client x WHERE x.TIN =?1"),
         @NamedQuery(name = Client.READ_BY_NAME_ORDERBY_NAME,
                 query = "SELECT x FROM Client x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
+        @NamedQuery(name = Client.READ_MIN_SET_BY_NAME_ORDERBY_NAME,
+                query = "SELECT x.id, x.name FROM Client x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
         @NamedQuery(name = Client.COUNT,
                 query = "SELECT COUNT(x) FROM Client x"),
         @NamedQuery(name = Client.READ_ALL_ORDERBY_ID,
@@ -49,6 +51,7 @@ public class Client implements Serializable {
     public static final String READ_ALL_ORDERBY_ID = "Client.ReadAll";
     public static final String READ_BY_COMPANY_NUMBER = "Client.ReadByCompanyNumber";
     public static final String READ_BY_ID = " Client.ReadById";
+    public static final String READ_MIN_SET_BY_NAME_ORDERBY_NAME = "Client.ReadMinSetByName";
 
     @TableGenerator(
             name = "ClientTab",

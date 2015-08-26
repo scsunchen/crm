@@ -3,6 +3,7 @@ package com.invado.masterdata.service;
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.Currency;
 import com.invado.core.domain.Currency_;
+import com.invado.core.dto.CurrencyDTO;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import sun.util.resources.cldr.aa.CurrencyNames_aa;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -46,23 +48,38 @@ public class CurrencyService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Currency create(Currency a) throws com.invado.masterdata.service.exception.IllegalArgumentException,
-            EntityExistsException {
+    public Currency create(CurrencyDTO a) throws IllegalArgumentException,
+            EntityExistsException, ConstraintViolationException {
         //check CreateCurrencyPermission
         if (a == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Currency.IllegalArgumentEx"));
         }
+        if (a.getISOCode() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Currency.IllegalArgumentEx.ISOCode"));
+        }
+        if (a.getCurrency() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Currency.IllegalArgumentEx.Currency"));
+        }
         try {
 
+            Currency currency = new Currency();
+
+            currency.setDescription(a.getDescription());
+            currency.setState(a.getState());
+            currency.setISONumber(a.getISONumber());
+            currency.setISOCode(a.getISOCode());
+            currency.setCurrency(a.getCurrency());
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            dao.persist(a);
-            return a;
+            dao.persist(currency);
+            return currency;
         } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -74,17 +91,21 @@ public class CurrencyService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public Currency update(Currency dto) throws ConstraintViolationException,
+    public Currency update(CurrencyDTO dto) throws IllegalArgumentException, ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateCurrencyPermission
         if (dto == null) {
-            throw new ConstraintViolationException(
+            throw new IllegalArgumentException(
                     Utils.getMessage("Currency.IllegalArgumentEx"));
         }
         if (dto.getISOCode() == null) {
             throw new ConstraintViolationException(
-                    Utils.getMessage("Currency.IllegalArgumentEx.Code"));
+                    Utils.getMessage("Currency.IllegalArgumentEx.ISOCode"));
+        }
+        if (dto.getCurrency() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Currency.IllegalArgumentEx.Currency"));
         }
         try {
             Currency item = dao.find(Currency.class,
@@ -101,9 +122,9 @@ public class CurrencyService {
             item.setDescription(dto.getDescription());
             item.setISOCode(dto.getISOCode());
             item.setISONumber(dto.getISONumber());
-            item.setDescription(dto.getDescription());
-            /*Dodaj ovde ostalo*/
+            item.setState(dto.getState());
             item.setVersion(dto.getVersion());
+
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -155,7 +176,7 @@ public class CurrencyService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Currency read(String ISOCode) throws EntityNotFoundException {
+    public CurrencyDTO read(String ISOCode) throws EntityNotFoundException {
         //TODO : check ReadCurrencyPermission
         if (ISOCode == null) {
             throw new EntityNotFoundException(
@@ -169,7 +190,7 @@ public class CurrencyService {
                         Utils.getMessage("Currency.EntityNotFoundEx", ISOCode)
                 );
             }
-            return Currency;
+            return Currency.getDTO();
         } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -181,7 +202,7 @@ public class CurrencyService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<Currency> readPage(PageRequestDTO p)
+    public ReadRangeDTO<CurrencyDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadCurrencyPermission
         String ISOCode = null;
@@ -211,18 +232,18 @@ public class CurrencyService {
                 throw new PageNotExistsException(
                         Utils.getMessage("Currency.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<Currency> result = new ReadRangeDTO<>();
+            ReadRangeDTO<CurrencyDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first Currency = last page number * Currencys per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao, ISOCode, ISONumber, state, start, pageSize));
+                result.setData(convertToDTO(this.search(dao, ISOCode, ISONumber, state, start, pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao, ISOCode, ISONumber, state,
+                result.setData(convertToDTO(this.search(dao, ISOCode, ISONumber, state,
                         p.getPage() * pageSize,
-                        pageSize));
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -237,6 +258,13 @@ public class CurrencyService {
         }
     }
 
+    private List<CurrencyDTO> convertToDTO(List<Currency> lista) {
+        List<CurrencyDTO> listaDTO = new ArrayList<>();
+        for (Currency pr : lista) {
+            listaDTO.add(pr.getDTO());
+        }
+        return listaDTO;
+    }
     private Long count(
             EntityManager EM,
             String ISOCode, Integer ISONumber, String state) {
@@ -313,12 +341,12 @@ public class CurrencyService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Currency> readAll(
+    public List<CurrencyDTO> readAll(
             String ISOCode,
             Integer ISONumber,
             String state) {
         try {
-            return this.search(dao, ISOCode, ISONumber, state, 0, 0);
+            return convertToDTO(this.search(dao, ISOCode, ISONumber, state, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

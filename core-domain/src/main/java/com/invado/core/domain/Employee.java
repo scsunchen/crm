@@ -1,6 +1,6 @@
 package com.invado.core.domain;
 
-import org.springframework.cglib.core.Local;
+import com.invado.core.dto.EmployeeDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
         @NamedQuery(name = Employee.READ_BY_ORGUNIT, query = "SELECT x FROM Employee x WHERE orgUnit.id = :orgUnit")
 })
 @Entity
-@Table(name = "c_employee", schema = "devel")
+@Table(name = "hr_employee", schema = "devel")
 public class Employee implements Serializable {
 
     public final static String READ_BY_ORGUNIT = "Employee.ReadByOrgUnit";
@@ -70,11 +70,6 @@ public class Employee implements Serializable {
     private Address address;
     @Version
     private Long version;
-
-    @Transient
-    private Integer transientJobId;
-    @Transient
-    private Integer transientOrgUnitId;
 
     public Employee() {
     }
@@ -183,21 +178,6 @@ public class Employee implements Serializable {
         this.picture = picture;
     }
 
-    public Integer getTransientJobId() {
-        return transientJobId;
-    }
-
-    public void setTransientJobId(Integer transientJobId) {
-        this.transientJobId = transientJobId;
-    }
-
-    public Integer getTransientOrgUnitId() {
-        return transientOrgUnitId;
-    }
-
-    public void setTransientOrgUnitId(Integer transientOrgUnitId) {
-        this.transientOrgUnitId = transientOrgUnitId;
-    }
 
     public Long getVersion() {
         return version;
@@ -205,6 +185,34 @@ public class Employee implements Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public EmployeeDTO getDTO(){
+
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+
+        employeeDTO.setPicture(this.getPicture());
+        employeeDTO.setPhone(this.getPhone());
+        employeeDTO.setPostCode(this.getAddress().getPostCode());
+        employeeDTO.setCountry(this.getAddress().getCountry());
+        employeeDTO.setStreet(this.getAddress().getStreet());
+        employeeDTO.setPlace(this.getAddress().getPlace());
+        employeeDTO.setDateOfBirth(this.getDateOfBirth());
+        employeeDTO.setEmail(this.getEmail());
+        employeeDTO.setEndDate(this.getEndDate());
+        employeeDTO.setHireDate(this.getHireDate());
+        employeeDTO.setId(this.getId());
+        employeeDTO.setJobId(this.getJob().getId());
+        employeeDTO.setJobName(this.getJob().getName());
+        employeeDTO.setLastName(this.getLastName());
+        employeeDTO.setDateOfBirth(this.getDateOfBirth());
+        employeeDTO.setMiddleName(this.getMiddleName());
+        employeeDTO.setName(this.getName());
+        employeeDTO.setEndDate(this.getEndDate());
+        employeeDTO.setOrgUnitId(this.getOrgUnit().getId());
+        employeeDTO.setOrgUnitName(this.getOrgUnit().getName());
+
+        return employeeDTO;
     }
 
     //************************************************************************//

@@ -1,22 +1,20 @@
 package com.invado.hr.service;
 
 import com.invado.core.domain.*;
+import com.invado.core.dto.EmployeeDTO;
 import com.invado.hr.Utils;
 import com.invado.hr.service.dto.PageRequestDTO;
 import com.invado.hr.service.dto.ReadRangeDTO;
 import com.invado.hr.service.exception.*;
 import com.invado.hr.service.exception.EntityExistsException;
-import com.invado.hr.service.exception.EntityNotFoundException;
 import com.invado.hr.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.ArrayList;
@@ -42,8 +40,8 @@ public class EmployeeService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Employee create(Employee a) throws IllegalArgumentException,
-            EntityExistsException {
+    public Employee create(EmployeeDTO a) throws IllegalArgumentException,
+            EntityExistsException, ConstraintViolationException {
         //check CreateEmployeePermission
 
 
@@ -51,17 +49,37 @@ public class EmployeeService {
             throw new IllegalArgumentException(
                     Utils.getMessage("Employee.IllegalArgumentEx"));
         }
+        if (a.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Employee.IllegalArgumentException.name"));
+        }
+        if (a.getLastName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Employee.IllegalArgumentException.LastName"));
+        }
         try {
-            a.setOrgUnit(dao.find(OrgUnit.class, a.getTransientOrgUnitId()));
-            a.setJob(dao.find(Job.class, a.getTransientJobId()));
+            Employee employee = new Employee();
+            employee.setName(a.getName());
+            employee.setAddress(new Address(a.getCountry(), a.getPlace(), a.getStreet(), a.getPostCode()));
+            employee.setDateOfBirth(a.getDateOfBirth());
+            employee.setEmail(a.getEmail());
+            employee.setEndDate(a.getEndDate());
+            employee.setHireDate(a.getHireDate());
+            employee.setJob(dao.find(Job.class, a.getJobId()));
+            employee.setLastName(a.getLastName());
+            employee.setMiddleName(a.getMiddleName());
+            employee.setOrgUnit(dao.find(OrgUnit.class, a.getOrgUnitId()));
+            employee.setPhone(a.getPhone());
+            employee.setPicture(a.getPicture());
+
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            dao.persist(a);
-            return a;
+            dao.persist(employee);
+            return employee;
         } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -73,7 +91,7 @@ public class EmployeeService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public Employee update(Employee dto) throws ConstraintViolationException,
+    public Employee update(EmployeeDTO dto) throws ConstraintViolationException,
             com.invado.hr.service.exception.EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateEmployeePermission
@@ -84,6 +102,14 @@ public class EmployeeService {
         if (dto.getId() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Employee.IllegalArgumentEx.Code"));
+        }
+        if (dto.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Employee.IllegalArgumentException.name"));
+        }
+        if (dto.getLastName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Employee.IllegalArgumentException.LastName"));
         }
         try {
             Employee item = dao.find(Employee.class,
@@ -97,23 +123,20 @@ public class EmployeeService {
             }
             dao.lock(item, LockModeType.OPTIMISTIC);
             item.setName(dto.getName());
-            item.setAddress(dto.getAddress());
+            if (dto.getStreet() != null)
+                item.setAddress(new Address(dto.getCountry(), dto.getPlace(), dto.getStreet(), dto.getPostCode()));
             item.setDateOfBirth(dto.getDateOfBirth());
             item.setEmail(dto.getEmail());
             item.setEndDate(dto.getEndDate());
             item.setHireDate(dto.getHireDate());
-            if (item.getTransientJobId() != null) {
-                item.setJob(dao.find(Job.class, item.getTransientJobId()));
-            }else{
-                item.setJob(dao.find(Job.class, item.getJob().getId()));
+            if (dto.getJobId() != null) {
+                item.setJob(dao.find(Job.class, dto.getJobId()));
             }
             item.setPhone(dto.getPhone());
             item.setLastName(dto.getLastName());
             item.setMiddleName(dto.getMiddleName());
-            if (item.getTransientOrgUnitId() != null){
-                item.setOrgUnit(dao.find(OrgUnit.class, item.getTransientOrgUnitId()));
-            }else{
-                item.setOrgUnit(dao.find(OrgUnit.class, item.getOrgUnit().getId()));
+            if (dto.getOrgUnitId() != null) {
+                item.setOrgUnit(dao.find(OrgUnit.class, dto.getOrgUnitId()));
             }
             item.setPhone(dto.getPhone());
             item.setPicture(dto.getPicture());
@@ -168,7 +191,7 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Employee read(Integer id) throws com.invado.hr.service.exception.EntityNotFoundException {
+    public EmployeeDTO read(Integer id) throws com.invado.hr.service.exception.EntityNotFoundException {
         //TODO : check ReadEmployeePermission
         if (id == null) {
             throw new com.invado.hr.service.exception.EntityNotFoundException(
@@ -176,13 +199,13 @@ public class EmployeeService {
             );
         }
         try {
-            Employee Employee = dao.find(Employee.class, id);
-            if (Employee == null) {
+            Employee employee = dao.find(Employee.class, id);
+            if (employee == null) {
                 throw new com.invado.hr.service.exception.EntityNotFoundException(
                         Utils.getMessage("Employee.EntityNotFoundEx", id)
                 );
             }
-            return Employee;
+            return employee.getDTO();
         } catch (com.invado.hr.service.exception.EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -194,7 +217,7 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<Employee> readPage(PageRequestDTO p)
+    public ReadRangeDTO<EmployeeDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadEmployeePermission
         Integer id = null;
@@ -224,24 +247,24 @@ public class EmployeeService {
                 throw new PageNotExistsException(
                         Utils.getMessage("Employee.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<Employee> result = new ReadRangeDTO<>();
+            ReadRangeDTO<EmployeeDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first Employee = last page number * Employees per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao,
+                result.setData(convertToDTO(this.search(dao,
                         id,
                         name,
                         start,
-                        pageSize));
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao,
+                result.setData(convertToDTO(this.search(dao,
                         id,
                         name,
                         p.getPage() * pageSize,
-                        pageSize));
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -255,6 +278,15 @@ public class EmployeeService {
             );
         }
     }
+
+    private List<EmployeeDTO> convertToDTO(List<Employee> lista) {
+        List<EmployeeDTO> listaDTO = new ArrayList<>();
+        for (Employee pr : lista) {
+            listaDTO.add(pr.getDTO());
+        }
+        return listaDTO;
+    }
+
 
     private Long count(
             EntityManager EM,
@@ -321,10 +353,10 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Employee> readAll(Integer id,
+    public List<EmployeeDTO> readAll(Integer id,
                                   String name) {
         try {
-            return this.search(dao, id, name, 0, 0);
+            return convertToDTO(this.search(dao, id, name, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

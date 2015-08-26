@@ -19,8 +19,8 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group" id="datetimepickcontainer">
+                    <label for="${name}">${label}</label>
 
-                    <label for="${name}"  ><spring:message code="${label}"/></label>
                     <div class='input-group date' id='datetimepicker'>
                         <form:input id="${name}" path="${name}"
                                     class="form-control ${cssclass} ${status.error ? 'error' : '' }"

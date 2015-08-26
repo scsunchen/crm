@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>customer-relationship-management</artifactId>
     <packaging>war</packaging>
-    <name>customer-relationship-management Maven Webapp</name>
+    <name>customer-relationship-management</name>
     <url>http://maven.apache.org</url>
 
     <dependencyManagement>
@@ -101,11 +101,16 @@
             <artifactId>core-service-provider-interface</artifactId>
             <version>1.0</version>
         </dependency>
-<!--        <dependency>
+        <dependency>
             <groupId>com.invado</groupId>
             <artifactId>masterdata</artifactId>
             <version>1.0</version>
-        </dependency>-->
+        </dependency>
+        <dependency>
+            <groupId>com.invado</groupId>
+            <artifactId>finance</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>

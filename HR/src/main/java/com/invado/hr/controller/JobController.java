@@ -1,6 +1,7 @@
 package com.invado.hr.controller;
 
 import com.invado.core.domain.Job;
+import com.invado.core.dto.JobDTO;
 import com.invado.hr.service.JobService;
 import com.invado.hr.service.dto.PageRequestDTO;
 import com.invado.hr.service.dto.ReadRangeDTO;
@@ -24,13 +25,18 @@ public class JobController {
     private JobService service;
 
 
+    @RequestMapping("/home")
+    public String showHomePage() {
+        return "home";
+    }
+
     @RequestMapping("/job/{page}")
     public String showItems(@PathVariable Integer page,
                             Map<String, Object> model)
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<Job> items = service.readPage(request);
+        ReadRangeDTO<JobDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -40,13 +46,13 @@ public class JobController {
 
     @RequestMapping(value = "/job/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        model.put("item", new Job());
+        model.put("item", new JobDTO());
         model.put("action", "create");
         return "job-grid";
     }
 
     @RequestMapping(value = "/job/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") Job item,
+    public String processCreationForm(@ModelAttribute("item") JobDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -72,14 +78,14 @@ public class JobController {
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        Job item = service.read(id);
+        JobDTO item = service.read(id);
         model.put("item", item);
         return "job-grid";
     }
 
     @RequestMapping(value = "/job/{page}/update/{id}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") Job item,
+    public String processUpdationForm(@ModelAttribute("item") JobDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)

@@ -4,6 +4,8 @@
  */
 package com.invado.core.domain;
 
+import com.invado.core.dto.CurrencyDTO;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -101,6 +103,19 @@ public class Currency implements Serializable {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public CurrencyDTO getDTO(){
+        CurrencyDTO currencyDTO = new CurrencyDTO();
+
+        currencyDTO.setCurrency(this.getCurrency());
+        currencyDTO.setDescription(this.getDescription());
+        currencyDTO.setISOCode(this.getISOCode());
+        currencyDTO.setISONumber(this.ISONumber);
+        currencyDTO.setState(this.getState());
+        currencyDTO.setVersion(this.getVersion());
+
+        return currencyDTO;
     }
 
     @Override

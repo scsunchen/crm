@@ -1,27 +1,36 @@
 package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.BusinessPartner;
-import com.invado.core.domain.Device;
 import com.invado.core.domain.LocalDateConverter;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * Created by NikolaB on 6/18/2015.
  */
+@Entity
+@Table(name = "crm_device_holder_partner")
 public class DeviceHolderPartner {
 
+    @TableGenerator(
+            name = "DeviceHolderTab",
+            table = "id_generator",
+            pkColumnName = "idime",
+            valueColumnName = "idvrednost",
+            pkColumnValue = "DeviceHolder",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "DeviceHolderTab")
     @Id
     private Integer Id;
-    @Column(name = "device_id")
+    @ManyToOne
+    @JoinColumn(name = "device_id")
     private Device device;
-    @Column(name = "business_partner_id")
+    @ManyToOne
+    @JoinColumn(name = "business_partner_id")
     private BusinessPartner businessPartner;
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate startDate;
     @Column(name = "end_date")

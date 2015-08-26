@@ -21,6 +21,9 @@ public class ContactPerson implements Serializable {
     @Size(max = 40, message = "{BusinessPartner.ContactPersonPhone.Size}")
     @Column(name = "contact_person_phone")
     private String phone;
+    @Size(max = 200, message = "{BusinessPartner.ContactPersonPhone.Email}")
+    @Column(name = "contact_person_email")
+    private String email;
     @Size(max = 60, message = "{BusinessPartner.ContactPersonFunction.Size}")
     @Column(name = "contact_person_function")
     private String function;
@@ -46,9 +49,13 @@ public class ContactPerson implements Serializable {
         return phone;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     @Override
     public String toString() {
-        return "ContactPerson{" + "name=" + name + ", phone=" + phone + ", function=" + function + '}';
+        return "ContactPerson{" + "name=" + name + ", phone=" + phone + ", function=" + function + ", email " + email + '}';
     }
 
     

@@ -28,6 +28,9 @@ public class BusinessPartnerDTO {
     private String contactPersonePhone;
     private String contactPersoneFunction;
     private Integer parentBusinessPartnerId;
+    private String type;
+    private Integer longitude;
+    private Integer latitude;
     private String parentBusinesspartnerName;
 
 
@@ -205,6 +208,30 @@ public class BusinessPartnerDTO {
 
     public void setContactPersoneFunction(String contactPersoneFunction) {
         this.contactPersoneFunction = contactPersoneFunction;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Integer longitude) {
+        this.longitude = longitude;
+    }
+
+    public Integer getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Integer latitude) {
+        this.latitude = latitude;
     }
 
     public Integer getParentBusinessPartnerId() {

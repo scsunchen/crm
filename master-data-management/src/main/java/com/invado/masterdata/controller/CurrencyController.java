@@ -1,6 +1,7 @@
 package com.invado.masterdata.controller;
 
 import com.invado.core.domain.Currency;
+import com.invado.core.dto.CurrencyDTO;
 import com.invado.masterdata.service.CurrencyService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
@@ -30,7 +31,7 @@ public class CurrencyController {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<Currency> items = service.readPage(request);
+        ReadRangeDTO<CurrencyDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -40,13 +41,13 @@ public class CurrencyController {
 
     @RequestMapping(value = "/currency/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        model.put("item", new Currency());
+        model.put("item", new CurrencyDTO());
         model.put("action", "create");
         return "currency-grid";
     }
 
     @RequestMapping(value = "/currency/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") Currency item,
+    public String processCreationForm(@ModelAttribute("item") CurrencyDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -72,14 +73,14 @@ public class CurrencyController {
     public String initUpdateForm(@PathVariable String ISOCode,
                                  Map<String, Object> model)
             throws Exception {
-        Currency item = service.read(ISOCode);
+        CurrencyDTO item = service.read(ISOCode);
         model.put("item", item);
         return "currency-grid";
     }
 
     @RequestMapping(value = "/currency/{page}/update/{ISOCode}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") Currency item,
+    public String processUpdationForm(@ModelAttribute("item") CurrencyDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)

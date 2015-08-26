@@ -9,12 +9,63 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 <a class="btn btn-primary" href="${page}/create">
     <span class="glyphicon glyphicon-plus"></span> <spring:message code="BusinessPartnerTerms.Button.Create"/></a>
 <br/>
 <br/>
 
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Pretraživanje poslovnih partnera -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left" role="search" modelAttribute="requestData" method="GET"
+                  action="${pageContext.request.contextPath}/receivable-payable-card/show-terms.html">
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Matični broj</th>
+            <th>Naziv</th>
+            <th>Dodatni naziv</th>
+            <th>Adresa</th>
+            <th>Telefon</th>
+            <th>email</th>
+            <th>Račun</th>
+            <th>Kontakt osoba</th>
+        </tr>
+        </thead>
+        <tbody>
+            <!-- Modal -->
+            <tr>
+                <td><c:out value="${partnerData.companyIdNumber}"/></td>
+                <td><c:out value="${partnerData.name}"/></td>
+                <td><c:out value="${partnerData.name1}"/></td>
+                <td class="form-inline">
+                    <c:out value="${partnerData.country}"/>
+                    <c:out value="${partnerData.place}"/>
+                    <c:out value="${partnerData.street}"/>
+                    <c:out value="${partnerData.postCode}"/>
+                </td>
+                <td><c:out value="${partnerData.phone}"/></td>
+                <td><c:out value="${partnerData.EMail}"/></td>
+                <td><c:out value="${partnerData.currentAccount}"/></td>
+                <td><c:out value="${partnerData.contactPersoneName}"/></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -30,7 +81,7 @@
         </thead>
         <tbody>
         <c:set var="count" value="0" scope="page"/>
-        <c:forEach var="businessPartnerTerms" items="${data}">
+        <c:forEach var="businessPartnerTerms" items="${termsata}">
             <!-- Modal -->
             <div class="modal fade" id="dialog${count}" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
@@ -94,3 +145,24 @@
         </li>
     </ul>
 </nav>
+<script type="text/javascript">
+    $('#partnerName').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/read-partner/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#partnerName').bind('typeahead:selected', function (obj, datum, name) {
+        $('#partnerNameHidden').val(datum['id']);
+    });
+</script>

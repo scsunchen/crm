@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>masterdata</artifactId>
     <packaging>war</packaging>
-    <name>master-data Maven Webapp</name>
+    <name>masterdata</name>
     <url>http://maven.apache.org</url>
     <dependencyManagement>
         <dependencies>

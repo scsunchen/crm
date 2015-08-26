@@ -52,13 +52,12 @@ public class MenuFormPreparer implements ViewPreparer {
         service.setName("Servis aparata");
         service.put("Proba", "Proba", "/service/proba/0");
         modules.add(service);
-        Module hr = new Module();
-        hr.setPath("hr");
-        hr.setName("Human Resource");
-        masterdata.put("Opsti sifarnici", "Radno mesto", "/hr/job/0");
-        masterdata.put("Opsti sifarnici", "Radnik", "/hr/employee/0");
-        modules.add(hr);
-
+        Module HR = new Module();
+        HR.setPath("HR");
+        HR.setName("Human Resource");
+        HR.put("Human Resource", "Radno mesto", "/HR/job/0");
+        HR.put("Human Resource", "Radnik", "/HR/employee/0");
+        modules.add(HR);
     }
 
     @Override
@@ -68,6 +67,7 @@ public class MenuFormPreparer implements ViewPreparer {
                 .getRequest();
         ac.putAttribute("modules", new Attribute(modules));
         for (Module module : modules) {
+            System.out.println("poruka iz hr je "+module.getName()+" "+module.getPath());
             if (request1.getRequestURI().contains(module.getPath())) {
                 ac.putAttribute("selectedModule", new Attribute(module));
             }

@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.invado.masterdata.controller"></context:component-scan>
+    <context:component-scan base-package="com.invado.hr.controller"></context:component-scan>
 
     <!-- all resources inside folder src/main/webapp/resources are mapped so they can be refered to inside JSP files
     (see header.jsp for more details) -->
@@ -51,7 +51,7 @@
     </bean>
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basenames" value="com.invado.masterdata.bundle.server-strings">
+        <property name="basenames" value="com.invado.hr.bundle.server-strings">
         </property>
     </bean>
     <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean"/>

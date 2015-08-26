@@ -36,24 +36,26 @@ public class MenuFormPreparer implements ViewPreparer {
         finance.put("Fakturisanje", "Faktura", "/finance/invoice/0");
         modules.add(finance);
 
-        /*Matiènio podaci modul*/
+        /*Matiï¿½nio podaci modul*/
         Module masterdata = new Module();
         masterdata.setPath("masterdata");
-        masterdata.setName("Matièni Podaci");
-        masterdata.put("Opšti šifarnici", "Kompanija Klijent", "/masterdata/client/0");
-        masterdata.put("Opšti šifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
-        masterdata.put("Opšti šifarnici", "Poslovni partner", "/masterdata/partner/0");
-        masterdata.put("Opšti šifarnici", "Banka", "/masterdata/bank/0");
-        masterdata.put("Opšti šifarnici", "Opština", "/masterdata/township/0");
-
-        masterdata.put("Opšti šifarnici", "Valuta", "/masterdata/currency/0");
-        masterdata.put("Opšti šifarnici", "Kurs", "/core/exchange-rate/0");
+        masterdata.setName("Matiï¿½ni Podaci");
+        masterdata.put("Opï¿½ti ï¿½ifarnici", "Kompanija Klijent", "/masterdata/client/0");
+        masterdata.put("Opï¿½ti ï¿½ifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
+        masterdata.put("Opï¿½ti ï¿½ifarnici", "Poslovni partner", "/masterdata/partner/0");
+        masterdata.put("Opï¿½ti ï¿½ifarnici", "Banka", "/masterdata/bank/0");
+        masterdata.put("Opï¿½ti ï¿½ifarnici", "Opï¿½tina", "/masterdata/township/0");
+        masterdata.put("Opï¿½ti ï¿½ifarnici", "Valuta", "/masterdata/currency/0");
+        masterdata.put("Opï¿½ti ï¿½ifarnici", "Kurs", "/core/exchange-rate/0");
         modules.add(masterdata);
 
         /*CRM modul*/
         Module crm = new Module();
         crm.setPath("crm");
-        crm.put("CRM", "Uslovi poslovanja", "/crm/terms/0");
+        crm.put("CRM", "Status terminala", "/crm/devicestatus/0");
+        crm.put("CRM", "Terminal", "/crm/device/0");
+        crm.put("CRM", "Transakcije", "/crm/transactions/0");
+        crm.put("CRM", "CRM", "/crm/terms/read-terms.html");
         modules.add(crm);
 
         /*Servis modul*/
@@ -72,6 +74,8 @@ public class MenuFormPreparer implements ViewPreparer {
                 .getRequest();
         ac.putAttribute("modules", new Attribute(modules));
         for (Module module : modules) {
+
+            System.out.println("poruka iz crm je "+module.getName()+" "+module.getPath());
             if (request1.getRequestURI().contains(module.getPath())) {
                 ac.putAttribute("selectedModule", new Attribute(module));
             }

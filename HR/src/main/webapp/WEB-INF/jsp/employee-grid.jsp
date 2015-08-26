@@ -28,33 +28,35 @@
         <input:inputField label="Telefon" name="phone"/>
         <input:inputField label="Email" name="email"/>
         <input:inputField label="Fotografija" name="picture"/>
-        <spring:bind path="orgUnit.id">
+        <spring:bind path="orgUnitId">
             <div class="form-group">
                 <label for="orgunit">Organizaciona jedinica</label>
-                <form:select path="transientOrgUnitId" id="orgunit" class="form-control" itemLabel="orgUnit">
-                    <form:option value="${item.orgUnit.id}">${item.orgUnit.name}</form:option>
+                <form:select path="orgUnitId" id="orgunit" class="form-control" itemLabel="orgUnit">
+                    <form:option value="${item.orgUnitId}">${item.orgUnitName}</form:option>
                     <form:options items="${orgUnits}" itemLabel="name" itemValue="id"/>
                 </form:select>
             </div>
         </spring:bind>
         <input:inputDate label="Datum zapošljenja" name="hireDate" placeholder="dd.mm.yyyy."/>
         <input:inputDate label="Datum odlaska" name="endDate" placeholder="dd.mm.yyyy."/>
-        <spring:bind path="job.id">
+        <spring:bind path="jobId">
             <div class="form-group">
                 <label for="job">Radno mesto</label>
-                <form:select path="transientJobId" id="job" class="form-control" itemLabel="job">
-                    <form:option value="${item.job.id}">${item.job.name}</form:option>
+                <form:select path="jobId" id="job" class="form-control" itemLabel="job">
+                    <form:option value="${item.jobId}">${item.jobName}</form:option>
                     <form:options items="${jobs}" itemLabel="name" itemValue="id"/>
                 </form:select>
             </div>
         </spring:bind>
-        <input:inputField label="Država" name="address.country"/>
-        <input:inputField label="Mesto" name="address.place"/>
-        <input:inputField label="Poštanski broj" name="address.postCode"/>
-        <input:inputField label="Ulica i broj" name="address.street"/>
+        <input:inputField label="Država" name="country"/>
+        <input:inputField label="Mesto" name="place"/>
+        <input:inputField label="Poštanski broj" name="postCode"/>
+        <input:inputField label="Ulica i broj" name="street"/>
         <form:hidden path="version"/>
     </div>
     <div class="form-group">
+
+        <a class="btn btn-primary" href="/HR/employee/0">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">

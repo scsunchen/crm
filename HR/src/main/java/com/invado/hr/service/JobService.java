@@ -1,8 +1,11 @@
 package com.invado.hr.service;
 
 import com.invado.core.domain.ApplicationSetup;
+import com.invado.core.domain.BankCreditor;
 import com.invado.core.domain.Job;
 import com.invado.core.domain.Job_;
+import com.invado.core.dto.BankCreditorDTO;
+import com.invado.core.dto.JobDTO;
 import com.invado.hr.Utils;
 import com.invado.hr.service.dto.PageRequestDTO;
 import com.invado.hr.service.dto.ReadRangeDTO;
@@ -45,14 +48,23 @@ public class JobService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Job create(Job a) throws IllegalArgumentException,
-            EntityExistsException {
+    public Job create(JobDTO a) throws IllegalArgumentException,
+            EntityExistsException, ConstraintViolationException {
         //check CreateJobPermission
         if (a == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Job.IllegalArgumentEx"));
         }
+        if (a.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("BankCreditor.IllegalArgumentException.name"));
+        }
         try {
+
+            Job job = new Job();
+
+            job.setName(a.getName());
+            job.setDescription(a.getDescription());
 
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
@@ -60,8 +72,8 @@ public class JobService {
             if (msgs.size() > 0) {
                 throw new IllegalArgumentException("", msgs);
             }
-            dao.persist(a);
-            return a;
+            dao.persist(job);
+            return job;
         } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -73,7 +85,7 @@ public class JobService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public Job update(Job dto) throws ConstraintViolationException,
+    public Job update(JobDTO dto) throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateJobPermission
@@ -84,6 +96,10 @@ public class JobService {
         if (dto.getId() == null ) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Job.IllegalArgumentEx.Code"));
+        }
+        if (dto.getName() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("BankCreditor.IllegalArgumentException.name"));
         }
         try {
             Job item = dao.find(Job.class,
@@ -151,7 +167,7 @@ public class JobService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Job read(Integer id) throws EntityNotFoundException {
+    public JobDTO read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadJobPermission
         if (id == null) {
             throw new EntityNotFoundException(
@@ -159,13 +175,13 @@ public class JobService {
             );
         }
         try {
-            Job Job = dao.find(Job.class, id);
-            if (Job == null) {
+            JobDTO job = dao.find(Job.class, id).getDTO();
+            if (job == null) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("Job.EntityNotFoundEx", id)
                 );
             }
-            return Job;
+            return job;
         } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -177,7 +193,7 @@ public class JobService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<Job> readPage(PageRequestDTO p)
+    public ReadRangeDTO<JobDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadJobPermission
         Integer code = null;
@@ -203,18 +219,18 @@ public class JobService {
                 throw new PageNotExistsException(
                         Utils.getMessage("Job.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<Job> result = new ReadRangeDTO<>();
+            ReadRangeDTO<JobDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first Job = last page number * Jobs per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.search(dao, code, name,  start, pageSize));
+                result.setData(convertToDTO(this.search(dao, code, name,  start, pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(this.search(dao, code, name,
+                result.setData(convertToDTO(this.search(dao, code, name,
                         p.getPage() * pageSize,
-                        pageSize));
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -227,6 +243,14 @@ public class JobService {
                     Utils.getMessage("Job.PersistenceEx.ReadPage", ex)
             );
         }
+    }
+
+    private List<JobDTO> convertToDTO(List<Job> lista) {
+        List<JobDTO> listaDTO = new ArrayList<>();
+        for (Job pr : lista) {
+            listaDTO.add(pr.getDTO());
+        }
+        return listaDTO;
     }
 
     private Long count(
@@ -296,11 +320,11 @@ public class JobService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Job> readAll(
+    public List<JobDTO> readAll(
             Integer code,
             String name) {
         try {
-            return this.search(dao, code, name, 0, 0);
+            return convertToDTO(this.search(dao, code, name, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

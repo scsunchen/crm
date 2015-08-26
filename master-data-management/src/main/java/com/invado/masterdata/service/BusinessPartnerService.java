@@ -281,6 +281,7 @@ public class BusinessPartnerService {
                     companyIdNumber,
                     name,
                     TIN);
+            System.out.println("broj entiteta je "+countEntities);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             Integer pageNumber = p.getPage();
@@ -403,6 +404,7 @@ public class BusinessPartnerService {
 
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(BusinessPartner_.companyIdNumber)));
+        query.orderBy(cb.asc(root.get(BusinessPartner_.name)));
         TypedQuery<BusinessPartner> typedQuery = em.createQuery(query);
         if (id != null) {
             typedQuery.setParameter("id", id);
@@ -416,10 +418,11 @@ public class BusinessPartnerService {
         if (TIN != null && TIN.isEmpty() == false) {
             typedQuery.setParameter("TIN", TIN);
         }
-
+        System.out.println("first " + first + " a ps je " + pageSize);
         typedQuery.setFirstResult(first);
         typedQuery.setMaxResults(pageSize);
-        return typedQuery.getResultList();
+        List<BusinessPartner> tempList = typedQuery.getResultList();
+        return tempList;
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)

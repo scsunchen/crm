@@ -26,7 +26,7 @@
   <form:hidden path="version"/>
 
   <div class="form-group btn-group-sm">
-      <a class="btn btn-primary" href="/masterdata/job/0">Povratak</a>
+      <a class="btn btn-primary" href="/HR/job/0">Povratak</a>
     <button type="submit" class="btn btn-primary">
       <c:choose>
         <c:when test="${action == 'create'}">
