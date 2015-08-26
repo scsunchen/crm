@@ -7,7 +7,7 @@ import com.invado.core.dto.DeviceStatusDTO;
 import com.invado.customer.relationship.service.DeviceService;
 import com.invado.customer.relationship.service.DeviceStatusService;
 import com.invado.finance.service.MasterDataService;
-import com.invado.masterdata.service.BusinessPartnerService;
+import com.invado.masterdata.service.BPService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;

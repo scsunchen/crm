@@ -15,36 +15,36 @@
         <!-- Pretraživanje poslovnih partnera -->
 
         <div id="bs-example-navbar-collapse-1">
-            <form:form class="navbar-form navbar-left" role="search" modelAttribute="request" var="list" method="POST">
+            <form:form class="navbar-form navbar-left" role="search" modelAttribute="transactionDTO" method="POST">
                 <div class="form-group input-group col-md-2">
                     <label for="serviceProviderName">Service provider</label>
                     <form:input id="serviceProviderName" class="typeahead form-control" type="text"
-                                path="listCriteria[5].value" style="margin-bottom:  15px;"/>
-                    <form:hidden id="itemDescHidden" path="listCriteria[4].value"/>
+                                path="serviceProviderName" style="margin-bottom:  15px;"/>
+                    <form:hidden id="serviceProviderIdHidden" path="serviceProviderId"/>
                 </div>
                 <div class="form-group input-group col-md-2">
                     <label for="pointOfSaleName">POS</label>
                     <form:input id="pointOfSaleName" class="typeahead form-control" type="text"
-                                path="listCriteria[3].value" style="margin-bottom:  15px;"/>
-                    <form:hidden id="itemDescHidden" path="listCriteria[2].value"/>
+                                path="pointOfSaleName" style="margin-bottom:  15px;"/>
+                    <form:hidden id="pointOfSaleIdHidden" path="pointOfSaleId"/>
                 </div>
                 <div class="form-group input-group col-md-2">
-                    <label for="terminalCustomerCode">Treminal</label>
-                    <form:input id="terminalCustomerCode" class="typeahead form-control" type="text"
-                                path="listCriteria[7].value" style="margin-bottom:  15px;"/>
-                    <form:hidden id="itemDescHidden" path="listCriteria[6].value"/>
+                    <label for="terminalCustomCode">Treminal</label>
+                    <form:input id="terminalCustomCode" class="typeahead form-control" type="text"
+                                path="terminalCustomCode" style="margin-bottom:  15px;"/>
+                    <form:hidden id="terminalIdHidden" path="terminalId"/>
                 </div>
                 <div class="form-group input-group col-md-2">
                     <label for="typeDescription">Tip transakcije</label>
                     <form:input id="typeDescription" class="typeahead form-control" type="text"
-                                path="listCriteria[9].value" style="margin-bottom:  15px;"/>
-                    <form:hidden id="itemDescHidden" path="listCriteria[8].value"/>
+                                path="typeDescription" style="margin-bottom:  15px;"/>
+                    <form:hidden id="typeIdHidden" path="typeId"/>
                 </div>
                 <div class="form-group input-group col-md-2">
                     <label for="distributorName">Distributor</label>
                     <form:input id="distributorName" class="typeahead form-control" type="text"
-                                path="v[1].value" style="margin-bottom:  15px;"/>
-                    <form:hidden id="itemDescHidden" path="listCriteria[0].value"/>
+                                path="distributorName" style="margin-bottom:  15px;"/>
+                    <form:hidden id="distributorIdHidden" path="distributorId"/>
                 </div>
 
                 <button type="submit" class="btn btn-default">Pretraga</button>
@@ -119,7 +119,7 @@
         })
     });
     $('#serviceProviderName').bind('typeahead:selected', function (obj, datum, name) {
-        $('#itemDescHidden').val(datum['id']);
+        $('#serviceProviderIdHidden').val(datum['id']);
     });
 </script>
 <script type="text/javascript">
@@ -134,17 +134,17 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdat/read-pointofsale/%QUERY',
+                url: '${pageContext.request.contextPath}/masterdat/read-businesspartner/%QUERY',
                 wildcard: '%QUERY'
             }
         })
     });
     $('#pointOfSaleName').bind('typeahead:selected', function (obj, datum, name) {
-        $('#itemDescHidden').val(datum['id']);
+        $('#pointOfSaleIdHidden').val(datum['id']);
     });
 </script>
 <script type="text/javascript">
-    $('#terminalCustomerCode').typeahead({
+    $('#terminalCustomCode').typeahead({
         hint: false,
         highlight: true,
         minLength: 1,
@@ -161,7 +161,7 @@
         })
     });
     $('#terminalCustomCode').bind('typeahead:selected', function (obj, datum, name) {
-        $('#itemDescHidden').val(datum['id']);
+        $('#terminalIdHidden').val(datum['id']);
     });
 </script>
 <script type="text/javascript">
@@ -182,7 +182,7 @@
         })
     });
     $('#typeDescription').bind('typeahead:selected', function (obj, datum, name) {
-        $('#itemDescHidden').val(datum['id']);
+        $('#typeIdHidden').val(datum['id']);
     });
 </script>
 <script type="text/javascript">
@@ -203,6 +203,6 @@
         })
     });
     $('#distributorName').bind('typeahead:selected', function (obj, datum, name) {
-        $('#itemDescHidden').val(datum['id']);
+        $('#distributorIdHidden').val(datum['id']);
     });
 </script>

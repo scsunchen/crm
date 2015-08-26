@@ -2,7 +2,7 @@ package com.invado.masterdata.controller;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.dto.BusinessPartnerDTO;
-import com.invado.masterdata.service.BusinessPartnerService;
+import com.invado.masterdata.service.BPService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +11,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * Created by NikolaB on 6/2/2015.
+ * Created by Nikola on 26/08/2015.
  */
 @Controller
 public class BusinessPartnerController {
 
     @Autowired
-    private BusinessPartnerService service;
+    private BPService service;
 
     @RequestMapping("/home")
     public String showHomePage() {

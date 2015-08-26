@@ -1,0 +1,22 @@
+SET DEFINE OFF;
+Insert into EVD.CIS_TERMINAL_TYPES
+   (TERMINAL_TYPE_ID, TERMINAL_TYPE_NAME)
+ Values
+   (1, 'Certus');
+Insert into EVD.CIS_TERMINAL_TYPES
+   (TERMINAL_TYPE_ID, TERMINAL_TYPE_NAME)
+ Values
+   (4, 'M3000');
+Insert into EVD.CIS_TERMINAL_TYPES
+   (TERMINAL_TYPE_ID, TERMINAL_TYPE_NAME)
+ Values
+   (3, 'POS cash register');
+Insert into EVD.CIS_TERMINAL_TYPES
+   (TERMINAL_TYPE_ID, TERMINAL_TYPE_NAME)
+ Values
+   (2, 'Datecs');
+Insert into EVD.CIS_TERMINAL_TYPES
+   (TERMINAL_TYPE_ID, TERMINAL_TYPE_NAME)
+ Values
+   (5, 'Datecs-fw4');
+COMMIT;

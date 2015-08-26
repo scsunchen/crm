@@ -1,0 +1,10 @@
+SET DEFINE OFF;
+Insert into EVD.CIS_CONTACTS
+   (ID, FULLNAME, CONTACT_TYPE_ID, MERCHANT_ID)
+ Values
+   (2, 'šdžcc', 5, 4);
+Insert into EVD.CIS_CONTACTS
+   (ID, FULLNAME, CONTACT_TYPE_ID, MERCHANT_ID)
+ Values
+   (1, 'Goran Šopic', 2, 432310);
+COMMIT;

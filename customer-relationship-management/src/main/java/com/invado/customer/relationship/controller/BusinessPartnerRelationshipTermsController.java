@@ -5,7 +5,8 @@ import com.invado.core.dto.BusinessPartnerDTO;
 import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
 import com.invado.customer.relationship.service.BusinessPartnerRelationshipTermsService;
 import com.invado.customer.relationship.service.dto.*;
-import com.invado.masterdata.service.BusinessPartnerService;
+import com.invado.masterdata.service.BPService;
+import com.invado.masterdata.service.BPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class BusinessPartnerRelationshipTermsController {
 
     @Autowired
-    private BusinessPartnerService partnerService;
+    private BPService partnerService;
     @Autowired
     private BusinessPartnerRelationshipTermsService businessPartnerRelationshipTermsService;
 
