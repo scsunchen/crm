@@ -68,7 +68,6 @@
         <fmt:formatDate value="${parsedDate}" var="stdDatum"
                         type="date" pattern="dd.MM.yyyy" />
         <td><c:out value="${stdDatum}"/></td>
-
         <td><c:out value="${item.installedSoftwareVersion}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>

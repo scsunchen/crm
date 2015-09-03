@@ -10,6 +10,14 @@
         <put-attribute name="panel-title" value=""/>
         <put-attribute name="body" value=""/>
     </definition>
+    <definition name="filtered-main-menu-form" template="/WEB-INF/layouts/filtered-menu-form.jsp"
+                preparer="com.invado.customer.relationship.MenuFormPreparer">
+        <put-attribute name="head" value=""/>
+        <put-attribute name="title" value=""/>
+        <put-attribute name="filter" value=""/>
+        <put-attribute name="panel-title" value=""/>
+        <put-attribute name="body" value=""/>
+    </definition>
     <definition name="home" extends="main-menu-form">
         <put-attribute name="body" value="/WEB-INF/jsp/logo.jsp"/>
     </definition>
@@ -44,6 +52,7 @@
     <definition name="transactions-view" extends="main-menu-form">
         <put-attribute name="title" value="Transakcije"/>
         <put-attribute name="panel-title" value="Pregled transakcija"/>
+        <put-attribute name="filter" value="/WEB-INF/jsp/transaction-filter.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/transaction-table.jsp"/>
     </definition>
     <definition name="terms-table" extends="main-menu-form">

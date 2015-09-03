@@ -22,12 +22,17 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.core.domain.Employee</class>
         <class>com.invado.core.domain.Job</class>
         <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms</class>
+        <class>com.invado.customer.relationship.domain.Transaction</class>
+        <class>com.invado.customer.relationship.domain.Device</class>
+        <class>com.invado.customer.relationship.domain.DeviceHolderPartner</class>
+        <class>com.invado.customer.relationship.domain.DeviceStatus</class>
+        <class>com.invado.customer.relationship.domain.TransactionType</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-            <!--
+
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            -->
+
         </properties>
     </persistence-unit>
 </persistence>

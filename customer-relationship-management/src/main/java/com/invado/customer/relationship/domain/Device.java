@@ -18,7 +18,7 @@ import java.time.LocalDate;
         @NamedQuery(name = Device.READ_BY_SERIAL_NUMBER,
                 query = "SELECT x FROM Device x WHERE UPPER(x.serialNumber) LIKE  :serialNumber"),
         @NamedQuery(name = Device.READ_BY_CUSTOM_CODE,
-                query = "SELECT x FROM Device x WHERE UPPER(x.customCode) LIKE :cusotmCode ORDER BY x.customCode")
+                query = "SELECT x FROM Device x WHERE UPPER(x.customCode) LIKE :name ORDER BY x.customCode")
 })
 public class Device implements Serializable {
 

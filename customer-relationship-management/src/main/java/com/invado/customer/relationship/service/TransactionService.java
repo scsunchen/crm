@@ -457,7 +457,7 @@ public class TransactionService {
     @Transactional(readOnly = true)
     public List<TransactionType> readTransactionTypeByType(String name) {
         try {
-            return dao.createNamedQuery(TransactionType.READ_BY_TYPE, TransactionType.class)
+            return dao.createNamedQuery(TransactionType.READ_BY_DESCRIPTION, TransactionType.class)
                     .setParameter("name", ("%" + name + "%").toUpperCase())
                     .getResultList();
         } catch (Exception ex) {
@@ -468,6 +468,19 @@ public class TransactionService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public TransactionType readTransactionTypeById(Integer id) {
+        try {
+            return dao.createNamedQuery(TransactionType.READ_BY_ID, TransactionType.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new com.invado.core.exception.SystemException(com.invado.finance.Utils.getMessage(
+                    "Device.Exception.ReadById"),
+                    ex);
+        }
+    }
 }
 
 

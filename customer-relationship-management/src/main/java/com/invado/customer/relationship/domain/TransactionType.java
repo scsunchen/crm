@@ -9,15 +9,18 @@ import java.io.Serializable;
 @Entity
 @Table(name = "crm_transaction_type")
 @NamedQueries({
+        @NamedQuery(name = TransactionType.READ_BY_ID,
+                query = "SELECT x FROM TransactionType x WHERE id LIKE  :id"),
         @NamedQuery(name = TransactionType.READ_BY_TYPE,
                 query = "SELECT x FROM TransactionType x WHERE UPPER(x.type) LIKE  :type"),
         @NamedQuery(name = TransactionType.READ_BY_DESCRIPTION,
-                query = "SELECT x FROM TransactionType x WHERE UPPER(x.description) LIKE :description ORDER BY x.description")
+                query = "SELECT x FROM TransactionType x WHERE UPPER(x.description) LIKE :name ORDER BY x.description")
 })
 public class TransactionType implements Serializable {
 
     public static final String READ_BY_TYPE = "TransactionType.ReadByType";
     public static final String READ_BY_DESCRIPTION = "TransactionType.ReadByDescription";
+    public static final String READ_BY_ID = "TransactionType.ReadById";
 
     @TableGenerator(
             name = "ClientTab",

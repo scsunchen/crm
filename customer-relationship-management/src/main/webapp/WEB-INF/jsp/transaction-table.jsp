@@ -9,13 +9,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Pretraživanje poslovnih partnera -->
+<form:form class="navbar-form navbar-left" role="search" modelAttribute="transactionDTO" method="POST">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Pretraživanje poslovnih partnera -->
 
-        <div id="bs-example-navbar-collapse-1">
-            <form:form class="navbar-form navbar-left" role="search" modelAttribute="transactionDTO" method="POST">
+            <div id="bs-example-navbar-collapse-1">
                 <div class="form-group input-group col-md-2">
                     <label for="serviceProviderName">Service provider</label>
                     <form:input id="serviceProviderName" class="typeahead form-control" type="text"
@@ -46,61 +47,65 @@
                                 path="distributorName" style="margin-bottom:  15px;"/>
                     <form:hidden id="distributorIdHidden" path="distributorId"/>
                 </div>
-
                 <button type="submit" class="btn btn-default">Pretraga</button>
-            </form:form>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Šifra</th>
-            <th>Tip</th>
-            <th>Terminal</th>
-            <th>POS</th>
-            <th>Iznos</th>
-            <th>Service provider</th>
-            <th>Distributor</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:set var="count" value="0" scope="page"/>
-        <c:forEach var="item" items="${data}">
-            <!-- Modal -->
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td><c:out value="${item.id}"/></td>
-                <td><c:out value="${item.typeDescription}"/></td>
-                <td><c:out value="${item.terminalCustomCode}"/></td>
-                <td><c:out value="${item.pointOfSaleName}"/></td>
-                <td><spring:eval expression="item.amount"/></td>
-                <td><c:out value="${item.serviceProviderName}"/></td>
-                <td><c:out value="${item.distributorName}"/></td>
+                <th>Šifra</th>
+                <th>Tip</th>
+                <th>Terminal</th>
+                <th>POS</th>
+                <th>Request</th>
+                <th>Response</th>
+                <th>Iznos</th>
+                <th>Service provider</th>
+                <th>Distributor</th>
             </tr>
-            <c:set var="count" value="${count + 1}" scope="page"/>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
-<nav>
-    <ul class="pager pull-right">
-        Strana
-        <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
-            </a>
-        </li>
-        <c:out value="${page+1} od ${numberOfPages+1}"/>
-        <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
-            </a>
-        </li>
-    </ul>
-</nav>
+            </thead>
+            <tbody>
+            <c:set var="count" value="0" scope="page"/>
+            <c:forEach var="item" items="${data}">
+                <!-- Modal -->
+                <tr>
+                    <td><c:out value="${item.id}"/></td>
+                    <td><c:out value="${item.typeDescription}"/></td>
+                    <td><c:out value="${item.terminalCustomCode}"/></td>
+                    <td><c:out value="${item.pointOfSaleName}"/></td>
+                    <td><spring:eval expression="item.requestTime"/></td>
+                    <td><spring:eval expression="item.responseTime"/></td>
+                    <td><spring:eval expression="item.amount"/></td>
+                    <td><c:out value="${item.serviceProviderName}"/></td>
+                    <td><c:out value="${item.distributorName}"/></td>
+                </tr>
+                <c:set var="count" value="${count + 1}" scope="page"/>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+    <nav>
+
+        <ul class="pager pull-right">
+            Strana
+            <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
+                <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page - 1}"/></c:if>">
+                    <span class="glyphicon glyphicon-backward"></span> Prethodna
+                </a>
+            </li>
+            <c:out value="${page+1} od ${numberOfPages+1}"/>
+            <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
+                <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page + 1}"/></c:if>">
+                    <span class="glyphicon glyphicon-forward"></span> Naredna
+                </a>
+            </li>
+        </ul>
+    </nav>
+</form:form>
 <script type="text/javascript">
     $('#serviceProviderName').typeahead({
         hint: false,
@@ -150,7 +155,7 @@
         minLength: 1,
         limit: 1000
     }, {
-        display: 'name',
+        display: 'customCode',
         source: new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -171,7 +176,7 @@
         minLength: 1,
         limit: 1000
     }, {
-        display: 'name',
+        display: 'description',
         source: new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,

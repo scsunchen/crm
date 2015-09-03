@@ -42,7 +42,7 @@
                 <fmt:formatDate value="${yourObject.date}" var="dateString" pattern="dd/MM/yyyy" />
                 <form:input path="date" value="${dateString} .. />
             --%>
-        <input:inputDate name="creationDate" label="Datum Kreiranja" placeholder="dd.mm.yyyy."/>
+        <input:inputDate name="requestTime" label="Datum Kreiranja" placeholder="dd.mm.yyyy."/>
         <input:inputTime name="workingStartTime" label="Početak rada" placeholder="hh:mi"/>
         <input:inputTime name="workingEndTime" label="Kraj rada" placeholder="hh:mi"/>
         <input:inputField name="installedSoftwareVersion" label="Firmware verzija"/>

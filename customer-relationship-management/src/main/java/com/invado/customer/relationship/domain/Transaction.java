@@ -2,16 +2,19 @@ package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
+import com.invado.core.domain.LocalDateConverter;
+import com.invado.core.domain.LocalDateTimeConverter;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Created by Nikola on 19/08/2015.
  */
 @Entity
-@Table(name = "crm_transaction")
+@Table(name = "CRM_TRANSACTION")
 public class Transaction implements Serializable{
 
     @Id
@@ -28,7 +31,7 @@ public class Transaction implements Serializable{
      * Point of sale - mesto prodaje, partner podređen poslovnom partneru koji je i pravno lice i sa kojim se sklapa ugovor o prodaji. esot na kojemu se nalazi terminal
      */
     @ManyToOne
-    @JoinColumn(name = "business_partner_id")
+    @JoinColumn(name = "point_of_sale_id")
     private BusinessPartner pointOfSale;
     /**
      * Distrubotor je zapravo klijent, odnosno kompanija korisnik aplikacije
@@ -42,6 +45,14 @@ public class Transaction implements Serializable{
     @ManyToOne
     @JoinColumn(name = "service_provider_id")
     private BusinessPartner serviceProvider;
+
+    @Column(name = "request_time")
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime requestTime;
+
+    @Column(name = "response_time")
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime responseTime;
 
 
     public Long getId() {
@@ -109,22 +120,40 @@ public class Transaction implements Serializable{
     }
 
 
+    public LocalDateTime getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(LocalDateTime requestTime) {
+        this.requestTime = requestTime;
+    }
+
+    public LocalDateTime getResponseTime() {
+        return responseTime;
+    }
+
+    public void setResponseTime(LocalDateTime responseTime) {
+        this.responseTime = responseTime;
+    }
+
     public TransactionDTO getDTO(){
 
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setId(this.getId());
-        transactionDTO.setStatusId (this.getStatusId());
-        transactionDTO.setTypeId (this.getType().getId());
+        transactionDTO.setStatusId(this.getStatusId());
+        transactionDTO.setTypeId(this.getType().getId());
         transactionDTO.setTypeDescription(this.getType().getDescription());
-        transactionDTO.setAmount (this.getAmount());
-        transactionDTO.setTerminalId (this.getTerminal().getId());
+        transactionDTO.setAmount(this.getAmount());
+        transactionDTO.setTerminalId(this.getTerminal().getId());
         transactionDTO.setTerminalCustomCode(this.getTerminal().getCustomCode());
         transactionDTO.setPointOfSaleId(this.getPointOfSale().getId());
         transactionDTO.setPointOfSaleName(this.getPointOfSale().getName());
-        transactionDTO.setDistributorId (this.getDistributor().getId());
+        transactionDTO.setDistributorId(this.getDistributor().getId());
         transactionDTO.setDistributorName(this.getDistributor().getName());
-        transactionDTO.setServiceProviderId (this.getServiceProvider().getId());
+        transactionDTO.setServiceProviderId(this.getServiceProvider().getId());
         transactionDTO.setServiceProviderName(this.getServiceProvider().getName());
+        transactionDTO.setRequestTime(this.getRequestTime());
+        transactionDTO.setResponseTime(this.getResponseTime());
 
         return transactionDTO;
     }

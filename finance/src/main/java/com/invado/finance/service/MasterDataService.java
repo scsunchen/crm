@@ -73,6 +73,22 @@ public class MasterDataService {
         }
     }
 
+
+    @Transactional(readOnly = true)
+    public BusinessPartner readPointOfSaleById(Integer id) {
+        try {
+           return  dao.createNamedQuery(BusinessPartner.READ_POINT_OF_SALE_BY_ID,
+                    BusinessPartner.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadBusinessPartnerByName"),
+                    ex
+            );
+        }
+    }
     @Transactional(readOnly = true)
     public List<BusinessPartner> readServiceProviderByName(String name) {
         try {
@@ -91,11 +107,41 @@ public class MasterDataService {
     }
 
     @Transactional(readOnly = true)
+    public BusinessPartner readServiceProviderById(Integer id) {
+        try {
+           return  dao.createNamedQuery(BusinessPartner.READ_SERVICE_PROVIDER_BY_ID,
+                    BusinessPartner.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadBusinessPartnerByName"),
+                    ex
+            );
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<Client> readClientByName(String name) {
         try {
             return dao.createNamedQuery(Client.READ_BY_NAME_ORDERBY_NAME, Client.class)
                     .setParameter("name", ("%"+name+"%").toUpperCase())
                     .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadClientByName"),
+                    ex);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Client readClientById(Integer id) {
+        try {
+            return dao.createNamedQuery(Client.READ_BY_ID, Client.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
         } catch(Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(

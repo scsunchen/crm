@@ -1,7 +1,11 @@
 package com.invado.customer.relationship.service.dto;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by Nikola on 23/08/2015.
@@ -23,6 +27,13 @@ public class TransactionDTO {
     private String distributorName;
     private Integer serviceProviderId;
     private String serviceProviderName;
+    @DateTimeFormat( style = "MM")
+    private LocalDateTime requestTime;
+    @DateTimeFormat(style = "MM")
+    private LocalDateTime responseTime;
+
+
+    public TransactionDTO(){}
 
     public Long getId() {
         return id;
@@ -126,5 +137,21 @@ public class TransactionDTO {
 
     public void setServiceProviderName(String serviceProviderName) {
         this.serviceProviderName = serviceProviderName;
+    }
+
+    public LocalDateTime getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(LocalDateTime requestTime) {
+        this.requestTime = requestTime;
+    }
+
+    public LocalDateTime getResponseTime() {
+        return responseTime;
+    }
+
+    public void setResponseTime(LocalDateTime responseTime) {
+        this.responseTime = responseTime;
     }
 }
