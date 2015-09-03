@@ -25,8 +25,12 @@ import org.hibernate.validator.constraints.NotBlank;
                 query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
         @NamedQuery(name = BusinessPartner.READ_POINT_OF_SALE_BY_NAME_ORDERBY_NAME,
                 query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name AND x.type = 1 ORDER BY x.name"),
+        @NamedQuery(name = BusinessPartner.READ_POINT_OF_SALE_BY_ID,
+                query = "SELECT x FROM BusinessPartner x WHERE id LIKE :id AND x.type = 1"),
         @NamedQuery(name = BusinessPartner.READ_SERVICE_PROVIDER_BY_NAME_ORDERBY_NAME,
                 query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name AND x.type = 2 ORDER BY x.name"),
+        @NamedQuery(name = BusinessPartner.READ_SERVICE_PROVIDER_BY_ID,
+                query = "SELECT x FROM BusinessPartner x WHERE id LIKE :id AND x.type = 2"),
         @NamedQuery(name = BusinessPartner.READ_PARENT,
                 query = "SELECT x FROM BusinessPartner x where x.parentBusinessPartner is null")
 })
@@ -36,8 +40,10 @@ public class BusinessPartner implements Serializable {
     public static final String READ_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadByNameOrderByName";
     public static final String READ_PARENT = "BusinessPartner.ReadParentPartners";
     public static final String READ_POINT_OF_SALE_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadPointOfSaleByName";
-    public static final String READ_SERVICE_PROVIDER_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadServiceProviderByName";
+    public static final String READ_POINT_OF_SALE_BY_ID = "BusinessPartner.ReadPointOfSaleById";
+    public static final String READ_SERVICE_PROVIDER_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadServiceProviderById";
     public static final String READ_GENERAL_NAME_ORDERBY_NAME = "BusinessPartner.ReadGeneralPartnerByName";
+    public static final String READ_SERVICE_PROVIDER_BY_ID = "BusinessPartner.ReadGeneralPartnerById";
 
     @TableGenerator(
             name = "PartnerTab",
