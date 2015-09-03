@@ -8,23 +8,34 @@
     <file type="web" url="file://$PROJECT_DIR$/customer-relationship-management" />
     <file type="web" url="file://$PROJECT_DIR$/finance" />
     <file type="web" url="file://$PROJECT_DIR$/HR" />
+    <file type="web" url="file://$PROJECT_DIR$/HumanResources" />
     <file type="web" url="file://$PROJECT_DIR$/master-data-management" />
   </component>
-  <component name="IdProvider" IDEtalkID="B520C55E5C74204658DAF7C7A76F1454" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/admin/pom.xml" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/pom.xml" />
         <option value="$PROJECT_DIR$/master-data-management/pom.xml" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/HumanResources/pom.xml" />
+      </set>
+    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" default="false" assert-keyword="false" jdk-15="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
-  </component>
-  <component name="SvnBranchConfigurationManager">
-    <option name="mySupportsUserInfoFilter" value="true" />
   </component>
 </project>

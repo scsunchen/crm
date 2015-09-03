@@ -7,9 +7,6 @@
           <element id="module-output" name="HR" />
         </element>
         <element id="directory" name="lib">
-          <element id="archive" name="HR-1.0.jar">
-            <element id="module-output" name="HR" />
-          </element>
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.1.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.4.RELEASE" />
