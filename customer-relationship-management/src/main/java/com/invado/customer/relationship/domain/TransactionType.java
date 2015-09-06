@@ -36,6 +36,8 @@ public class TransactionType implements Serializable {
     private Integer id;
     private String type;
     private String description;
+    private Boolean invoiceable;
+    private String invoicingStatuses;
 
 
     public Integer getId() {
@@ -60,5 +62,21 @@ public class TransactionType implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getInvoiceable() {
+        return invoiceable;
+    }
+
+    public void setInvoiceable(Boolean invoiceable) {
+        this.invoiceable = invoiceable;
+    }
+
+    public String getInvoicingStatuses() {
+        return invoicingStatuses;
+    }
+
+    public void setInvoicingStatuses(String invoicingStatuses) {
+        this.invoicingStatuses = invoicingStatuses;
     }
 }

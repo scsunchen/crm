@@ -31,6 +31,7 @@ public class TransactionDTO {
     private LocalDateTime requestTime;
     @DateTimeFormat(style = "MM")
     private LocalDateTime responseTime;
+    private Boolean invoicingStatus;
 
 
     public TransactionDTO(){}
@@ -153,5 +154,13 @@ public class TransactionDTO {
 
     public void setResponseTime(LocalDateTime responseTime) {
         this.responseTime = responseTime;
+    }
+
+    public Boolean getInvoicingStatus() {
+        return invoicingStatus;
+    }
+
+    public void setInvoicingStatus(Boolean invoicingStatus) {
+        this.invoicingStatus = invoicingStatus;
     }
 }

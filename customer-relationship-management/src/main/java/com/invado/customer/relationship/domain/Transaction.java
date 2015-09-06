@@ -2,7 +2,6 @@ package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
-import com.invado.core.domain.LocalDateConverter;
 import com.invado.core.domain.LocalDateTimeConverter;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
 
@@ -19,6 +18,7 @@ public class Transaction implements Serializable{
 
     @Id
     private Long id;
+    @Column(name = "transaction_status")
     private String statusId;
     @ManyToOne
     @JoinColumn(name = "type_id")
@@ -53,6 +53,9 @@ public class Transaction implements Serializable{
     @Column(name = "response_time")
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime responseTime;
+
+    @Column(name = "invoicing_status")
+    private Boolean invoicingStatus;
 
 
     public Long getId() {
@@ -136,6 +139,14 @@ public class Transaction implements Serializable{
         this.responseTime = responseTime;
     }
 
+    public Boolean isInvoicingStatus() {
+        return invoicingStatus;
+    }
+
+    public void setInvoicingStatus(Boolean invoicingStatus) {
+        this.invoicingStatus = invoicingStatus;
+    }
+
     public TransactionDTO getDTO(){
 
         TransactionDTO transactionDTO = new TransactionDTO();
@@ -154,6 +165,7 @@ public class Transaction implements Serializable{
         transactionDTO.setServiceProviderName(this.getServiceProvider().getName());
         transactionDTO.setRequestTime(this.getRequestTime());
         transactionDTO.setResponseTime(this.getResponseTime());
+        transactionDTO.setInvoicingStatus(this.isInvoicingStatus());
 
         return transactionDTO;
     }

@@ -24,4 +24,5 @@ public class Transaction_ {
     public static volatile SingularAttribute<Transaction, BusinessPartner> serviceProvider;
     public static volatile SingularAttribute<Transaction, LocalDateTime> requestTime;
     public static volatile SingularAttribute<Transaction, LocalDateTime> responseTime;
+    public static volatile SingularAttribute<Transaction, Boolean> invoicingStatus;
 }
