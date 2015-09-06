@@ -27,6 +27,8 @@ public class Test {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
                 "applicationContext.xml");
 
+        /*testiram da li je ok sa branch*/
+
 //        System.out.println(service.read("222"));
     }
     
