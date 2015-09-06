@@ -14,7 +14,25 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "CRM_TRANSACTION")
+@NamedQueries({
+        @NamedQuery(name = Transaction.INVOICING_CANDIDATES,
+                query = " select trans.distributor.id as distributorId, trans.distributor.name as distributorName, trans.merchant.id as merchantId, trans.merchant.name as merchantName, " +
+                        " trans.pointOfSale.id as posId, trans.pointOfSale.name as posName, trans.terminal.id as treminalId, trans.terminal.customCode as treminalName," +
+                        " service.id as service, sum(trans.amount) as amount " +
+                        " from TransactionType type, Transaction trans, ServiceProviderServices service " +
+                        " where type.invoiceable = true " +
+                        " and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                        " and trans.statusId is not null " +
+                        " and trans.invoicingStatus = false " +
+                        " and trans.responseTime < :invoicingDate " +
+                        " and trans.type = type " +
+                        " and service.serviceProvider = trans.serviceProvider " +
+                        " group by trans.distributor, trans.merchant, trans.pointOfSale, service.id, trans.terminal " +
+                        " order by 1, 2, 3, 4, 5 ")
+})
 public class Transaction implements Serializable{
+
+    public static final String INVOICING_CANDIDATES = "Transaction.ReadInvoicingCandidatesTransactions";
 
     @Id
     private Long id;
@@ -39,6 +57,12 @@ public class Transaction implements Serializable{
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client distributor;
+    /**
+     * Merchant je prodavac
+     */
+    @ManyToOne
+    @JoinColumn(name = "business_partner_id")
+    private BusinessPartner merchant;
     /**
      * Service provider je kompanija čija se usluga prodaje, odnoson mobilni provider
      */
@@ -147,6 +171,18 @@ public class Transaction implements Serializable{
         this.invoicingStatus = invoicingStatus;
     }
 
+    public BusinessPartner getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(BusinessPartner businessPartner) {
+        this.merchant = businessPartner;
+    }
+
+    public Boolean getInvoicingStatus() {
+        return invoicingStatus;
+    }
+
     public TransactionDTO getDTO(){
 
         TransactionDTO transactionDTO = new TransactionDTO();
@@ -161,6 +197,8 @@ public class Transaction implements Serializable{
         transactionDTO.setPointOfSaleName(this.getPointOfSale().getName());
         transactionDTO.setDistributorId(this.getDistributor().getId());
         transactionDTO.setDistributorName(this.getDistributor().getName());
+        transactionDTO.setMerchantId(this.getMerchant().getId());
+        transactionDTO.setMerchantName(this.getMerchant().getName());
         transactionDTO.setServiceProviderId(this.getServiceProvider().getId());
         transactionDTO.setServiceProviderName(this.getServiceProvider().getName());
         transactionDTO.setRequestTime(this.getRequestTime());

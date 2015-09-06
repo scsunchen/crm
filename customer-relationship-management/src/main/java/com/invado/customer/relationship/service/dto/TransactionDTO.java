@@ -27,6 +27,8 @@ public class TransactionDTO {
     private String distributorName;
     private Integer serviceProviderId;
     private String serviceProviderName;
+    private Integer merchantId;
+    private String merchantName;
     @DateTimeFormat( style = "MM")
     private LocalDateTime requestTime;
     @DateTimeFormat(style = "MM")
@@ -162,5 +164,21 @@ public class TransactionDTO {
 
     public void setInvoicingStatus(Boolean invoicingStatus) {
         this.invoicingStatus = invoicingStatus;
+    }
+
+    public Integer getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Integer merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
     }
 }

@@ -1,567 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1d2dfdfd-3ed0-485c-8ab7-ddfd9a35dac6" name="Default" comment="Transaction commit">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/0.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/10.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/101.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/102.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/103.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/104.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/105.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/106.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/107.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/108.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/109.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/11.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/110.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/111.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/112.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/113.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/114.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/115.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/116.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/117.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/118.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/119.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/12.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/120.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/121.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/122.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/123.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/124.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/125.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/126.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/127.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/128.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/129.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/13.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/130.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/131.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/132.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/133.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/134.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/135.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/136.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/137.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/138.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/139.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/14.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/140.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/141.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/142.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/143.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/144.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/145.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/146.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/147.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/148.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/149.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/15.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/150.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/151.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/152.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/153.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/154.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/155.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/156.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/157.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/158.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/159.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/16.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/160.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/161.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/162.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/163.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/164.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/165.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/166.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/167.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/168.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/169.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/17.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/170.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/171.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/172.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/173.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/174.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/175.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/176.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/177.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/178.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/179.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/18.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/180.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/181.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/182.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/183.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/184.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/185.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/186.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/187.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/188.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/189.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/19.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/190.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/191.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/192.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/193.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/194.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/195.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/196.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/197.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/198.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/199.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/20.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/200.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/201.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/202.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/203.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/204.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/205.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/206.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/207.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/208.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/209.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/21.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/210.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/211.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/212.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/213.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/214.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/215.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/216.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/217.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/218.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/219.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/22.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/220.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/221.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/222.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/223.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/224.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/225.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/226.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/227.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/228.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/229.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/23.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/230.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/231.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/232.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/233.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/234.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/235.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/236.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/237.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/238.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/239.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/24.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/241.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/242.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/243.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/244.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/245.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/246.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/247.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/248.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/249.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/25.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/250.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/251.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/252.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/253.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/254.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/255.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/256.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/257.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/258.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/259.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/26.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/260.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/261.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/262.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/263.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/264.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/265.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/266.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/267.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/268.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/269.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/27.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/270.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/271.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/272.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/273.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/274.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/275.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/276.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/277.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/278.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/279.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/28.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/280.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/281.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/282.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/283.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/284.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/285.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/286.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/287.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/288.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/289.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/29.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/290.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/291.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/292.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/293.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/294.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/295.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/296.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/297.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/298.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/299.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/30.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/300.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/301.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/302.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/303.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/304.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/305.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/306.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/307.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/308.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/309.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/31.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/310.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/311.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/312.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/313.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/314.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/315.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/316.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/317.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/318.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/319.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/320.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/33.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/34.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/35.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/36.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/37.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/38.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/39.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/40.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/41.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/42.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/43.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/44.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/45.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/46.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/47.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/48.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/49.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/5.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/50.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/51.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/52.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/53.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/54.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/55.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/56.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/57.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/58.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/59.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/6.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/60.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/61.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/62.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/63.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/64.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/65.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/66.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/67.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/68.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/69.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/7.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/70.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/71.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/72.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/73.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/74.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/75.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/76.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/77.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/78.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/79.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/8.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/80.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/81.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/82.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/83.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/84.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/85.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/86.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/87.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/88.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/89.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/9.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/90.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/91.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/92.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/93.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/94.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/95.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/96.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/97.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/98.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/99.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/worddoc/Class Model.docx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA15.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA17.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA19.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA21.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA23.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA25.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA46.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA48.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA50.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA52.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/dtm.eap" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/dtm.ldb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/ea.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/hbg.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/join01.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/join02.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/join03.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/join04.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/minus01.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/minus02.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/minus03.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/plus01.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/plus02.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/images/plus03.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/25E63750-7D23-4516-A44F-40CE18D82591.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/40252D54-1D1C-4516-85FB-C6C39048BBD8.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/62FAA514-B4E1-48b0-8494-28DB088E7B86.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA10.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA11.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA12.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA13.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA14.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA16.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA18.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA20.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA22.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA24.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA26.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA27.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA28.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA29.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA3.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA30.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA31.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA32.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA33.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA34.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA35.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA36.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA37.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA38.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA39.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA4.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA40.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA41.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA42.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA43.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA1/EA44.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA45.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA47.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA49.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA5.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA51.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA53.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA54.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA55.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA56.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA57.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA58.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA59.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA6.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA60.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA61.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA62.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA2/EA63.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA7.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA8.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/EARoot/EA9.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap01.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap04.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap09.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap0d.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap1f.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap20.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap22.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap25.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap29.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap2f.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap40.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap4c.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap53.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap5a.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap60.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap62.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap6a.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap70.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap77.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap80.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap8c.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap8f.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap93.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap9d.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMap9e.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapa0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapa2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapa3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapa7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapaa.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapac.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapb3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapb4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapb5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapb8.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapbb.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapc7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapc8.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapd5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapec.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapef.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapf6.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/guidmaps/GuidMapf9.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/HumanResources_war.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/HumanResources_war_exploded.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_8.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/blank.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/displayToc.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/css/ea.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/css/eacont.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/index.htm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/js/data/root.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/worddoc/Terms/termsDiagram.RTF" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Documentation/architecture/htmldoc/toc.htm" />
-      <change type="DELETED" beforePath="F:\Invado\crm\.idea\scopes\scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="F:\Invado\crm\.idea\workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="F:\Invado\crm\Documentation\dtm.ldb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Documentation/dtm.eap" afterPath="$PROJECT_DIR$/Documentation/dtm.eap" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.eot" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.eot" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.ttf" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.ttf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.woff2" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.woff2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.woff" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.woff" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Address.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Address.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/ApplicationException.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/ApplicationException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ApplicationSetup.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ApplicationSetup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ApplicationUser.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ApplicationUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ArticleService.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ArticleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner_.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client_.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/ConstraintViolationException.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/ConstraintViolationException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ContactPerson.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ContactPerson.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Currency.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Currency.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/exception/CurrencyNotFoundException.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/exception/CurrencyNotFoundException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Currency_.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Currency_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/EntityExistsException.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/EntityExistsException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/EntityNotFoundException.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/EntityNotFoundException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ExchangeRate.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ExchangeRate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ExchangeRatePK.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ExchangeRatePK.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ExchangeRate_.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ExchangeRate_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/FinanceValidator.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/FinanceValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/HR_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/HR_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceBusinessPartner.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceBusinessPartner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/InvoiceController.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/InvoiceController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/InvoiceDTO.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/InvoiceDTO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceItem.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/InvoiceItemDTO.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/InvoiceItemDTO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceItemPK.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceItemPK.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceItem_.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceItem_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoicePK.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoicePK.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/InvoiceReportDTO.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/InvoiceReportDTO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/InvoiceService.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/InvoiceService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceType.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice_.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/ItemController.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/ItemController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/JournalEntryItemService.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/JournalEntryItemService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/MenuFormPreparer.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/MenuFormPreparer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/spi/Module.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/spi/Module.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/spi/ModuleFeature.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/spi/ModuleFeature.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/spi/ModuleServiceProviderInterface.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/spi/ModuleServiceProviderInterface.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/OpenItemStatementsGridController.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/OpenItemStatementsGridController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit_.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/PageNotExistsException.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/PageNotExistsException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/PageRequestDTO.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/PageRequestDTO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Properties.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Properties.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/ReadRangeDTO.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/ReadRangeDTO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ReceivablePayableCard.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ReceivablePayableCard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/RecordInvoiceService.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/RecordInvoiceService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/ReferentialIntegrityException.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/ReferentialIntegrityException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Role.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Role.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/SystemException.java" afterPath="$PROJECT_DIR$/core-module-spi/src/main/java/com/invado/core/exception/SystemException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Township.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/UnitOfMeasure.java" afterPath="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/UnitOfMeasure.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/application-context.xml" afterPath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/application-context.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/css/bootstrap-theme.min.css" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/css/bootstrap-theme.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/css/bootstrap.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/js/bootstrap.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/META-INF/context.xml" afterPath="$PROJECT_DIR$/finance/src/main/webapp/META-INF/context.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/customer_relationship_management_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/customer_relationship_management_war.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/customer_relationship_management_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/customer_relationship_management_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterPath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/finance_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/finance_war.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/finance_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/finance_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/fonts/glyphicons-halflings-regular.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/item-table.jsp" afterPath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/item-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/js/jquery-1.11.2.min.js" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/js/jquery-1.11.2.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/resources/css/main.css" afterPath="$PROJECT_DIR$/finance/src/main/webapp/resources/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/layouts/menu-form.jsp" afterPath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/layouts/menu-form.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/my-crm.iml" afterPath="$PROJECT_DIR$/my-crm.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/pom.xml" afterPath="$PROJECT_DIR$/core-domain/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-module-spi/pom.xml" afterPath="$PROJECT_DIR$/core-module-spi/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/pom.xml" afterPath="$PROJECT_DIR$/finance/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/redirect.jsp" afterPath="$PROJECT_DIR$/finance/src/main/webapp/redirect.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/resources/com/invado/customer/relationship/bundle/server-strings.properties" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/resources/com/invado/customer/relationship/bundle/server-strings.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/resources/com/invado/finance/bundle/server-strings.properties" afterPath="$PROJECT_DIR$/finance/src/main/resources/com/invado/finance/bundle/server-strings.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/tiles.xml" afterPath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/tiles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transaction-table.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transaction-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/web.xml" />
-      <change type="MOVED" beforePath="F:\Invado\crm\.idea\artifacts\master_data_management_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/masterdata_war.xml" />
-      <change type="MOVED" beforePath="F:\Invado\crm\.idea\artifacts\master_data_management_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/masterdata_war_exploded.xml" />
+    <list default="true" id="1d2dfdfd-3ed0-485c-8ab7-ddfd9a35dac6" name="Default" comment="Invoincing start">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/ServiceProviderServices.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction_.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction_.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/resources/META-INF/masterdata-persistence.xml" afterPath="$PROJECT_DIR$/master-data-management/src/main/resources/META-INF/masterdata-persistence.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="crm.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -596,6 +45,24 @@
         <option name="myItemId" />
         <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
       </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="Oracle - xe@94.127.3.157" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DbRootNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="Oracle - xe@94.127.3.157" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="DEVEL" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
     </PATH>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
@@ -604,95 +71,147 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="application-context.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/application-context.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DeviceStatus.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/DeviceStatus.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="24" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusinessPartnerRelationshipTerms.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="22" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="encodings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Article.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Article.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TransactionController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Transaction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="155" column="34" selection-start-line="155" selection-start-column="34" selection-end-line="155" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Address.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Address.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OrgUnit.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.7513914">
-              <caret line="68" column="13" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+            <state vertical-scroll-proportion="-9.5">
+              <caret line="26" column="61" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
               <folding>
-                <marker date="1439751687545" expanded="true" signature="3155:3423" placeholder="select ou.OR..c_org_unit..." />
-                <marker date="1439751687545" expanded="true" signature="3510:3982" placeholder="select ou.OR..c_org_unit..." />
+                <element signature="e#5218#5219#0" expanded="true" />
+                <element signature="e#5249#5250#0" expanded="true" />
+                <element signature="e#5313#5314#0" expanded="true" />
+                <element signature="e#5360#5361#0" expanded="true" />
+                <element signature="e#5403#5404#0" expanded="true" />
+                <element signature="e#5441#5442#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InvoicingTransactionSetDTO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/InvoicingTransactionSetDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="39" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="39" />
+              <folding>
+                <element signature="e#438#439#0" expanded="true" />
+                <element signature="e#474#475#0" expanded="true" />
+                <element signature="e#533#534#0" expanded="true" />
+                <element signature="e#583#584#0" expanded="true" />
+                <element signature="e#625#626#0" expanded="true" />
+                <element signature="e#663#664#0" expanded="true" />
+                <element signature="e#725#726#0" expanded="true" />
+                <element signature="e#779#780#0" expanded="true" />
+                <element signature="e#817#818#0" expanded="true" />
+                <element signature="e#850#851#0" expanded="true" />
+                <element signature="e#903#904#0" expanded="true" />
+                <element signature="e#947#948#0" expanded="true" />
+                <element signature="e#986#987#0" expanded="true" />
+                <element signature="e#1021#1022#0" expanded="true" />
+                <element signature="e#1077#1078#0" expanded="true" />
+                <element signature="e#1125#1126#0" expanded="true" />
+                <element signature="e#1158#1159#0" expanded="true" />
+                <element signature="e#1186#1187#0" expanded="true" />
+                <element signature="e#1229#1230#0" expanded="true" />
+                <element signature="e#1263#1264#0" expanded="true" />
+                <element signature="e#1297#1298#0" expanded="true" />
+                <element signature="e#1327#1328#0" expanded="true" />
+                <element signature="e#1373#1374#0" expanded="true" />
+                <element signature="e#1411#1412#0" expanded="true" />
+                <element signature="e#1449#1450#0" expanded="true" />
+                <element signature="e#1482#1483#0" expanded="true" />
+                <element signature="e#1535#1536#0" expanded="true" />
+                <element signature="e#1579#1580#0" expanded="true" />
+                <element signature="e#1618#1619#0" expanded="true" />
+                <element signature="e#1653#1654#0" expanded="true" />
+                <element signature="e#1709#1710#0" expanded="true" />
+                <element signature="e#1757#1758#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessPartner.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactionType.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="36" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactionDTO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="168" column="36" selection-start-line="168" selection-start-column="36" selection-end-line="168" selection-end-column="36" />
+              <folding>
+                <element signature="e#4058#4059#0" expanded="true" />
+                <element signature="e#4111#4112#0" expanded="true" />
+                <element signature="e#4155#4156#0" expanded="true" />
+                <element signature="e#4194#4195#0" expanded="true" />
+                <element signature="e#4229#4230#0" expanded="true" />
+                <element signature="e#4285#4286#0" expanded="true" />
+                <element signature="e#4333#4334#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReadRangeDTO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/ReadRangeDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="25" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactionService.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.6774848">
+              <caret line="382" column="53" selection-start-line="382" selection-start-column="53" selection-end-line="382" selection-end-column="53" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#delete#0;class#TransactionService#0" expanded="false" />
+                <element signature="method#read#0;class#TransactionService#0" expanded="false" />
+                <element signature="method#readPage#0;class#TransactionService#0" expanded="false" />
+                <element signature="method#convertToDTO#0;class#TransactionService#0" expanded="false" />
+                <element signature="method#count#0;class#TransactionService#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Transaction_.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction_.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="83" selection-start-line="23" selection-start-column="83" selection-end-line="23" selection-end-column="83" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Device.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Device.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="29" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -709,6 +228,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -718,11 +242,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ContactPerson.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner_.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BusinessPartnerService.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/DeviceStatus.java" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/DeviceHolderPartner.java" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/device-grid.jsp" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/devicestatus-grid.jsp" />
@@ -753,22 +272,27 @@
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/layouts/filtered-menu-form.jsp" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java" />
         <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" />
         <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/MasterDataService.java" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/device-table.jsp" />
         <option value="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/invoice-update-master-grid.jsp" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transaction-table.jsp" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction_.java" />
         <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/LocalDateTimeConverter.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/POSRegisteredServices.java" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerServices.java" />
         <option value="$PROJECT_DIR$/.idea/encodings.xml" />
         <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType_.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/9a661551-1596-403f-9ede-f4eecba493c0/console.sql" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/resources/META-INF/masterdata-persistence.xml" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/ServiceProviderServices.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction_.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/InvoicingTransactionSetDto.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java" />
       </list>
     </option>
   </component>
@@ -894,8 +418,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -924,7 +448,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="finance" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -938,7 +462,111 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="META-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="finance" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -960,7 +588,43 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -976,7 +640,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
+              <option name="myItemId" value="relationship" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -990,7 +654,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1006,7 +670,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
+              <option name="myItemId" value="relationship" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1024,144 +688,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Documentation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Documentation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="architecture" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Documentation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="architecture" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="worddoc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Documentation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="architecture" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="worddoc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Terms" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Documentation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="architecture" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="htmldoc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="customer-relationship-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="customer-relationship-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1179,6 +705,14 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="relationship" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dto" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1212,79 +746,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core-domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
+              <option name="myItemId" value="domain" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1292,19 +760,23 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2792584" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="FullScreen" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.applicationServers" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="JPA.DatabaseSchemaImportDialog" value="9a661551-1596-403f-9ede-f4eecba493c0" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.invado.customer.relationship.domain" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\Invado\crm\customer-relationship-management\src\main\java\com\invado\customer\relationship\domain" />
       <recent name="F:\Invado\crm\customer-relationship-management\src\main\webapp\WEB-INF\tags" />
@@ -1321,6 +793,9 @@
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.invado.customer.relationship.service" />
+    </key>
+    <key name="ImportMappingsDialog.RecentPackages">
+      <recent name="com.invado.customer.relationship.domain" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.CRM">
@@ -1589,6 +1064,9 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Unknown" factoryName="Unknown">
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -2021,7 +1499,11 @@
       <workItem from="1441279568400" duration="164000" />
       <workItem from="1441279768041" duration="1081000" />
       <workItem from="1441280969143" duration="1727000" />
-      <workItem from="1441297280909" duration="211000" />
+      <workItem from="1441297280909" duration="2098000" />
+      <workItem from="1441299494497" duration="49000" />
+      <workItem from="1441486924726" duration="2048000" />
+      <workItem from="1441555791135" duration="149000" />
+      <workItem from="1441556192359" duration="12707000" />
     </task>
     <task id="LOCAL-00001" summary="Transaction commit">
       <created>1440617481217</created>
@@ -2053,45 +1535,80 @@
       <option name="project" value="LOCAL" />
       <updated>1441282042121</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Transaction commit">
+      <created>1441298137206</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1441298137206</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Transaction commit">
+      <created>1441299108927</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1441299108927</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Invoincing start">
+      <created>1441556952282</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1441556952282</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Invoincing start">
+      <created>1441573933570</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1441573933570</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="196984000" />
+    <option name="totallyTimeSpent" value="213824000" />
+  </component>
+  <component name="TodoView" selected-index="4">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hibernate Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36884308" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1315508" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32912844" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3161512" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20588236" sideWeight="0.5040092" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1315508" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22566845" sideWeight="0.49599084" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15262516" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19625668" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39633447" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298969" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23596793" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3161512" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2197861" sideWeight="0.5108878" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2197861" sideWeight="0.48911223" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32416952" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39977092" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32451093" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20618556" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2107,7 +1624,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Transaction commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Transaction commit" />
+    <MESSAGE value="Invoincing start" />
+    <option name="LAST_COMMIT_MESSAGE" value="Invoincing start" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2143,7 +1661,7 @@
           <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="28" />
+      <option name="time" value="29" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2152,118 +1670,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/ClientController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/OrgUnitController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/DeviceService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="444" column="54" selection-start-line="444" selection-start-column="47" selection-end-line="444" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/layouts/filtered-menu-form.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-25.5">
-          <caret line="97" column="45" selection-start-line="97" selection-start-column="45" selection-end-line="97" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transacton-filter.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7597656">
-          <caret line="55" column="6" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/layouts/master-details-form.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/devicestatus-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tags/inputField.tag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.0">
-          <caret line="62" column="59" selection-start-line="62" selection-start-column="59" selection-end-line="62" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/device-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.884615">
-          <caret line="57" column="29" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="56" selection-start-line="56" selection-start-column="56" selection-end-line="56" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="43" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="94" selection-start-line="42" selection-start-column="94" selection-end-line="42" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/MasterDataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="143" column="38" selection-start-line="143" selection-start-column="38" selection-end-line="143" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/4.1.4.RELEASE/spring-aop-4.1.4.RELEASE.jar!/org/springframework/aop/framework/CglibAopProxy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.53125">
-          <caret line="435" column="0" selection-start-line="435" selection-start-column="0" selection-end-line="435" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.1.4.RELEASE/spring-web-4.1.4.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3569794">
@@ -2348,20 +1754,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction_.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="77" selection-start-line="23" selection-start-column="77" selection-end-line="23" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.441177">
-          <caret line="434" column="0" selection-start-line="434" selection-start-column="0" selection-end-line="434" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/LocalDateConverter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2380,27 +1772,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15799257">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="51" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/resources/com/invado/customer/relationship/bundle/server-strings.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="37" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15799257">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -2425,26 +1796,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/application-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/DeviceStatus.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="24" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2452,14 +1807,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="57" column="22" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -2472,9 +1819,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.34282324">
           <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2482,7 +1828,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2494,17 +1839,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="155" column="34" selection-start-line="155" selection-start-column="34" selection-end-line="155" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Address.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.37485173">
           <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding />
         </state>
@@ -2512,11 +1849,344 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7513914">
-          <caret line="68" column="13" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/application-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="43" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="26" selection-start-line="0" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/resources/com/invado/customer/relationship/bundle/server-strings.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="1" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://Persistence/JavaeeElement:/a906a262/unit/customer-relationship-management/jpa/JPA/PersistenceModel">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Persistence</ID>
+          <OriginalElement>JavaeeElement:/a906a262/unit/customer-relationship-management/jpa/JPA/PersistenceModel</OriginalElement>
+          <nodes>
+            <node x="" y="">JournalEntryItem#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/JournalEntryItem.java</node>
+            <node x="" y="">Employee#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/Employee.java</node>
+            <node x="" y="">GeneralLedger#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/GeneralLedger.java</node>
+            <node x="" y="">Township#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/Township.java</node>
+            <node x="" y="">ApplicationUser#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/ApplicationUser.java</node>
+            <node x="" y="">Description#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/Description.java</node>
+            <node x="" y="">BusinessPartnerRelationshipTermsItems#file://C:/Invado/crm/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTermsItems.java</node>
+            <node x="" y="">Properties#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/Properties.java</node>
+            <node x="" y="">BusinessPartner#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java</node>
+            <node x="" y="">JournalEntryItemPK#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/JournalEntryItemPK.java</node>
+            <node x="" y="">InvoiceItem#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/InvoiceItem.java</node>
+            <node x="" y="">ExchangeRate#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/ExchangeRate.java</node>
+            <node x="" y="">ApplicationSetup#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/ApplicationSetup.java</node>
+            <node x="" y="">JournalEntryPK#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/JournalEntryPK.java</node>
+            <node x="" y="">Analytical#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/Analytical.java</node>
+            <node x="" y="">Job#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/Job.java</node>
+            <node x="" y="">JournalEntry#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/JournalEntry.java</node>
+            <node x="" y="">Article#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/Article.java</node>
+            <node x="" y="">DeviceHolderPartner#file://C:/Invado/crm/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/DeviceHolderPartner.java</node>
+            <node x="" y="">RecordInvoiceAccount#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/RecordInvoiceAccount.java</node>
+            <node x="" y="">Client#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/Client.java</node>
+            <node x="" y="">Account#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/Account.java</node>
+            <node x="" y="">OrgUnit#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/OrgUnit.java</node>
+            <node x="" y="">TransactionType#file://C:/Invado/crm/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType.java</node>
+            <node x="" y="">Address#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/Address.java</node>
+            <node x="" y="">Transaction#file://C:/Invado/crm/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java</node>
+            <node x="" y="">ContactPerson#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/ContactPerson.java</node>
+            <node x="" y="">DeviceStatus#file://C:/Invado/crm/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/DeviceStatus.java</node>
+            <node x="" y="">ServiceProviderServices#file://C:/Invado/crm/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/ServiceProviderServices.java</node>
+            <node x="" y="">BankCreditor#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/BankCreditor.java</node>
+            <node x="" y="">Role#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/Role.java</node>
+            <node x="" y="">Device#file://C:/Invado/crm/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Device.java</node>
+            <node x="" y="">JournalEntryType#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/journal_entry/JournalEntryType.java</node>
+            <node x="" y="">BusinessPartnerRelationshipTerms#file://C:/Invado/crm/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerRelationshipTerms.java</node>
+            <node x="" y="">Invoice#file://C:/Invado/crm/finance/src/main/java/com/invado/finance/domain/Invoice.java</node>
+            <node x="" y="">Currency#file://C:/Invado/crm/core-domain/src/main/java/com/invado/core/domain/Currency.java</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.30000000000000016" x="1847.333333333324" y="2083.333333333328" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Properties</Category>
+            <Category>Embeddables</Category>
+            <Category>Superclasses</Category>
+          </Categories>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/9a661551-1596-403f-9ede-f4eecba493c0/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="80" selection-start-line="22" selection-start-column="80" selection-end-line="22" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/application-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.1875">
+          <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-module-spi/src/main/resources/META-INF/persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.575188">
+          <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/resources/META-INF/masterdata-persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5084112">
+          <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="78" selection-start-line="28" selection-start-column="78" selection-end-line="29" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/ServiceProviderServices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1439751687545" expanded="true" signature="3155:3423" placeholder="select ou.OR..c_org_unit..." />
-            <marker date="1439751687545" expanded="true" signature="3510:3982" placeholder="select ou.OR..c_org_unit..." />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1638#1639#0" expanded="true" />
+            <element signature="e#1666#1667#0" expanded="true" />
+            <element signature="e#1696#1697#0" expanded="true" />
+            <element signature="e#1721#1722#0" expanded="true" />
+            <element signature="e#1758#1759#0" expanded="true" />
+            <element signature="e#1786#1787#0" expanded="true" />
+            <element signature="e#1837#1838#0" expanded="true" />
+            <element signature="e#1875#1876#0" expanded="true" />
+            <element signature="e#1946#1947#0" expanded="true" />
+            <element signature="e#2000#2001#0" expanded="true" />
+            <element signature="e#2038#2039#0" expanded="true" />
+            <element signature="e#2072#2073#0" expanded="true" />
+            <element signature="e#2126#2127#0" expanded="true" />
+            <element signature="e#2172#2173#0" expanded="true" />
+            <element signature="e#2219#2220#0" expanded="true" />
+            <element signature="e#2261#2262#0" expanded="true" />
+            <element signature="e#2332#2333#0" expanded="true" />
+            <element signature="e#2394#2395#0" expanded="true" />
+            <element signature="e#2429#2430#0" expanded="true" />
+            <element signature="e#2459#2460#0" expanded="true" />
+            <element signature="e#2506#2507#0" expanded="true" />
+            <element signature="e#2544#2545#0" expanded="true" />
+            <element signature="e#2582#2583#0" expanded="true" />
+            <element signature="e#2613#2614#0" expanded="true" />
+            <element signature="e#2664#2665#0" expanded="true" />
+            <element signature="e#2704#2705#0" expanded="true" />
+            <element signature="e#2740#2741#0" expanded="true" />
+            <element signature="e#2769#2770#0" expanded="true" />
+            <element signature="e#2816#2817#0" expanded="true" />
+            <element signature="e#2852#2853#0" expanded="true" />
+            <element signature="e#3432#3433#0" expanded="true" />
+            <element signature="e#3518#3519#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/ApplicationSetup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="83" selection-start-line="23" selection-start-column="83" selection-end-line="23" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="36" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="29" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="168" column="36" selection-start-line="168" selection-start-column="36" selection-end-line="168" selection-end-column="36" />
+          <folding>
+            <element signature="e#4058#4059#0" expanded="true" />
+            <element signature="e#4111#4112#0" expanded="true" />
+            <element signature="e#4155#4156#0" expanded="true" />
+            <element signature="e#4194#4195#0" expanded="true" />
+            <element signature="e#4229#4230#0" expanded="true" />
+            <element signature="e#4285#4286#0" expanded="true" />
+            <element signature="e#4333#4334#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/ReadRangeDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/InvoicingTransactionSetDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="39" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="39" />
+          <folding>
+            <element signature="e#438#439#0" expanded="true" />
+            <element signature="e#474#475#0" expanded="true" />
+            <element signature="e#533#534#0" expanded="true" />
+            <element signature="e#583#584#0" expanded="true" />
+            <element signature="e#625#626#0" expanded="true" />
+            <element signature="e#663#664#0" expanded="true" />
+            <element signature="e#725#726#0" expanded="true" />
+            <element signature="e#779#780#0" expanded="true" />
+            <element signature="e#817#818#0" expanded="true" />
+            <element signature="e#850#851#0" expanded="true" />
+            <element signature="e#903#904#0" expanded="true" />
+            <element signature="e#947#948#0" expanded="true" />
+            <element signature="e#986#987#0" expanded="true" />
+            <element signature="e#1021#1022#0" expanded="true" />
+            <element signature="e#1077#1078#0" expanded="true" />
+            <element signature="e#1125#1126#0" expanded="true" />
+            <element signature="e#1158#1159#0" expanded="true" />
+            <element signature="e#1186#1187#0" expanded="true" />
+            <element signature="e#1229#1230#0" expanded="true" />
+            <element signature="e#1263#1264#0" expanded="true" />
+            <element signature="e#1297#1298#0" expanded="true" />
+            <element signature="e#1327#1328#0" expanded="true" />
+            <element signature="e#1373#1374#0" expanded="true" />
+            <element signature="e#1411#1412#0" expanded="true" />
+            <element signature="e#1449#1450#0" expanded="true" />
+            <element signature="e#1482#1483#0" expanded="true" />
+            <element signature="e#1535#1536#0" expanded="true" />
+            <element signature="e#1579#1580#0" expanded="true" />
+            <element signature="e#1618#1619#0" expanded="true" />
+            <element signature="e#1653#1654#0" expanded="true" />
+            <element signature="e#1709#1710#0" expanded="true" />
+            <element signature="e#1757#1758#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_51/src.zip!/java/time/LocalDate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3320965">
+          <caret line="467" column="12" selection-start-line="467" selection-start-column="12" selection-end-line="467" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.5">
+          <caret line="26" column="61" selection-start-line="26" selection-start-column="61" selection-end-line="26" selection-end-column="61" />
+          <folding>
+            <element signature="e#5218#5219#0" expanded="true" />
+            <element signature="e#5249#5250#0" expanded="true" />
+            <element signature="e#5313#5314#0" expanded="true" />
+            <element signature="e#5360#5361#0" expanded="true" />
+            <element signature="e#5403#5404#0" expanded="true" />
+            <element signature="e#5441#5442#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6774848">
+          <caret line="382" column="53" selection-start-line="382" selection-start-column="53" selection-end-line="382" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#delete#0;class#TransactionService#0" expanded="false" />
+            <element signature="method#read#0;class#TransactionService#0" expanded="false" />
+            <element signature="method#readPage#0;class#TransactionService#0" expanded="false" />
+            <element signature="method#convertToDTO#0;class#TransactionService#0" expanded="false" />
+            <element signature="method#count#0;class#TransactionService#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2544,7 +2214,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.2792584" />
               </list>
             </option>
           </splitter-proportions>
@@ -2576,11 +2246,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Spring|masterdata</last-edited>
+          <last-edited>customer-relationship-management</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2792584" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -2604,7 +2275,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.2792584" />
               </list>
             </option>
           </splitter-proportions>

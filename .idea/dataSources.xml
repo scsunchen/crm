@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1805844934">
+  <component name="DataSourceManagerImpl" format="xml" hash="956364239">
     <data-source source="LOCAL" name="Oracle - xe@94.127.3.157" uuid="9a661551-1596-403f-9ede-f4eecba493c0">
       <driver-ref>oracle</driver-ref>
       <auto-commit>false</auto-commit>
