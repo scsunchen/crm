@@ -12,7 +12,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @StaticMetamodel(Invoice.class)
-public class Invoice_ { 
+public class Invoice_ {
 
     public static volatile SingularAttribute<Invoice, Client> client;
     public static volatile SingularAttribute<Invoice, Integer> orgUnit;

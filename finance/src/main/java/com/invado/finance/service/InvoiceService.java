@@ -71,14 +71,14 @@ public class InvoiceService {
     private static final Logger LOG = Logger.getLogger(InvoiceService.class.getName());
 
     @PersistenceContext(name = "unit")
-    private EntityManager dao;   
+    private EntityManager dao;
     @Autowired
     private Validator validator;
 
     @Transactional(rollbackFor = Exception.class)
     public void createInvoice(InvoiceDTO dto) throws ConstraintViolationException,
-                                                     ReferentialIntegrityException,
-                                                     EntityExistsException {
+            ReferentialIntegrityException,
+            EntityExistsException {
         if (dto == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException"));
@@ -110,7 +110,7 @@ public class InvoiceService {
             if (temp != null) {
                 throw new EntityExistsException(
                         Utils.getMessage("Invoice.EntityExistsException",
-                        dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()));
+                                dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()));
             }
             OrgUnit unit = dao.find(OrgUnit.class, dto.getOrgUnitId());
             if (unit == null) {
@@ -189,21 +189,21 @@ public class InvoiceService {
                 throw new ConstraintViolationException("", msgs);
             }
             dao.persist(invoice);
-        } catch (EntityExistsException | ReferentialIntegrityException 
+        } catch (EntityExistsException | ReferentialIntegrityException
                 | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Create"),ex);
-        } 
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteInvoice(Integer clientId,
                               Integer orgUnitId,
-                              String document) 
-                              throws ConstraintViolationException,
-                              EntityNotFoundException {  
+                              String document)
+            throws ConstraintViolationException,
+            EntityNotFoundException {
         // TODO:check delete invoice permission
         if (clientId == null) {
             throw new ConstraintViolationException(
@@ -219,9 +219,9 @@ public class InvoiceService {
         }
         try {
             Invoice temp = dao.find(Invoice.class, new InvoicePK(
-                    clientId,
-                    orgUnitId,
-                    document)
+                            clientId,
+                            orgUnitId,
+                            document)
             );
             if (temp == null) {
                 throw new EntityNotFoundException(Utils.getMessage(
@@ -239,13 +239,13 @@ public class InvoiceService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Delete"),ex);
-        } 
+        }
     }
 
     @Transactional(readOnly = true)
     public InvoiceDTO readInvoice(Integer clientId,
-            Integer orgUnitId,
-            String document)
+                                  Integer orgUnitId,
+                                  String document)
             throws ConstraintViolationException,
             EntityNotFoundException {
         // TODO : check read invoice permission
@@ -275,7 +275,7 @@ public class InvoiceService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "Invoice.PersistenceEx.Read", ex);
             throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Read"),ex);
-        } 
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -327,7 +327,7 @@ public class InvoiceService {
                 }
             }
             ApplicationUser user = dao.createNamedQuery(
-                    ApplicationUser.READ_BY_USERNAME, 
+                    ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
                     .setParameter(1, dto.getUsername())
                     .getSingleResult();
@@ -386,7 +386,7 @@ public class InvoiceService {
                 throw new OptimisticLockException();
             }
             return temp.getVersion();
-        } catch (EntityNotFoundException | ReferentialIntegrityException 
+        } catch (EntityNotFoundException | ReferentialIntegrityException
                 | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -398,14 +398,14 @@ public class InvoiceService {
                 LOG.log(Level.WARNING, "Invoice.PersistenceEx.Update", ex);
                 throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Update"),ex);
             }
-        } 
+        }
     }
 
     @Transactional(readOnly = true)
     public InvoiceItemDTO readItem(Integer clientId,
-            Integer unitId,
-            String document,
-            Integer ordinal)
+                                   Integer unitId,
+                                   String document,
+                                   Integer ordinal)
             throws ConstraintViolationException,
             EntityNotFoundException {
         // TODO : check read invoice permission
@@ -452,16 +452,16 @@ public class InvoiceService {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
                     Utils.getMessage("Invoice.PersistenceEx.ReadItem"),ex);
-        } 
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
     public Long removeItem(Integer clientId,
-            Integer unitId,
-            String document,
-            Integer ordinal,
-            String username,
-            Long version) 
+                           Integer unitId,
+                           String document,
+                           Integer ordinal,
+                           String username,
+                           Long version)
             throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
@@ -520,7 +520,7 @@ public class InvoiceService {
                 throw new OptimisticLockException();
             }
             return invoice.getVersion();
-        } catch (EntityNotFoundException | ReferentialIntegrityException 
+        } catch (EntityNotFoundException | ReferentialIntegrityException
                 | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -532,7 +532,7 @@ public class InvoiceService {
                 LOG.log(Level.WARNING, "", ex);
                 throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.DeleteItem"),ex);
             }
-        } 
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -654,7 +654,7 @@ public class InvoiceService {
                 throw new OptimisticLockException();
             }
             return invoice.getVersion();
-        } catch (ConstraintViolationException | ReferentialIntegrityException 
+        } catch (ConstraintViolationException | ReferentialIntegrityException
                 | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -666,13 +666,13 @@ public class InvoiceService {
                 LOG.log(Level.WARNING, "", ex);
                 throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.UpdateItem"),ex);
             }
-        } 
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
     public Long addItem(InvoiceItemDTO dto) throws ReferentialIntegrityException,
-                                                   ConstraintViolationException,
-                                                   EntityExistsException {
+            ConstraintViolationException,
+            EntityExistsException {
         // TODO : check update invoice permission
         if (dto == null) {
             throw new ConstraintViolationException(Utils.getMessage(
@@ -792,7 +792,7 @@ public class InvoiceService {
                     .multiply(dto.getQuantity());
             item.setTotalCost(total.setScale(2, RoundingMode.HALF_UP));
             invoice.addItem(item);
-             List<String> msgs = validator.validate(invoice).stream()
+            List<String> msgs = validator.validate(invoice).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
@@ -813,7 +813,7 @@ public class InvoiceService {
                 LOG.log(Level.WARNING, "", ex);
                 throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.AddItem"),ex);
             }
-        } 
+        }
     }
 
     @Transactional(readOnly = true)
@@ -871,15 +871,15 @@ public class InvoiceService {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(
                     "Invoice.PersistenceEx.ReadInvoiceItems"),ex);
-        } 
+        }
     }
 
     @Transactional(readOnly = true)
     public InvoiceReportDTO readInvoiceReport(Integer clientId,
-            Integer orgUnitId,
-            String document)
+                                              Integer orgUnitId,
+                                              String document)
             throws ConstraintViolationException,
-            EntityNotFoundException {       
+            EntityNotFoundException {
         // TODO : check read invoice permission
         if (clientId == null) {
             throw new ConstraintViolationException(Utils.getMessage(
@@ -998,9 +998,9 @@ public class InvoiceService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Read"),ex);
-        } 
+        }
     }
-    
+
     @Transactional(readOnly = true)
     public ReadRangeDTO<InvoiceDTO> readPage(
             PageRequestDTO p)
@@ -1074,7 +1074,7 @@ public class InvoiceService {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
                     Utils.getMessage("Invoice.PersistenceEx.ReadPage"),ex);
-        } 
+        }
     }
 
     private List<InvoiceDTO> convertToDTO(List<Invoice> lista) {
@@ -1116,7 +1116,7 @@ public class InvoiceService {
         }
         if (partner != null) {
             criteria.add(cb.like(root.get(Invoice_.partner)
-                    .get(BusinessPartner_.companyIdNumber),
+                            .get(BusinessPartner_.companyIdNumber),
                     cb.parameter(String.class, "partner")));
         }
         if (articleCode != null && articleCode.isEmpty() == false) {
@@ -1132,9 +1132,9 @@ public class InvoiceService {
 //        Join<Invoice, OrgUnit> orgUnit = root.join(Invoice_.orgUnit);
         c.where(cb.and(criteria.toArray(new Predicate[0])))
                 .orderBy(
-                cb.asc(root.get(Invoice_.client).get(Client_.id)),
-                cb.asc(root.get(Invoice_.orgUnit)),
-                cb.asc(root.get(Invoice_.document)));
+                        cb.asc(root.get(Invoice_.client).get(Client_.id)),
+                        cb.asc(root.get(Invoice_.orgUnit)),
+                        cb.asc(root.get(Invoice_.document)));
         TypedQuery<Invoice> q = EM.createQuery(c);
         if (document != null) {
             q.setParameter("document", document);
@@ -1157,11 +1157,11 @@ public class InvoiceService {
     }
 
     public Long count(EntityManager EM,
-            String document,
-            Date from,
-            Date to,
-            String partner,
-            String articleCode) {
+                      String document,
+                      Date from,
+                      Date to,
+                      String partner,
+                      String articleCode) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<Invoice> root = c.from(Invoice.class);
@@ -1181,15 +1181,15 @@ public class InvoiceService {
         }
         if (partner != null) {
             criteria.add(cb.like(root.get(Invoice_.partner)
-                    .get(BusinessPartner_.companyIdNumber),
+                            .get(BusinessPartner_.companyIdNumber),
                     cb.parameter(String.class, "partner")));
         }
         if (articleCode != null && articleCode.isEmpty() == false) {
             Subquery<InvoiceItem> sq = c.subquery(InvoiceItem.class);
             Root<InvoiceItem> rootsq = sq.from(InvoiceItem.class);
             sq.select(rootsq).where(cb.equal(rootsq.get(InvoiceItem_.article)
-                    .get(Article_.code),
-                    cb.parameter(Integer.class, "articleCode")),
+                                    .get(Article_.code),
+                            cb.parameter(Integer.class, "articleCode")),
                     cb.equal(rootsq.get(InvoiceItem_.invoice).get(Invoice_.document),
                             root.get(Invoice_.document)));
             criteria.add(cb.exists(sq));

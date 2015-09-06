@@ -53,13 +53,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class JournalEntryItemService  {
- 
+
     private static final Logger LOG = Logger.getLogger(JournalEntryItemService.class.getName());
     @PersistenceContext(name = "unit")
     private EntityManager EM;
     @Autowired
     private Validator validator;
-    
+
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<JournalEntryItemDTO> readAllJournalItems(Integer clientId,
                                                          Integer typeId,
@@ -77,13 +77,13 @@ public class JournalEntryItemService  {
             throw new SystemException(
                     getMessage("JournalEntry.Persistence.ReadAllItems"), ex
             );
-        } 
+        }
     }
-    
+
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public ReadRangeDTO<JournalEntryItemDTO> readJournalEntryItemPage(
             PageRequestDTO p)
-            throws PageNotExistsException {       
+            throws PageNotExistsException {
         try {
             Integer pageNumber = p.getPage();
             Integer clientId = null;
@@ -152,7 +152,7 @@ public class JournalEntryItemService  {
             throw new SystemException(
                     getMessage("JournalEntry.Persistence.ReadAllItems"), ex
             );
-        } 
+        }
     }
 
     private List<JournalEntryItemDTO> convertToDTO(List<JournalEntryItem> lista) {
@@ -162,12 +162,12 @@ public class JournalEntryItemService  {
         }
         return listaDTO;
     }
-    
+
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public JournalEntryItemDTO readJournalEntryItem(Integer clientID,
-            Integer typeID,
-            Integer number,
-            Integer ordinal)
+                                                    Integer typeID,
+                                                    Integer number,
+                                                    Integer ordinal)
             throws JournalEntryItemNotFoundException {
         try {
             JournalEntryItem temp = EM.find(JournalEntryItem.class,
@@ -175,10 +175,10 @@ public class JournalEntryItemService  {
             if (temp == null) {
                 throw new JournalEntryItemNotFoundException(
                         getMessage("JournalEntry.JournalEntryItemNotExists",
-                        clientID,
-                        typeID,
-                        number,
-                        ordinal));
+                                clientID,
+                                typeID,
+                                number,
+                                ordinal));
             }
             return temp.getDTO();
         } catch (JournalEntryItemNotFoundException e) {
@@ -186,9 +186,9 @@ public class JournalEntryItemService  {
         } catch (Exception e) {
             LOG.log(Level.WARNING, "", e);
             throw new SystemException(getMessage("JournalEntry.Persistence.ReadItem"),e);
-        } 
+        }
     }
-    
+
 //    @Transactional(rollbackFor = Exception.class)
 //    public UpdateJournalEntryResultDTO updateJournalEntryItem(
 //            JournalEntryItemDTO dto,
@@ -376,7 +376,7 @@ public class JournalEntryItemService  {
 //        journalEntry.setBalanceDebit(balanceDebit);
 //        journalEntry.setBalanceCredit(balanceCredit);
 //    }
-    
+
     @Transactional(rollbackFor = Exception.class)
     public UpdateJournalEntryResultDTO deleteJournalEntryItem(
             Integer clientID,
@@ -390,25 +390,25 @@ public class JournalEntryItemService  {
             //remove item from journal entry
             JournalEntryItem item = EM.find(JournalEntryItem.class,
                     new JournalEntryItemPK(clientID,
-                    typeID,
-                    number,
-                    ordinal));
+                            typeID,
+                            number,
+                            ordinal));
             if (item == null) {
                 throw new JournalEntryItemNotFoundException(
                         getMessage("JournalEntry.JournalEntryItemNotExists",
-                        clientID,
-                        typeID,
-                        number,
-                        ordinal));
+                                clientID,
+                                typeID,
+                                number,
+                                ordinal));
             }
             JournalEntry journalEntry = EM.find(JournalEntry.class,
                     new JournalEntryPK(clientID, typeID, number));
             if (journalEntry.getPosted() == true) {
                 throw new PostedJournalEntryUpdateException(
                         getMessage("JournalEntry.PostedJournalEntryUpdate",
-                        clientID,
-                        typeID,
-                        number));
+                                clientID,
+                                typeID,
+                                number));
             }
             journalEntry.setVersion(journalEntryVersion);
             EM.lock(journalEntry, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
@@ -433,7 +433,7 @@ public class JournalEntryItemService  {
             result.balance = journalEntry.getBalanceDebit().subtract(
                     journalEntry.getBalanceCredit());
             return result;
-        } catch (JournalEntryItemNotFoundException 
+        } catch (JournalEntryItemNotFoundException
                 | PostedJournalEntryUpdateException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -448,9 +448,9 @@ public class JournalEntryItemService  {
                 throw new SystemException(
                         getMessage("JournalEntry.Persistence.DeleteItem"),ex);
             }
-        } 
+        }
     }
-    
+
     @Transactional(rollbackFor = Exception.class)
     public UpdateJournalEntryResultDTO createJournalEntryItem(
             JournalEntryItemDTO dto,
@@ -464,22 +464,22 @@ public class JournalEntryItemService  {
         try {
             JournalEntry journalEntry = EM.find(JournalEntry.class,
                     new JournalEntryPK(dto.getClientId(),
-                                       dto.getTypeId(),
-                                       dto.getJournalEntryNumber()));
+                            dto.getTypeId(),
+                            dto.getJournalEntryNumber()));
             if (journalEntry == null) {
                 throw new ReferentialIntegrityException(
                         getMessage("JournalEntry.JournalEntryNotExists",
-                        dto.getClientId(),
-                        dto.getTypeId(),
-                        dto.getJournalEntryNumber()));
+                                dto.getClientId(),
+                                dto.getTypeId(),
+                                dto.getJournalEntryNumber()));
             }
             if (journalEntry.getPosted() == true) {
                 throw new PostedJournalEntryUpdateException(
                         getMessage("JournalEntry.PostedJournalEntryUpdate",
-                        dto.getClientId(),
-                        dto.getTypeId(),
-                        dto.getJournalEntryNumber()));
-            }            
+                                dto.getClientId(),
+                                dto.getTypeId(),
+                                dto.getJournalEntryNumber()));
+            }
             EM.lock(journalEntry, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
             journalEntry.setVersion(journalEntryVersion);
             //check referential integrity***************************************
@@ -489,7 +489,7 @@ public class JournalEntryItemService  {
                 if (orgUnit == null) {
                     throw new ReferentialIntegrityException(
                             getMessage("JournalEntry.OrgUnitNotExists",
-                            dto.getUnitId()));
+                                    dto.getUnitId()));
                 }
             }
             Description description = null;
@@ -506,9 +506,9 @@ public class JournalEntryItemService  {
                 account = EM.find(Account.class, dto.getAccountCode());
                 if (account == null) {
                     throw new ReferentialIntegrityException(
-                            getMessage("JournalEntry.AccountNotExists", 
-                            dto.getAccountCode())
-                   );
+                            getMessage("JournalEntry.AccountNotExists",
+                                    dto.getAccountCode())
+                    );
                 }
             }
             BusinessPartner businessPartner = null;
@@ -518,18 +518,18 @@ public class JournalEntryItemService  {
                     //if user enter business partner that not exists
                     throw new ReferentialIntegrityException(
                             getMessage("JournalEntry.BusinessPartnerNotExists",
-                            dto.getPartnerId()));
+                                    dto.getPartnerId()));
                 }
             }
             List<ApplicationUser> userList = EM.createNamedQuery(
-                    ApplicationUser.READ_BY_USERNAME, 
+                    ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
                     .setParameter(1, dto.getUsername())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new ReferentialIntegrityException(
-                        getMessage("JournalEntry.UserNotExists", 
-                                   dto.getUsername())
+                        getMessage("JournalEntry.UserNotExists",
+                                dto.getUsername())
                 );
             }
             //******************************************************************
@@ -538,7 +538,7 @@ public class JournalEntryItemService  {
             for (JournalEntryItem item  : journalEntry.getItems()) {
                 if(item.getOrdinalNumber() > ordinal) {
                     ordinal = item.getOrdinalNumber();
-                }                
+                }
             }
             JournalEntryItem temp = new JournalEntryItem(journalEntry, ordinal + 1 );
             temp.setCreditDebitRelationDate(dto.getCreditDebitRelationDate());
@@ -549,7 +549,7 @@ public class JournalEntryItemService  {
             temp.setPartner(businessPartner);
             temp.setAccount(account);
             if(account != null) {
-                temp.setDetermination(account.getDetermination());                
+                temp.setDetermination(account.getDetermination());
             }
             temp.setValueDate(dto.getValueDate());
             temp.setUser(userList.get(0));
@@ -575,27 +575,27 @@ public class JournalEntryItemService  {
             result.creditBalance = journalEntry.getBalanceCredit();
             result.balance = journalEntry.getBalanceDebit().subtract(journalEntry.getBalanceCredit());
             return result;
-        } catch (IllegalBusinessPartnerException 
-                | ReferentialIntegrityException 
-                | IllegalAccountException 
-                | PostedJournalEntryUpdateException 
+        } catch (IllegalBusinessPartnerException
+                | ReferentialIntegrityException
+                | IllegalAccountException
+                | PostedJournalEntryUpdateException
                 | JournalEntryConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
                 throw new SystemException(getMessage("JournalEntry.OptimisticLock",
-                    dto.getClientId(),
-                    dto.getTypeId(),
-                    dto.getJournalEntryNumber()),ex);
+                        dto.getClientId(),
+                        dto.getTypeId(),
+                        dto.getJournalEntryNumber()),ex);
             } else {
                 LOG.log(Level.WARNING, "", ex);
                 throw new SystemException(getMessage("JournalEntry.Persistence.CreateItem"),ex);
             }
-        } 
+        }
     }
 
-    private void validate1(JournalEntryItem item) 
+    private void validate1(JournalEntryItem item)
             throws JournalEntryConstraintViolationException,
             IllegalAccountException,
             IllegalBusinessPartnerException {
@@ -603,8 +603,8 @@ public class JournalEntryItemService  {
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
         if (!messages.isEmpty()) {
-            throw new JournalEntryConstraintViolationException(getMessage(""), 
-                                                               messages);
+            throw new JournalEntryConstraintViolationException(getMessage(""),
+                    messages);
         }
         Account account = item.getAccount();
         if (item.getPartner() == null) {
@@ -626,7 +626,7 @@ public class JournalEntryItemService  {
     }
 
     private void updateJournalEntryBalance(JournalEntry journalEntry,
-            JournalEntryItem item) {
+                                           JournalEntryItem item) {
         if (item.getChangeType() == ChangeType.DEBIT) {
             BigDecimal saldoDuguje = journalEntry.getBalanceDebit();
             saldoDuguje = saldoDuguje.add(item.getAmount());
@@ -636,7 +636,7 @@ public class JournalEntryItemService  {
         BigDecimal saldoPotrazuje = journalEntry.getBalanceCredit();
         saldoPotrazuje = saldoPotrazuje.add(item.getAmount());
         journalEntry.setBalanceCredit(saldoPotrazuje);
-    }    
+    }
 
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Integer getAppSetupBusinessYear() {
@@ -644,11 +644,11 @@ public class JournalEntryItemService  {
             return EM.find(ApplicationSetup.class, 1)
                     .getYear();
         } catch (Exception e) {
-            LOG.log(Level.WARNING, 
-                    "", 
+            LOG.log(Level.WARNING,
+                    "",
                     e);
             throw new SystemException(
                     getMessage("JournalEntry.Persistence.CreditRelationDate"),e);
-        } 
+        }
     }
 }

@@ -40,18 +40,18 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class ReceivablePayableCard  {
-    
+
     private static final Logger LOG = Logger.getLogger(ReceivablePayableCard.class.getName());
-    
+
     @PersistenceContext(name = "unit")
     private EntityManager dao;
-    
+
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public ReadLedgerCardsDTO readReceivablePayableCard(RequestLedgerCardDTO dto) 
-            throws EntityNotFoundException, 
+    public ReadLedgerCardsDTO readReceivablePayableCard(RequestLedgerCardDTO dto)
+            throws EntityNotFoundException,
             ZeroExchangeRateException {
-        
-         if (dto.getClientID() == null) {
+
+        if (dto.getClientID() == null) {
             throw new EntityNotFoundException(getMessage(
                     "LedgerCard.IllegalArgument.ClientId"));
         }
@@ -68,7 +68,7 @@ public class ReceivablePayableCard  {
             if (dao.find(Client.class, dto.getClientID()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("LedgerCard.ClientNotExists",
-                        dto.getClientID()));
+                                dto.getClientID()));
             }
             if (dto.getOrgUnitID() != null && dao.find(OrgUnit.class, dto.getOrgUnitID()) == null) {
                 throw new EntityNotFoundException(getMessage(
@@ -78,14 +78,14 @@ public class ReceivablePayableCard  {
                     && dao.find(Account.class, dto.getAccountNumber()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("LedgerCard.AccountNotExists",
-                        dto.getAccountNumber()));
+                                dto.getAccountNumber()));
             }
             if (dto.getPartnerRegNo() != null
                     && dto.getPartnerRegNo().equals("") == false
                     && dao.find(BusinessPartner.class, dto.getPartnerRegNo()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("LedgerCard.BusinessPartnerNotExists",
-                        dto.getPartnerRegNo()));
+                                dto.getPartnerRegNo()));
             }
 
 
@@ -115,13 +115,13 @@ public class ReceivablePayableCard  {
                 throw new SystemException(
                         getMessage("LedgerCard.Persistence"));
             }
-        } 
+        }
     }
 
     private ReadLedgerCardsDTO convertToDTO(
             EntityManager EM,
             RequestLedgerCardDTO requestDTO,
-            List<Analytical> stavke) 
+            List<Analytical> stavke)
             throws EntityNotFoundException,
             ZeroExchangeRateException {
         List<LedgerCardDTO> resultList = new ArrayList<>();
@@ -166,12 +166,12 @@ public class ReceivablePayableCard  {
                         calendar.set(Calendar.DAY_OF_YEAR, item1.getCreditDebitRelationDate().getDayOfYear());
                         ExchangeRate exRate = EM.find(ExchangeRate.class,
                                 new ExchangeRatePK(new Date(calendar.getTimeInMillis()),
-                                requestDTO.getForeignCurrencyISOCode()));
+                                        requestDTO.getForeignCurrencyISOCode()));
                         if (exRate == null) {
                             throw new EntityNotFoundException(
                                     getMessage("LedgerCard.ExchangeRateNotExists",
-                                    requestDTO.getForeignCurrencyISOCode(),
-                                    item1.getCreditDebitRelationDate()));
+                                            requestDTO.getForeignCurrencyISOCode(),
+                                            item1.getCreditDebitRelationDate()));
                         } else {
                             //pitaj za srednji kurs
                             exchangeRate = exRate.getMiddle();
@@ -180,9 +180,9 @@ public class ReceivablePayableCard  {
                     if(exchangeRate.compareTo(BigDecimal.ZERO) == 0) {
                         throw new ZeroExchangeRateException(
                                 getMessage(
-                                "LedgerCard.ZeroExchangeRateException",
-                                requestDTO.getForeignCurrencyISOCode(),
-                                item1.getCreditDebitRelationDate()));
+                                        "LedgerCard.ZeroExchangeRateException",
+                                        requestDTO.getForeignCurrencyISOCode(),
+                                        item1.getCreditDebitRelationDate()));
                     }
                     BigDecimal amount = item1.getAmount().divide(exchangeRate,
                             2,
@@ -233,9 +233,9 @@ public class ReceivablePayableCard  {
     }
 
     private void addAccountTotal(List<LedgerCardDTO.AccountTotal> accountTotal,
-            String account,
-            BigDecimal amount,
-            ChangeType type) {
+                                 String account,
+                                 BigDecimal amount,
+                                 ChangeType type) {
         //ako je total za konto vec unet azuriraj iznose
         for (LedgerCardDTO.AccountTotal total1 : accountTotal) {
             if (total1.accountCode.equals(account) == true) {
@@ -325,17 +325,17 @@ public class ReceivablePayableCard  {
         }
         dto.currency = requestDTO.getCurrency();
         switch(requestDTO.getCurrency()) {
-            case DOMESTIC :                                
+            case DOMESTIC :
                 dto.currencyISOCode = java.util.Currency.getInstance(Locale.getDefault())
-                                                        .getCurrencyCode();                
+                        .getCurrencyCode();
                 break;
-            case FOREIGN : 
-                dto.currencyISOCode = requestDTO.getForeignCurrencyISOCode();                
+            case FOREIGN :
+                dto.currencyISOCode = requestDTO.getForeignCurrencyISOCode();
                 break;
         }
         return dto;
     }
-    
+
     public List<Analytical> readSupplierCustomerLedgerCard(
             EntityManager EM,
             RequestLedgerCardDTO dto,
@@ -347,16 +347,16 @@ public class ReceivablePayableCard  {
         Join<Analytical, OrgUnit> orgUnitJoin =
                 root.join(Analytical_.orgUnit, JoinType.LEFT);
         Join<Analytical, Account> accountJoin =
-                root.join(Analytical_.account, JoinType.LEFT);        
+                root.join(Analytical_.account, JoinType.LEFT);
         Join<Analytical, BusinessPartner> partnerJoin =
-                root.join(Analytical_.partner, JoinType.LEFT);        
+                root.join(Analytical_.partner, JoinType.LEFT);
         List<Predicate> criteria = new ArrayList<>();
         if(isSupplier == true) {
-                criteria.add(cb.equal(root.get(Analytical_.determination), 
-                        AccountDetermination.SUPPLIERS));                
+            criteria.add(cb.equal(root.get(Analytical_.determination),
+                    AccountDetermination.SUPPLIERS));
         }
         if(isSupplier == false) {
-            criteria.add(cb.equal(root.get(Analytical_.determination), 
+            criteria.add(cb.equal(root.get(Analytical_.determination),
                     AccountDetermination.CUSTOMERS));
         }
         criteria.add(cb.equal(orgUnitJoin.get(OrgUnit_.client).get(Client_.id),
@@ -377,14 +377,14 @@ public class ReceivablePayableCard  {
             criteria.add(cb.equal(partnerJoin.get(BusinessPartner_.companyIdNumber), p));
         }
         if (dto.getCreditDebitRelationDateFrom() != null) {
-            ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class, 
+            ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class,
                     "creditDebitRelationFrom");
             criteria.add(cb.greaterThanOrEqualTo(
-                    root.get(Analytical_.creditDebitRelationDate), p)
+                            root.get(Analytical_.creditDebitRelationDate), p)
             );
         }
         if (dto.getCreditDebitRelationDateTo() != null) {
-            ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class, 
+            ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class,
                     "creditDebitRelationTo");
             criteria.add(cb.lessThanOrEqualTo(
                     root.get(Analytical_.creditDebitRelationDate), p));
@@ -405,11 +405,11 @@ public class ReceivablePayableCard  {
         Predicate predicate = cb.and(criteria.toArray(new Predicate[0]));
         c.where(predicate).orderBy(
                 cb.asc( partnerJoin.get(BusinessPartner_.companyIdNumber) ),
-                cb.asc( accountJoin.get(Account_.number) ), 
+                cb.asc( accountJoin.get(Account_.number) ),
                 cb.asc( root.get(Analytical_.recordDate) )
         );
         TypedQuery<Analytical> q = EM.createQuery(c);
-        q.setParameter("clientID", dto.getClientID());        
+        q.setParameter("clientID", dto.getClientID());
         if(dto.getOrgUnitID() != null) {
             q.setParameter("orgUnitID", dto.getOrgUnitID());
         }
@@ -420,7 +420,7 @@ public class ReceivablePayableCard  {
             q.setParameter("partner", dto.getPartnerRegNo());
         }
         if(dto.getCreditDebitRelationDateFrom() != null) {
-            q.setParameter("creditDebitRelationFrom", 
+            q.setParameter("creditDebitRelationFrom",
                     dto.getCreditDebitRelationDateFrom());
         }
         if(dto.getCreditDebitRelationDateTo() != null) {
@@ -432,7 +432,7 @@ public class ReceivablePayableCard  {
         if(dto.getValueDateTo() != null) {
             q.setParameter("valueTo", dto.getValueDateTo());
         }
-        if (dto.getStatus().equals(RequestLedgerCardDTO.Status.ALL) == false) {          
+        if (dto.getStatus().equals(RequestLedgerCardDTO.Status.ALL) == false) {
             if(dto.getStatus().equals(RequestLedgerCardDTO.Status.OPEN_ITEMS)) {
                 q.setParameter("status", Analytical.Status.OPEN);
             } else {
@@ -441,5 +441,5 @@ public class ReceivablePayableCard  {
         }
         return q.getResultList();
     }
-    
+
 }

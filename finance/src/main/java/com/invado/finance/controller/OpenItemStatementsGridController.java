@@ -83,21 +83,21 @@ public class OpenItemStatementsGridController extends AbstractController {
             SessionStatus status,
             Map<String, Object> model) throws Exception {
         if (result.hasErrors()) {
-           throw new ConstraintViolationException(
-                    "", 
+            throw new ConstraintViolationException(
+                    "",
                     result
-                    .getFieldErrors()
-                    .stream()
-                    .map(p -> {       
-                        for (String key : p.getCodes()) {
-                            if(Utils.containsKey(key)){
-                                return Utils.getMessage(key);
-                            }
-                        }
-                        return "";                         
-                    })
-                    .collect(Collectors.toList())
-            );        
+                            .getFieldErrors()
+                            .stream()
+                            .map(p -> {
+                                for (String key : p.getCodes()) {
+                                    if(Utils.containsKey(key)){
+                                        return Utils.getMessage(key);
+                                    }
+                                }
+                                return "";
+                            })
+                            .collect(Collectors.toList())
+            );
         }
         if (request.getMax() != null || request.getMin() != null) {
             request.setI(RequestOpenItemStatementsDTO.Amount.OPSEG);
@@ -112,18 +112,18 @@ public class OpenItemStatementsGridController extends AbstractController {
                 openStatements);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = String.format("%sopen-item-statements", 
-                 LocalDateTime.now());
+        String filename = String.format("%sopen-item-statements",
+                LocalDateTime.now());
         headers.add("content-disposition", "inline;filename=" + filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        //embed FreeSans(http://www.gnu.org/software/freefont/) 
+        //embed FreeSans(http://www.gnu.org/software/freefont/)
         //font into PDF document
         DefaultFontMapper mapper = new DefaultFontMapper();
         DefaultFontMapper.BaseFontParameters PDFFontParameters
                 = new DefaultFontMapper.BaseFontParameters(FREE_SANS_FONT_PATH);
         PDFFontParameters.encoding = BaseFont.CP1250;
         PDFFontParameters.embedded = Boolean.TRUE;
-        //Map AWT font Lucida Sans Regular to FreeSans. Lucida Sans 
+        //Map AWT font Lucida Sans Regular to FreeSans. Lucida Sans
         //Regular font cannot be embedded due to license restrictions.
         mapper.putName(OpenItemStatementsReport.FONT_NAME, PDFFontParameters);
         return new ResponseEntity<>(super.getPDFFile(book, mapper), headers, HttpStatus.OK);

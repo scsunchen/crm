@@ -60,20 +60,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class RecordInvoiceService {
-   
+
     private static final Logger LOG = Logger.getLogger(RecordInvoiceService.class.getName());
-    
+
     @PersistenceContext(name = "unit")
     private EntityManager EM;
     @Autowired
-    private Validator validator; 
-   
+    private Validator validator;
+
     @Transactional(rollbackFor = Exception.class)
     public void perform(RequestInvoiceRecordingDTO dto) throws EntityNotFoundException,
-                                                     JournalEntryExistsException,
-                                                     PostedInvoiceException,
-                                                     ProformaInvoicePostingException,
-                                                     ConstraintViolationException {
+            JournalEntryExistsException,
+            PostedInvoiceException,
+            ProformaInvoicePostingException,
+            ConstraintViolationException {
         List<String> result = validator.validate(dto).stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
@@ -81,55 +81,55 @@ public class RecordInvoiceService {
             throw new ConstraintViolationException("",result);
         }
         try {
-            Invoice invoice = EM.find(Invoice.class, 
+            Invoice invoice = EM.find(Invoice.class,
                     new InvoicePK(dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()));
             if (invoice == null) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("RecordInvoice.EntityNotFoundEx.Invoice",
-                        dto.getClientId(), dto.getOrgUnitId(), dto.getDocument())
+                                dto.getClientId(), dto.getOrgUnitId(), dto.getDocument())
                 );
             }
-            
+
             //check if invoice id already recorded(posted)
             if(invoice.isRecorded() == true) {
                 throw new PostedInvoiceException(
                         Utils.getMessage("RecordInvoice.IllegalArgument.RecordedInvoice",
-                                         dto.getClientId(), 
-                                         dto.getOrgUnitId(), 
-                                         dto.getDocument())
-                ); 
+                                dto.getClientId(),
+                                dto.getOrgUnitId(),
+                                dto.getDocument())
+                );
             }
-            
+
             //check if user try to record proforma invoice
             if(invoice.getInvoiceType() == InvoiceType.PROFORMA_INVOICE) {
                 throw new ProformaInvoicePostingException(
-                        Utils.getMessage("RecordInvoice.IllegalArgument.ProformaPosting")); 
+                        Utils.getMessage("RecordInvoice.IllegalArgument.ProformaPosting"));
             }
-            if(EM.find(JournalEntry.class, new JournalEntryPK(dto.getClientId(), 
-                                         dto.getEntryOrderType(),
-                                         dto.getJournalEntryNumber())) != null) {
+            if(EM.find(JournalEntry.class, new JournalEntryPK(dto.getClientId(),
+                    dto.getEntryOrderType(),
+                    dto.getJournalEntryNumber())) != null) {
                 throw new JournalEntryExistsException(
                         Utils.getMessage("RecordInvoice.JournalEntryExists"));
             }
-            BusinessPartner partner = EM.find(BusinessPartner.class, 
-                                               invoice.getPartnerID());// ne moze biti null           
+            BusinessPartner partner = EM.find(BusinessPartner.class,
+                    invoice.getPartnerID());// ne moze biti null
             OrgUnit orgUnit = EM.find(OrgUnit.class,dto.getOrgUnitId());//ne moze biti null
             Description opis = EM.find(Description.class, dto.getDescription());
             if (opis == null) {
                 //dao.rollbackTransaction();
                 throw new EntityNotFoundException(
-                        Utils.getMessage("RecordInvoice.EntityNotFoundEx.Desc", 
-                        dto.getDescription()));
+                        Utils.getMessage("RecordInvoice.EntityNotFoundEx.Desc",
+                                dto.getDescription()));
             }
             List<ApplicationUser> userList = EM.createNamedQuery(
-                    ApplicationUser.READ_BY_USERNAME, 
+                    ApplicationUser.READ_BY_USERNAME,
                     ApplicationUser.class)
                     .setParameter(1, dto.getUser())
                     .getResultList();
             if (userList.isEmpty() == true) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("RecordInvoice.EntityNotFoundEx.User",
-                        dto.getUser())
+                                dto.getUser())
                 );
             }
             ApplicationUser user = userList.get(0);
@@ -155,7 +155,7 @@ public class RecordInvoiceService {
             BigDecimal rebate = BigDecimal.ZERO;
             BigDecimal vatGeneral = BigDecimal.ZERO;
             BigDecimal vatLower = BigDecimal.ZERO;
-            for (InvoiceItem item : invoice.getUnmodifiableItemsSet()) {                
+            for (InvoiceItem item : invoice.getUnmodifiableItemsSet()) {
                 BigDecimal price1 = item.getNetPrice().multiply(item.getQuantity());
                 price = price.add(item.getNetPrice().multiply(item.getQuantity()));
                 BigDecimal rebate1 = item.getNetPrice().multiply(item.getRebatePercent())
@@ -170,7 +170,7 @@ public class RecordInvoiceService {
                 switch(item.getArticleVAT()) {
                     case GENERAL_RATE : vatGeneral = vatGeneral.add(tempVat);break;
                     case LOWER_RATE : vatLower = vatLower.add(tempVat);break;
-                }                                
+                }
             }
             if (invoice.isDomesticCurrency() == false) {
                 Calendar calendar = Calendar.getInstance();
@@ -179,13 +179,13 @@ public class RecordInvoiceService {
                 calendar.set(Calendar.DAY_OF_YEAR, invoice.getCreditRelationDate().getDayOfYear());
                 ExchangeRate rate = EM.find(ExchangeRate.class,
                         new ExchangeRatePK(new Date(calendar.getTimeInMillis()),
-                        invoice.getCurrencyISOCode()));
+                                invoice.getCurrencyISOCode()));
                 if (rate == null) {
                     //dao.rollbackTransaction();
                     throw new EntityNotFoundException(
                             Utils.getMessage("RecordInvoice.EntityNotFoundEx.ExchangeRate",
-                            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(invoice.getCreditRelationDate()),
-                            invoice.getCurrencyISOCode()));
+                                    DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(invoice.getCreditRelationDate()),
+                                    invoice.getCurrencyISOCode()));
                 }
                 total = total.multiply(rate.getMiddle());
                 price = price.multiply(rate.getMiddle());
@@ -195,21 +195,21 @@ public class RecordInvoiceService {
             }
             int rbr = 1;
             if(invoice.getPartnerType() == InvoiceBusinessPartner.ABROAD) {
-                if (total.compareTo(BigDecimal.ZERO) > 0) {                    
+                if (total.compareTo(BigDecimal.ZERO) > 0) {
                     Account konto = EM.find(RecordInvoiceAccount.class, "customer_abroad")
                             .getAccount();
-                    this.addEntryOrderDocument(order, 
-                                               rbr, 
-                                               orgUnit, 
-                                               invoice.getCreditRelationDate(),
-                                               invoice.getValueDate(), 
-                                               opis, 
-                                               invoice.getDocument(), 
-                                               konto, 
-                                               partner,
-                                               ChangeType.DEBIT, 
-                                               total.setScale(2, RoundingMode.HALF_UP), 
-                                               user
+                    this.addEntryOrderDocument(order,
+                            rbr,
+                            orgUnit,
+                            invoice.getCreditRelationDate(),
+                            invoice.getValueDate(),
+                            opis,
+                            invoice.getDocument(),
+                            konto,
+                            partner,
+                            ChangeType.DEBIT,
+                            total.setScale(2, RoundingMode.HALF_UP),
+                            user
                     );
                     rbr = rbr +1;
                 }
@@ -217,54 +217,54 @@ public class RecordInvoiceService {
                 if (price.compareTo(BigDecimal.ZERO) > 0) {
                     Account konto = EM.find(RecordInvoiceAccount.class, "income_abroad")
                             .getAccount();
-                    this.addEntryOrderDocument(order, 
-                                               rbr, 
-                                               orgUnit, 
-                                               invoice.getCreditRelationDate(),
-                                               invoice.getValueDate(), 
-                                               opis, 
-                                               invoice.getDocument(), 
-                                               konto,
-                                               null,
-                                               ChangeType.CREDIT, 
-                                               price.setScale(2, RoundingMode.HALF_UP), 
-                                               user
+                    this.addEntryOrderDocument(order,
+                            rbr,
+                            orgUnit,
+                            invoice.getCreditRelationDate(),
+                            invoice.getValueDate(),
+                            opis,
+                            invoice.getDocument(),
+                            konto,
+                            null,
+                            ChangeType.CREDIT,
+                            price.setScale(2, RoundingMode.HALF_UP),
+                            user
                     );
                     rbr = rbr +1;
                 }
                 if (rebate.compareTo(BigDecimal.ZERO) > 0) {
                     Account konto = EM.find(RecordInvoiceAccount.class, "income_abroad")
                             .getAccount();
-                    this.addEntryOrderDocument(order, 
-                                               rbr, 
-                                               orgUnit, 
-                                               invoice.getCreditRelationDate(),
-                                               invoice.getValueDate(), 
-                                               opis, 
-                                               invoice.getDocument(), 
-                                               konto, 
-                                               null,
-                                               ChangeType.DEBIT,
-                                               rebate.setScale(2, RoundingMode.HALF_UP),
-                                               user);
+                    this.addEntryOrderDocument(order,
+                            rbr,
+                            orgUnit,
+                            invoice.getCreditRelationDate(),
+                            invoice.getValueDate(),
+                            opis,
+                            invoice.getDocument(),
+                            konto,
+                            null,
+                            ChangeType.DEBIT,
+                            rebate.setScale(2, RoundingMode.HALF_UP),
+                            user);
                     rbr = rbr +1;
                 }
             } else {
                 if (total.compareTo(BigDecimal.ZERO) > 0) {
                     Account konto = EM.find(RecordInvoiceAccount.class, "customer_domestic")
                             .getAccount();
-                    this.addEntryOrderDocument(order, 
-                                               rbr, 
-                                               orgUnit,
-                                               invoice.getCreditRelationDate(),
-                                               invoice.getValueDate(), 
-                                               opis, 
-                                               invoice.getDocument(), 
-                                               konto, 
-                                               partner,
-                                               ChangeType.DEBIT, 
-                                               total.setScale(2, RoundingMode.HALF_UP), 
-                                               user
+                    this.addEntryOrderDocument(order,
+                            rbr,
+                            orgUnit,
+                            invoice.getCreditRelationDate(),
+                            invoice.getValueDate(),
+                            opis,
+                            invoice.getDocument(),
+                            konto,
+                            partner,
+                            ChangeType.DEBIT,
+                            total.setScale(2, RoundingMode.HALF_UP),
+                            user
                     );
                     rbr = rbr +1;
                 }
@@ -272,71 +272,71 @@ public class RecordInvoiceService {
                 if (price.compareTo(BigDecimal.ZERO) > 0) {
                     Account konto = EM.find(RecordInvoiceAccount.class, "income_domestic")
                             .getAccount();
-                    this.addEntryOrderDocument(order, 
-                                               rbr, 
-                                               orgUnit, 
-                                               invoice.getCreditRelationDate(),
-                                               invoice.getValueDate(), 
-                                               opis, 
-                                               invoice.getDocument(), 
-                                               konto, 
-                                               null,
-                                               ChangeType.CREDIT, 
-                                               price.setScale(2, RoundingMode.HALF_UP),
-                                               user);
+                    this.addEntryOrderDocument(order,
+                            rbr,
+                            orgUnit,
+                            invoice.getCreditRelationDate(),
+                            invoice.getValueDate(),
+                            opis,
+                            invoice.getDocument(),
+                            konto,
+                            null,
+                            ChangeType.CREDIT,
+                            price.setScale(2, RoundingMode.HALF_UP),
+                            user);
                     rbr = rbr +1;
                 }
                 if (rebate.compareTo(BigDecimal.ZERO) > 0) {
                     Account konto = EM.find(RecordInvoiceAccount.class, "income_domestic")
                             .getAccount();
-                    this.addEntryOrderDocument(order, 
-                                               rbr, 
-                                               orgUnit, 
-                                               invoice.getCreditRelationDate(),
-                                               invoice.getValueDate(), 
-                                               opis, 
-                                               invoice.getDocument(), 
-                                               konto,
-                                               null,
-                                               ChangeType.DEBIT, 
-                                               rebate.setScale(2, RoundingMode.HALF_UP), 
-                                               user
+                    this.addEntryOrderDocument(order,
+                            rbr,
+                            orgUnit,
+                            invoice.getCreditRelationDate(),
+                            invoice.getValueDate(),
+                            opis,
+                            invoice.getDocument(),
+                            konto,
+                            null,
+                            ChangeType.DEBIT,
+                            rebate.setScale(2, RoundingMode.HALF_UP),
+                            user
                     );
                     rbr = rbr + 1;
                 }
                 if (vatGeneral.compareTo(BigDecimal.ZERO) > 0) {
                     Account konto = EM.find(RecordInvoiceAccount.class, "vat_general_rate")
                             .getAccount();
-                    this.addEntryOrderDocument(order, 
-                                               rbr, 
-                                               orgUnit, 
-                                               invoice.getCreditRelationDate(),
-                                               invoice.getValueDate(), 
-                                               opis, 
-                                               invoice.getDocument(), 
-                                               konto,
-                                               null,
-                                               ChangeType.CREDIT, 
-                                               vatGeneral.setScale(2, RoundingMode.HALF_UP), 
-                                               user
+                    this.addEntryOrderDocument(order,
+                            rbr,
+                            orgUnit,
+                            invoice.getCreditRelationDate(),
+                            invoice.getValueDate(),
+                            opis,
+                            invoice.getDocument(),
+                            konto,
+                            null,
+                            ChangeType.CREDIT,
+                            vatGeneral.setScale(2, RoundingMode.HALF_UP),
+                            user
                     );
                     rbr = rbr +1;
                 }
                 if (vatLower.compareTo(BigDecimal.ZERO) > 0) {
                     Account konto = EM.find(RecordInvoiceAccount.class, "vat_lower_rate")
                             .getAccount();
-                    this.addEntryOrderDocument(order, 
-                                               rbr, 
-                                               orgUnit, 
-                                               invoice.getCreditRelationDate(),
-                                               invoice.getValueDate(), 
-                                               opis, 
-                                               invoice.getDocument(), 
-                                               konto,
-                                               null,
-                                               ChangeType.CREDIT, 
-                                               vatLower.setScale(2, RoundingMode.HALF_UP), 
-                                               user);
+                    this.addEntryOrderDocument(order,
+                            rbr,
+                            orgUnit,
+                            invoice.getCreditRelationDate(),
+                            invoice.getValueDate(),
+                            opis,
+                            invoice.getDocument(),
+                            konto,
+                            null,
+                            ChangeType.CREDIT,
+                            vatLower.setScale(2, RoundingMode.HALF_UP),
+                            user);
                     rbr = rbr +1;
                 }
             }
@@ -352,45 +352,45 @@ public class RecordInvoiceService {
                 }
             }
             if (duguje.compareTo(potrazuje) > 0) {
-                Account konto = EM.find(RecordInvoiceAccount.class, 
-                                         "journal_entry_inequailty")
-                            .getAccount();
-                this.addEntryOrderDocument(order, 
-                                           rbr, 
-                                           orgUnit, 
-                                           invoice.getCreditRelationDate(),
-                                           invoice.getValueDate(), 
-                                           opis, 
-                                           invoice.getDocument(), 
-                                           konto, 
-                                           null,
-                                           ChangeType.CREDIT, 
-                                           duguje.subtract(potrazuje), 
-                                           user
+                Account konto = EM.find(RecordInvoiceAccount.class,
+                        "journal_entry_inequailty")
+                        .getAccount();
+                this.addEntryOrderDocument(order,
+                        rbr,
+                        orgUnit,
+                        invoice.getCreditRelationDate(),
+                        invoice.getValueDate(),
+                        opis,
+                        invoice.getDocument(),
+                        konto,
+                        null,
+                        ChangeType.CREDIT,
+                        duguje.subtract(potrazuje),
+                        user
                 );
                 rbr = rbr +1;
-            } 
+            }
             if(duguje.compareTo(potrazuje) < 0) {
-                Account konto = EM.find(RecordInvoiceAccount.class, 
-                                         "journal_entry_inequailty")
-                            .getAccount();
-                this.addEntryOrderDocument(order, 
-                                           rbr, 
-                                           orgUnit, 
-                                           invoice.getCreditRelationDate(),
-                                           invoice.getValueDate(), 
-                                           opis, 
-                                           invoice.getDocument(), 
-                                           konto,
-                                           null,
-                                           ChangeType.DEBIT, 
-                                           potrazuje.subtract(duguje), 
-                                           user
+                Account konto = EM.find(RecordInvoiceAccount.class,
+                        "journal_entry_inequailty")
+                        .getAccount();
+                this.addEntryOrderDocument(order,
+                        rbr,
+                        orgUnit,
+                        invoice.getCreditRelationDate(),
+                        invoice.getValueDate(),
+                        opis,
+                        invoice.getDocument(),
+                        konto,
+                        null,
+                        ChangeType.DEBIT,
+                        potrazuje.subtract(duguje),
+                        user
                 );
             }
             invoice.setRecorded(Boolean.TRUE);
             EM.persist(order);
-        } catch(EntityNotFoundException | PostedInvoiceException | 
+        } catch(EntityNotFoundException | PostedInvoiceException |
                 ProformaInvoicePostingException | JournalEntryExistsException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -398,20 +398,20 @@ public class RecordInvoiceService {
             throw new SystemException(
                     getMessage("RecordInvoice.PersistenceEx.Record")
             );
-        } 
-    }        
-    
-    private void addEntryOrderDocument(JournalEntry nalog, 
+        }
+    }
+
+    private void addEntryOrderDocument(JournalEntry nalog,
                                        Integer ordinal,
                                        OrgUnit orgUnit,
                                        LocalDate datumDPO,
                                        LocalDate valueDate,
                                        Description opis,
                                        String document,
-                                       Account account, 
-                                       BusinessPartner partner, 
-                                       ChangeType type, 
-                                       BigDecimal amount, 
+                                       Account account,
+                                       BusinessPartner partner,
+                                       ChangeType type,
+                                       BigDecimal amount,
                                        ApplicationUser user ) {
         JournalEntryItem item = new JournalEntryItem(nalog, ordinal);
         item.setOrgUnit(orgUnit);
@@ -433,7 +433,7 @@ public class RecordInvoiceService {
                 nalog.setBalanceCredit(nalog.getBalanceCredit().add(amount));
                 break;
         }
-        
+
         //dodaj korisnika        
         nalog.addItem(item);
     }
