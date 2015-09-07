@@ -22,34 +22,24 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.core.domain.Employee</class>
         <class>com.invado.core.domain.Job</class>
         <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms</class>
-        <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTermsItems</class>
         <class>com.invado.customer.relationship.domain.Transaction</class>
         <class>com.invado.customer.relationship.domain.Device</class>
         <class>com.invado.customer.relationship.domain.DeviceHolderPartner</class>
         <class>com.invado.customer.relationship.domain.DeviceStatus</class>
         <class>com.invado.customer.relationship.domain.TransactionType</class>
         <class>com.invado.customer.relationship.domain.ServiceProviderServices</class>
+        <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms</class>
+        <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTermsItems</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
 
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="toplink.jdbc.url" value="jdbc:oracle:thin:@//94.127.3.157:1521/xe"/>
-            <property name="toplink.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-            <property name="toplink.jdbc.user"/>
-            <property name="toplink.jdbc.password"/>
             <property name="hibernate.connection.url" value="jdbc:oracle:thin:@//94.127.3.157:1521/xe"/>
             <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
-            <property name="hibernate.connection.username"/>
-            <property name="hibernate.connection.password"/>
-            <property name="openjpa.ConnectionURL" value="jdbc:oracle:thin:@//94.127.3.157:1521/xe"/>
-            <property name="openjpa.ConnectionDriverName" value="oracle.jdbc.OracleDriver"/>
-            <property name="openjpa.ConnectionUserName"/>
-            <property name="openjpa.ConnectionPassword"/>
-            <property name="eclipselink.jdbc.url" value="jdbc:oracle:thin:@//94.127.3.157:1521/xe"/>
-            <property name="eclipselink.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-            <property name="eclipselink.jdbc.user"/>
-            <property name="eclipselink.jdbc.password"/>
+            <property name="hibernate.connection.username" value="devel"/>
+            <property name="hibernate.connection.password" value="devel"/>
+
 
         </properties>
     </persistence-unit>

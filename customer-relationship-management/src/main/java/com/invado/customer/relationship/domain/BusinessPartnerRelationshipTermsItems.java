@@ -12,7 +12,6 @@ import java.math.BigDecimal;
  * Created by nikola on 11.07.2015.
  */
 @Entity
-
 @Table(name = "CRM_BUSINESS_TERMS_ITEMS", schema = "devel")
 public class BusinessPartnerRelationshipTermsItems implements Serializable, Comparable<BusinessPartnerRelationshipTermsItems>{
 

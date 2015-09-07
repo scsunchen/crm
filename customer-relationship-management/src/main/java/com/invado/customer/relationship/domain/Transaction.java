@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
         @NamedQuery(name = Transaction.INVOICING_CANDIDATES,
                 query = " select trans.distributor.id as distributorId, trans.distributor.name as distributorName, trans.merchant.id as merchantId, trans.merchant.name as merchantName, " +
                         " trans.pointOfSale.id as posId, trans.pointOfSale.name as posName, trans.terminal.id as treminalId, trans.terminal.customCode as treminalName," +
-                        " service.id as service, sum(trans.amount) as amount " +
+                        " service.id as service, service.description as serviceDescription, sum(trans.amount) as amount " +
                         " from TransactionType type, Transaction trans, ServiceProviderServices service " +
                         " where type.invoiceable = true " +
                         " and type.invoicingStatuses like '%'||trans.statusId||'%' " +
@@ -27,12 +27,24 @@ import java.time.LocalDateTime;
                         " and trans.responseTime < :invoicingDate " +
                         " and trans.type = type " +
                         " and service.serviceProvider = trans.serviceProvider " +
-                        " group by trans.distributor, trans.merchant, trans.pointOfSale, service.id, trans.terminal " +
-                        " order by 1, 2, 3, 4, 5 ")
+                        " group by trans.distributor.id, trans.distributor.name, trans.merchant.id, trans.merchant.name, trans.pointOfSale.id, " +
+                        "  trans.pointOfSale.name, trans.terminal.id, trans.terminal.customCode,  service.id, service.description " +
+                        " order by 1, 2, 3, 4, 5 "),
+        @NamedQuery(name = Transaction.COUNT_INVOICING_CANDIDATES,
+                query = " select count(*) " +
+                        " from TransactionType type, Transaction trans, ServiceProviderServices service " +
+                        " where type.invoiceable = true " +
+                        " and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                        " and trans.statusId is not null " +
+                        " and trans.invoicingStatus = false " +
+                        " and trans.responseTime < :invoicingDate " +
+                        " and trans.type = type " +
+                        " and service.serviceProvider = trans.serviceProvider ")
 })
-public class Transaction implements Serializable{
+public class Transaction implements Serializable {
 
     public static final String INVOICING_CANDIDATES = "Transaction.ReadInvoicingCandidatesTransactions";
+    public static final String COUNT_INVOICING_CANDIDATES = "Transaction.CountInvoincingCandidatesSet";
 
     @Id
     private Long id;
@@ -183,7 +195,7 @@ public class Transaction implements Serializable{
         return invoicingStatus;
     }
 
-    public TransactionDTO getDTO(){
+    public TransactionDTO getDTO() {
 
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setId(this.getId());

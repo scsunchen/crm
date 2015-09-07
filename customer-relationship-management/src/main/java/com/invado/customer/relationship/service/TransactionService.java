@@ -30,6 +30,7 @@ import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -438,25 +439,25 @@ public class TransactionService {
         return tempList;
     }
 
-    private List<Transaction> searchInvoicingSet(EntityManager em,
-                                     LocalDate invoicingDate,
-                                     int first,
-                                     int pageSize){
-
-
-    }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<InvoicingTransactionSetDTO> readInvicingSetPage(PageRequestDTO p)
+    public ReadRangeDTO<InvoicingTransactionSetDTO> readInvoicingSetPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadTransactionPermission
-        LocalDate invoicingDate = new LocalDate().now();
 
+        LocalDateTime invoicingDate = LocalDateTime.now();
+
+        Query query = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES);
+        query.setParameter("invoicingDate", invoicingDate);
 
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
-            Long countEntities = this.count(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId);
+            Query countEntitiesQuery = dao.createNamedQuery(Transaction.COUNT_INVOICING_CANDIDATES);
+            countEntitiesQuery.setParameter("invoicingDate", invoicingDate);
+
+            Long countEntities = (Long) countEntitiesQuery.getSingleResult();
+
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             Integer pageNumber = p.getPage();
@@ -469,16 +470,18 @@ public class TransactionService {
             ReadRangeDTO<InvoicingTransactionSetDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 int start = numberOfPages.intValue() * pageSize;
-                List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES).getResultList();
-                result.setData(invoicingTransactionSetDTOs);
-                result.setNumberOfPages(numberOfPages.intValue());
-                result.setPage(numberOfPages.intValue());
+                query.setFirstResult(start);
+                query.setMaxResults(pageSize);
             } else {
-                List<InvoicingTransactionSetDTO> TransactionDTOList = convertToDTO(this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, p.getPage() * pageSize, pageSize));
-                result.setData(TransactionDTOList);
-                result.setNumberOfPages(numberOfPages.intValue());
-                result.setPage(pageNumber);
+                int start = p.getPage() * pageSize;
+                query.setFirstResult(start);
+                query.setMaxResults(pageSize);
             }
+            List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = query.getResultList();
+            result.setData(invoicingTransactionSetDTOs);
+            result.setNumberOfPages(numberOfPages.intValue());
+            result.setPage(numberOfPages.intValue());
+
             return result;
         } catch (PageNotExistsException ex) {
             throw ex;

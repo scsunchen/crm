@@ -6,6 +6,7 @@ import com.invado.customer.relationship.domain.Device;
 import com.invado.customer.relationship.domain.TransactionType;
 import com.invado.customer.relationship.service.DeviceService;
 import com.invado.customer.relationship.service.TransactionService;
+import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
@@ -124,6 +125,35 @@ public class TransactionController {
         return "transactions-view";
     }
 
+    @RequestMapping(value = "invoicing/{page}")
+    public String showInvoincingCandidatesSet(@PathVariable Integer page, Map<String, Object> model, @ModelAttribute TransactionDTO transactionDTO ) throws  Exception{
+
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId",
+                transactionDTO.getDistributorId() == null || transactionDTO.getDistributorName() == null || transactionDTO.getDistributorName().isEmpty()
+                        ? null : transactionDTO.getDistributorId()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("pointOfSaleId",
+                transactionDTO.getPointOfSaleId() == null || transactionDTO.getPointOfSaleName() == null || transactionDTO.getPointOfSaleName().isEmpty()
+                        ? null : transactionDTO.getPointOfSaleId()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("serviceProviderId",
+                transactionDTO.getServiceProviderId() == null || transactionDTO.getServiceProviderName() == null || transactionDTO.getServiceProviderName().isEmpty()
+                        ? null : transactionDTO.getServiceProviderId()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("terminalId",
+                transactionDTO.getTerminalId() == null || transactionDTO.getTerminalCustomCode() == null || transactionDTO.getTerminalCustomCode().isEmpty()
+                        ? null : transactionDTO.getTerminalId()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("typeId",
+                transactionDTO.getTypeId() == null || transactionDTO.getTypeDescription() == null || transactionDTO.getTypeDescription().isEmpty()
+                        ? null : transactionDTO.getTypeId()));
+        ReadRangeDTO<InvoicingTransactionSetDTO> items = transactionService.readInvoicingSetPage(request);
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        model.put("pageTo", 0);
+        model.put("transactionDTO", transactionDTO);
+        model.put("numberOfPages", items.getNumberOfPages());
+        return "invoicingSet-view";
+
+    }
 
     @RequestMapping(value = "transactions/{page}", method = RequestMethod.POST)
     public String showFilteredTransactions(@PathVariable Integer page, Map<String, Object> model, @ModelAttribute TransactionDTO transactionDTO) throws Exception {

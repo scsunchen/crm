@@ -37,13 +37,13 @@ public class ServiceProviderServices implements Serializable {
             generator = "ServiceProviderServicesGenerator")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "BUSINESS_PARTNER_ID")
+    @JoinColumn(name = "SERVICE_PROVIDER")
     private BusinessPartner serviceProvider;
     private String description;
     @Column(name = "MANDATORY_ACTIVATION")
     private Boolean mandatoryActivation;
     @ManyToOne
-    @JoinColumn(name = "ITEM_ID")
+    @JoinColumn(name = "SERVICE_ID")
     private Article service;
     @Column(name = "DATE_FROM")
     private LocalDate dateFrom;
