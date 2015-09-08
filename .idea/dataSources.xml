@@ -1,11 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="956364239">
+  <component name="DataSourceManagerImpl" format="xml" hash="1483180463">
     <data-source source="LOCAL" name="Oracle - xe@94.127.3.157" uuid="9a661551-1596-403f-9ede-f4eecba493c0">
       <driver-ref>oracle</driver-ref>
       <auto-commit>false</auto-commit>
       <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
       <jdbc-url>jdbc:oracle:thin:@//94.127.3.157:1521/xe</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="unit/EclipseLink" uuid="f7af9582-bff7-4f66-8fa8-ab521c1db681">
+      <driver-ref>oracle</driver-ref>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//94.127.3.157:1521/xe</jdbc-url>
+      <libraries>
+        <library>
+          <url>jar://F:/Invado/crm/libs/ojdbc6.jar!/</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="unit/OpenJPA" uuid="86904950-b2b2-43c8-b939-04efb3e7ccaf">
+      <driver-ref>oracle</driver-ref>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//94.127.3.157:1521/xe</jdbc-url>
+      <libraries>
+        <library>
+          <url>jar://F:/Invado/crm/libs/ojdbc6.jar!/</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="unit/TopLink" uuid="bc19caf5-0a8f-4326-89b1-f05ac748ba51">
+      <driver-ref>oracle</driver-ref>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//94.127.3.157:1521/xe</jdbc-url>
+      <libraries>
+        <library>
+          <url>jar://F:/Invado/crm/libs/ojdbc6.jar!/</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="dataSource" uuid="445f545d-114f-4054-8f29-2de61988b431">
+      <jdbc-driver>devel</jdbc-driver>
+      <jdbc-url>oracle.jdbc.driver.OracleDriver</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="dataSource" uuid="83fadf9d-f911-4e1f-8183-b59b45f8de96">
+      <jdbc-driver>devel</jdbc-driver>
+      <jdbc-url>oracle.jdbc.driver.OracleDriver</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="dataSource" uuid="4d056c4a-594f-4826-9b44-f7e65ef2d9dd">
+      <jdbc-driver>devel</jdbc-driver>
+      <jdbc-url>oracle.jdbc.driver.OracleDriver</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="dataSource" uuid="4253bb8b-31ba-4f81-b82d-efd99961f637">
+      <jdbc-driver>devel</jdbc-driver>
+      <jdbc-url>oracle.jdbc.driver.OracleDriver</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="dataSource" uuid="27b2da5a-786e-4afb-9e79-842cbc363bee">
+      <jdbc-driver>devel</jdbc-driver>
+      <jdbc-url>oracle.jdbc.driver.OracleDriver</jdbc-url>
       <libraries />
     </data-source>
   </component>
