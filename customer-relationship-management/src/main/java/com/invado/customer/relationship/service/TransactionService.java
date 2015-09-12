@@ -3,6 +3,7 @@ package com.invado.customer.relationship.service;
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
+import com.invado.core.utils.NativeQueryResultsMapper;
 import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.Device;
 import com.invado.customer.relationship.domain.Transaction;
@@ -448,7 +449,7 @@ public class TransactionService {
         LocalDateTime invoicingDate = LocalDateTime.now();
 
         Query query = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES);
-        query.setParameter("invoicingDate", invoicingDate);
+        //query.setParameter("invoicingDate", invoicingDate);
 
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
@@ -477,7 +478,8 @@ public class TransactionService {
                 query.setFirstResult(start);
                 query.setMaxResults(pageSize);
             }
-            List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = query.getResultList();
+
+            List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(query.getResultList(), InvoicingTransactionSetDTO.class);
             result.setData(invoicingTransactionSetDTOs);
             result.setNumberOfPages(numberOfPages.intValue());
             result.setPage(numberOfPages.intValue());
