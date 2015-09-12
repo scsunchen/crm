@@ -70,7 +70,7 @@
             <c:forEach var="item" items="${data}">
                 <!-- Modal -->
                 <tr>
-                    <td hidden><c:out value="${item.distributorId}"/></td>
+                    <td><c:out value="${item.distributorId}"/></td>
                     <td><c:out value="${item.distributorName}"/></td>
                     <td hidden><c:out value="${item.merchantId}"/></td>
                     <td><c:out value="${item.merchantName}"/></td>
@@ -92,13 +92,13 @@
         <ul class="pager pull-right">
             Strana
             <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page - 1}"/></c:if>">
+                <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/invoicing/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page - 1}"/></c:if>">
                     <span class="glyphicon glyphicon-backward"></span> Prethodna
                 </a>
             </li>
             <c:out value="${page+1} od ${numberOfPages+1}"/>
             <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page + 1}"/></c:if>">
+                <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/invoicing/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page + 1}"/></c:if>">
                     <span class="glyphicon glyphicon-forward"></span> Naredna
                 </a>
             </li>
