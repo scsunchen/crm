@@ -3,6 +3,7 @@ package com.invado.customer.relationship.domain;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
 import com.invado.core.domain.LocalDateTimeConverter;
+import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
 
 import javax.persistence.*;
@@ -14,22 +15,27 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "CRM_TRANSACTION")
+@NamedNativeQuery(name = Transaction.INVOICING_CANDIDATES, query = " select trans.client_id as distributorId, " +
+        "      distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
+        "      trans.point_Of_Sale_id as posId, pos.name as posName, trans.terminal_id as treminalId, custom_Code as treminalName," +
+        "      service.id as service, service.description as serviceDescription, sum(trans.amount) as amount " +
+        "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
+        "             c_business_partner pos, crm_device terminal, crm_Service_Provider_Services service " +
+        "         where type.invoiceable = 1 " +
+        "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+        "         and trans.statusId is not null " +
+        "         and trans.invoicing_Status = 0 " +
+        "         and trans.response_Time < sysdate " +
+        "         and trans.type_id = type.id" +
+        "         and trans.terminal_id = terminal.id " +
+        "         and trans.client_id = distributor.id" +
+        "         and trans.service_Provider_id = service.service_Provider" +
+        "         and trans.business_partner_id = merchant.id" +
+        "         and trans.point_of_sale_id  =  pos.id " +
+        "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, trans.point_Of_Sale_id, pos.name, " +
+        "                    trans.terminal_id, terminal.custom_Code, service.id, service.description" +
+        "         order by 1, 2, 3, 4, 5 ")
 @NamedQueries({
-        @NamedQuery(name = Transaction.INVOICING_CANDIDATES,
-                query = " select trans.distributor.id as distributorId, trans.distributor.name as distributorName, trans.merchant.id as merchantId, trans.merchant.name as merchantName, " +
-                        " trans.pointOfSale.id as posId, trans.pointOfSale.name as posName, trans.terminal.id as treminalId, trans.terminal.customCode as treminalName," +
-                        " service.id as service, service.description as serviceDescription, sum(trans.amount) as amount " +
-                        " from TransactionType type, Transaction trans, ServiceProviderServices service " +
-                        " where type.invoiceable = true " +
-                        " and type.invoicingStatuses like '%'||trans.statusId||'%' " +
-                        " and trans.statusId is not null " +
-                        " and trans.invoicingStatus = false " +
-                        " and trans.responseTime < :invoicingDate " +
-                        " and trans.type = type " +
-                        " and service.serviceProvider = trans.serviceProvider " +
-                        " group by trans.distributor.id, trans.distributor.name, trans.merchant.id, trans.merchant.name, trans.pointOfSale.id, " +
-                        "  trans.pointOfSale.name, trans.terminal.id, trans.terminal.customCode,  service.id, service.description " +
-                        " order by 1, 2, 3, 4, 5 "),
         @NamedQuery(name = Transaction.COUNT_INVOICING_CANDIDATES,
                 query = " select count(*) " +
                         " from TransactionType type, Transaction trans, ServiceProviderServices service " +
@@ -48,7 +54,7 @@ public class Transaction implements Serializable {
 
     @Id
     private Long id;
-    @Column(name = "transaction_status")
+    @Column(name = "TRANSACTION_STATUS")
     private String statusId;
     @ManyToOne
     @JoinColumn(name = "type_id")
