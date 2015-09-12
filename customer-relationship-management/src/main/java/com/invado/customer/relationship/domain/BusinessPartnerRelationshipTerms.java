@@ -40,11 +40,11 @@ public class BusinessPartnerRelationshipTerms implements Serializable{
     @Column(name = "date_from")
     @NotNull(message = "{BusinessPartnerTerms.DateFrom.NotNull}")
     @Convert(converter = LocalDateConverter.class)
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(style = "M-")
     private LocalDate dateFrom;
     @Column(name = "end_date")
     @Convert(converter = LocalDateConverter.class)
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(style = "M-")
     private LocalDate endDate;
     @Column(name = "days_to_pay")
     private Integer daysToPay;
@@ -54,14 +54,11 @@ public class BusinessPartnerRelationshipTerms implements Serializable{
     @Column(name = "status")
     @NotNull(message = "{BusinessPartnerTerms.Status.NotNull}")
     private Status status;
-    @Column(name = "remark")
-    private String remark;
     @Valid//FIXME : Lazy collection validation
     @OneToMany(cascade = {CascadeType.ALL},
             mappedBy = "businessPartnerRelationshipTerms",
             fetch = FetchType.LAZY)
     private List<BusinessPartnerRelationshipTermsItems> items = new ArrayList<>();
-
    @Version
     private Long version;
 
@@ -119,14 +116,6 @@ public class BusinessPartnerRelationshipTerms implements Serializable{
         this.rebate = rebate;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
     public Long getVersion() {
         return version;
     }
@@ -162,7 +151,6 @@ public class BusinessPartnerRelationshipTerms implements Serializable{
 
     public BusinessPartnerRelationshipTermsDTO getDTO() {
         BusinessPartnerRelationshipTermsDTO result = new BusinessPartnerRelationshipTermsDTO();
-
         result.setId(this.getId());
         result.setVersion(this.getVersion());
         result.setBusinessPartnerId(this.getBusinessPartner().getId());
@@ -171,7 +159,6 @@ public class BusinessPartnerRelationshipTerms implements Serializable{
         result.setEndDate(this.getEndDate());
         result.setDaysToPay(this.getDaysToPay());
         result.setRebate(this.getRebate());
-        result.setRemark(this.getRemark());
         result.setStatus(this.getStatus());
         result.setVersion(this.getVersion());
         return result;

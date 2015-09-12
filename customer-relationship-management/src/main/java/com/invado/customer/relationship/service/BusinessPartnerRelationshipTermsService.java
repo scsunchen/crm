@@ -111,7 +111,6 @@ public class BusinessPartnerRelationshipTermsService {
             item.setDateFrom(dto.getDateFrom());
             item.setDaysToPay(dto.getDaysToPay());
             item.setRebate(dto.getRebate());
-            item.setRemark(dto.getRemark());
             item.setEndDate(dto.getEndDate());
             item.setStatus(dto.getStatus());
             //item.setVersion(dto.getVersion());
