@@ -5,11 +5,11 @@ import com.invado.core.domain.Client;
 import com.invado.customer.relationship.domain.Device;
 import com.invado.customer.relationship.domain.TransactionType;
 import com.invado.customer.relationship.service.DeviceService;
+import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.TransactionService;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
-import com.invado.finance.service.MasterDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +25,17 @@ public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
-
+    @Autowired
+    private DeviceService deviceService;
     @Autowired
     private MasterDataService masterDataService;
 
-    @Autowired
-    private DeviceService deviceService;
 
-
-    @RequestMapping(value = "transactions/{page}")
-    public String showTransactions(@PathVariable Integer page, Map<String, Object> model, @ModelAttribute TransactionDTO transactionDTO)
-            throws Exception {
-        System.out.println("prvi get ");
+    @RequestMapping(value = "/transactions/{page}")
+    public String showTransactions(@PathVariable Integer page, 
+                                   Map<String, Object> model, 
+                                   @ModelAttribute TransactionDTO transactionDTO)
+                                   throws Exception {
         PageRequestDTO request = new PageRequestDTO();
 
         request.setPage(page);
@@ -67,8 +66,10 @@ public class TransactionController {
 
     }
 
-    @RequestMapping(value = "transactions/{paramValues}/{page}")
-    public String browsePages(@PathVariable Integer page, @PathVariable String paramValues, Map<String, Object> model) throws Exception {
+    @RequestMapping(value = "/transactions/{paramValues}/{page}")
+    public String browsePages(@PathVariable Integer page, 
+                              @PathVariable String paramValues, 
+                              Map<String, Object> model) throws Exception {
 
         String[] params = paramValues.split("-");
 
@@ -127,8 +128,6 @@ public class TransactionController {
 
     @RequestMapping(value = "transactions/{page}", method = RequestMethod.POST)
     public String showFilteredTransactions(@PathVariable Integer page, Map<String, Object> model, @ModelAttribute TransactionDTO transactionDTO) throws Exception {
-
-        System.out.println(" POST ");
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId",
@@ -199,5 +198,4 @@ public class TransactionController {
     List<TransactionType> findTransactiontypeByType(@PathVariable String name) {
         return transactionService.readTransactionTypeByType(name);
     }
-
 }

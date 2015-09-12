@@ -11,14 +11,11 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.invado.customer.relationship.service, com.invado.masterdata.service,
-    com.invado.finance.service"/>
-
+    <context:component-scan base-package="com.invado.customer.relationship.service"/>
     <bean id="validator"
-          class="com.invado.customer.relationship.MasterdataValidator"
+          class="com.invado.customer.relationship.CRMValidator"
           factory-method="get"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
-
     <bean id="jpaVendorAdapter"
           class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/>
@@ -32,13 +29,12 @@
     </bean>
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="classpath:META-INF/crm-persistence.xml"/>
+        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
         <property name="persistenceUnitName" value="unit"/>
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
         <property name="jpaDialect" ref="jpaDialect"/>
     </bean>
-
     <bean id="dataSource_Dragan" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="url" value="jdbc:postgresql://localhost:5432/robfink"/>
         <property name="driverClassName" value="org.postgresql.Driver"/>
@@ -50,9 +46,7 @@
         <property name="username" value="devel"/>
         <property name="password" value="devel"/>
     </bean>
-
-
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
-
+     <bean id="userService" class="com.invado.finance.service.UserDataService" />
 </beans>
 

@@ -20,12 +20,9 @@ public class Test {
      */
     public static void main(String[] args) throws Exception{
         // TODO code application logic here
-//        EntityManagerFactory factory = Persistence.createEntityManagerFactory("unit");
-//        EntityManager em = factory.createEntityManager();
-//        System.out.println(em.createQuery("Select x from InvoiceItem x").getResultList());
         
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-                "applicationContext.xml");
+                "application-context.xml");
 
 //        System.out.println(service.read("222"));
     }

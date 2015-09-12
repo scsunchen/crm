@@ -3,6 +3,10 @@ package com.invado.customer.relationship.service;
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
+import com.invado.core.exception.ConstraintViolationException;
+import com.invado.core.exception.PageNotExistsException;
+import com.invado.core.exception.ReferentialIntegrityException;
+import com.invado.core.exception.SystemException;
 import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.Device;
 import com.invado.customer.relationship.domain.Transaction;
@@ -11,10 +15,6 @@ import com.invado.customer.relationship.domain.Transaction_;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
-import com.invado.customer.relationship.service.exception.*;
-import com.invado.customer.relationship.service.exception.EntityExistsException;
-import com.invado.customer.relationship.service.exception.EntityNotFoundException;
-import com.invado.customer.relationship.service.exception.IllegalArgumentException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,11 +54,11 @@ public class TransactionService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public Transaction create(TransactionDTO a) throws IllegalArgumentException,
+    public Transaction create(TransactionDTO a) throws ConstraintViolationException,
             EntityExistsException, ConstraintViolationException {
         //check CreateTransactionPermission
         if (a == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("Transaction.IllegalArgumentEx"));
         }
         try {
@@ -77,12 +77,12 @@ public class TransactionService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
 
             dao.persist(transaction);
             return transaction;
-        } catch (IllegalArgumentException ex) {
+        } catch (ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -462,8 +462,8 @@ public class TransactionService {
                     .getResultList();
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new com.invado.core.exception.SystemException(com.invado.finance.Utils.getMessage(
-                    "Device.Exception.ReadByCusotmCode"),
+            throw new com.invado.core.exception.SystemException(Utils.getMessage(
+                    "Transaction.Exception.ReadByCusotmCode"),
                     ex);
         }
     }
@@ -476,8 +476,8 @@ public class TransactionService {
                     .getSingleResult();
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new com.invado.core.exception.SystemException(com.invado.finance.Utils.getMessage(
-                    "Device.Exception.ReadById"),
+            throw new com.invado.core.exception.SystemException(Utils.getMessage(
+                    "Transaction.Exception.ReadById"),
                     ex);
         }
     }

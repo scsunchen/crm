@@ -32,5 +32,14 @@
     <class>com.invado.finance.domain.journal_entry.JournalEntry</class>
     <class>com.invado.finance.domain.journal_entry.JournalEntryItem</class>
     <class>com.invado.finance.domain.journal_entry.PartnerSpecification</class>
+    <!-- ***************CRM**************************************************-->
+    <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms</class>
+    <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTermsItems</class>
+    <class>com.invado.customer.relationship.domain.Transaction</class>
+    <class>com.invado.customer.relationship.domain.Device</class>
+    <class>com.invado.customer.relationship.domain.DeviceHolderPartner</class>
+    <class>com.invado.customer.relationship.domain.DeviceStatus</class>
+    <class>com.invado.customer.relationship.domain.TransactionType</class>
+    <class>com.invado.customer.relationship.domain.ServiceProviderServices</class>
   </persistence-unit>
 </persistence>
