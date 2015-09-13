@@ -13,98 +13,71 @@
 
 <form:form class="navbar-form navbar-left" role="search" modelAttribute="transactionDTO" method="POST">
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Pretraživanje poslovnih partnera -->
-
-            <div id="bs-example-navbar-collapse-1">
-                <div class="form-group input-group col-md-2">
-                    <label for="serviceProviderName">Service provider</label>
-                    <form:input id="serviceProviderName" class="typeahead form-control" type="text"
-                                path="serviceProviderName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="serviceProviderIdHidden" path="serviceProviderId"/>
+        <div class="row">
+            <div class="container-fluid">
+                <!-- Pretraživanje poslovnih partnera -->
+                <div id="bs-example-navbar-collapse-1">
+                    <input:inputDate name="requestTime" label="Datum do: " placeholder="dd.mm.yyyy."/>
+                    <button type="submit" class="btn btn-default">Pretraga</button>
                 </div>
-                <div class="form-group input-group col-md-2">
-                    <label for="pointOfSaleName">POS</label>
-                    <form:input id="pointOfSaleName" class="typeahead form-control" type="text"
-                                path="pointOfSaleName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="pointOfSaleIdHidden" path="pointOfSaleId"/>
-                </div>
-                <div class="form-group input-group col-md-2">
-                    <label for="terminalCustomCode">Treminal</label>
-                    <form:input id="terminalCustomCode" class="typeahead form-control" type="text"
-                                path="terminalCustomCode" style="margin-bottom:  15px;"/>
-                    <form:hidden id="terminalIdHidden" path="terminalId"/>
-                </div>
-                <div class="form-group input-group col-md-2">
-                    <label for="typeDescription">Tip transakcije</label>
-                    <form:input id="typeDescription" class="typeahead form-control" type="text"
-                                path="typeDescription" style="margin-bottom:  15px;"/>
-                    <form:hidden id="typeIdHidden" path="typeId"/>
-                </div>
-                <div class="form-group input-group col-md-2">
-                    <label for="distributorName">Distributor</label>
-                    <form:input id="distributorName" class="typeahead form-control" type="text"
-                                path="distributorName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="distributorIdHidden" path="distributorId"/>
-                </div>
-                <button type="submit" class="btn btn-default">Pretraga</button>
+                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.navbar-collapse -->
+            <!-- /.container-fluid -->
         </div>
-        <!-- /.container-fluid -->
-    </nav>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Distributor</th>
-                <th>Merchant</th>
-                <th>POS</th>
-                <th>Terminal</th>
-                <th>Usluga</th>
-                <th>Iznos za fakturisanje</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:set var="count" value="0" scope="page"/>
-            <c:forEach var="item" items="${data}">
-                <!-- Modal -->
-                <tr>
-                    <td><c:out value="${item.distributorId}"/></td>
-                    <td><c:out value="${item.distributorName}"/></td>
-                    <td hidden><c:out value="${item.merchantId}"/></td>
-                    <td><c:out value="${item.merchantName}"/></td>
-                    <td hidden><c:out value="${item.posId}"/></td>
-                    <td><c:out value="${item.posName}"/></td>
-                    <td><c:out value="${item.treminalId}"/></td>
-                    <td hidden><c:out value="${item.treminalName}"/></td>
-                    <td hidden><c:out value="${item.serviceId}"/></td>
-                    <td><c:out value="${item.serviceDescription}"/></td>
-                    <td><c:out value="${item.amount}"/></td>
-                </tr>
-                <c:set var="count" value="${count + 1}" scope="page"/>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
-    <nav>
-
-        <ul class="pager pull-right">
-            Strana
-            <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/invoicing/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page - 1}"/></c:if>">
-                    <span class="glyphicon glyphicon-backward"></span> Prethodna
-                </a>
-            </li>
-            <c:out value="${page+1} od ${numberOfPages+1}"/>
-            <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/invoicing/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page + 1}"/></c:if>">
-                    <span class="glyphicon glyphicon-forward"></span> Naredna
-                </a>
-            </li>
-        </ul>
     </nav>
 </form:form>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Distributor</th>
+            <th>Merchant</th>
+            <th>POS</th>
+            <th>Terminal</th>
+            <th>Usluga</th>
+            <th>Iznos za fakturisanje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="count" value="0" scope="page"/>
+        <c:forEach var="item" items="${data}">
+            <!-- Modal -->
+            <tr>
+                <td hidden><c:out value="${item.distributorId}"/></td>
+                <td><c:out value="${item.distributorName}"/></td>
+                <td hidden><c:out value="${item.merchantId}"/></td>
+                <td><c:out value="${item.merchantName}"/></td>
+                <td hidden><c:out value="${item.posId}"/></td>
+                <td><c:out value="${item.posName}"/></td>
+                <td hidden><c:out value="${item.treminalId}"/></td>
+                <td><c:out value="${item.treminalName}"/></td>
+                <td hidden><c:out value="${item.serviceId}"/></td>
+                <td><c:out value="${item.serviceDescription}"/></td>
+                <td><c:out value="${item.amount}"/></td>
+            </tr>
+            <c:set var="count" value="${count + 1}" scope="page"/>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<nav>
+
+    <ul class="pager pull-right">
+        Strana
+        <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/invoicing/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page - 1}"/></c:if>">
+                <span class="glyphicon glyphicon-backward"></span> Prethodna
+            </a>
+        </li>
+        <c:out value="${page+1} od ${numberOfPages+1}"/>
+        <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/invoicing/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page + 1}"/></c:if>">
+                <span class="glyphicon glyphicon-forward"></span> Naredna
+            </a>
+        </li>
+    </ul>
+</nav>
+
 <script type="text/javascript">
     $('#serviceProviderName').typeahead({
         hint: false,

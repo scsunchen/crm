@@ -25,7 +25,8 @@ import java.time.LocalDateTime;
         "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
         "         and trans.statusId is not null " +
         "         and trans.invoicing_Status = 0 " +
-        "         and trans.response_Time < sysdate " +
+        "         and trans.response_Time < :invoicingDate " +
+        "         and (trans.distributor_id = :distributorId or :distributorId is null) " +
         "         and trans.type_id = type.id" +
         "         and trans.terminal_id = terminal.id " +
         "         and trans.client_id = distributor.id" +

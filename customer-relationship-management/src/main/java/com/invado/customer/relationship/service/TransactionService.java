@@ -1,8 +1,8 @@
 package com.invado.customer.relationship.service;
 
-import com.invado.core.domain.ApplicationSetup;
-import com.invado.core.domain.BusinessPartner;
-import com.invado.core.domain.Client;
+import com.invado.core.domain.*;
+import com.invado.core.domain.Currency;
+import com.invado.core.exception.*;
 import com.invado.core.utils.NativeQueryResultsMapper;
 import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.Device;
@@ -14,11 +14,19 @@ import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
 import com.invado.customer.relationship.service.exception.*;
+import com.invado.customer.relationship.service.exception.ConstraintViolationException;
 import com.invado.customer.relationship.service.exception.EntityExistsException;
 import com.invado.customer.relationship.service.exception.EntityNotFoundException;
 import com.invado.customer.relationship.service.exception.IllegalArgumentException;
 
+import com.invado.customer.relationship.service.exception.PageNotExistsException;
+import com.invado.customer.relationship.service.exception.ReferentialIntegrityException;
+import com.invado.customer.relationship.service.exception.SystemException;
+import com.invado.finance.domain.*;
+import com.invado.finance.domain.Properties;
+import com.invado.finance.service.dto.InvoiceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +38,19 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang.time.DateUtils;
 
 /**
  * Created by Nikola on 23/08/2015.
@@ -447,15 +460,33 @@ public class TransactionService {
         //TODO : check ReadTransactionPermission
 
         LocalDateTime invoicingDate = LocalDateTime.now();
-
+        Date out = null;
         Query query = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES);
-        //query.setParameter("invoicingDate", invoicingDate);
+
+        for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
+            if (s.getKey().equals("invoicingDate")) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+                    String in = s.getValue().toString();
+                    out = formatter.parse(in);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //out = (Date)s.getValue();
+            }
+        }
+
+        if (out == null) {
+            out = Date.from(invoicingDate.now().atZone(ZoneId.systemDefault()).toInstant());
+        }
+        //Date out = Date.from(invoicingDate.atZone(ZoneId.systemDefault()).toInstant());
+        query.setParameter("invoicingDate", out);
 
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
             Query countEntitiesQuery = dao.createNamedQuery(Transaction.COUNT_INVOICING_CANDIDATES);
-            countEntitiesQuery.setParameter("invoicingDate", invoicingDate);
+            countEntitiesQuery.setParameter("invoicingDate", LocalDateTime.now());
 
             Long countEntities = (Long) countEntitiesQuery.getSingleResult();
 
@@ -473,16 +504,18 @@ public class TransactionService {
                 int start = numberOfPages.intValue() * pageSize;
                 query.setFirstResult(start);
                 query.setMaxResults(pageSize);
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(numberOfPages.intValue());
             } else {
                 int start = p.getPage() * pageSize;
                 query.setFirstResult(start);
                 query.setMaxResults(pageSize);
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(pageNumber);
             }
 
             List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(query.getResultList(), InvoicingTransactionSetDTO.class);
             result.setData(invoicingTransactionSetDTOs);
-            result.setNumberOfPages(numberOfPages.intValue());
-            result.setPage(numberOfPages.intValue());
 
             return result;
         } catch (PageNotExistsException ex) {
@@ -511,6 +544,79 @@ public class TransactionService {
             throw new SystemException(
                     Utils.getMessage("Transaction.PersistenceEx.ReadAll"), ex);
         }
+    }
+
+
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+    public List<InvoiceDTO> genInvoices(TransactionDTO transactionDTO) throws ReferentialIntegrityException{
+
+
+        LocalDate invoicingDate = LocalDate.now();
+        Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES);
+        queryInvoicingCandidates.setParameter("invoicingDate", transactionDTO.getInvoicingDate());
+        queryInvoicingCandidates.setParameter("distributorId", transactionDTO.getDistributorId());
+        List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
+        Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
+        Map<Integer, Map<Integer, Invoice>> invoicePerMerchantMap = new HashMap<Integer, Map<Integer, Invoice>>();
+
+        for (InvoicingTransactionSetDTO transactionSetDTO : invoicingTransactionSetDTOs) {
+
+            if (invoicePerMerchantMap.get(transactionDTO.getMerchantId()).get(transactionDTO.getPointOfSaleId()) == null) {
+
+                Client client = dao.find(Client.class, transactionDTO.getDistributorId());
+                OrgUnit orgUnit = dao.createNamedQuery(OrgUnit.READ_ROOT_BY_CLIENT, OrgUnit.class)
+                        .setParameter("clientId", client.getId())
+                        .getSingleResult();
+
+                Invoice invoice = new Invoice(orgUnit, dao.createNamedQuery(Invoice.READ_MAX_DOCUMENT, String.class)
+                        .setParameter("client", client)
+                        .setParameter("orgUnit", orgUnit).getSingleResult());
+                invoice.setCreditRelationDate(invoicingDate);
+                invoice.setInvoiceDate(invoicingDate);
+                invoice.setIsDomesticCurrency(true);
+                Currency currency = null;
+                if (invoice.isDomesticCurrency()) {
+                    //read domestic currency ISO code from application properties
+                    String ISOCode = dao.find(Properties.class,
+                            "domestic_currency")
+                            .getValue();
+                    currency = dao.find(Currency.class, ISOCode);
+                    //if domestic currency does not exists in database create it
+                    if (currency == null) {
+                        Currency domesticCurrency = new Currency(ISOCode);
+                        domesticCurrency.setDescription("");
+                        currency = dao.merge(domesticCurrency);
+                        dao.flush();
+                    }
+                } else {
+                    currency = dao.find(Currency.class, invoice.getCurrencyISOCode());
+                    if (currency == null) {
+                        throw new ReferentialIntegrityException(
+                                com.invado.finance.Utils.getMessage("Invoice.ReferentialIntegrityException.Currency",
+                                        invoice.getCurrencyISOCode()));
+                    }
+                }
+                invoice.setCurrency(currency);
+                invoice.setPaid(false);
+                invoice.setPrinted(false);
+                invoice.setRecorded(false);
+                invoice.setInvoiceType(InvoiceType.INVOICE);
+                invoice.setPartner(dao.find(BusinessPartner.class, transactionDTO.getMerchantId()));
+                invoice.setPartnerType(InvoiceBusinessPartner.DOMESTIC);
+                invoice.setSubordinatePartner(dao.find(BusinessPartner.class, transactionDTO.getPointOfSaleId()));
+                invoice.setBank(client.getBank());
+                invoice.setValueDate(invoicingDate);
+                dao.persist(invoice);
+                invoicesPerPOSMap.put(transactionDTO.getPointOfSaleId(), invoice);
+                invoicePerMerchantMap.put(transactionDTO.getMerchantId(), invoicesPerPOSMap);
+
+            }
+
+        }
+
+
+        return null;
+
     }
 
     @Transactional(readOnly = true)

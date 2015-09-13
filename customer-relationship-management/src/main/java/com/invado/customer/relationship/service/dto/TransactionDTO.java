@@ -4,7 +4,6 @@ package com.invado.customer.relationship.service.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -33,6 +32,7 @@ public class TransactionDTO {
     private LocalDateTime requestTime;
     @DateTimeFormat(style = "MM")
     private LocalDateTime responseTime;
+    private String invoicingDate;
     private Boolean invoicingStatus;
 
 
@@ -180,5 +180,13 @@ public class TransactionDTO {
 
     public void setMerchantName(String merchantName) {
         this.merchantName = merchantName;
+    }
+
+    public String getInvoicingDate() {
+        return invoicingDate;
+    }
+
+    public void setInvoicingDate(String invoicingDate) {
+        this.invoicingDate = invoicingDate;
     }
 }

@@ -56,10 +56,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/transaction-table.jsp"/>
     </definition>
     <definition name="invoicingSet-view" extends="main-menu-form">
-        <put-attribute name="title" value="Sumarne Transakcije"/>
-        <put-attribute name="panel-title" value="Pregled transakcija"/>
+        <put-attribute name="title" value="Sumarni pregled Transakcije"/>
+        <put-attribute name="panel-title" value="Sumarni pregled transakcija"/>
         <put-attribute name="filter" value="/WEB-INF/jsp/transaction-filter.jsp"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/invoicingtransactions-table.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/in-table.jsp"/>
     </definition>
     <definition name="terms-table" extends="main-menu-form">
         <put-attribute name="title" value="Uslovi poslovanja"/>

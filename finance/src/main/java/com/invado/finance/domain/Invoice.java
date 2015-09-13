@@ -28,6 +28,9 @@ import java.util.Objects;
         @NamedQuery(name = "Invoice.GetMaxOrdinalNumber",
                 query = "SELECT MAX(x.ordinal) FROM InvoiceItem x WHERE "
                         + "x.invoice.document = :document AND x.invoice.orgUnitE = :orgUnit"),
+        @NamedQuery(name = Invoice.READ_MAX_DOCUMENT,
+                query = "SELECT MAX(cast(x.document as integer))+1 FROM Invoice x WHERE "
+                        + "x.client = :client AND x.orgUnitE = :orgUnit"),
         @NamedQuery(name = "Invoice.GetAll",
                 query = "SELECT x FROM Invoice x ORDER BY x.orgUnit.client.id,"
                         + "x.orgUnit.id, x.document"),
@@ -40,6 +43,8 @@ import java.util.Objects;
 })
 @IdClass(InvoicePK.class)
 public class Invoice implements Serializable {
+
+    public static final String READ_MAX_DOCUMENT = "Invoice.GetMaxDocument";
 
     @Id
     @JoinColumn(name = "company_id", referencedColumnName = "id")
@@ -68,6 +73,10 @@ public class Invoice implements Serializable {
     @ManyToOne
     @JoinColumn(name = "partner_id")
     private BusinessPartner partner;
+    @NotNull(message = "{Invoice.Partner.NotNull}")
+    @ManyToOne
+    @JoinColumn(name = "subordinate_partner_id")
+    private BusinessPartner subordinatePartner;
     @NotNull(message = "{Invoice.InvoiceDate.NotNull}")
     @Column(name = "invoice_date")
     @Convert(converter = LocalDateConverter.class)
@@ -238,6 +247,14 @@ public class Invoice implements Serializable {
         return partner;
     }
 
+    public BusinessPartner getSubordinatePartner() {
+        return subordinatePartner;
+    }
+
+    public void setSubordinatePartner(BusinessPartner subordinatePartner) {
+        this.subordinatePartner = subordinatePartner;
+    }
+
     public String getCurrencyISOCode() {
         return currency.getISOCode();
     }
@@ -376,6 +393,14 @@ public class Invoice implements Serializable {
 
     public String getUserFullName() {
         return user.getDescription();
+    }
+
+    public OrgUnit getOrgUnitE() {
+        return orgUnitE;
+    }
+
+    public void setOrgUnitE(OrgUnit orgUnitE) {
+        this.orgUnitE = orgUnitE;
     }
 
     public void setVersion(Long version) {
