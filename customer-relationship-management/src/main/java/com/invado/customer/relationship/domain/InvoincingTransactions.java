@@ -29,6 +29,8 @@ public class InvoincingTransactions {
     private Client ditributor;
     @Column(name = "INVOICING_DATE")
     private LocalDate invoicingDate;
+    @Column (name = "INVOICED_FROM ")
+    private LocalDate invoicedFrom;
     @Column (name = "INVOICED_TO")
     private LocalDate invoicedTo;
 

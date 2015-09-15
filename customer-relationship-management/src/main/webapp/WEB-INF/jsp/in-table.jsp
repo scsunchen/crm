@@ -25,7 +25,7 @@
                     </div>
                     <input:inputDate name="invoicingDate" label="Datum do: " placeholder="dd.mm.yyyy."/>
                     <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal"><spring:message
+                        <button class="btn btn-default" data-dismiss="modal" name="genInvoices"><spring:message
                                 code="Invoicing.Button.Cancel"/></button>
                         <button class="btn btn-primary" type="submit"><spring:message
                                 code="Invoicing.Button.Confirm"/></button>
@@ -51,7 +51,7 @@
                 <div class="form-group input-group col-md-4">
                     <input:inputDate name="invoicingDate" label="Datum do: " placeholder="dd.mm.yyyy."/>
                 </div>
-                <button type="submit" class="btn btn-default">Pretraga</button>
+                <button type="submit" name="search" class="btn btn-default">Pretraga</button>
             </div>
             <!-- /.navbar-collapse -->
         </div>

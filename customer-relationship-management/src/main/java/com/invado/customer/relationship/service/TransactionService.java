@@ -609,8 +609,11 @@ public class TransactionService {
                 dao.persist(invoice);
                 invoicesPerPOSMap.put(transactionDTO.getPointOfSaleId(), invoice);
                 invoicePerMerchantMap.put(transactionDTO.getMerchantId(), invoicesPerPOSMap);
-
+            }else{
+                Invoice invoice = invoicePerMerchantMap.get(transactionDTO.getMerchantId()).get(transactionDTO.getPointOfSaleId());
             }
+
+            /*insertovanje stavki fakture*/
 
         }
 

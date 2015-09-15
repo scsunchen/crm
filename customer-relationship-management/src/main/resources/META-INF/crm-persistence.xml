@@ -32,9 +32,9 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-<!--
+
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            -->
+
             <property name="toplink.jdbc.url" value="jdbc:oracle:thin:@//94.127.3.157:1521/xe"/>
             <property name="toplink.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
             <property name="toplink.jdbc.user" value="devel"/>
