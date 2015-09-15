@@ -15,7 +15,7 @@ import javax.validation.Validator;
  *
  * @author bdragan
  */
-public class MasterdataValidator {
+public class CRMValidator {
 
     private static final Validator validator;
 
@@ -24,7 +24,7 @@ public class MasterdataValidator {
         .configure()
         .messageInterpolator(
             new ResourceBundleMessageInterpolator(
-                new PlatformResourceBundleLocator( "com.invado.finance.bundle.server-strings" ))
+                new PlatformResourceBundleLocator( "com.invado.customer.relationship.bundle.server-strings" ))
         )                
         .buildValidatorFactory()
         .getValidator();

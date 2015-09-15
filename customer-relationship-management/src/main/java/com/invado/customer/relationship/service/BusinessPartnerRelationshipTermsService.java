@@ -2,6 +2,10 @@ package com.invado.customer.relationship.service;
 
 import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.exception.ConstraintViolationException;
+import com.invado.core.exception.PageNotExistsException;
+import com.invado.core.exception.ReferentialIntegrityException;
+import com.invado.core.exception.SystemException;
 import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
 import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTermsItems;
@@ -10,12 +14,6 @@ import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipT
 import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsItemsDTO;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
-import com.invado.customer.relationship.service.exception.ConstraintViolationException;
-import com.invado.customer.relationship.service.exception.EntityNotFoundException;
-import com.invado.customer.relationship.service.exception.IllegalArgumentException;
-import com.invado.customer.relationship.service.exception.PageNotExistsException;
-import com.invado.customer.relationship.service.exception.ReferentialIntegrityException;
-import com.invado.customer.relationship.service.exception.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -55,7 +53,8 @@ public class BusinessPartnerRelationshipTermsService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    public BusinessPartnerRelationshipTerms create(BusinessPartnerRelationshipTerms a) throws IllegalArgumentException,
+    public BusinessPartnerRelationshipTerms create(BusinessPartnerRelationshipTerms a) 
+            throws ConstraintViolationException,
             javax.persistence.EntityExistsException {
         //check CreateBusinessPartnerRelationshipTermsPermission
         if (a == null) {
@@ -69,12 +68,12 @@ public class BusinessPartnerRelationshipTermsService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
 
             dao.persist(a);
             return a;
-        } catch (IllegalArgumentException | EntityExistsException ex) {
+        } catch (ConstraintViolationException | EntityExistsException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -112,7 +111,6 @@ public class BusinessPartnerRelationshipTermsService {
             item.setDateFrom(dto.getDateFrom());
             item.setDaysToPay(dto.getDaysToPay());
             item.setRebate(dto.getRebate());
-            item.setRemark(dto.getRemark());
             item.setEndDate(dto.getEndDate());
             item.setStatus(dto.getStatus());
             //item.setVersion(dto.getVersion());

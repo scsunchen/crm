@@ -6,10 +6,8 @@ import com.invado.core.dto.DeviceStatusDTO;
 //import com.invado.finance.service.MasterDataService;
 import com.invado.customer.relationship.service.DeviceService;
 import com.invado.customer.relationship.service.DeviceStatusService;
-import com.invado.finance.service.MasterDataService;
-import com.invado.masterdata.service.BPService;
-import com.invado.masterdata.service.dto.PageRequestDTO;
-import com.invado.masterdata.service.dto.ReadRangeDTO;
+import com.invado.customer.relationship.service.dto.PageRequestDTO;
+import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,11 +28,6 @@ public class DeviceController {
     private DeviceService deviceService;
     @Autowired
     private DeviceStatusService deviceStatusService;
-    @Autowired
-    private MasterDataService masterDataService;
-
-
-
 
     @RequestMapping("/device/{page}")
     public String showItems(@PathVariable Integer page,
@@ -123,6 +116,6 @@ public class DeviceController {
     @RequestMapping(value = "/device/read-item/{desc}")
     public @ResponseBody
     List<Article> findItemByDescription(@PathVariable String desc) {
-        return masterDataService.readItemByDescription(desc);
+        return deviceService.readItemByDescription(desc);
     }
 }

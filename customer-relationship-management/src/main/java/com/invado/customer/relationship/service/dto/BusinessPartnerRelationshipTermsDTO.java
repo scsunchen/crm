@@ -19,7 +19,6 @@ public class BusinessPartnerRelationshipTermsDTO {
     private Integer daysToPay;
     private Integer rebate;
     private BusinessPartnerRelationshipTerms.Status status;
-    private String remark;
     private Long version;
 
 
@@ -87,13 +86,6 @@ public class BusinessPartnerRelationshipTermsDTO {
         this.status = status;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 
     public Long getVersion() {
         return version;

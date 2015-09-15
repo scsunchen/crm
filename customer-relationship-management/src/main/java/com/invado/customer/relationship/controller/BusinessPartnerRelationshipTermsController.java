@@ -4,9 +4,8 @@ import com.invado.core.domain.BusinessPartner;
 import com.invado.core.dto.BusinessPartnerDTO;
 import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
 import com.invado.customer.relationship.service.BusinessPartnerRelationshipTermsService;
+import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.dto.*;
-import com.invado.masterdata.service.BPService;
-import com.invado.masterdata.service.BPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,15 +27,10 @@ import java.util.Map;
 public class BusinessPartnerRelationshipTermsController {
 
     @Autowired
-    private BPService partnerService;
-    @Autowired
     private BusinessPartnerRelationshipTermsService businessPartnerRelationshipTermsService;
+    @Autowired
+    private MasterDataService masterDataService;
 
-
-    @RequestMapping("home")
-    public String showHomePage() {
-        return "home";
-    }
 
     @RequestMapping(value = "/terms/read-terms.html")
     public String prepareShowItems(Map<String, Object> model)
@@ -68,7 +62,7 @@ public class BusinessPartnerRelationshipTermsController {
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
 
         model.put("item", new BusinessPartnerRelationshipTerms());
-        List<BusinessPartner> partners = partnerService.readAll(null, null, null, null);
+        List<BusinessPartner> partners = masterDataService.readBusinessPartnerByName("");
         model.put("partners", partners);
 
         model.put("action", "create");

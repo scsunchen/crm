@@ -4,11 +4,13 @@ import com.invado.core.domain.ApplicationSetup;
 import com.invado.customer.relationship.domain.DeviceStatus;
 import com.invado.customer.relationship.domain.DeviceStatus_;
 import com.invado.core.dto.DeviceStatusDTO;
-import com.invado.masterdata.Utils;
-import com.invado.masterdata.service.dto.PageRequestDTO;
-import com.invado.masterdata.service.dto.ReadRangeDTO;
-import com.invado.masterdata.service.exception.*;
-import com.invado.masterdata.service.exception.IllegalArgumentException;
+import com.invado.core.exception.ConstraintViolationException;
+import com.invado.core.exception.PageNotExistsException;
+import com.invado.core.exception.ReferentialIntegrityException;
+import com.invado.core.exception.SystemException;
+import com.invado.customer.relationship.Utils;
+import com.invado.customer.relationship.service.dto.PageRequestDTO;
+import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -72,11 +74,11 @@ public class DeviceStatusService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
             dao.persist(deviceStatus);
             return deviceStatus;
-        } catch (IllegalArgumentException ex) {
+        } catch (ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
