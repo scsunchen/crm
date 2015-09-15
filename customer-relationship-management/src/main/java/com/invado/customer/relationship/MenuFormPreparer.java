@@ -55,7 +55,7 @@ public class MenuFormPreparer implements ViewPreparer {
         crm.put("CRM", "Status terminala", "/crm/devicestatus/0");
         crm.put("CRM", "Terminal", "/crm/device/0");
         crm.put("CRM", "Transakcije", "/crm/transactions/0");
-        crm.put("CRM", "Transakcije", "/crm/invoicing/0");
+        crm.put("CRM", "Fakturisanje", "/crm/invoicing/0");
         modules.add(crm);
 
         /*Servis modul*/
