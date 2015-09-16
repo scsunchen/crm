@@ -4,6 +4,7 @@ package com.invado.customer.relationship.service.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +18,7 @@ public class TransactionDTO {
     private Integer typeId;
     private String typeDescription;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
-    private Integer amount;
+    private BigDecimal amount;
     private Integer terminalId;
     private String terminalCustomCode;
     private Integer pointOfSaleId;
@@ -70,11 +71,11 @@ public class TransactionDTO {
         this.typeDescription = typeDescription;
     }
 
-    public Integer getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

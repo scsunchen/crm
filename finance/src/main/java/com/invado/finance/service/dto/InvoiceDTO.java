@@ -22,6 +22,8 @@ public class InvoiceDTO  {
     private String document;
     private Integer partnerID;
     private String partnerName;
+    private Integer subordinatePartnerID;
+    private String subordinatepartnerName;
     @DateTimeFormat(style = "M-")
     private LocalDate invoiceDate;
     @DateTimeFormat(style = "M-")
@@ -44,6 +46,7 @@ public class InvoiceDTO  {
     private Integer bankID;
     private String bankName;
     private Long version;
+    private Integer maxItemOrdinal;
 
     public Integer getClientId() {
         return clientId;
@@ -99,6 +102,22 @@ public class InvoiceDTO  {
 
     public void setPartnerName(String partnerName) {
         this.partnerName = partnerName;
+    }
+
+    public Integer getSubordinatePartnerID() {
+        return subordinatePartnerID;
+    }
+
+    public void setSubordinatePartnerID(Integer subordinatePartnerID) {
+        this.subordinatePartnerID = subordinatePartnerID;
+    }
+
+    public String getSubordinatepartnerName() {
+        return subordinatepartnerName;
+    }
+
+    public void setSubordinatepartnerName(String subordinatepartnerName) {
+        this.subordinatepartnerName = subordinatepartnerName;
     }
 
     public LocalDate getInvoiceDate() {
@@ -244,6 +263,12 @@ public class InvoiceDTO  {
     public void setVersion(Long version) {
         this.version = version;
     }
-    
-    
+
+    public Integer getMaxItemOrdinal() {
+        return maxItemOrdinal;
+    }
+
+    public void setMaxItemOrdinal(Integer maxItemOrdinal) {
+        this.maxItemOrdinal = maxItemOrdinal;
+    }
 }

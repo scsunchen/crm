@@ -13,11 +13,24 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "CRM_BUSINESS_TERMS_ITEMS", schema = "devel")
-public class BusinessPartnerRelationshipTermsItems implements Serializable, Comparable<BusinessPartnerRelationshipTermsItems>{
+@NamedQueries({
+        @NamedQuery(name = BusinessPartnerRelationshipTermsItems.READ_TERMS_PER_PARTNER_AND_ARTICLE,
+        query = "SELECT it FROM BusinessPartnerRelationshipTermsItems as it " +
+                " INNER  JOIN it.businessPartnerRelationshipTerms as te " +
+                " WHERE  te.businessPartner.id = :partner  " +
+                " AND it.article.code = :article " +
+                " AND te.endDate is null "),
+        @NamedQuery(name = BusinessPartnerRelationshipTermsItems.READ_TERMS_BY_ID,
+                query = "SELECT it FROM BusinessPartnerRelationshipTermsItems as it WHERE it.id = :id ")
+})
+public class BusinessPartnerRelationshipTermsItems implements Serializable, Comparable<BusinessPartnerRelationshipTermsItems> {
+
+    public static final String READ_TERMS_PER_PARTNER_AND_ARTICLE = "ReadTermsPerPartnerAndPartner";
+    public static final String READ_TERMS_BY_ID = "ReadTermsById";
 
     @Id
     @NotNull(message = "{BusinessTermsItem.BusinessTerms.NotNull}")
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "terms_id", referencedColumnName = "id")
     private BusinessPartnerRelationshipTerms businessPartnerRelationshipTerms;
     @Id
@@ -28,10 +41,14 @@ public class BusinessPartnerRelationshipTermsItems implements Serializable, Comp
     @ManyToOne
     @JoinColumn(name = "article_code", referencedColumnName = "code")
     private Article article;
-    /**Ukupna vrednost prodatih artikala na jednom dokumentu. ukoliko iznos prelazi zadati totalAmount dobija se dodatni popust*/
+    /**
+     * Ukupna vrednost prodatih artikala na jednom dokumentu. ukoliko iznos prelazi zadati totalAmount dobija se dodatni popust
+     */
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
-    /**Ukupna količina prodatih artikala na jednom dokumentu. ukoliko količina prelazi zadati totalQuantity dobija se dodatni popust*/
+    /**
+     * Ukupna količina prodatih artikala na jednom dokumentu. ukoliko količina prelazi zadati totalQuantity dobija se dodatni popust
+     */
     @Column(name = "total_quantity")
     private BigDecimal totalQuantity;
     @Column(name = "rebate")
@@ -106,7 +123,7 @@ public class BusinessPartnerRelationshipTermsItems implements Serializable, Comp
 
     @Override
     public int compareTo(BusinessPartnerRelationshipTermsItems o) {
-        if(o.businessPartnerRelationshipTerms.equals(businessPartnerRelationshipTerms)){
+        if (o.businessPartnerRelationshipTerms.equals(businessPartnerRelationshipTerms)) {
             return ordinal.compareTo(o.ordinal);
         } else {
             return businessPartnerRelationshipTerms.getId().compareTo(o.businessPartnerRelationshipTerms.getId());

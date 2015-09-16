@@ -3,11 +3,11 @@ package com.invado.customer.relationship.domain;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
 import com.invado.core.domain.LocalDateTimeConverter;
-import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -15,9 +15,30 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "CRM_TRANSACTION")
-@NamedNativeQuery(name = Transaction.INVOICING_CANDIDATES, query = " select trans.client_id as distributorId, " +
-        "      distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
-        "      trans.point_Of_Sale_id as posId, pos.name as posName, trans.terminal_id as treminalId, custom_Code as treminalName," +
+@NamedNativeQueries({
+        @NamedNativeQuery(name = Transaction.INVOICING_CANDIDATES_PER_POS, query = " select trans.client_id as distributorId, " +
+                "      distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
+                "      trans.point_Of_Sale_id as posId, pos.name as posName, trans.terminal_id as treminalId, terminal.custom_code as treminalName," +
+                "      a.code as service, service.description as serviceDescription, sum(trans.amount) as amount " +
+                "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
+                "             c_business_partner pos, crm_device terminal, crm_Service_Provider_Services service, r_article a  " +
+                "         where type.invoiceable = 1 " +
+                "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                "         and trans.statusId is not null " +
+                "         and trans.invoicing_Status = 0 " +
+                "         and trans.response_Time < :invoicingDate " +
+                "         and (trans.distributor_id = :distributorId or :distributorId is null) " +
+                "         and trans.type_id = type.id" +
+                "         and trans.terminal_id = terminal.id " +
+                "         and trans.client_id = distributor.id" +
+                "         and trans.service_Provider_id = service.service_Provider" +
+                "         and trans.business_partner_id = merchant.id" +
+                "         and trans.point_of_sale_id  =  pos.id " +
+                "         and service.service_id = a.code " +
+                "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, trans.point_Of_Sale_id, pos.name, " +
+                "                    trans.terminal_id, terminal.custom_Code, service.service_id, service.description, a .code " +
+                "         order by 1, 2, 3, 4, 5 "),
+        @NamedNativeQuery(name = Transaction.COUNT_INVOICING_CANDIDATES_PER_POS, query = " select count(*) from (select 1 " +
         "      service.id as service, service.description as serviceDescription, sum(trans.amount) as amount " +
         "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
         "             c_business_partner pos, crm_device terminal, crm_Service_Provider_Services service " +
@@ -33,26 +54,51 @@ import java.time.LocalDateTime;
         "         and trans.service_Provider_id = service.service_Provider" +
         "         and trans.business_partner_id = merchant.id" +
         "         and trans.point_of_sale_id  =  pos.id " +
+        "         and service.service_id = a.code " +
         "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, trans.point_Of_Sale_id, pos.name, " +
-        "                    trans.terminal_id, terminal.custom_Code, service.id, service.description" +
-        "         order by 1, 2, 3, 4, 5 ")
-@NamedQueries({
-        @NamedQuery(name = Transaction.COUNT_INVOICING_CANDIDATES,
-                query = " select count(*) " +
-                        " from TransactionType type, Transaction trans, ServiceProviderServices service " +
-                        " where type.invoiceable = true " +
-                        " and type.invoicingStatuses like '%'||trans.statusId||'%' " +
-                        " and trans.statusId is not null " +
-                        " and trans.invoicingStatus = false " +
-                        " and trans.responseTime < :invoicingDate " +
-                        " and trans.type = type " +
-                        " and service.serviceProvider = trans.serviceProvider ")
+        "                    trans.terminal_id, terminal.custom_Code, service.service_id, service.description, a .code )" ),
+        @NamedNativeQuery(name = Transaction.INVOICING_CANDIDATES_PER_MERCHANT, query = " select trans.client_id as distributorId, " +
+                "      distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
+                "      a.code as service, service.description as serviceDescription, sum(trans.amount) as amount " +
+                "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
+                "             crm_Service_Provider_Services service, r_article a " +
+                "         where type.invoiceable = 1 " +
+                "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                "         and trans.statusId is not null " +
+                "         and trans.invoicing_Status = 0 " +
+                "         and trans.response_Time < :invoicingDate " +
+                "         and (trans.client_id = :distributorId or :distributorId is null) " +
+                "         and trans.type_id = type.id" +
+                "         and trans.client_id = distributor.id" +
+                "         and trans.service_Provider_id = service.service_Provider" +
+                "         and trans.business_partner_id = merchant.id" +
+                "         and service.service_id = a.code " +
+                "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, a.code, service.description " +
+                "         order by 1, 2, 3, 4, 5 "),
+        @NamedNativeQuery(name = Transaction.COUNT_INVOICING_CANDIDATES_PER_MERCHANT, query = " select count(*) from (select 1 " +
+                "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
+                "             crm_Service_Provider_Services service, r_article " +
+                "         where type.invoiceable = 1 " +
+                "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                "         and trans.statusId is not null " +
+                "         and trans.invoicing_Status = 0 " +
+                "         and trans.response_Time < :invoicingDate " +
+                "         and (trans.client_id = :distributorId or :distributorId is null) " +
+                "         and trans.type_id = type.id" +
+                "         and trans.client_id = distributor.id" +
+                "         and trans.service_Provider_id = service.service_Provider" +
+                "         and trans.business_partner_id = merchant.id" +
+                "         and service.service_id = a.code " +
+                "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, a.code, service.description )")
+
 })
+
 public class Transaction implements Serializable {
 
-    public static final String INVOICING_CANDIDATES = "Transaction.ReadInvoicingCandidatesTransactions";
-    public static final String COUNT_INVOICING_CANDIDATES = "Transaction.CountInvoincingCandidatesSet";
-
+    public static final String INVOICING_CANDIDATES_PER_POS = "Transaction.ReadInvoicingCandidatesTransactionsPerPOS";
+    public static final String COUNT_INVOICING_CANDIDATES_PER_POS = "Transaction.CountInvoincingCandidatesSetPerPOS";
+    public static final String INVOICING_CANDIDATES_PER_MERCHANT = "Transaction.ReadInvoicingCandidatesTransactionsPerMerchant";
+    public static final String COUNT_INVOICING_CANDIDATES_PER_MERCHANT = "Transaction.CountInvoincingCandidatesSetPerMerchant";
     @Id
     private Long id;
     @Column(name = "TRANSACTION_STATUS")
@@ -60,7 +106,7 @@ public class Transaction implements Serializable {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private TransactionType type;
-    private Integer amount;
+    private BigDecimal amount;
     @ManyToOne
     @JoinColumn(name = "terminal_id")
     private Device terminal;
@@ -125,11 +171,11 @@ public class Transaction implements Serializable {
         this.type = type;
     }
 
-    public Integer getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
