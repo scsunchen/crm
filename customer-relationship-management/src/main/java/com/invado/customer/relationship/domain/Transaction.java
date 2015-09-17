@@ -57,9 +57,9 @@ import java.time.LocalDateTime;
         "         and service.service_id = a.code " +
         "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, trans.point_Of_Sale_id, pos.name, " +
         "                    trans.terminal_id, terminal.custom_Code, service.service_id, service.description, a .code )" ),
-        @NamedNativeQuery(name = Transaction.INVOICING_CANDIDATES_PER_MERCHANT, query = " select trans.client_id as distributorId, " +
+        @NamedNativeQuery(name = Transaction.INVOICING_SUM_PER_MERCHANT, query = " select trans.client_id as distributorId, " +
                 "      distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
-                "      a.code as service, service.description as serviceDescription, sum(trans.amount) as amount " +
+                "      a.code as service, service.description as serviceDescription, sum(trans.amount) as amount, null as transactionId " +
                 "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
                 "             crm_Service_Provider_Services service, r_article a " +
                 "         where type.invoiceable = 1 " +
@@ -73,9 +73,9 @@ import java.time.LocalDateTime;
                 "         and trans.service_Provider_id = service.service_Provider" +
                 "         and trans.business_partner_id = merchant.id" +
                 "         and service.service_id = a.code " +
-                "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, a.code, service.description " +
+                "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, a.code, service.description, null " +
                 "         order by 1, 2, 3, 4, 5 "),
-        @NamedNativeQuery(name = Transaction.COUNT_INVOICING_CANDIDATES_PER_MERCHANT, query = " select count(*) from (select 1 " +
+        @NamedNativeQuery(name = Transaction.COUNT_INVOICING_SUM_PER_MERCHANT, query = " select count(*) from (select 1 " +
                 "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
                 "             crm_Service_Provider_Services service, r_article " +
                 "         where type.invoiceable = 1 " +
@@ -89,7 +89,37 @@ import java.time.LocalDateTime;
                 "         and trans.service_Provider_id = service.service_Provider" +
                 "         and trans.business_partner_id = merchant.id" +
                 "         and service.service_id = a.code " +
-                "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, a.code, service.description )")
+                "         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, a.code, service.description )"),
+        @NamedNativeQuery(name = Transaction.INVOICING_CANDIDATES_PER_MERCHANT, query = " select trans.client_id as distributorId, " +
+                "      distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
+                "      a.code as service, service.description as serviceDescription, trans.amount as amount, trans.id as transactionId " +
+                "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
+                "             crm_Service_Provider_Services service, r_article a " +
+                "         where type.invoiceable = 1 " +
+                "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                "         and trans.statusId is not null " +
+                "         and trans.invoicing_Status = 0 " +
+                "         and trans.response_Time < :invoicingDate " +
+                "         and (trans.client_id = :distributorId or :distributorId is null) " +
+                "         and trans.type_id = type.id" +
+                "         and trans.client_id = distributor.id" +
+                "         and trans.service_Provider_id = service.service_Provider" +
+                "         and trans.business_partner_id = merchant.id" +
+                "         and service.service_id = a.code "),
+        @NamedNativeQuery(name = Transaction.COUNT_INVOICING_CANDIDATES_PER_MERCHANT, query = " select count(*) from (select 1 " +
+                "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
+                "             crm_Service_Provider_Services service, r_article " +
+                "         where type.invoiceable = 1 " +
+                "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                "         and trans.statusId is not null " +
+                "         and trans.invoicing_Status = 0 " +
+                "         and trans.response_Time < :invoicingDate " +
+                "         and (trans.client_id = :distributorId or :distributorId is null) " +
+                "         and trans.type_id = type.id" +
+                "         and trans.client_id = distributor.id" +
+                "         and trans.service_Provider_id = service.service_Provider" +
+                "         and trans.business_partner_id = merchant.id" +
+                "         and service.service_id = a.code ")
 
 })
 
@@ -97,6 +127,8 @@ public class Transaction implements Serializable {
 
     public static final String INVOICING_CANDIDATES_PER_POS = "Transaction.ReadInvoicingCandidatesTransactionsPerPOS";
     public static final String COUNT_INVOICING_CANDIDATES_PER_POS = "Transaction.CountInvoincingCandidatesSetPerPOS";
+    public static final String INVOICING_SUM_PER_MERCHANT = "Transaction.ReadInvoicingSumTransactionsPerMerchant";
+    public static final String COUNT_INVOICING_SUM_PER_MERCHANT = "Transaction.CountInvoincingSumSetPerMerchant";
     public static final String INVOICING_CANDIDATES_PER_MERCHANT = "Transaction.ReadInvoicingCandidatesTransactionsPerMerchant";
     public static final String COUNT_INVOICING_CANDIDATES_PER_MERCHANT = "Transaction.CountInvoincingCandidatesSetPerMerchant";
     @Id

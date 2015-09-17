@@ -544,27 +544,26 @@ public class TransactionService {
 
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public Map<Integer, InvoiceDTO> genInvoices(TransactionDTO transactionDTO) throws ReferentialIntegrityException,
-            ConstraintViolationException, EntityExistsException {
+    public Map<Integer, InvoiceDTO> genInvoices(TransactionDTO paramTransactionDTO) throws ReferentialIntegrityException,
+            ConstraintViolationException, EntityExistsException, EntityNotFoundException {
 
 
         LocalDate invoicingDate = LocalDate.now();
         Date out = null;
         Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
-        if (transactionDTO.getInvoicingDate() != null) {
+        if (paramTransactionDTO.getInvoicingDate() != null) {
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
             try {
-                String in = transactionDTO.getInvoicingDate();
+                String in = paramTransactionDTO.getInvoicingDate();
                 out = formatter.parse(in);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            //out = (Date)s.getValue();
         }
 
         Integer maxDocument = new Integer(1);
         queryInvoicingCandidates.setParameter("invoicingDate", out);
-        queryInvoicingCandidates.setParameter("distributorId", transactionDTO.getDistributorId());
+        queryInvoicingCandidates.setParameter("distributorId", paramTransactionDTO.getDistributorId());
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
         Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
         Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
@@ -598,53 +597,70 @@ public class TransactionService {
                 invoice.setBankID(client.getBank().getId());
                 invoice.setValueDate(invoicingDate);
                 invoice.setUsername("nikola");
-                //invoicesPerPOSMap.put(transactionDTO.getPointOfSaleId(), invoice);
                 invoicePerMerchantMap.put(transactionSetDTO.getMerchantId(), invoice);
 
                 invoiceService.createInvoice(invoice);
             } else {
                 invoice = invoicePerMerchantMap.get(transactionSetDTO.getMerchantId());
             }
-
-            InvoiceItemDTO invoiceItemDTO = new InvoiceItemDTO();
-
-            invoiceItemDTO.setClientId(invoice.getClientId());
-            invoiceItemDTO.setInvoiceDocument(invoice.getDocument());
-            invoiceItemDTO.setUnitId(invoice.getOrgUnitId());
-            invoiceItemDTO.setArticleCode(transactionSetDTO.getServiceId() + "");
-            Article article = dao.find(Article.class, transactionSetDTO.getServiceId());
-            System.out.println(article.getVATRate().getDescription());
-            /* Vidi sa draganom kako se ovo re�ava jer description vra�a samo opis, ali ne i vrednost?
-            invoiceItemDTO.setVATPercent(new BigDecimal(article.getVATRate().getDescription()));
-            * */
-            BigDecimal vatPercent = null;
-            switch (article.getVATRate()) {
-                case GENERAL_RATE:
-                    vatPercent = new BigDecimal(dao.find(Properties.class,
-                            "vat_general_rate").getValue());
-                    break;
-                case LOWER_RATE:
-                    vatPercent = new BigDecimal(dao.find(Properties.class,
-                            "vat_low_rate").getValue());
-                    break;
+            InvoiceItemDTO invoiceItemDTO = null;
+            try {
+                invoiceItemDTO = dao.createNamedQuery(InvoiceItem.READ_ITEMS_BY_INVOICE_AND_ARTICLE, InvoiceItem.class)
+                        .setParameter("document", invoice.getDocument())
+                        .setParameter("orgUnit", invoice.getOrgUnitId())
+                        .setParameter("clientId", invoice.getClientId())
+                        .setParameter("code", transactionSetDTO.getServiceId())
+                        .getSingleResult().getInvoiceItemDTO();
+            }catch(NoResultException ex){
+                invoiceItemDTO = null;
             }
-            invoiceItemDTO.setVATPercent(vatPercent);
-            invoiceItemDTO.setNetPrice(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent()));
-            Query qTerms = dao.createNamedQuery( BusinessPartnerRelationshipTermsItems.READ_TERMS_PER_PARTNER_AND_ARTICLE, BusinessPartnerRelationshipTermsItems.class);
-            qTerms.setParameter("partner", transactionSetDTO.getMerchantId());
-            qTerms.setParameter("article", transactionSetDTO.getServiceId());
-            BusinessPartnerRelationshipTermsItems it = (BusinessPartnerRelationshipTermsItems)qTerms.getSingleResult();
-            invoiceItemDTO.setRabatPercent(it.getRebate());
-            invoiceItemDTO.setQuantity(new BigDecimal(1));
-            invoiceItemDTO.setTotalCost(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent()
-                    .divide(new BigDecimal(100)))
-                    .multiply(invoiceItemDTO.getVATPercent()));
-            invoiceItemDTO.setArticleDesc(article.getDescription());
-            invoiceItemDTO.setOrdinal(invoice.getMaxItemOrdinal() == null ? 1 : invoice.getMaxItemOrdinal() + 1);
-            invoice.setMaxItemOrdinal(invoiceItemDTO.getOrdinal());
-            invoiceService.addItem(invoiceItemDTO);
+            if (invoiceItemDTO == null) {
+                invoiceItemDTO = new InvoiceItemDTO();
 
-            /*insertovanje stavki fakture*/
+                invoiceItemDTO.setClientId(invoice.getClientId());
+                invoiceItemDTO.setInvoiceDocument(invoice.getDocument());
+                invoiceItemDTO.setUnitId(invoice.getOrgUnitId());
+                invoiceItemDTO.setArticleCode(transactionSetDTO.getServiceId() + "");
+                Article article = dao.find(Article.class, transactionSetDTO.getServiceId());
+                BigDecimal vatPercent = null;
+                switch (article.getVATRate()) {
+                    case GENERAL_RATE:
+                        vatPercent = new BigDecimal(dao.find(Properties.class,
+                                "vat_general_rate").getValue());
+                        break;
+                    case LOWER_RATE:
+                        vatPercent = new BigDecimal(dao.find(Properties.class,
+                                "vat_low_rate").getValue());
+                        break;
+                }
+                invoiceItemDTO.setVATPercent(vatPercent);
+                invoiceItemDTO.setNetPrice(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent()));
+                Query qTerms = dao.createNamedQuery(BusinessPartnerRelationshipTermsItems.READ_TERMS_PER_PARTNER_AND_ARTICLE, BusinessPartnerRelationshipTermsItems.class);
+                qTerms.setParameter("partner", transactionSetDTO.getMerchantId());
+                qTerms.setParameter("article", transactionSetDTO.getServiceId());
+                BusinessPartnerRelationshipTermsItems it = (BusinessPartnerRelationshipTermsItems) qTerms.getSingleResult();
+                invoiceItemDTO.setRabatPercent(it.getRebate());
+                invoiceItemDTO.setQuantity(new BigDecimal(1));
+                invoiceItemDTO.setTotalCost(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent()
+                        .divide(new BigDecimal(100)))
+                        .multiply(invoiceItemDTO.getVATPercent()));
+                invoiceItemDTO.setArticleDesc(article.getDescription());
+                invoiceItemDTO.setOrdinal(invoice.getMaxItemOrdinal() == null ? 1 : invoice.getMaxItemOrdinal() + 1);
+                invoiceItemDTO.setUsername("nikola");
+                invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
+                invoice.setMaxItemOrdinal(invoiceItemDTO.getOrdinal());
+                invoiceService.addItem(invoiceItemDTO);
+            } else {
+                invoiceItemDTO.setNetPrice(invoiceItemDTO.getNetPrice().add(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent())));
+                invoiceItemDTO.setUsername(invoice.getUsername());
+                invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
+                invoiceService.updateItem(invoiceItemDTO);
+            }
+
+            System.out.println("transakcija je "+transactionSetDTO.getTransactionId());
+            Transaction transaction = dao.find(Transaction.class, transactionSetDTO.getTransactionId());
+            transaction.setInvoicingStatus(true);
+            dao.persist(transaction);
 
         }
 

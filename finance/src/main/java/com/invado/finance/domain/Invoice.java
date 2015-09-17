@@ -73,7 +73,6 @@ public class Invoice implements Serializable {
     @ManyToOne
     @JoinColumn(name = "partner_id")
     private BusinessPartner partner;
-    @NotNull(message = "{Invoice.Partner.NotNull}")
     @ManyToOne
     @JoinColumn(name = "subordinate_partner_id")
     private BusinessPartner subordinatePartner;

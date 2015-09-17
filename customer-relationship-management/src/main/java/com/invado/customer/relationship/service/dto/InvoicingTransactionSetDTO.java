@@ -21,24 +21,24 @@ public class InvoicingTransactionSetDTO {
     @NativeQueryResultColumn(index=3)
     private String merchantName;
     @NativeQueryResultColumn(index=4)
-    private Integer posId;
+    private String serviceId;
     @NativeQueryResultColumn(index=5)
-    private String posName;
-    @NativeQueryResultColumn(index=6)
-    private Integer treminalId;
-    @NativeQueryResultColumn(index=7)
-    private String treminalName;
-    @NativeQueryResultColumn(index=8)
-    private Integer serviceId;
-    @NativeQueryResultColumn(index=9)
     private String serviceDescription;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
-    @NativeQueryResultColumn(index=10)
+    @NativeQueryResultColumn(index=6)
     private BigDecimal amount;
+    @NativeQueryResultColumn(index=7)
+    private Long transactionId;
+    @NativeQueryResultColumn(index=8)
+    private Integer posId;
+    @NativeQueryResultColumn(index=9)
+    private String posName;
+    @NativeQueryResultColumn(index=10)
+    private Integer treminalId;
     @NativeQueryResultColumn(index=11)
+    private String treminalName;
+    @NativeQueryResultColumn(index=12)
     private Integer rownum;
-
-    private Integer i;
 
 
 
@@ -106,11 +106,11 @@ public class InvoicingTransactionSetDTO {
         this.treminalName = treminalName;
     }
 
-    public Integer getServiceId() {
+    public String getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(Integer serviceId) {
+    public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
     }
 
@@ -136,6 +136,14 @@ public class InvoicingTransactionSetDTO {
 
     public void setRownum(Integer rownum) {
         this.rownum = rownum;
+    }
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 
     public String toString(){

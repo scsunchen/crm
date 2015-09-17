@@ -7,10 +7,14 @@ package com.invado.finance.service.dto;
 import java.math.BigDecimal;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
 /**
  *
  * @author root
  */
+
 public class InvoiceItemDTO {
     
     private Integer clientId;
