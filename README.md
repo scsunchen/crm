@@ -13,8 +13,16 @@ kao servis za konverziju(engl. conversion service). U XML datoteci bi trebalo da
 <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean" />
 ```
 U properties datoteci za svako polje morate uneti poruku koju korisnik vidi ako pogresno unese vrednost npr.
-typeMismatch.java.time.LocalDate=Uneta vrednost se ne može formatirati kao datum
-
+```xml
+<form:form modelAttribute="item" method="post">
+ <spring:bind path="purchasePrice">
+   <form:input id="purchasePrice" path="purchasePrice" class="form-control" />
+     <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
+         
+ </spring:bind>
+</form:form>
+```
+trebalo bi dodati u datoteku sa porukama red typeMismatch.item.purchasePrice=Greska prilikom unosa nabavne cene. Kljuc koji se unosi u datoteku sa porukama(typeMismatch.item.purchasePrice) sadrzi uvek _typeMismatch_._modelAttribute_(instanca navedena u form:form koja popunjava polja forme)._purchasePrice_(atribut na koji se poruka odnosi).
 ###Provera ispravnosti unetih vrednosti
 
 Za proveru ispravnosti unetih podataka se koristi JSR 303: Bean Validation i 
