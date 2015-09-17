@@ -51,7 +51,7 @@ Za svaki modul bi u pom.xml trebalo dodati :
             <artifactId>spring-security-taglibs</artifactId>
         </dependency>        
 ```
-U web.xml bi trebalo integrisati Spring Security tj. oznaciti datoteku u kojoj se spring security podesavanja(/WEB-INF/spring-security.xml):
+U web.xml bi trebalo integrisati Spring Security tj. oznaciti datoteku u kojoj se spring security podesavanja(/WEB-INF/security.xml):
 ```xml
 <context-param>
         <param-name>contextConfigLocation</param-name>
