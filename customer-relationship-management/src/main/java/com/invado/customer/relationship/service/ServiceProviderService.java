@@ -19,6 +19,7 @@ import com.invado.customer.relationship.service.exception.ArticleNotFoundExcepti
 import com.invado.customer.relationship.service.exception.BusinessPartnerIsNotServiceProviderException;
 import com.invado.customer.relationship.service.exception.BusinessPartnerNotFoundException;
 import com.invado.customer.relationship.service.exception.ServiceProviderServicesConstraintViolationException;
+import com.invado.customer.relationship.service.exception.ServiceProviderServicesNotFoundException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,6 +107,7 @@ public class ServiceProviderService {
     @Transactional(rollbackFor = Exception.class)
     public void update(ServiceProviderServices services)
             throws ServiceProviderServicesConstraintViolationException,
+            ServiceProviderServicesNotFoundException,
             ArticleNotFoundException,
             BusinessPartnerNotFoundException,
             BusinessPartnerIsNotServiceProviderException {
@@ -114,7 +116,7 @@ public class ServiceProviderService {
                     ServiceProviderServices.class,
                     services.getId());
             if (servicesFromDB == null) {
-                throw new BusinessPartnerNotFoundException(
+                throw new ServiceProviderServicesNotFoundException(
                         Messages.SERVICE_PROVIDER_SERVICES_NOT_FOUND.get()
                 );
             }

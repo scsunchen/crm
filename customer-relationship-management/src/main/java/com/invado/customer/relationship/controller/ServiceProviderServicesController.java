@@ -17,6 +17,7 @@ import com.invado.customer.relationship.service.exception.ArticleNotFoundExcepti
 import com.invado.customer.relationship.service.exception.BusinessPartnerIsNotServiceProviderException;
 import com.invado.customer.relationship.service.exception.BusinessPartnerNotFoundException;
 import com.invado.customer.relationship.service.exception.ServiceProviderServicesConstraintViolationException;
+import com.invado.customer.relationship.service.exception.ServiceProviderServicesNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -126,7 +127,8 @@ public class ServiceProviderServicesController {
         }
         try {
             service.update(services);
-        } catch (ServiceProviderServicesConstraintViolationException 
+        } catch (ServiceProviderServicesConstraintViolationException
+                | ServiceProviderServicesNotFoundException
                 | ArticleNotFoundException 
                 | BusinessPartnerNotFoundException 
                 | BusinessPartnerIsNotServiceProviderException 
