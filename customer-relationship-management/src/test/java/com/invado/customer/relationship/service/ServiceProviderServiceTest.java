@@ -14,7 +14,7 @@ import org.junit.Test;
 public class ServiceProviderServiceTest {
     
     @Test
-    public void shouldNotThrowMissingResourceExceptionIfAllMessagesExists() throws Exception {
+    public void shouldNotThrowMissingResourceException() throws Exception {
         for (ServiceProviderService.Messages message : ServiceProviderService.Messages.values()) {
            message.get();            
         }

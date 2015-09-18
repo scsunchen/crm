@@ -20,8 +20,6 @@ import com.invado.customer.relationship.service.exception.ServiceProviderService
 import com.invado.customer.relationship.service.exception.ServiceProviderServicesNotFoundException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

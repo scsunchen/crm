@@ -58,7 +58,7 @@ public class ServiceProviderServices implements Serializable {
                     generator = "ServiceProviderServicesGenerator")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "BUSINESS_PARTNER_ID")    
+    @JoinColumn(name = "SERVICE_PROVIDER")    
     @NotNull(message = "{ServiceProviderServices.ServiceProvider.NotNull}")
     private BusinessPartner serviceProvider;
     @NotBlank(message = "{ServiceProviderServices.Description.NotNull}")
