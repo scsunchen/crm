@@ -65,6 +65,16 @@
         <put-attribute name="panel-title" value="Ažuriranje uslova poslovanja"/>
         <put-attribute name="body" value="/WEB-INF/jsp/terms-create-grid.jsp"/>
     </definition>
+    <definition name="service-provider-services-table" extends="main-menu-form">
+        <put-attribute name="title" value="Usluge dobavljača"/>
+        <put-attribute name="panel-title" value="Prikaz svih usluga dobaljača"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/service-provider-services-table.jsp"/>
+    </definition>
+    <definition name="service-provider-services-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Usluge dobavljača"/>
+        <put-attribute name="panel-title" value="Prikaz usluge dobaljača"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/service-provider-services-grid.jsp"/>
+    </definition>
     <definition name="terms-update-master-detail" extends="main-menu-form">
         <put-attribute name="head" value=""/>
         <put-attribute name="title" value="Uslovi poslovanja"/>

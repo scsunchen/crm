@@ -11,6 +11,7 @@
         <intercept-url pattern="/devicestatus/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/transactions/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/terms/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/service-provider-services/**" access="hasRole('ROLE_ADMIN')" />
         <form-login login-page="/login" default-target-url="/home" 
             authentication-failure-url="/login?error=0"
             username-parameter="username" password-parameter="password" />

@@ -7,10 +7,10 @@ import com.invado.core.exception.PageNotExistsException;
 import com.invado.core.exception.ReferentialIntegrityException;
 import com.invado.core.exception.SystemException;
 import com.invado.customer.relationship.Utils;
-import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
-import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTermsItems;
-import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms_;
-import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsDTO;
+import com.invado.customer.relationship.domain.BusinessPartnerTerms;
+import com.invado.customer.relationship.domain.BusinessPartnerTermsItem;
+import com.invado.customer.relationship.domain.BusinessPartnerTerms_;
+import com.invado.customer.relationship.service.dto.BusinessPartnerTermsDTO;
 import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsItemsDTO;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
@@ -39,21 +39,19 @@ import java.util.stream.Collectors;
  * Created by NikolaB on 6/13/2015.
  */
 @Service
-public class BusinessPartnerRelationshipTermsService {
+public class BusinessPartnerTermsService {
 
-    private static final Logger LOG = Logger.getLogger(
-            BusinessPartnerRelationshipTerms.class.getName());
+    private static final Logger LOG = Logger.getLogger(BusinessPartnerTerms.class.getName());
 
     @PersistenceContext(name = "unit")
     private EntityManager dao;
 
     @Autowired
     private Validator validator;
-    private final String username = "a";
 
 
     @Transactional(rollbackFor = Exception.class)
-    public BusinessPartnerRelationshipTerms create(BusinessPartnerRelationshipTerms a) 
+    public BusinessPartnerTerms create(BusinessPartnerTerms a) 
             throws ConstraintViolationException,
             javax.persistence.EntityExistsException {
         //check CreateBusinessPartnerRelationshipTermsPermission
@@ -84,7 +82,7 @@ public class BusinessPartnerRelationshipTermsService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public BusinessPartnerRelationshipTerms update(BusinessPartnerRelationshipTerms dto) throws ConstraintViolationException,
+    public BusinessPartnerTerms update(BusinessPartnerTerms dto) throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateBusinessPartnerRelationshipTermsPermission
@@ -97,7 +95,7 @@ public class BusinessPartnerRelationshipTermsService {
                     Utils.getMessage("BusinessPartnerRelationshipTerms.IllegalArgumentEx.Code"));
         }
         try {
-            BusinessPartnerRelationshipTerms item = dao.find(BusinessPartnerRelationshipTerms.class,
+            BusinessPartnerTerms item = dao.find(BusinessPartnerTerms.class,
                     dto.getId(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
@@ -152,7 +150,7 @@ public class BusinessPartnerRelationshipTermsService {
             );
         }
         try {
-            BusinessPartnerRelationshipTerms service = dao.find(BusinessPartnerRelationshipTerms.class, id);
+            BusinessPartnerTerms service = dao.find(BusinessPartnerTerms.class, id);
             if (service != null) {
 
                 dao.remove(service);
@@ -167,7 +165,7 @@ public class BusinessPartnerRelationshipTermsService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public BusinessPartnerRelationshipTerms read(Integer id) throws EntityNotFoundException {
+    public BusinessPartnerTerms read(Integer id) throws EntityNotFoundException {
         //TODO : check ReadBusinessPartnerRelationshipTermsPermission
         if (id == null) {
             throw new javax.persistence.EntityNotFoundException(
@@ -175,7 +173,7 @@ public class BusinessPartnerRelationshipTermsService {
             );
         }
         try {
-            BusinessPartnerRelationshipTerms BusinessPartnerRelationshipTerms = dao.find(BusinessPartnerRelationshipTerms.class, id);
+            BusinessPartnerTerms BusinessPartnerRelationshipTerms = dao.find(BusinessPartnerTerms.class, id);
             if (BusinessPartnerRelationshipTerms == null) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("BusinessPartnerRelationshipTerms.EntityNotFoundEx", id)
@@ -193,7 +191,7 @@ public class BusinessPartnerRelationshipTermsService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<BusinessPartnerRelationshipTermsDTO> readPage(PageRequestDTO p)
+    public ReadRangeDTO<BusinessPartnerTermsDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadBusinessPartnerRelationshipTermsPermission
         Integer id = null;
@@ -231,7 +229,7 @@ public class BusinessPartnerRelationshipTermsService {
                 throw new PageNotExistsException(
                         Utils.getMessage("BusinessPartnerRelationshipTerms.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<BusinessPartnerRelationshipTermsDTO> result = new ReadRangeDTO<>();
+            ReadRangeDTO<BusinessPartnerTermsDTO> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first BusinessPartnerRelationshipTerms = last page number * BusinessPartnerRelationshipTermss per page
@@ -269,9 +267,9 @@ public class BusinessPartnerRelationshipTermsService {
         }
     }
 
-    private List<BusinessPartnerRelationshipTermsDTO> convertToDTO(List<BusinessPartnerRelationshipTerms> lista) {
-        List<BusinessPartnerRelationshipTermsDTO> listaDTO = new ArrayList<>();
-        for (BusinessPartnerRelationshipTerms pr : lista) {
+    private List<BusinessPartnerTermsDTO> convertToDTO(List<BusinessPartnerTerms> lista) {
+        List<BusinessPartnerTermsDTO> listaDTO = new ArrayList<>();
+        for (BusinessPartnerTerms pr : lista) {
             listaDTO.add(pr.getDTO());
         }
         return listaDTO;
@@ -286,23 +284,23 @@ public class BusinessPartnerRelationshipTermsService {
             BusinessPartner businessPartner) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
-        Root<BusinessPartnerRelationshipTerms> root = c.from(BusinessPartnerRelationshipTerms.class);
+        Root<BusinessPartnerTerms> root = c.from(BusinessPartnerTerms.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
         if (id != null) {
-            criteria.add(cb.equal(root.get(BusinessPartnerRelationshipTerms_.id),
+            criteria.add(cb.equal(root.get(BusinessPartnerTerms_.id),
                     cb.parameter(Integer.class, "id")));
         }
         if (businessPartner != null) {
-            criteria.add(cb.equal(root.get(BusinessPartnerRelationshipTerms_.businessPartner),
+            criteria.add(cb.equal(root.get(BusinessPartnerTerms_.businessPartner),
                     cb.parameter(BusinessPartner.class, "businessPartner")));
         }
         if (dateFrom != null) {
-            criteria.add(cb.equal(root.get(BusinessPartnerRelationshipTerms_.dateFrom),
+            criteria.add(cb.equal(root.get(BusinessPartnerTerms_.dateFrom),
                     cb.parameter(LocalDate.class, "dateFrom")));
         }
         if (endDate != null) {
-            criteria.add(cb.equal(root.get(BusinessPartnerRelationshipTerms_.endDate),
+            criteria.add(cb.equal(root.get(BusinessPartnerTerms_.endDate),
                     cb.parameter(LocalDate.class, "endDate")));
         }
 
@@ -324,7 +322,7 @@ public class BusinessPartnerRelationshipTermsService {
         return q.getSingleResult();
     }
 
-    private List<BusinessPartnerRelationshipTerms> search(EntityManager em,
+    private List<BusinessPartnerTerms> search(EntityManager em,
                                                           Integer id,
                                                           LocalDate dateFrom,
                                                           LocalDate endDate,
@@ -332,30 +330,30 @@ public class BusinessPartnerRelationshipTermsService {
                                                           int first,
                                                           int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<BusinessPartnerRelationshipTerms> query = cb.createQuery(BusinessPartnerRelationshipTerms.class);
-        Root<BusinessPartnerRelationshipTerms> root = query.from(BusinessPartnerRelationshipTerms.class);
+        CriteriaQuery<BusinessPartnerTerms> query = cb.createQuery(BusinessPartnerTerms.class);
+        Root<BusinessPartnerTerms> root = query.from(BusinessPartnerTerms.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
         if (id != null) {
-            criteria.add(cb.equal(root.get(BusinessPartnerRelationshipTerms_.id),
+            criteria.add(cb.equal(root.get(BusinessPartnerTerms_.id),
                     cb.parameter(Integer.class, "id")));
         }
         if (businessPartner != null) {
-            criteria.add(cb.equal(root.get(BusinessPartnerRelationshipTerms_.businessPartner),
+            criteria.add(cb.equal(root.get(BusinessPartnerTerms_.businessPartner),
                     cb.parameter(BusinessPartner.class, "businessPartner")));
         }
         if (dateFrom != null) {
-            criteria.add(cb.equal(root.get(BusinessPartnerRelationshipTerms_.dateFrom),
+            criteria.add(cb.equal(root.get(BusinessPartnerTerms_.dateFrom),
                     cb.parameter(Date.class, "dateFrom")));
         }
         if (endDate != null) {
-            criteria.add(cb.equal(root.get(BusinessPartnerRelationshipTerms_.endDate),
+            criteria.add(cb.equal(root.get(BusinessPartnerTerms_.endDate),
                     cb.parameter(Date.class, "endDate")));
         }
 
         query.where(criteria.toArray(new Predicate[0]))
-                .orderBy(cb.asc(root.get(BusinessPartnerRelationshipTerms_.id)));
-        TypedQuery<BusinessPartnerRelationshipTerms> typedQuery = em.createQuery(query);
+                .orderBy(cb.asc(root.get(BusinessPartnerTerms_.id)));
+        TypedQuery<BusinessPartnerTerms> typedQuery = em.createQuery(query);
         if (id != null) {
             typedQuery.setParameter("id", id);
         }
@@ -375,7 +373,7 @@ public class BusinessPartnerRelationshipTermsService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<BusinessPartnerRelationshipTerms> readAll(Integer id,
+    public List<BusinessPartnerTerms> readAll(Integer id,
                                                           LocalDate dateFrom,
                                                           LocalDate endDate,
                                                           BusinessPartner businessPartner) {
@@ -401,23 +399,23 @@ public class BusinessPartnerRelationshipTermsService {
         }
 
         try {
-            BusinessPartnerRelationshipTerms temp = dao.find(BusinessPartnerRelationshipTerms.class, id);
+            BusinessPartnerTerms temp = dao.find(BusinessPartnerTerms.class, id);
             if (temp == null) {
                 throw new EntityNotFoundException(Utils.getMessage("BusinessPartnerTerms.EntityNotFoundException", id));
             }
             BusinessPartnerRelationshipTermsItemsDTO[] result = new BusinessPartnerRelationshipTermsItemsDTO[temp.getItemsSize()];
             int i = 0;
-            List<BusinessPartnerRelationshipTermsItems> itemList = temp.getUnmodifiableItemsSet();
-            for (BusinessPartnerRelationshipTermsItems item : itemList) {
+            List<BusinessPartnerTermsItem> itemList = temp.getUnmodifiableItemsSet();
+            for (BusinessPartnerTermsItem item : itemList) {
                 BusinessPartnerRelationshipTermsItemsDTO dto = new BusinessPartnerRelationshipTermsItemsDTO();
-                dto.setBusinessPartnerRelationshipTermsId(item.getBusinessPartnerRelationshipTerms().getId());
+                dto.setBusinessPartnerRelationshipTermsId(item.getBusinessPartnerTerms().getId());
                 dto.setArticleCode(item.getArticle().getCode());
                dto.setArticleName(item.getArticle().getDescription());
                 dto.setOrdinal(item.getOrdinal());
                 dto.setRebate(item.getRebate());
                 dto.setTotalAmount(item.getTotalAmount());
                 dto.setTotalQuantity(item.getTotalQuantity());
-                dto.setBusinessPartnerRelationshipTermsVersion(item.getBusinessPartnerRelationshipTerms().getVersion());
+                dto.setBusinessPartnerRelationshipTermsVersion(item.getBusinessPartnerTerms().getVersion());
 
                 result[i] = dto;
                 i = i + 1;

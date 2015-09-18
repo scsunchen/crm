@@ -7,27 +7,43 @@ package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.Article;
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.domain.LocalDateConverter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author bdragan
  */
 @Entity
 @Table(name = "CRM_SERVICE_PROVIDER_SERVICES")
+@NamedQueries({
+    @NamedQuery(name = ServiceProviderServices.COUNT_ALL,
+            query = "SELECT COUNT(x) FROM ServiceProviderServices x"),
+    @NamedQuery(name = ServiceProviderServices.READ_ALL_ORDERBY_SERVICE_PROVIDER_DESCRIPTION,
+            query = "SELECT x FROM ServiceProviderServices x ORDER BY x.serviceProvider, x.description")
+})
 public class ServiceProviderServices implements Serializable {
+    
+    public  static final String COUNT_ALL = "ServiceProviderServices.CountAll";
+    public  static final String READ_ALL_ORDERBY_SERVICE_PROVIDER_DESCRIPTION = 
+            "ServiceProviderServices.ReadAllOrderByServiceProviderDescription";
     
     @Id
     @TableGenerator(
@@ -51,13 +67,19 @@ public class ServiceProviderServices implements Serializable {
     private Boolean mandatoryActivation;
     @NotNull(message = "{ServiceProviderServices.Item.NotNull}")
     @ManyToOne
-    @JoinColumn(name = "ITEM_ID")    
+    @JoinColumn(name = "SERVICE_ID")    
     private Article service;
     @Column(name="DATE_FROM")
+    @Convert(converter = LocalDateConverter.class)
+    @DateTimeFormat(style = "M-")
     private LocalDate dateFrom;
     @Column(name="DATE_TO")
+    @Convert(converter = LocalDateConverter.class)
+    @DateTimeFormat(style = "M-")
     private LocalDate dateTo;
-
+    @Version
+    private Long version;
+    
     public ServiceProviderServices() {
     }
 
@@ -121,6 +143,14 @@ public class ServiceProviderServices implements Serializable {
         this.dateTo = dateTo;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -146,6 +176,5 @@ public class ServiceProviderServices implements Serializable {
     @Override
     public String toString() {
         return "ServiceProviderServices{" + "description=" + description + '}';
-    }
-            
+    }           
 }

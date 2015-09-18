@@ -14,13 +14,13 @@ import java.math.BigDecimal;
 @Entity
 
 @Table(name = "CRM_BUSINESS_TERMS_ITEMS", schema = "devel")
-public class BusinessPartnerRelationshipTermsItems implements Serializable, Comparable<BusinessPartnerRelationshipTermsItems>{
+public class BusinessPartnerTermsItem implements Serializable, Comparable<BusinessPartnerTermsItem>{
 
     @Id
     @NotNull(message = "{BusinessTermsItem.BusinessTerms.NotNull}")
     @ManyToOne
     @JoinColumn(name = "terms_id", referencedColumnName = "id")
-    private BusinessPartnerRelationshipTerms businessPartnerRelationshipTerms;
+    private BusinessPartnerTerms businessPartnerTerms;
     @Id
     @NotNull(message = "{BusinessTermsItem.Ordinal.NotNull}")
     @DecimalMin(value = "1", message = "{InvoiceItem.Ordinal.Min}")
@@ -40,12 +40,12 @@ public class BusinessPartnerRelationshipTermsItems implements Serializable, Comp
     private BigDecimal rebate;
 
 
-    public BusinessPartnerRelationshipTerms getBusinessPartnerRelationshipTerms() {
-        return businessPartnerRelationshipTerms;
+    public BusinessPartnerTerms getBusinessPartnerTerms() {
+        return businessPartnerTerms;
     }
 
-    public void setBusinessPartnerRelationshipTerms(BusinessPartnerRelationshipTerms businessPartnerRelationshipTerms) {
-        this.businessPartnerRelationshipTerms = businessPartnerRelationshipTerms;
+    public void setBusinessPartnerRelationshipTerms(BusinessPartnerTerms businessPartnerRelationshipTerms) {
+        this.businessPartnerTerms = businessPartnerRelationshipTerms;
     }
 
     public Integer getOrdinal() {
@@ -97,9 +97,9 @@ public class BusinessPartnerRelationshipTermsItems implements Serializable, Comp
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BusinessPartnerRelationshipTermsItems other = (BusinessPartnerRelationshipTermsItems) obj;
-        if (this.businessPartnerRelationshipTerms != other.businessPartnerRelationshipTerms && (this.businessPartnerRelationshipTerms == null
-                || !this.businessPartnerRelationshipTerms.equals(other.businessPartnerRelationshipTerms))) {
+        final BusinessPartnerTermsItem other = (BusinessPartnerTermsItem) obj;
+        if (this.businessPartnerTerms != other.businessPartnerTerms && (this.businessPartnerTerms == null
+                || !this.businessPartnerTerms.equals(other.businessPartnerTerms))) {
             return false;
         }
         return !(this.ordinal != other.ordinal && (this.ordinal == null
@@ -107,11 +107,11 @@ public class BusinessPartnerRelationshipTermsItems implements Serializable, Comp
     }
 
     @Override
-    public int compareTo(BusinessPartnerRelationshipTermsItems o) {
-        if(o.businessPartnerRelationshipTerms.equals(businessPartnerRelationshipTerms)){
+    public int compareTo(BusinessPartnerTermsItem o) {
+        if(o.businessPartnerTerms.equals(businessPartnerTerms)){
             return ordinal.compareTo(o.ordinal);
         } else {
-            return businessPartnerRelationshipTerms.getId().compareTo(o.businessPartnerRelationshipTerms.getId());
+            return businessPartnerTerms.getId().compareTo(o.businessPartnerTerms.getId());
         }
     }
 }

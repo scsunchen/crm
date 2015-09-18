@@ -2,8 +2,8 @@ package com.invado.customer.relationship.controller;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.dto.BusinessPartnerDTO;
-import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
-import com.invado.customer.relationship.service.BusinessPartnerRelationshipTermsService;
+import com.invado.customer.relationship.domain.BusinessPartnerTerms;
+import com.invado.customer.relationship.service.BusinessPartnerTermsService;
 import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import java.util.Map;
 public class BusinessPartnerRelationshipTermsController {
 
     @Autowired
-    private BusinessPartnerRelationshipTermsService businessPartnerRelationshipTermsService;
+    private BusinessPartnerTermsService businessPartnerRelationshipTermsService;
     @Autowired
     private MasterDataService masterDataService;
 
@@ -50,7 +50,7 @@ public class BusinessPartnerRelationshipTermsController {
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        ReadRangeDTO<BusinessPartnerRelationshipTermsDTO> items = businessPartnerRelationshipTermsService.readPage(request);
+        ReadRangeDTO<BusinessPartnerTermsDTO> items = businessPartnerRelationshipTermsService.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
@@ -61,7 +61,7 @@ public class BusinessPartnerRelationshipTermsController {
     @RequestMapping(value = "/terms/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
 
-        model.put("item", new BusinessPartnerRelationshipTerms());
+        model.put("item", new BusinessPartnerTerms());
         List<BusinessPartner> partners = masterDataService.readBusinessPartnerByName("");
         model.put("partners", partners);
 
@@ -71,7 +71,7 @@ public class BusinessPartnerRelationshipTermsController {
     }
 
     @RequestMapping(value = "/terms/{page}/create", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("item") BusinessPartnerRelationshipTerms item,
+    public String processCreationForm(@ModelAttribute("item") BusinessPartnerTerms item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -117,7 +117,7 @@ public class BusinessPartnerRelationshipTermsController {
     public String initUpdateForm(@PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        BusinessPartnerRelationshipTerms item = businessPartnerRelationshipTermsService.read(id);
+        BusinessPartnerTerms item = businessPartnerRelationshipTermsService.read(id);
         model.put("item", item);
         return "terms-grid";
     }
@@ -128,12 +128,12 @@ public class BusinessPartnerRelationshipTermsController {
                                  @PathVariable Integer id,
                                  Map<String, Object> model)
             throws Exception {
-        BusinessPartnerRelationshipTermsDTO tmp = businessPartnerRelationshipTermsService.read(id).getDTO();
+        BusinessPartnerTermsDTO tmp = businessPartnerRelationshipTermsService.read(id).getDTO();
         return initUpdateForm(page, tmp, null, model);
     }
 
     private String initUpdateForm(String page,
-                                  BusinessPartnerRelationshipTermsDTO dto,
+                                  BusinessPartnerTermsDTO dto,
                                   Exception ex,
                                   Map<String, Object> model)
             throws Exception {
@@ -151,7 +151,7 @@ public class BusinessPartnerRelationshipTermsController {
 
     @RequestMapping(value = "/terms/{page}/update/{id}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") BusinessPartnerRelationshipTerms item,
+    public String processUpdationForm(@ModelAttribute("item") BusinessPartnerTerms item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)

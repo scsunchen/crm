@@ -3,7 +3,7 @@ package com.invado.customer.relationship.domain;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.LocalDateConverter;
 import com.invado.customer.relationship.Utils;
-import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsDTO;
+import com.invado.customer.relationship.service.dto.BusinessPartnerTermsDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "CRM_BUSINESS_TERMS", schema = "devel")
-public class BusinessPartnerRelationshipTerms implements Serializable{
+public class BusinessPartnerTerms implements Serializable{
 
     @TableGenerator(
             name = "BusinessTermsTab",
@@ -56,16 +56,16 @@ public class BusinessPartnerRelationshipTerms implements Serializable{
     private Status status;
     @Valid//FIXME : Lazy collection validation
     @OneToMany(cascade = {CascadeType.ALL},
-            mappedBy = "businessPartnerRelationshipTerms",
+            mappedBy = "businessPartnerTerms",
             fetch = FetchType.LAZY)
-    private List<BusinessPartnerRelationshipTermsItems> items = new ArrayList<>();
-   @Version
+    private List<BusinessPartnerTermsItem> items = new ArrayList<>();
+    @Version
     private Long version;
 
     @Transient
     private Integer transientPartnerId;
 
-    public BusinessPartnerRelationshipTerms() {
+    public BusinessPartnerTerms() {
     }
 
     public Integer getId() {
@@ -144,13 +144,13 @@ public class BusinessPartnerRelationshipTerms implements Serializable{
         return items.size();
     }
 
-    public List<BusinessPartnerRelationshipTermsItems> getUnmodifiableItemsSet() {
+    public List<BusinessPartnerTermsItem> getUnmodifiableItemsSet() {
         Collections.sort(items);
         return Collections.unmodifiableList(items);
     }
 
-    public BusinessPartnerRelationshipTermsDTO getDTO() {
-        BusinessPartnerRelationshipTermsDTO result = new BusinessPartnerRelationshipTermsDTO();
+    public BusinessPartnerTermsDTO getDTO() {
+        BusinessPartnerTermsDTO result = new BusinessPartnerTermsDTO();
         result.setId(this.getId());
         result.setVersion(this.getVersion());
         result.setBusinessPartnerId(this.getBusinessPartner().getId());
@@ -192,7 +192,7 @@ public class BusinessPartnerRelationshipTerms implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BusinessPartnerRelationshipTerms other = (BusinessPartnerRelationshipTerms) obj;
+        final BusinessPartnerTerms other = (BusinessPartnerTerms) obj;
         return !(this.id != other.id && (this.id == null || !this.id.equals(other.id)));
     }
 

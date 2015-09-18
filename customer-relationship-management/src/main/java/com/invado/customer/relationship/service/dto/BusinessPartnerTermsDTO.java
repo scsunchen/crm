@@ -1,14 +1,14 @@
 package com.invado.customer.relationship.service.dto;
 
 
-import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms;
+import com.invado.customer.relationship.domain.BusinessPartnerTerms;
 
 import java.time.LocalDate;
 
 /**
  * Created by nikola on 15.07.2015.
  */
-public class BusinessPartnerRelationshipTermsDTO {
+public class BusinessPartnerTermsDTO {
 
 
     private Integer id;
@@ -18,7 +18,7 @@ public class BusinessPartnerRelationshipTermsDTO {
     private LocalDate endDate;
     private Integer daysToPay;
     private Integer rebate;
-    private BusinessPartnerRelationshipTerms.Status status;
+    private BusinessPartnerTerms.Status status;
     private Long version;
 
 
@@ -78,11 +78,11 @@ public class BusinessPartnerRelationshipTermsDTO {
         this.rebate = rebate;
     }
 
-    public BusinessPartnerRelationshipTerms.Status getStatus() {
+    public BusinessPartnerTerms.Status getStatus() {
         return status;
     }
 
-    public void setStatus(BusinessPartnerRelationshipTerms.Status status) {
+    public void setStatus(BusinessPartnerTerms.Status status) {
         this.status = status;
     }
 
