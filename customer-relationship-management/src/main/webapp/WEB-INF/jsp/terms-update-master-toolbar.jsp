@@ -13,7 +13,8 @@
             ${exception.message}
     </div>
 </c:if>
-<a href="${pageContext.request.contextPath}/terms/${page}/create"
+<spring:url value="/terms/${page}/create.html" var="createHRef"/>
+<a href="${createHRef}"
    class="btn btn-default"><span class="glyphicon glyphicon-plus"></span><spring:message
         code="BusinessPartnerTerms.Button.Create"/></a>
 
@@ -25,14 +26,15 @@
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">
                     <spring:message code="BusinessPartnerTerms.Delete.Question"
-                                    arguments="${terms.clientDesc},${terms.id}"/>
+                                    arguments="${terms.businessPartner.name}"/>
                 </h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message
                         code="BusinessPartnerTerms.Button.Cancel"/></button>
+                <spring:url value="/terms/${page}/${terms.id}/delete.html" var="deleteHRef"/>   
                 <a class="btn btn-danger"
-                   href="${pageContext.request.contextPath}/terms/${page}/${terms.id}/delete.html">
+                   href="${deleteHRef}">
                     <spring:message code="BusinessPartnerTerms.Button.Delete"/></a>
             </div>
         </div>
@@ -40,11 +42,6 @@
 </div>
 <button class="btn btn-default" data-toggle="modal" data-target="#dialogDelete">
     <span class="glyphicon glyphicon-trash"></span> <spring:message code="BusinessPartnerTerms.Button.Delete"/></button>
-<a href=
-           "${pageContext.request.contextPath}/terms/${terms.id}/print-preview.html"
-   class="btn btn-default"
-   target="_blank">
-    <span class="glyphicon glyphicon-search"></span> <spring:message
-        code="BusinessPartnerTerms.Button.PrintPreview"/></a>
-<a href="${pageContext.request.contextPath}/terms/${page}" class="btn btn-default">
+    <spring:url value="/terms/${page}/read-page.html" var="back"/>
+<a href="${back}" class="btn btn-default">
     <span class="glyphicon glyphicon-backward"></span> <spring:message code="BusinessPartnerTerms.Button.Back"/></a>

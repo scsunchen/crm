@@ -60,7 +60,7 @@
         <put-attribute name="panel-title" value="Uslovi poslovanja"/>
         <put-attribute name="body" value="/WEB-INF/jsp/terms-table.jsp"/>
     </definition>
-    <definition name="terms-grid" extends="main-menu-form">
+    <definition name="terms-create-grid" extends="main-menu-form">
         <put-attribute name="title" value="Uslovi poslovanja"/>
         <put-attribute name="panel-title" value="Ažuriranje uslova poslovanja"/>
         <put-attribute name="body" value="/WEB-INF/jsp/terms-create-grid.jsp"/>
