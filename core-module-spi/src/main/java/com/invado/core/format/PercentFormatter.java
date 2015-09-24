@@ -6,6 +6,7 @@
 package com.invado.core.format;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -22,12 +23,16 @@ public class PercentFormatter extends org.springframework.format.number.Abstract
         if(text.contains("%") == false) {
             text += "%";
         }
+        
         return super.parse(text, locale); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected NumberFormat getNumberFormat(Locale locale) {
-        DecimalFormat editFormat= (DecimalFormat) DecimalFormat.getPercentInstance(locale);        
+        DecimalFormat editFormat= (DecimalFormat) DecimalFormat.getPercentInstance(locale);                
+        editFormat.setMaximumFractionDigits(340);
+        editFormat.setMinimumFractionDigits(2);
         return editFormat;
-    }   
+    }
+    
 }

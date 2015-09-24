@@ -32,7 +32,9 @@ import org.hibernate.validator.constraints.NotBlank;
         @NamedQuery(name = BusinessPartner.READ_SERVICE_PROVIDER_BY_ID,
                 query = "SELECT x FROM BusinessPartner x WHERE id LIKE :id AND x.type = 2"),
         @NamedQuery(name = BusinessPartner.READ_PARENT,
-                query = "SELECT x FROM BusinessPartner x where x.parentBusinessPartner is null")
+                query = "SELECT x FROM BusinessPartner x where x.parentBusinessPartner is null"),
+        @NamedQuery(name = BusinessPartner.READBY_NAME_TYPE_ORDERBY_NAME,
+                query = "SELECT x FROM BusinessPartner x where UPPER(x.name) LIKE :name and x.type = :type")
 })
 public class BusinessPartner implements Serializable {
 
@@ -44,6 +46,7 @@ public class BusinessPartner implements Serializable {
     public static final String READ_SERVICE_PROVIDER_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadServiceProviderById";
     public static final String READ_GENERAL_NAME_ORDERBY_NAME = "BusinessPartner.ReadGeneralPartnerByName";
     public static final String READ_SERVICE_PROVIDER_BY_ID = "BusinessPartner.ReadGeneralPartnerById";
+    public static final String READBY_NAME_TYPE_ORDERBY_NAME = "BusinessPartner.ReadByNameAndTypeOrderByName";
 
     @TableGenerator(
             name = "PartnerTab",

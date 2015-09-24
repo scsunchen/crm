@@ -1,39 +1,31 @@
 package com.invado.customer.relationship.service;
 
 import com.invado.core.domain.ApplicationSetup;
+import com.invado.core.domain.Article;
 import com.invado.core.domain.BusinessPartner;
-import com.invado.core.exception.ConstraintViolationException;
-import com.invado.core.exception.PageNotExistsException;
-import com.invado.core.exception.ReferentialIntegrityException;
-import com.invado.core.exception.SystemException;
+import com.invado.core.domain.BusinessPartner_;
+import com.invado.core.exception.*;
+import com.invado.core.exception.EntityNotFoundException;
 import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.BusinessPartnerTerms;
 import com.invado.customer.relationship.domain.BusinessPartnerTermsItem;
+import com.invado.customer.relationship.domain.BusinessPartnerTermsItemPK;
 import com.invado.customer.relationship.domain.BusinessPartnerTerms_;
-import com.invado.customer.relationship.service.dto.BusinessPartnerTermsDTO;
-import com.invado.customer.relationship.service.dto.BusinessPartnerRelationshipTermsItemsDTO;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import javax.persistence.EntityExistsException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 
 /**
  * Created by NikolaB on 6/13/2015.
@@ -45,23 +37,17 @@ public class BusinessPartnerTermsService {
 
     @PersistenceContext(name = "unit")
     private EntityManager dao;
-
-    @Autowired
+    @Inject
     private Validator validator;
 
-
     @Transactional(rollbackFor = Exception.class)
-    public BusinessPartnerTerms create(BusinessPartnerTerms a) 
-            throws ConstraintViolationException,
-            javax.persistence.EntityExistsException {
-        //check CreateBusinessPartnerRelationshipTermsPermission
-        if (a == null) {
-            throw new IllegalArgumentException(
-                    Utils.getMessage("BusinessPartnerRelationshipTerms.IllegalArgumentEx"));
-        }
+    public void create(BusinessPartnerTerms a) throws ConstraintViolationException {
         try {
-            if (a.getTransientPartnerId() != null)
+            if (a.getTransientPartnerId() != null) {
                 a.setBusinessPartner(dao.find(BusinessPartner.class, a.getTransientPartnerId()));
+            }else {
+                a.setBusinessPartner(null);
+            }
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -70,8 +56,7 @@ public class BusinessPartnerTermsService {
             }
 
             dao.persist(a);
-            return a;
-        } catch (ConstraintViolationException | EntityExistsException ex) {
+        } catch (ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -81,19 +66,12 @@ public class BusinessPartnerTermsService {
         }
     }
 
-    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public BusinessPartnerTerms update(BusinessPartnerTerms dto) throws ConstraintViolationException,
+    @Transactional(rollbackFor = Exception.class)
+    public BusinessPartnerTerms update(BusinessPartnerTerms dto)
+            throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateBusinessPartnerRelationshipTermsPermission
-        if (dto == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("BusinessPartnerRelationshipTerms.IllegalArgumentEx"));
-        }
-        if (dto.getId() == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("BusinessPartnerRelationshipTerms.IllegalArgumentEx.Code"));
-        }
         try {
             BusinessPartnerTerms item = dao.find(BusinessPartnerTerms.class,
                     dto.getId(),
@@ -104,26 +82,30 @@ public class BusinessPartnerTermsService {
                                 dto.getId())
                 );
             }
-            dao.lock(item, LockModeType.OPTIMISTIC);
-            item.setBusinessPartner(dao.find(BusinessPartner.class, dto.getTransientPartnerId()));
+            if (item.getTransientPartnerId() != null) {
+                item.setBusinessPartner(
+                        dao.find(BusinessPartner.class, dto.getTransientPartnerId())
+                );
+            }
             item.setDateFrom(dto.getDateFrom());
+            item.setEndDate(dto.getEndDate());
             item.setDaysToPay(dto.getDaysToPay());
             item.setRebate(dto.getRebate());
-            item.setEndDate(dto.getEndDate());
             item.setStatus(dto.getStatus());
-            //item.setVersion(dto.getVersion());
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
                 throw new ConstraintViolationException("", msgs);
             }
+            if (item.getVersion().compareTo(dto.getVersion()) != 0) {
+                throw new OptimisticLockException();
+            }
             dao.flush();
             return item;
         } catch (ConstraintViolationException | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
-            System.out.println("poruka je " + ex.getMessage());
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
                 throw new SystemException(
@@ -141,20 +123,13 @@ public class BusinessPartnerTermsService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Integer id) throws IllegalArgumentException,
-            ReferentialIntegrityException {
-        //TODO : check DeleteBusinessPartnerRelationshipTermsPermission
-        if (id == null) {
-            throw new IllegalArgumentException(
-                    Utils.getMessage("BusinessPartnerRelationshipTerms.IllegalArgumentEx.Code")
-            );
-        }
+    public void delete(Integer id) {
+        //TODO : check DeleteBusinessPartnerRelationshipTermsPermission        
         try {
             BusinessPartnerTerms service = dao.find(BusinessPartnerTerms.class, id);
             if (service != null) {
 
                 dao.remove(service);
-                dao.flush();
             }
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -166,21 +141,18 @@ public class BusinessPartnerTermsService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public BusinessPartnerTerms read(Integer id) throws EntityNotFoundException {
-        //TODO : check ReadBusinessPartnerRelationshipTermsPermission
-        if (id == null) {
-            throw new javax.persistence.EntityNotFoundException(
-                    Utils.getMessage("BusinessPartnerRelationshipTerms.IllegalArgumentEx.Code")
-            );
-        }
         try {
-            BusinessPartnerTerms BusinessPartnerRelationshipTerms = dao.find(BusinessPartnerTerms.class, id);
-            if (BusinessPartnerRelationshipTerms == null) {
+            BusinessPartnerTerms result = dao.find(BusinessPartnerTerms.class, id);
+            if (result == null) {
                 throw new EntityNotFoundException(
                         Utils.getMessage("BusinessPartnerRelationshipTerms.EntityNotFoundEx", id)
                 );
             }
-            return BusinessPartnerRelationshipTerms;
-        } catch (javax.persistence.EntityNotFoundException ex) {
+            result.setTransientPartnerId(result.getBusinessPartner().getId());
+            //initialize lazy collections of items
+            result.getItemsSize();
+            return result;
+        } catch (EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -191,7 +163,7 @@ public class BusinessPartnerTermsService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ReadRangeDTO<BusinessPartnerTermsDTO> readPage(PageRequestDTO p)
+    public ReadRangeDTO<BusinessPartnerTerms> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadBusinessPartnerRelationshipTermsPermission
         Integer id = null;
@@ -202,10 +174,10 @@ public class BusinessPartnerTermsService {
             if (s.getKey().equals("id")) {
                 id = (Integer) s.getValue();
             }
-            if (s.getKey().equals("dateFrom") && s.getValue() instanceof Date) {
+            if (s.getKey().equals("dateFrom") && s.getValue() instanceof LocalDate) {
                 dateFrom = (LocalDate) s.getValue();
             }
-            if (s.getKey().equals("endDate") && s.getValue() instanceof Date) {
+            if (s.getKey().equals("endDate") && s.getValue() instanceof LocalDate) {
                 endDate = (LocalDate) s.getValue();
             }
             if (s.getKey().equals("businessPartner") && s.getValue() instanceof BusinessPartner) {
@@ -229,29 +201,29 @@ public class BusinessPartnerTermsService {
                 throw new PageNotExistsException(
                         Utils.getMessage("BusinessPartnerRelationshipTerms.PageNotExists", pageNumber));
             }
-            ReadRangeDTO<BusinessPartnerTermsDTO> result = new ReadRangeDTO<>();
+            ReadRangeDTO<BusinessPartnerTerms> result = new ReadRangeDTO<>();
             if (pageNumber.equals(-1)) {
                 //if page number is -1 read last page
                 //first BusinessPartnerRelationshipTerms = last page number * BusinessPartnerRelationshipTermss per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(this.convertToDTO(this.search(dao,
+                result.setData(this.search(dao,
                         id,
                         dateFrom,
                         endDate,
                         businessPartner,
                         start,
-                        pageSize)));
+                        pageSize));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
 
             } else {
-                result.setData(this.convertToDTO(this.search(dao,
+                result.setData(this.search(dao,
                         id,
                         dateFrom,
                         endDate,
                         businessPartner,
                         p.getPage() * pageSize,
-                        pageSize)));
+                        pageSize));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
 
@@ -266,15 +238,6 @@ public class BusinessPartnerTermsService {
             );
         }
     }
-
-    private List<BusinessPartnerTermsDTO> convertToDTO(List<BusinessPartnerTerms> lista) {
-        List<BusinessPartnerTermsDTO> listaDTO = new ArrayList<>();
-        for (BusinessPartnerTerms pr : lista) {
-            listaDTO.add(pr.getDTO());
-        }
-        return listaDTO;
-    }
-
 
     private Long count(
             EntityManager EM,
@@ -323,12 +286,12 @@ public class BusinessPartnerTermsService {
     }
 
     private List<BusinessPartnerTerms> search(EntityManager em,
-                                                          Integer id,
-                                                          LocalDate dateFrom,
-                                                          LocalDate endDate,
-                                                          BusinessPartner businessPartner,
-                                                          int first,
-                                                          int pageSize) {
+            Integer id,
+            LocalDate dateFrom,
+            LocalDate endDate,
+            BusinessPartner businessPartner,
+            int first,
+            int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<BusinessPartnerTerms> query = cb.createQuery(BusinessPartnerTerms.class);
         Root<BusinessPartnerTerms> root = query.from(BusinessPartnerTerms.class);
@@ -352,7 +315,9 @@ public class BusinessPartnerTermsService {
         }
 
         query.where(criteria.toArray(new Predicate[0]))
-                .orderBy(cb.asc(root.get(BusinessPartnerTerms_.id)));
+                .orderBy(cb.asc(root.get(BusinessPartnerTerms_.businessPartner)
+                                .get(BusinessPartner_.name)),
+                        cb.desc(root.get(BusinessPartnerTerms_.dateFrom)));
         TypedQuery<BusinessPartnerTerms> typedQuery = em.createQuery(query);
         if (id != null) {
             typedQuery.setParameter("id", id);
@@ -374,9 +339,9 @@ public class BusinessPartnerTermsService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<BusinessPartnerTerms> readAll(Integer id,
-                                                          LocalDate dateFrom,
-                                                          LocalDate endDate,
-                                                          BusinessPartner businessPartner) {
+            LocalDate dateFrom,
+            LocalDate endDate,
+            BusinessPartner businessPartner) {
         try {
             return this.search(dao, id, dateFrom, endDate, businessPartner, 0, 0);
         } catch (Exception ex) {
@@ -388,45 +353,115 @@ public class BusinessPartnerTermsService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public BusinessPartnerRelationshipTermsItemsDTO[] readTermsItems(Integer id)
-            throws ConstraintViolationException,
-            EntityNotFoundException {
-        // TODO : check read invoice permission
-        if (id == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("Invoice.IllegalArgumentException.Client"));
-        }
-
+    @Transactional(rollbackFor = Exception.class)
+    public void addItem(BusinessPartnerTermsItem i) 
+            throws ConstraintViolationException, 
+            ReferentialIntegrityException {
         try {
-            BusinessPartnerTerms temp = dao.find(BusinessPartnerTerms.class, id);
-            if (temp == null) {
-                throw new EntityNotFoundException(Utils.getMessage("BusinessPartnerTerms.EntityNotFoundException", id));
+            Long version = i.getTerms().getVersion();
+            BusinessPartnerTerms terms = dao.find(
+                    BusinessPartnerTerms.class,
+                    i.getTerms().getId(),
+                    LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+            if (terms == null) {
+                throw new ReferentialIntegrityException(
+                        Utils.getMessage("BusinessPartnerRelationshipTerms.TermsReferentialIntegrityException")
+                );
             }
-            BusinessPartnerRelationshipTermsItemsDTO[] result = new BusinessPartnerRelationshipTermsItemsDTO[temp.getItemsSize()];
-            int i = 0;
-            List<BusinessPartnerTermsItem> itemList = temp.getUnmodifiableItemsSet();
-            for (BusinessPartnerTermsItem item : itemList) {
-                BusinessPartnerRelationshipTermsItemsDTO dto = new BusinessPartnerRelationshipTermsItemsDTO();
-                dto.setBusinessPartnerRelationshipTermsId(item.getBusinessPartnerTerms().getId());
-                dto.setArticleCode(item.getArticle().getCode());
-               dto.setArticleName(item.getArticle().getDescription());
-                dto.setOrdinal(item.getOrdinal());
-                dto.setRebate(item.getRebate());
-                dto.setTotalAmount(item.getTotalAmount());
-                dto.setTotalQuantity(item.getTotalQuantity());
-                dto.setBusinessPartnerRelationshipTermsVersion(item.getBusinessPartnerTerms().getVersion());
-
-                result[i] = dto;
-                i = i + 1;
+            i.setTerms(terms);
+            if(i.getArticle() != null && i.getArticle().getCode() != null && 
+                    i.getArticle().getCode().isEmpty() == false) {
+                Article service = dao.find(Article.class, i.getArticle().getCode());
+                if(service == null) {
+                    throw new ReferentialIntegrityException(
+                            Utils.getMessage("BusinessPartnerRelationshipTerms.ArticleReferentialIntegrityException")
+                    );
+                }
+                i.setArticle(service);                    
+            } else {
+                i.setArticle(null);
+                
             }
-            return result;
-        } catch (EntityNotFoundException ex) {
+            Integer maxOrdinal = 1;
+            for (BusinessPartnerTermsItem item : terms.getItems()) {
+                if(item.getOrdinal() > maxOrdinal) {
+                    maxOrdinal = item.getOrdinal();
+                }
+            }
+            i.setOrdinal(maxOrdinal + 1);
+            List<String> msgs = validator.validate(i).stream()
+                    .map(ConstraintViolation::getMessage)
+                    .collect(Collectors.toList());
+            if (msgs.size() > 0) {
+                throw new ConstraintViolationException("", msgs);
+            }
+            if (terms.getVersion().compareTo(version) != 0) {
+                    throw new OptimisticLockException();
+            }            
+            terms.addItem(i);
+            dao.persist(i);
+        } catch (ConstraintViolationException | ReferentialIntegrityException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(Utils.getMessage(
-                    "BusinessPartnerTerms.PersistenceEx.ReadInvoiceItems"), ex);
+            throw new SystemException(
+                    Utils.getMessage("BusinessPartnerRelationshipTerms.PersistenceEx.Additem"),
+                    ex);
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void removeItem(Integer termsId,
+            Integer ordinal,
+            Long version) {
+        try {
+            BusinessPartnerTermsItem item = dao.find(BusinessPartnerTermsItem.class,
+                    new BusinessPartnerTermsItemPK(termsId, ordinal));
+            if (item != null) {
+                BusinessPartnerTerms terms = dao.find(BusinessPartnerTerms.class,
+                        termsId,
+                        LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+                terms.removeItem(item);
+                dao.remove(item);
+                if (terms.getVersion().compareTo(version) != 0) {
+                    throw new OptimisticLockException();
+                }
+            }
+        } catch (Exception ex) {
+            if (ex instanceof OptimisticLockException
+                    || ex.getCause() instanceof OptimisticLockException) {
+                throw new SystemException(
+                        Utils.getMessage("BusinessPartnerRelationshipTerms.OptimisticLockEx"),
+                        ex
+                );
+            } else {
+                LOG.log(Level.WARNING, "", ex);
+                throw new SystemException(
+                        Utils.getMessage("BusinessPartnerRelationshipTerms.PersistenceEx.RemoveItem"),
+                        ex);
+            }
+        }
+    }
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public BusinessPartnerTermsItem readItem(Integer termsId,
+                                             Integer ordinal) 
+                                             throws EntityNotFoundException {
+        try {
+            BusinessPartnerTermsItem item = dao.find(
+                    BusinessPartnerTermsItem.class,
+                    new BusinessPartnerTermsItemPK(termsId, ordinal));
+            if (item == null) {
+                throw new EntityNotFoundException(
+                        Utils.getMessage("BusinessPartnerRelationshipTerms.ItemNotFound")
+                );
+            }
+            return item;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(
+                    Utils.getMessage("BusinessPartnerRelationshipTerms.PersistenceEx.ReadItem"),
+                    ex);
         }
     }
 }

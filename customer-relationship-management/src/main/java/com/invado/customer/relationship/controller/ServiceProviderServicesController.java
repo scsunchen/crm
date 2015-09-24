@@ -17,6 +17,7 @@ import com.invado.customer.relationship.service.exception.ArticleNotFoundExcepti
 import com.invado.customer.relationship.service.exception.BusinessPartnerIsNotServiceProviderException;
 import com.invado.customer.relationship.service.exception.BusinessPartnerNotFoundException;
 import com.invado.customer.relationship.service.exception.ServiceProviderServicesConstraintViolationException;
+import com.invado.customer.relationship.service.exception.ServiceProviderServicesIsNotUniqueException;
 import com.invado.customer.relationship.service.exception.ServiceProviderServicesNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -86,11 +87,13 @@ public class ServiceProviderServicesController {
         }
         try {
             service.create(services);
-        } catch (ServiceProviderServicesConstraintViolationException | 
-                ArticleNotFoundException |
-                BusinessPartnerNotFoundException |
-                BusinessPartnerIsNotServiceProviderException | 
-                SystemException ex) {
+            status.setComplete();
+        } catch (ServiceProviderServicesConstraintViolationException 
+                | ServiceProviderServicesIsNotUniqueException 
+                | ArticleNotFoundException 
+                | BusinessPartnerNotFoundException 
+                | BusinessPartnerIsNotServiceProviderException 
+                | SystemException ex) {
             model.put("page", page);
             model.put("exception", ex);
             model.put("action", "create");
@@ -125,6 +128,7 @@ public class ServiceProviderServicesController {
         }
         try {
             service.update(services);
+            status.setComplete();
         } catch (ServiceProviderServicesConstraintViolationException
                 | ServiceProviderServicesNotFoundException
                 | ArticleNotFoundException 

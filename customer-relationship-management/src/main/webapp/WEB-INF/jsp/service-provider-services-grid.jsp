@@ -28,7 +28,7 @@
                 </c:when>
                 <c:otherwise>
                     <form:input id="serviceProvider" class="typeahead form-control" 
-                                type="text" path="serviceProvider.name"/>
+                                type="text" path="serviceProvider.name" disabled="true"/>
                 </c:otherwise>
             </c:choose>
         <form:input id="serviceProvider-hidden" type="hidden" 
@@ -40,8 +40,16 @@
     <input:inputField label="${descriptionLabel}" name="description" />        
     <div class="form-group" >
         <label for="serviceDescription"><spring:message code="ServiceProviderServices.Label.Service" /></label>
-         <form:input id="serviceDescription" class="typeahead form-control" 
-                    type="text" path="service.description" />
+        <c:choose>
+                <c:when test="${action == 'create'}">
+                     <form:input id="serviceDescription" class="typeahead form-control" 
+                                type="text" path="service.description" />
+                </c:when>
+                <c:otherwise>
+                     <form:input id="serviceDescription" class="typeahead form-control" 
+                                type="text" path="service.description" disabled="true" />
+                </c:otherwise>
+            </c:choose>
         <form:input id="serviceDescription-hidden" type="hidden" 
                     path="service.code"/>
     </div>

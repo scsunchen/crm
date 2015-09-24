@@ -11,56 +11,105 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-
-<form:form modelAttribute="item" method="post">
-    <fieldset class="col-lg-12">
-        <div class="form-group">
-            <c:choose>
-            <c:when test="${action == 'create'}">
-                <input:inputField label="BusinessPartnerTerms.Table.Id" name="id" autofocus="true" disabled="true"/>
-            </c:when>
-            <c:otherwise>
-                <form:hidden path="id"/>
-            </c:otherwise>
-            </c:choose>
-            <spring:bind path="businessPartner.companyIdNumber">
-            <div class="form-group col-md-6">
-                <label for="partner"><spring:message code="BusinessPartnerTerms.Table.BusinessPartnerName"/></label>
-                <form:select path="transientPartnerId" id="partner" class="form-control" itemLabel="partner">
-                    <form:option value="${item.businessPartner.id}">${item.businessPartner.name}</form:option>
-                    <form:options items="${partners}" itemLabel="name" itemValue="id"/>
-                </form:select>
-            </div>
-            </spring:bind>
-
-            <div class="form-group col-md-6">
-                <label for="status">Status</label>
-                <form:select path="status" id="status" class="form-control" itemLabel="status">
-                    <form:option value="${item.status}">${item.status.description}</form:option>
-                    <form:options items="${statuses}" itemLabel="description"/>
-                </form:select>
-            </div>
-            <div class="col-md-6">
-                <input:inputDate label="BusinessPartnerTerms.Table.DateFrom" name="dateFrom"/>
-                <input:inputDate label="BusinessPartnerTerms.Table.EndDate" name="endDate"/>
-            </div>
-            <div class="col-md-6">
-                <input:inputField label="BusinessPartnerTerms.Table.DPO" name="daysToPay"/>
-                <input:inputField label="BusinessPartnerTerms.Table.Rebate" name="rebate"/>
-            </div>
-                <input:inputTextArea label="BusinessPartnerTerms.Table.Remark" name="remark"/>
-                <form:hidden path="version"/>
-    </fieldset>
+<c:if test = "${exception != null}">
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        ${exception.message}
+    </div>
+</c:if>
+<form:form modelAttribute="terms" method="post">
+    <form:hidden path="id"/>
     <div class="form-group">
+        <label for="partner"><spring:message code="BusinessPartnerTerms.Label.BusinessPartnerName"/></label>
+        <form:input id="businessPartner" class="typeahead form-control" 
+                    type="text"   path="businessPartner.name" autofocus="true"/>
+        <form:input id="businessPartner-hidden" type="hidden" 
+                    path="transientPartnerId"/>
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-6">
+            <label style="margin-top: 20px;" for="status"><spring:message code="BusinessPartnerTerms.Label.Status"/></label>
+            <form:select path="status" id="status" class="form-control" itemLabel="status">
+                <form:options items="${statuses}" itemLabel="description"/>
+            </form:select>
+        </div>
+        <spring:bind path="daysToPay">
+            <div class="form-group col-lg-6">
+                <label for="daysToPay" style="margin-top: 20px;" >
+                    <spring:message code="BusinessPartnerTerms.Label.DaysToPay" />
+                </label>
+                <form:input id="daysToPay" path="daysToPay" class="form-control"/>                    
+                <span class="help-inline">
+                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
+                    </span>
+                </div>
+        </spring:bind>
+    </div>
+    <div class="row">
+        <spring:bind path="dateFrom">
+            <div class="form-group col-lg-6">
+                <label for="dateFrom">
+                    <spring:message code="BusinessPartnerTerms.Label.DateFrom" />
+                </label>
+                <form:input id="dateFrom" path="dateFrom" class="form-control"/>                    
+                <span class="help-inline">
+                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
+                    </span>
+                </div>
+        </spring:bind>
+        <spring:bind path="endDate">
+            <div class="form-group col-lg-6">
+                <label for="endDate" >
+                    <spring:message code="BusinessPartnerTerms.Label.EndDate" />
+                </label>
+                <form:input id="endDate" path="endDate" class="form-control"/>                    
+                <span class="help-inline">
+                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
+                    </span>
+                </div>
+        </spring:bind>
+    </div>
+    <spring:bind path="rebate">
+        <div class="row">
+            <div class="form-group col-lg-6">
+                <label for="rebate" >
+                    <spring:message code="BusinessPartnerTerms.Label.Rebate" />
+                </label>
+                <form:input id="rebate" path="rebate" class="form-control"/>                    
+                <span class="help-inline">
+                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
+                    </span>
+                </div>
+            </div>
+    </spring:bind>
+    <form:hidden path="version"/>
+    <div class="form-group">
+        <spring:url value="/terms/${page}/read-page.html" var="back"/>
+        <a class="btn btn-primary" href="${back}">
+            <spring:message code="BusinessPartnerTerms.Button.Back" />
+        </a>
         <button type="submit" class="btn btn-primary">
-            <c:choose>
-                <c:when test="${action == 'create'}">
-                    <spring:message code="BusinessPartnerTerms.Button.Create"/>
-                </c:when>
-                <c:otherwise>
-                    <spring:message code="BusinessPartnerTerms.Button.Update"/>
-                </c:otherwise>
-            </c:choose>
+            <spring:message code="BusinessPartnerTerms.Button.Create"/>
         </button>
     </div>
 </form:form>
+<script type="text/javascript">
+    $('#businessPartner').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1
+    }, {
+        display: 'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/terms/read-merchant/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#businessPartner').bind('typeahead:selected', function (obj, datum, name) {
+        $('#businessPartner-hidden').val(datum['id']);
+    });
+</script>

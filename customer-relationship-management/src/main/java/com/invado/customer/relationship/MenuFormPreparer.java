@@ -55,7 +55,7 @@ public class MenuFormPreparer implements ViewPreparer {
         crm.put("CRM", "Status terminala", "/crm/devicestatus/0");
         crm.put("CRM", "Terminal", "/crm/device/0");
         crm.put("CRM", "Transakcije", "/crm/transactions/0");
-        crm.put("CRM", "CRM", "/crm/terms/read-terms.html");
+        crm.put("CRM", "CRM", "/crm/terms/0/read-page.html");
         crm.put("CRM", "Usluge dobavljača", "/crm/service-provider-services/0/read-page.html");
         modules.add(crm);
 
@@ -76,7 +76,6 @@ public class MenuFormPreparer implements ViewPreparer {
         ac.putAttribute("modules", new Attribute(modules));
         for (Module module : modules) {
 
-            System.out.println("poruka iz crm je "+module.getName()+" "+module.getPath());
             if (request1.getRequestURI().contains(module.getPath())) {
                 ac.putAttribute("selectedModule", new Attribute(module));
             }

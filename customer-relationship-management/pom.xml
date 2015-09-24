@@ -163,7 +163,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
                 <configuration>
-                    <warName>masterdata</warName>
+                    <warName>crm</warName>
                 </configuration>
             </plugin>
             <plugin>

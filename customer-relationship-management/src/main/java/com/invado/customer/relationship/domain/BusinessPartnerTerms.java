@@ -1,27 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.LocalDateConverter;
 import com.invado.customer.relationship.Utils;
-import com.invado.customer.relationship.service.dto.BusinessPartnerTermsDTO;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
+import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
- * Created by NikolaB on 6/13/2015.
+ *
+ * @author bdragan
  */
 @Entity
-@Table(name = "CRM_BUSINESS_TERMS", schema = "devel")
-public class BusinessPartnerTerms implements Serializable{
-
+@Table(name = "CRM_BUSINESS_TERMS")
+public class BusinessPartnerTerms implements Serializable {
+    
     @TableGenerator(
             name = "BusinessTermsTab",
             table = "id_generator",
@@ -35,36 +55,32 @@ public class BusinessPartnerTerms implements Serializable{
     private Integer id;
     @NotNull(message = "{BusinessPartnerTerms.BusinessPartner.NotNull}")
     @ManyToOne
-    @JoinColumn(name = "partner_id")
+    @JoinColumn(name = "PARTNER_ID")
     private BusinessPartner businessPartner;
-    @Column(name = "date_from")
+    @Column(name = "DATE_FROM")
     @NotNull(message = "{BusinessPartnerTerms.DateFrom.NotNull}")
     @Convert(converter = LocalDateConverter.class)
     @DateTimeFormat(style = "M-")
     private LocalDate dateFrom;
-    @Column(name = "end_date")
+    @Column(name = "END_DATE")
     @Convert(converter = LocalDateConverter.class)
     @DateTimeFormat(style = "M-")
     private LocalDate endDate;
-    @Column(name = "days_to_pay")
+    @Column(name = "DAYS_TO_PAY")
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
     private Integer daysToPay;
-    @Column(name = "rebate")
     @NotNull(message = "{BusinessPartnerTerms.Rabate.NotNull}")
-    private Integer rebate;
-    @Column(name = "status")
+    @NumberFormat(style = NumberFormat.Style.PERCENT)
+    private BigDecimal rebate;
     @NotNull(message = "{BusinessPartnerTerms.Status.NotNull}")
     private Status status;
-    @Valid//FIXME : Lazy collection validation
-    @OneToMany(cascade = {CascadeType.ALL},
-            mappedBy = "businessPartnerTerms",
-            fetch = FetchType.LAZY)
-    private List<BusinessPartnerTermsItem> items = new ArrayList<>();
     @Version
     private Long version;
-
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "terms")
+    private List<BusinessPartnerTermsItem> items = new ArrayList<>();
     @Transient
     private Integer transientPartnerId;
-
+    
     public BusinessPartnerTerms() {
     }
 
@@ -108,20 +124,12 @@ public class BusinessPartnerTerms implements Serializable{
         this.daysToPay = daysToPay;
     }
 
-    public Integer getRebate() {
+    public BigDecimal getRebate() {
         return rebate;
     }
 
-    public void setRebate(Integer rebate) {
+    public void setRebate(BigDecimal rebate) {
         this.rebate = rebate;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public Status getStatus() {
@@ -140,30 +148,61 @@ public class BusinessPartnerTerms implements Serializable{
         this.transientPartnerId = transientPartnerId;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     public int getItemsSize() {
         return items.size();
     }
 
-    public List<BusinessPartnerTermsItem> getUnmodifiableItemsSet() {
-        Collections.sort(items);
+    public boolean removeItem(BusinessPartnerTermsItem o) {
+        return items.remove(o);
+    }
+
+    public boolean addItem(BusinessPartnerTermsItem e) {
+        return items.add(e);
+    }
+
+    public boolean addAll(Collection<? extends BusinessPartnerTermsItem> c) {
+        return items.addAll(c);
+    }
+
+    public List<BusinessPartnerTermsItem> getItems() {
         return Collections.unmodifiableList(items);
     }
-
-    public BusinessPartnerTermsDTO getDTO() {
-        BusinessPartnerTermsDTO result = new BusinessPartnerTermsDTO();
-        result.setId(this.getId());
-        result.setVersion(this.getVersion());
-        result.setBusinessPartnerId(this.getBusinessPartner().getId());
-        result.setBusinessPartnerName(this.getBusinessPartner().getName());
-        result.setDateFrom(this.getDateFrom());
-        result.setEndDate(this.getEndDate());
-        result.setDaysToPay(this.getDaysToPay());
-        result.setRebate(this.getRebate());
-        result.setStatus(this.getStatus());
-        result.setVersion(this.getVersion());
-        return result;
+    
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BusinessPartnerTerms other = (BusinessPartnerTerms) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "BusinessPartnerTerms{" + "id=" + id + '}';
+    }
+    
     public enum Status {
 
         INSERT,//USLOVI SU UNETI
@@ -181,31 +220,5 @@ public class BusinessPartnerTerms implements Serializable{
             }
             return "";
         }
-    }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final BusinessPartnerTerms other = (BusinessPartnerTerms) obj;
-        return !(this.id != other.id && (this.id == null || !this.id.equals(other.id)));
-    }
-
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + (this.id != null ? this.id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public String toString() {
-        return "com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms{" + "id=" + id + '}';
     }
 }

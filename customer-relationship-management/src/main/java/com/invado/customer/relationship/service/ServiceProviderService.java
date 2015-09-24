@@ -19,6 +19,7 @@ import com.invado.customer.relationship.service.exception.ArticleNotFoundExcepti
 import com.invado.customer.relationship.service.exception.BusinessPartnerIsNotServiceProviderException;
 import com.invado.customer.relationship.service.exception.BusinessPartnerNotFoundException;
 import com.invado.customer.relationship.service.exception.ServiceProviderServicesConstraintViolationException;
+import com.invado.customer.relationship.service.exception.ServiceProviderServicesIsNotUniqueException;
 import com.invado.customer.relationship.service.exception.ServiceProviderServicesNotFoundException;
 import java.util.List;
 import java.util.logging.Level;
@@ -50,6 +51,7 @@ public class ServiceProviderService {
     @Transactional(rollbackFor = Exception.class)
     public void create(ServiceProviderServices services)
             throws ServiceProviderServicesConstraintViolationException,
+            ServiceProviderServicesIsNotUniqueException,
             ArticleNotFoundException,
             BusinessPartnerNotFoundException,
             BusinessPartnerIsNotServiceProviderException {
@@ -92,8 +94,23 @@ public class ServiceProviderService {
                         messages
                 );
             }
+            if(entityManager.createNamedQuery(
+                    ServiceProviderServices.READ_BY_BUSINESSPARTNER_SERVICE,
+                    ServiceProviderServices.class)
+                    .setParameter("service", services.getService())
+                    .setParameter("provider", services.getServiceProvider())
+                    .getResultList()
+                    .isEmpty() == false) {
+                throw new ServiceProviderServicesIsNotUniqueException(
+                        Messages.SERVICE_PROVIDER_SERVICES_NOT_UNIQUE.get(
+                                services.getServiceProvider().getName(),
+                                services.getService().getDescription()
+                                )
+                );
+            }
             entityManager.persist(services);
         } catch (ServiceProviderServicesConstraintViolationException 
+                | ServiceProviderServicesIsNotUniqueException
                 | ArticleNotFoundException 
                 | BusinessPartnerNotFoundException 
                 | BusinessPartnerIsNotServiceProviderException ex) {
@@ -107,6 +124,7 @@ public class ServiceProviderService {
     @Transactional(rollbackFor = Exception.class)
     public void update(ServiceProviderServices services)
             throws ServiceProviderServicesConstraintViolationException,
+//            ServiceProviderServicesIsNotUniqueException,
             ServiceProviderServicesNotFoundException,
             ArticleNotFoundException,
             BusinessPartnerNotFoundException,
@@ -166,6 +184,7 @@ public class ServiceProviderService {
                 throw new OptimisticLockException();
             }
         } catch (ServiceProviderServicesConstraintViolationException 
+//                | ServiceProviderServicesIsNotUniqueException
                 | ArticleNotFoundException 
                 | BusinessPartnerNotFoundException 
                 | BusinessPartnerIsNotServiceProviderException ex) {
@@ -277,6 +296,7 @@ public class ServiceProviderService {
         BUSINESS_PARTNER_NOT_FOUND("ServiceProviderServices.BusinessPartnerNotFound"),
         BUSINESS_PARTNER_IS_NOT_SERVICE_PROVIDER(
             "ServiceProviderServices.BusinessPartnerIsNotServiceProvider"),
+        SERVICE_PROVIDER_SERVICES_NOT_UNIQUE("ServiceProviderServices.ServiceProviderServicesNotUnique"),
         SERVICE_PROVIDER_SERVICES_NOT_FOUND(
             "ServiceProviderServices.ServiceProviderServicesNotFound"),
         PAGE_NOT_FOUND("ServiceProviderServices.PageNotFound"),

@@ -37,11 +37,17 @@ import org.springframework.format.annotation.DateTimeFormat;
     @NamedQuery(name = ServiceProviderServices.COUNT_ALL,
             query = "SELECT COUNT(x) FROM ServiceProviderServices x"),
     @NamedQuery(name = ServiceProviderServices.READ_ALL_ORDERBY_SERVICE_PROVIDER_DESCRIPTION,
-            query = "SELECT x FROM ServiceProviderServices x ORDER BY x.serviceProvider, x.description")
+            query = "SELECT x FROM ServiceProviderServices x ORDER BY x.serviceProvider, x.description"),
+    @NamedQuery(name = ServiceProviderServices.READ_BY_BUSINESSPARTNER_SERVICE,
+            query="SELECT x FROM ServiceProviderServices x WHERE "
+                    + "x.service = :service "
+                    + "AND x.serviceProvider= :provider")
 })
 public class ServiceProviderServices implements Serializable {
     
     public  static final String COUNT_ALL = "ServiceProviderServices.CountAll";
+    public  static final String READ_BY_BUSINESSPARTNER_SERVICE 
+            = "ServiceProviderServices.ReadByBusinessPartnerService";
     public  static final String READ_ALL_ORDERBY_SERVICE_PROVIDER_DESCRIPTION = 
             "ServiceProviderServices.ReadAllOrderByServiceProviderDescription";
     

@@ -1,51 +1,71 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.Article;
-
-import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
- * Created by nikola on 11.07.2015.
+ *
+ * @author bdragan
  */
 @Entity
-
-@Table(name = "CRM_BUSINESS_TERMS_ITEMS", schema = "devel")
-public class BusinessPartnerTermsItem implements Serializable, Comparable<BusinessPartnerTermsItem>{
-
+@Table(name = "CRM_BUSINESS_TERMS_ITEMS")
+@NamedQuery(name="test", query = "SELECT x FROM BusinessPartnerTermsItem x WHERE x.terms.id = :terms AND x.ordinal = :o")
+@IdClass(BusinessPartnerTermsItemPK.class)
+public class BusinessPartnerTermsItem implements Serializable {
+    
     @Id
-    @NotNull(message = "{BusinessTermsItem.BusinessTerms.NotNull}")
     @ManyToOne
-    @JoinColumn(name = "terms_id", referencedColumnName = "id")
-    private BusinessPartnerTerms businessPartnerTerms;
-    @Id
+    @JoinColumn(name = "TERMS_ID")
+    @NotNull(message = "{BusinessTermsItem.Terms.NotNull}")
+    private BusinessPartnerTerms terms;
+    @Id    
     @NotNull(message = "{BusinessTermsItem.Ordinal.NotNull}")
-    @DecimalMin(value = "1", message = "{InvoiceItem.Ordinal.Min}")
-    @Column(name = "ordinal")
     private Integer ordinal;
     @ManyToOne
-    @JoinColumn(name = "article_code", referencedColumnName = "code")
+    @JoinColumn(name = "ARTICLE_CODE")
     @NotNull(message = "{BusinessTermsItem.Article.NotNull}")
     private Article article;
-    /**Ukupna vrednost prodatih artikala na jednom dokumentu. ukoliko iznos prelazi zadati totalAmount dobija se dodatni popust*/
-    @Column(name = "total_amount")
+    @Column(name = "TOTAL_AMOUNT")
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal totalAmount;
-    /**Ukupna količina prodatih artikala na jednom dokumentu. ukoliko količina prelazi zadati totalQuantity dobija se dodatni popust*/
-    @Column(name = "total_quantity")
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
+    @Column(name = "TOTAL_QUANTITY")
     private BigDecimal totalQuantity;
-    @Column(name = "rebate")
+    @NumberFormat(style = NumberFormat.Style.PERCENT)
+    @NotNull(message = "{BusinessTermsItem.Rebate.NotNull}")
     private BigDecimal rebate;
 
-
-    public BusinessPartnerTerms getBusinessPartnerTerms() {
-        return businessPartnerTerms;
+    public BusinessPartnerTermsItem() {
     }
 
-    public void setBusinessPartnerRelationshipTerms(BusinessPartnerTerms businessPartnerRelationshipTerms) {
-        this.businessPartnerTerms = businessPartnerRelationshipTerms;
+    public BusinessPartnerTermsItem(BusinessPartnerTerms terms, Integer ordinal) {
+        this.terms = terms;
+        this.ordinal = ordinal;
+    }
+
+    public BusinessPartnerTerms getTerms() {
+        return terms;
+    }
+
+    public void setTerms(BusinessPartnerTerms terms) {
+        this.terms = terms;
     }
 
     public Integer getOrdinal() {
@@ -88,6 +108,13 @@ public class BusinessPartnerTermsItem implements Serializable, Comparable<Busine
         this.rebate = rebate;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.terms);
+        hash = 17 * hash + Objects.hashCode(this.ordinal);
+        return hash;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -98,20 +125,18 @@ public class BusinessPartnerTermsItem implements Serializable, Comparable<Busine
             return false;
         }
         final BusinessPartnerTermsItem other = (BusinessPartnerTermsItem) obj;
-        if (this.businessPartnerTerms != other.businessPartnerTerms && (this.businessPartnerTerms == null
-                || !this.businessPartnerTerms.equals(other.businessPartnerTerms))) {
+        if (!Objects.equals(this.terms, other.terms)) {
             return false;
         }
-        return !(this.ordinal != other.ordinal && (this.ordinal == null
-                || !this.ordinal.equals(other.ordinal)));
+        if (!Objects.equals(this.ordinal, other.ordinal)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public int compareTo(BusinessPartnerTermsItem o) {
-        if(o.businessPartnerTerms.equals(businessPartnerTerms)){
-            return ordinal.compareTo(o.ordinal);
-        } else {
-            return businessPartnerTerms.getId().compareTo(o.businessPartnerTerms.getId());
-        }
+    public String toString() {
+        return "BusinessPartnerTermsItem{" + "terms=" + terms + ", ordinal=" + ordinal + '}';
     }
+    
 }

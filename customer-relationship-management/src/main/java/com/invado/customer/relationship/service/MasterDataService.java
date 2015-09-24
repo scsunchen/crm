@@ -99,6 +99,26 @@ public class MasterDataService {
             );
         }
     }
+    
+    @Transactional(readOnly = true)
+    public List<BusinessPartner> readBusinessPartnerByNameAndType(
+            String name, 
+            BusinessPartner.Type type) {
+        try {
+            List<BusinessPartner> list =  dao.createNamedQuery(BusinessPartner.READBY_NAME_TYPE_ORDERBY_NAME,
+                    BusinessPartner.class)
+                    .setParameter("name", ("%"+name+"%").toUpperCase())
+                    .setParameter("type", type)
+                    .getResultList();
+            return list;
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadBusinessPartnerByName"),
+                    ex
+            );
+        }
+    }
 
     @Transactional(readOnly = true)
     public BusinessPartner readServiceProviderById(Integer id) {
