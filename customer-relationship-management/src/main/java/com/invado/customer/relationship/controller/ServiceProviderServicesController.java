@@ -130,6 +130,7 @@ public class ServiceProviderServicesController {
             service.update(services);
             status.setComplete();
         } catch (ServiceProviderServicesConstraintViolationException
+                | ServiceProviderServicesIsNotUniqueException 
                 | ServiceProviderServicesNotFoundException
                 | ArticleNotFoundException 
                 | BusinessPartnerNotFoundException 
