@@ -42,7 +42,7 @@ public class MenuFormPreparer implements ViewPreparer {
         masterdata.put("Opsti sifarnici", "Opstina", "/masterdata/township/0");
         masterdata.put("Opsti sifarnici", "Banka", "/masterdata/bank/0");
         masterdata.put("Opsti sifarnici", "Valuta", "/masterdata/currency/0");
-        masterdata.put("Opsti sifarnici", "Kurs", "/core/exchange-rate/0");
+        masterdata.put("Opsti sifarnici", "Kursna Lista", "/masterdata/exchange-rate/0");
         modules.add(masterdata);
         Module service = new Module();
         service.setPath("service");

@@ -11,7 +11,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<form:form class="navbar-form navbar-left" role="search" modelAttribute="transactionDTO" method="POST">
+<form:form class="navbar-form navbar-left" role="search" modelAttribute="transactionDTO" method="GET"
+           action="${pageContext.request.contextPath}/transactions/0">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Pretraživanje poslovnih partnera -->
@@ -93,13 +94,13 @@
         <ul class="pager pull-right">
             Strana
             <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page - 1}"/></c:if>">
+                <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/${page - 1}?serviceProviderId=${transactionDTO.serviceProviderId}&serviceProviderName=${transactionDTO.serviceProviderName}&pointOfSaleId=${transactionDTO.pointOfSaleId}&pointOfSaleName=${transactionDTO.pointOfSaleName}&terminalCustomCode=${transactionDTO.terminalCustomCode}&terminalId=${transactionDTO.terminalId}&typeId=${transactionDTO.typeId}&typeDescription=${transactionDTO.typeId}&distributorId=${transactionDTO.distributorId}&distributorName=${transactionDTO.distributorName}"/></c:if>">
                     <span class="glyphicon glyphicon-backward"></span> Prethodna
                 </a>
             </li>
             <c:out value="${page+1} od ${numberOfPages+1}"/>
             <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/-${transactionDTO.serviceProviderId}-${transactionDTO.pointOfSaleId}${transactionDTO.terminalId}-${transactionDTO.typeId}-${transactionDTO.distributorId}/${page + 1}"/></c:if>">
+                <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/${page + 1}?serviceProviderId=${transactionDTO.serviceProviderId}&serviceProviderName=${transactionDTO.serviceProviderName}&pointOfSaleId=${transactionDTO.pointOfSaleId}&pointOfSaleName=${transactionDTO.pointOfSaleName}&terminalCustomCode=${transactionDTO.terminalCustomCode}&terminalId=${transactionDTO.terminalId}&typeId=${transactionDTO.typeId}&typeDescription=${transactionDTO.typeId}&distributorId=${transactionDTO.distributorId}&distributorName=${transactionDTO.distributorName}"/></c:if>">
                     <span class="glyphicon glyphicon-forward"></span> Naredna
                 </a>
             </li>
@@ -118,7 +119,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdat/read-serviceprovider/%QUERY',
+                url: '${pageContext.request.contextPath}/masterdata/read-serviceprovider/%QUERY',
                 wildcard: '%QUERY'
             }
         })
@@ -139,7 +140,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdat/read-businesspartner/%QUERY',
+                url: '${pageContext.request.contextPath}/masterdata/read-businesspartner/%QUERY',
                 wildcard: '%QUERY'
             }
         })
@@ -160,7 +161,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdat/read-terminal/%QUERY',
+                url: '${pageContext.request.contextPath}/masterdata/read-terminal/%QUERY',
                 wildcard: '%QUERY'
             }
         })
@@ -181,7 +182,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdat/read-transactiontype/%QUERY',
+                url: '${pageContext.request.contextPath}/masterdata/read-transactiontype/%QUERY',
                 wildcard: '%QUERY'
             }
         })
@@ -202,7 +203,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdat/read-distributor/%QUERY',
+                url: '${pageContext.request.contextPath}/masterdata/read-distributor/%QUERY',
                 wildcard: '%QUERY'
             }
         })

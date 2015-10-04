@@ -33,11 +33,6 @@ public class BusinessPartnerRelationshipTermsController {
     private BusinessPartnerRelationshipTermsService businessPartnerRelationshipTermsService;
 
 
-    @RequestMapping("home")
-    public String showHomePage() {
-        return "home";
-    }
-
     @RequestMapping(value = "/terms/read-terms.html")
     public String prepareShowItems(Map<String, Object> model)
             throws Exception {

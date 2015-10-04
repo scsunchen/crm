@@ -178,7 +178,7 @@ public class RecordInvoiceService {
                 calendar.set(Calendar.YEAR, invoice.getCreditRelationDate().getYear());
                 calendar.set(Calendar.DAY_OF_YEAR, invoice.getCreditRelationDate().getDayOfYear());
                 ExchangeRate rate = EM.find(ExchangeRate.class,
-                        new ExchangeRatePK(new Date(calendar.getTimeInMillis()),
+                        new ExchangeRatePK(LocalDate.now(),
                                 invoice.getCurrencyISOCode()));
                 if (rate == null) {
                     //dao.rollbackTransaction();

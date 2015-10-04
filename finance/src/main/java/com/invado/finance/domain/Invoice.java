@@ -135,6 +135,7 @@ public class Invoice implements Serializable {
     @Column(name = "version")
     private Long version;
 
+
     public Invoice() {
     }
 

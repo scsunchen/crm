@@ -4,12 +4,16 @@
  */
 package com.invado.core.domain;
 
+import com.invado.core.dto.ExchangeRateDTO;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.swing.event.DocumentEvent;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -35,10 +39,10 @@ public class ExchangeRate implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Temporal(TemporalType.DATE)
     @Column(name = "application_date")
     @NotNull(message = "{ExchangeRate.ApplicationDate.NotNull}")
-    private Date applicationDate;
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate applicationDate;
     @Id
     @NotNull(message = "{ExchangeRate.ToCurrency.NotNull}")
     @ManyToOne
@@ -64,13 +68,21 @@ public class ExchangeRate implements Serializable {
     @Version
     private Long version;
 
-    public ExchangeRate(Date applicationDate, 
+    public ExchangeRate(LocalDate applicationDate,
                         Currency toCurrency) {
         this.applicationDate = applicationDate;
         this.toCurrency = toCurrency;
     }
 
     public ExchangeRate() {}
+
+    public Currency getToCurrency() {
+        return toCurrency;
+    }
+
+    public void setToCurrency(Currency toCurrency) {
+        this.toCurrency = toCurrency;
+    }
 
     public String getToCurrencyISOCode() {
         return toCurrency.getISOCode();
@@ -120,8 +132,24 @@ public class ExchangeRate implements Serializable {
         this.version = version;
     }
 
-    public Date getApplicationDate() {
+    public LocalDate getApplicationDate() {
         return applicationDate;
+    }
+
+    public ExchangeRateDTO getDTO(){
+
+        ExchangeRateDTO exchangeRateDTO = new ExchangeRateDTO();
+
+        exchangeRateDTO.setBuying(this.getBuying());
+        exchangeRateDTO.setSelling(this.getSelling());
+        exchangeRateDTO.setMiddle(this.getMiddle());
+        exchangeRateDTO.setListNumber(this.getListNumber());
+        exchangeRateDTO.setApplicationDate(this.getApplicationDate());
+        exchangeRateDTO.setISOCode(this.getToCurrencyISOCode());
+        exchangeRateDTO.setCurrencyDescription(this.getToCurrencyDescription());
+
+        return exchangeRateDTO;
+
     }
 
     @Override

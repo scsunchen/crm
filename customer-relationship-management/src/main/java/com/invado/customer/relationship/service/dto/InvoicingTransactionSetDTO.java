@@ -21,23 +21,25 @@ public class InvoicingTransactionSetDTO {
     @NativeQueryResultColumn(index=3)
     private String merchantName;
     @NativeQueryResultColumn(index=4)
-    private String serviceId;
+    private Integer serviceId;
     @NativeQueryResultColumn(index=5)
-    private String serviceDescription;
-    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private String articleCode;
     @NativeQueryResultColumn(index=6)
-    private BigDecimal amount;
+    private String serviceDescription;
     @NativeQueryResultColumn(index=7)
-    private Long transactionId;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private BigDecimal amount;
     @NativeQueryResultColumn(index=8)
-    private Integer posId;
+    private Long transactionId;
     @NativeQueryResultColumn(index=9)
-    private String posName;
+    private Integer posId;
     @NativeQueryResultColumn(index=10)
-    private Integer treminalId;
+    private String posName;
     @NativeQueryResultColumn(index=11)
-    private String treminalName;
+    private Integer treminalId;
     @NativeQueryResultColumn(index=12)
+    private String treminalName;
+    @NativeQueryResultColumn(index=13)
     private Integer rownum;
 
 
@@ -106,12 +108,20 @@ public class InvoicingTransactionSetDTO {
         this.treminalName = treminalName;
     }
 
-    public String getServiceId() {
+    public Integer getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(String serviceId) {
+    public void setServiceId(Integer serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public String getArticleCode() {
+        return articleCode;
+    }
+
+    public void setArticleCode(String articleCode) {
+        this.articleCode = articleCode;
     }
 
     public String getServiceDescription() {

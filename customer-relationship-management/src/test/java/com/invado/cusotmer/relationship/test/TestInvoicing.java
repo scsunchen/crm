@@ -6,6 +6,7 @@
 package com.invado.cusotmer.relationship.test;
 
 
+import com.invado.customer.relationship.domain.BusinessPartnerRelationshipTermsItems;
 import com.invado.customer.relationship.service.TransactionService;
 import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
@@ -22,6 +23,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -47,6 +50,9 @@ public class TestInvoicing {
     @Autowired
     private TransactionService transactionService;
 
+    @PersistenceContext(name = "baza")
+    private EntityManager dao;
+
     @Test
     public void testInv() throws Exception{
 
@@ -63,6 +69,15 @@ public class TestInvoicing {
             it.remove(); // avoids a ConcurrentModificationException
         }
 
+    }
+
+    @Test
+    public void testQuery(){
+
+        BusinessPartnerRelationshipTermsItems it = dao.createNamedQuery(BusinessPartnerRelationshipTermsItems.READ_TERMS_PER_PARTNER_AND_ARTICLE, BusinessPartnerRelationshipTermsItems.class)
+                .setParameter("partner", 5)
+                .setParameter("serviceId", 13)
+                .getSingleResult();
     }
 
 }

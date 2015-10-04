@@ -355,5 +355,21 @@ public class CurrencyService {
                     Utils.getMessage("Currency.PersistenceEx.ReadAll"), ex);
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<Currency> readByName(String name) {
+        try {
+            return dao.createNamedQuery(
+                    Currency.READ_BY_NAME_ORDERBY_NAME,
+                    Currency.class)
+                    .setParameter("name", ("%" + name + "%").toUpperCase())
+                    .getResultList();
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "Currency.Exception.ReadItemByDescription"),
+                    ex);
+        }
+    }
 }
 

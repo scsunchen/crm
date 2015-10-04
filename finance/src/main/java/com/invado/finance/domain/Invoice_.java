@@ -32,8 +32,10 @@ public class Invoice_ {
     public static volatile SingularAttribute<Invoice, Boolean> printed;
     public static volatile SingularAttribute<Invoice, Date> creditRelationDate;
     public static volatile SingularAttribute<Invoice, BusinessPartner> partner;
+    public static volatile SingularAttribute<Invoice, BusinessPartner> subordinatePartner;
     public static volatile SingularAttribute<Invoice, BankCreditor> bank;
     public static volatile SingularAttribute<Invoice, ApplicationUser> user;
     public static volatile SingularAttribute<Invoice, String> contractNumber;
+
 
 }

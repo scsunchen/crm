@@ -6,6 +6,8 @@ package com.invado.finance.service.dto;
 
 import com.invado.finance.domain.InvoiceBusinessPartner;
 import com.invado.finance.domain.InvoiceType;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -47,6 +49,7 @@ public class InvoiceDTO  {
     private String bankName;
     private Long version;
     private Integer maxItemOrdinal;
+    private BigDecimal totalAmount;
 
     public Integer getClientId() {
         return clientId;
@@ -270,5 +273,13 @@ public class InvoiceDTO  {
 
     public void setMaxItemOrdinal(Integer maxItemOrdinal) {
         this.maxItemOrdinal = maxItemOrdinal;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }

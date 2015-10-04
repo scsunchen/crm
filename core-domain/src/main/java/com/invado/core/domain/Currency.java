@@ -23,7 +23,10 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = Currency.READ_ALL_ORDERBY_ISOCODE,
             query = "SELECT x FROM Currency x ORDER BY x.ISOCode"),
     @NamedQuery(name = Currency.READ_BY_ISOCODE_ORDERBY_ISOCODE,
-            query = "SELECT x FROM Currency x WHERE UPPER(x.ISOCode) LIKE :iso ORDER BY x.ISOCode")
+            query = "SELECT x FROM Currency x WHERE UPPER(x.ISOCode) LIKE :iso ORDER BY x.ISOCode"),
+        @NamedQuery(name = Currency.READ_BY_NAME_ORDERBY_NAME,
+                query = "SELECT x FROM Currency x WHERE UPPER(x.currency) LIKE :name ORDER BY x.ISOCode")
+
 })
 public class Currency implements Serializable {
 
@@ -32,6 +35,8 @@ public class Currency implements Serializable {
             "Currency.ReadAllOrderByISOCode";
     public static final String READ_BY_ISOCODE_ORDERBY_ISOCODE = 
             "Currency.ReadByISOCodeOrderByISOCode";
+    public static final String READ_BY_NAME_ORDERBY_NAME =
+            "Currency.ReadByName";
 
 
     @Id

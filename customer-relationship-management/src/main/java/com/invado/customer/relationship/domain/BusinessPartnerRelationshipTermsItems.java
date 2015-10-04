@@ -15,13 +15,11 @@ import java.math.BigDecimal;
 @Table(name = "CRM_BUSINESS_TERMS_ITEMS", schema = "devel")
 @NamedQueries({
         @NamedQuery(name = BusinessPartnerRelationshipTermsItems.READ_TERMS_PER_PARTNER_AND_ARTICLE,
-        query = "SELECT it FROM BusinessPartnerRelationshipTermsItems as it " +
-                " INNER  JOIN it.businessPartnerRelationshipTerms as te " +
-                " WHERE  te.businessPartner.id = :partner  " +
-                " AND it.article.code = :article " +
-                " AND te.endDate is null "),
-        @NamedQuery(name = BusinessPartnerRelationshipTermsItems.READ_TERMS_BY_ID,
-                query = "SELECT it FROM BusinessPartnerRelationshipTermsItems as it WHERE it.id = :id ")
+                query = "SELECT it FROM BusinessPartnerRelationshipTermsItems as it " +
+                        " INNER  JOIN it.businessPartnerRelationshipTerms as te " +
+                        " WHERE  te.businessPartner.id = :partner  " +
+                        " AND it.service.id = :serviceId " +
+                        " AND te.endDate is null ")
 })
 public class BusinessPartnerRelationshipTermsItems implements Serializable, Comparable<BusinessPartnerRelationshipTermsItems> {
 
@@ -31,27 +29,30 @@ public class BusinessPartnerRelationshipTermsItems implements Serializable, Comp
     @Id
     @NotNull(message = "{BusinessTermsItem.BusinessTerms.NotNull}")
     @ManyToOne()
-    @JoinColumn(name = "terms_id", referencedColumnName = "id")
+    @JoinColumn(name = "TERMS_ID", referencedColumnName = "id")
     private BusinessPartnerRelationshipTerms businessPartnerRelationshipTerms;
     @Id
     @NotNull(message = "{InvoiceItem.Ordinal.NotNull}")
     @DecimalMin(value = "1", message = "{InvoiceItem.Ordinal.Min}")
-    @Column(name = "ordinal")
+    @Column(name = "ORDINAL")
     private Integer ordinal;
     @ManyToOne
-    @JoinColumn(name = "article_code", referencedColumnName = "code")
+    @JoinColumn(name = "SERVICE_ID", referencedColumnName = "ID")
+    private ServiceProviderServices service;
+    @ManyToOne
+    @JoinColumn(name = "ARTICLE_CODE", referencedColumnName = "code")
     private Article article;
     /**
      * Ukupna vrednost prodatih artikala na jednom dokumentu. ukoliko iznos prelazi zadati totalAmount dobija se dodatni popust
      */
-    @Column(name = "total_amount")
+    @Column(name = "TOTAL_AMOUNT")
     private BigDecimal totalAmount;
     /**
      * Ukupna količina prodatih artikala na jednom dokumentu. ukoliko količina prelazi zadati totalQuantity dobija se dodatni popust
      */
-    @Column(name = "total_quantity")
+    @Column(name = "TOTAL_QUANTITY")
     private BigDecimal totalQuantity;
-    @Column(name = "rebate")
+    @Column(name = "REBATE")
     private BigDecimal rebate;
 
 
@@ -69,6 +70,14 @@ public class BusinessPartnerRelationshipTermsItems implements Serializable, Comp
 
     public void setOrdinal(Integer ordinal) {
         this.ordinal = ordinal;
+    }
+
+    public ServiceProviderServices getService() {
+        return service;
+    }
+
+    public void setService(ServiceProviderServices service) {
+        this.service = service;
     }
 
     public Article getArticle() {
@@ -102,7 +111,6 @@ public class BusinessPartnerRelationshipTermsItems implements Serializable, Comp
     public void setRebate(BigDecimal rebate) {
         this.rebate = rebate;
     }
-
 
     @Override
     public boolean equals(Object obj) {

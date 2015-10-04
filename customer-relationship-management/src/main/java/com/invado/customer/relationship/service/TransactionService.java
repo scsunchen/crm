@@ -55,7 +55,7 @@ public class TransactionService {
     private static final Logger LOG = Logger.getLogger(
             Transaction.class.getName());
 
-    @PersistenceContext(name = "baza")
+    @PersistenceContext(name = "unit")
     private EntityManager dao;
 
     @Autowired
@@ -228,23 +228,23 @@ public class TransactionService {
         Integer terminalId = null;
         Integer typeId = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
-            if (s.getKey().equals("id") && s.getValue() instanceof Integer) {
-                id = (Integer) s.getValue();
+            if (s.getKey().equals("id") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                id = Integer.valueOf(s.getValue().toString());
             }
-            if (s.getKey().equals("distributorId") && s.getValue() instanceof Integer) {
-                distributorId = (Integer) s.getValue();
+            if (s.getKey().equals("distributorId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                distributorId = Integer.valueOf(s.getValue().toString());
             }
-            if (s.getKey().equals("pointOfSaleId") && s.getValue() instanceof Integer) {
-                pointOfSaleId = (Integer) s.getValue();
+            if (s.getKey().equals("pointOfSaleId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                pointOfSaleId = Integer.valueOf(s.getValue().toString());
             }
-            if (s.getKey().equals("serviceProviderId") && s.getValue() instanceof Integer) {
-                serviceProviderId = (Integer) s.getValue();
+            if (s.getKey().equals("serviceProviderId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                serviceProviderId = Integer.valueOf(s.getValue().toString());
             }
-            if (s.getKey().equals("terminalId") && s.getValue() instanceof Integer) {
-                terminalId = (Integer) s.getValue();
+            if (s.getKey().equals("terminalId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                terminalId = Integer.valueOf(s.getValue().toString());
             }
-            if (s.getKey().equals("typeId") && s.getValue() instanceof Integer) {
-                typeId = (Integer) s.getValue();
+            if (s.getKey().equals("typeId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                typeId = Integer.valueOf(s.getValue().toString());
             }
 
         }
@@ -455,36 +455,39 @@ public class TransactionService {
             throws PageNotExistsException {
         //TODO : check ReadTransactionPermission
 
-        LocalDateTime invoicingDate = LocalDateTime.now();
-        Date out = null;
-        Query query = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
+
+        Date invoicingDate = null;
+        Integer distributorId = null;
 
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
-            if (s.getKey().equals("invoicingDate")) {
+            if (s.getKey().equals("invoicingDate") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
                 try {
                     String in = s.getValue().toString();
-                    out = formatter.parse(in);
+                    invoicingDate = formatter.parse(in);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 //out = (Date)s.getValue();
             }
+            if (s.getKey().equals("distributorId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                distributorId = Integer.valueOf(s.getValue().toString());
+            }
         }
 
-        if (out == null) {
-            out = Date.from(invoicingDate.now().atZone(ZoneId.systemDefault()).toInstant());
-        }
-        //Date out = Date.from(invoicingDate.atZone(ZoneId.systemDefault()).toInstant());
-        query.setParameter("invoicingDate", out);
+        Query query = dao.createNamedQuery(Transaction.INVOICING_SUM_PER_MERCHANT);
+        query.setParameter("distributorId", distributorId == null ? new Integer(0) : distributorId);
+        query.setParameter("invoicingDate", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
+
 
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
-            Query countEntitiesQuery = dao.createNamedQuery(Transaction.COUNT_INVOICING_CANDIDATES_PER_MERCHANT);
-            countEntitiesQuery.setParameter("invoicingDate", LocalDateTime.now());
+            Query countEntitiesQuery = dao.createNamedQuery(Transaction.COUNT_INVOICING_SUM_PER_MERCHANT);
+            countEntitiesQuery.setParameter("distributorId", distributorId == null ? new Integer(0) : distributorId);
+            countEntitiesQuery.setParameter("invoicingDate", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
 
-            Long countEntities = (Long) countEntitiesQuery.getSingleResult();
+            Long countEntities = new Long(countEntitiesQuery.getSingleResult().toString());
 
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
@@ -548,22 +551,22 @@ public class TransactionService {
             ConstraintViolationException, EntityExistsException, EntityNotFoundException {
 
 
+        Integer maxDocument = new Integer(1);
         LocalDate invoicingDate = LocalDate.now();
         Date out = null;
         Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
-        if (paramTransactionDTO.getInvoicingDate() != null) {
+        if (paramTransactionDTO.getInvoicingGenDate() != null) {
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
             try {
-                String in = paramTransactionDTO.getInvoicingDate();
+                String in = paramTransactionDTO.getInvoicingGenDate();
                 out = formatter.parse(in);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
 
-        Integer maxDocument = new Integer(1);
         queryInvoicingCandidates.setParameter("invoicingDate", out);
-        queryInvoicingCandidates.setParameter("distributorId", paramTransactionDTO.getDistributorId());
+        queryInvoicingCandidates.setParameter("distributorId", paramTransactionDTO.getInvoicingDistributorId());
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
         Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
         Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
@@ -598,7 +601,6 @@ public class TransactionService {
                 invoice.setValueDate(invoicingDate);
                 invoice.setUsername("nikola");
                 invoicePerMerchantMap.put(transactionSetDTO.getMerchantId(), invoice);
-
                 invoiceService.createInvoice(invoice);
             } else {
                 invoice = invoicePerMerchantMap.get(transactionSetDTO.getMerchantId());
@@ -609,9 +611,9 @@ public class TransactionService {
                         .setParameter("document", invoice.getDocument())
                         .setParameter("orgUnit", invoice.getOrgUnitId())
                         .setParameter("clientId", invoice.getClientId())
-                        .setParameter("code", transactionSetDTO.getServiceId())
+                        .setParameter("code", transactionSetDTO.getArticleCode())
                         .getSingleResult().getInvoiceItemDTO();
-            }catch(NoResultException ex){
+            } catch (NoResultException ex) {
                 invoiceItemDTO = null;
             }
             if (invoiceItemDTO == null) {
@@ -620,8 +622,8 @@ public class TransactionService {
                 invoiceItemDTO.setClientId(invoice.getClientId());
                 invoiceItemDTO.setInvoiceDocument(invoice.getDocument());
                 invoiceItemDTO.setUnitId(invoice.getOrgUnitId());
-                invoiceItemDTO.setArticleCode(transactionSetDTO.getServiceId() + "");
-                Article article = dao.find(Article.class, transactionSetDTO.getServiceId());
+                invoiceItemDTO.setArticleCode(transactionSetDTO.getArticleCode());
+                Article article = dao.find(Article.class, transactionSetDTO.getArticleCode());
                 BigDecimal vatPercent = null;
                 switch (article.getVATRate()) {
                     case GENERAL_RATE:
@@ -635,10 +637,12 @@ public class TransactionService {
                 }
                 invoiceItemDTO.setVATPercent(vatPercent);
                 invoiceItemDTO.setNetPrice(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent()));
-                Query qTerms = dao.createNamedQuery(BusinessPartnerRelationshipTermsItems.READ_TERMS_PER_PARTNER_AND_ARTICLE, BusinessPartnerRelationshipTermsItems.class);
-                qTerms.setParameter("partner", transactionSetDTO.getMerchantId());
-                qTerms.setParameter("article", transactionSetDTO.getServiceId());
-                BusinessPartnerRelationshipTermsItems it = (BusinessPartnerRelationshipTermsItems) qTerms.getSingleResult();
+                System.out.println("evo podaci " + transactionSetDTO.getMerchantId() + "  " + transactionSetDTO.getServiceId());
+                BusinessPartnerRelationshipTermsItems it = dao.createNamedQuery(BusinessPartnerRelationshipTermsItems.READ_TERMS_PER_PARTNER_AND_ARTICLE, BusinessPartnerRelationshipTermsItems.class)
+                        .setParameter("partner", transactionSetDTO.getMerchantId())
+                        .setParameter("serviceId", transactionSetDTO.getServiceId())
+                        .getSingleResult();
+
                 invoiceItemDTO.setRabatPercent(it.getRebate());
                 invoiceItemDTO.setQuantity(new BigDecimal(1));
                 invoiceItemDTO.setTotalCost(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent()
@@ -652,12 +656,12 @@ public class TransactionService {
                 invoiceService.addItem(invoiceItemDTO);
             } else {
                 invoiceItemDTO.setNetPrice(invoiceItemDTO.getNetPrice().add(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent())));
+                invoice.setTotalAmount(invoice.getTotalAmount() == null ? invoiceItemDTO.getTotalCost(): invoice.getTotalAmount().add(invoiceItemDTO.getTotalCost()));
                 invoiceItemDTO.setUsername(invoice.getUsername());
                 invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
                 invoiceService.updateItem(invoiceItemDTO);
             }
 
-            System.out.println("transakcija je "+transactionSetDTO.getTransactionId());
             Transaction transaction = dao.find(Transaction.class, transactionSetDTO.getTransactionId());
             transaction.setInvoicingStatus(true);
             dao.persist(transaction);
@@ -676,7 +680,7 @@ public class TransactionService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new com.invado.core.exception.SystemException(com.invado.finance.Utils.getMessage(
-                    "Device.Exception.ReadByCusotmCode"),
+                    "Device.Exception.ReadByCustomCode"),
                     ex);
         }
     }

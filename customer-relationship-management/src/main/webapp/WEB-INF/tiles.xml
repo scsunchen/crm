@@ -71,6 +71,11 @@
         <put-attribute name="panel-title" value="Ažuriranje uslova poslovanja"/>
         <put-attribute name="body" value="/WEB-INF/jsp/terms-create-grid.jsp"/>
     </definition>
+    <definition name="invoice-table" extends="main-menu-form">
+        <put-attribute name="title" value="Faktura"/>
+        <put-attribute name="panel-title" value="Pregled faktura"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/invoices-review.jsp"/>
+    </definition>
     <definition name="terms-update-master-detail" extends="main-menu-form">
         <put-attribute name="head" value=""/>
         <put-attribute name="title" value="Uslovi poslovanja"/>
@@ -83,4 +88,10 @@
             </definition>
         </put-attribute>
     </definition>
+    <definition name="error" extends="main-menu-form" >
+        <put-attribute name="title" value="Greška"/>
+        <put-attribute name="panel-title" value="Greška prilikom izvršavanja programa"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/exception.jsp"/>
+    </definition>
+    <definition name="login" template="/WEB-INF/jsp/login.jsp" />
 </tiles-definitions>

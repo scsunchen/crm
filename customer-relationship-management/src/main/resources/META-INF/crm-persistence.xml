@@ -29,11 +29,13 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.customer.relationship.domain.DeviceStatus</class>
         <class>com.invado.customer.relationship.domain.TransactionType</class>
         <class>com.invado.customer.relationship.domain.ServiceProviderServices</class>
+        <class>com.invado.finance.domain.InvoiceItem</class>
+        <class>com.invado.finance.domain.Invoice</class>
+        <class>com.invado.finance.domain.Properties</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
 
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
 
             <property name="toplink.jdbc.url" value="jdbc:oracle:thin:@//94.127.3.157:1521/xe"/>
             <property name="toplink.jdbc.driver" value="oracle.jdbc.OracleDriver"/>

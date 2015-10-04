@@ -23,11 +23,6 @@ public class BusinessPartnerController {
     @Autowired
     private BPService service;
 
-    @RequestMapping("/home")
-    public String showHomePage() {
-        return "home";
-    }
-
     @RequestMapping("/partner/{page}")
     public String showItems(@PathVariable Integer page,
                             Map<String, Object> model)

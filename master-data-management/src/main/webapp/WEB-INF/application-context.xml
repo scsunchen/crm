@@ -53,6 +53,7 @@
 
 
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+    <bean id="userService" class="com.invado.finance.service.UserDataService" />
 
 </beans>
 

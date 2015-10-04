@@ -28,7 +28,6 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.customer.relationship.domain.DeviceStatus</class>
         <class>com.invado.customer.relationship.domain.TransactionType</class>
         <class>com.invado.customer.relationship.domain.ServiceProviderServices</class>
-        <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTerms</class>
         <class>com.invado.customer.relationship.domain.BusinessPartnerRelationshipTermsItems</class>
         <class>com.invado.finance.domain.Invoice</class>
         <class>com.invado.finance.domain.InvoiceItem</class>

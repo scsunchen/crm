@@ -17,8 +17,6 @@ public class TransactionDTO {
     private String statusId;
     private Integer typeId;
     private String typeDescription;
-    @NumberFormat(style = NumberFormat.Style.CURRENCY)
-    private BigDecimal amount;
     private Integer terminalId;
     private String terminalCustomCode;
     private Integer pointOfSaleId;
@@ -29,15 +27,22 @@ public class TransactionDTO {
     private String serviceProviderName;
     private Integer merchantId;
     private String merchantName;
-    @DateTimeFormat( style = "MM")
+    @DateTimeFormat(style = "MM")
     private LocalDateTime requestTime;
     @DateTimeFormat(style = "MM")
     private LocalDateTime responseTime;
+    @DateTimeFormat(style = "M-")
     private String invoicingDate;
     private Boolean invoicingStatus;
+    private String invoicingGenDate;
+    private String invoicingDistributorId;
+    private String invoicingDistributorName;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private BigDecimal amount;
 
 
-    public TransactionDTO(){}
+    public TransactionDTO() {
+    }
 
     public Long getId() {
         return id;
@@ -189,5 +194,29 @@ public class TransactionDTO {
 
     public void setInvoicingDate(String invoicingDate) {
         this.invoicingDate = invoicingDate;
+    }
+
+    public String getInvoicingGenDate() {
+        return invoicingGenDate;
+    }
+
+    public void setInvoicingGenDate(String invoicingGenDate) {
+        this.invoicingGenDate = invoicingGenDate;
+    }
+
+    public String getInvoicingDistributorId() {
+        return invoicingDistributorId;
+    }
+
+    public void setInvoicingDistributorId(String invoicingDistributorId) {
+        this.invoicingDistributorId = invoicingDistributorId;
+    }
+
+    public String getInvoicingDistributorName() {
+        return invoicingDistributorName;
+    }
+
+    public void setInvoicingDistributorName(String invoicingDistributorName) {
+        this.invoicingDistributorName = invoicingDistributorName;
     }
 }
