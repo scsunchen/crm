@@ -165,7 +165,7 @@ public class ReceivablePayableCard  {
                         calendar.set(Calendar.YEAR, item1.getCreditDebitRelationDate().getYear());
                         calendar.set(Calendar.DAY_OF_YEAR, item1.getCreditDebitRelationDate().getDayOfYear());
                         ExchangeRate exRate = EM.find(ExchangeRate.class,
-                                new ExchangeRatePK(LocalDate.now(),
+                                new ExchangeRatePK(new Date(calendar.getTimeInMillis()),
                                         requestDTO.getForeignCurrencyISOCode()));
                         if (exRate == null) {
                             throw new EntityNotFoundException(

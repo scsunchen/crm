@@ -11,102 +11,99 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<form:form class="navbar-form navbar-left" role="search" modelAttribute="transactionDTO" method="GET"
+<form:form role="search" modelAttribute="transactionDTO" method="GET"
            action="${pageContext.request.contextPath}/transactions/0">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Pretraživanje poslovnih partnera -->
+            <br/>
 
-            <div id="bs-example-navbar-collapse-1">
-                <div class="form-group input-group col-md-2">
-                    <label for="serviceProviderName">Service provider</label>
-                    <form:input id="serviceProviderName" class="typeahead form-control" type="text"
-                                path="serviceProviderName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="serviceProviderIdHidden" path="serviceProviderId"/>
-                </div>
-                <div class="form-group input-group col-md-2">
-                    <label for="pointOfSaleName">POS</label>
-                    <form:input id="pointOfSaleName" class="typeahead form-control" type="text"
-                                path="pointOfSaleName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="pointOfSaleIdHidden" path="pointOfSaleId"/>
-                </div>
-                <div class="form-group input-group col-md-2">
-                    <label for="terminalCustomCode">Treminal</label>
-                    <form:input id="terminalCustomCode" class="typeahead form-control" type="text"
-                                path="terminalCustomCode" style="margin-bottom:  15px;"/>
-                    <form:hidden id="terminalIdHidden" path="terminalId"/>
-                </div>
-                <div class="form-group input-group col-md-2">
-                    <label for="typeDescription">Tip transakcije</label>
-                    <form:input id="typeDescription" class="typeahead form-control" type="text"
-                                path="typeDescription" style="margin-bottom:  15px;"/>
-                    <form:hidden id="typeIdHidden" path="typeId"/>
-                </div>
-                <div class="form-group input-group col-md-2">
-                    <label for="distributorName">Distributor</label>
-                    <form:input id="distributorName" class="typeahead form-control" type="text"
-                                path="distributorName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="distributorIdHidden" path="distributorId"/>
-                </div>
-                <button type="submit" class="btn btn-default">Pretraga</button>
+            <div class="col-md-2">
+                <form:input id="serviceProviderName" class="typeahead form-control" type="text"
+                            path="serviceProviderName" style="margin-bottom:  15px;"
+                            placeholder="Service provider..."/>
+                <form:hidden id="serviceProviderIdHidden" path="serviceProviderId"/>
             </div>
+            <div class="col-md-2">
+                <form:input id="pointOfSaleName" class="typeahead form-control" type="text"
+                            path="pointOfSaleName" style="margin-bottom:  15px;" placeholder="POS..."/>
+                <form:hidden id="pointOfSaleIdHidden" path="pointOfSaleId"/>
+            </div>
+            <div class="col-md-2">
+                <form:input id="terminalCustomCode" class="typeahead form-control" type="text"
+                            path="terminalCustomCode" style="margin-bottom:  15px;" placeholder="Treminal..."/>
+                <form:hidden id="terminalIdHidden" path="terminalId"/>
+            </div>
+            <div class="col-md-2">
+                <form:input id="typeDescription" class="typeahead form-control" type="text"
+                            path="typeDescription" style="margin-bottom:  15px;" placeholder="Tip transakcije..."/>
+                <form:hidden id="typeIdHidden" path="typeId"/>
+            </div>
+            <div class="col-md-2">
+                <form:input id="distributorName" class="typeahead form-control" type="text"
+                            path="distributorName" style="margin-bottom:  15px;" placeholder="Distributor..."/>
+                <form:hidden id="distributorIdHidden" path="distributorId"/>
+            </div>
+            <button type="submit" class="btn btn-default">Pretraga</button>
+
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Šifra</th>
-                <th>Tip</th>
-                <th>Terminal</th>
-                <th>POS</th>
-                <th>Request</th>
-                <th>Response</th>
-                <th>Iznos</th>
-                <th>Service provider</th>
-                <th>Distributor</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:set var="count" value="0" scope="page"/>
-            <c:forEach var="item" items="${data}">
-                <!-- Modal -->
-                <tr>
-                    <td><c:out value="${item.id}"/></td>
-                    <td><c:out value="${item.typeDescription}"/></td>
-                    <td><c:out value="${item.terminalCustomCode}"/></td>
-                    <td><c:out value="${item.pointOfSaleName}"/></td>
-                    <td><spring:eval expression="item.requestTime"/></td>
-                    <td><spring:eval expression="item.responseTime"/></td>
-                    <td><spring:eval expression="item.amount"/></td>
-                    <td><c:out value="${item.serviceProviderName}"/></td>
-                    <td><c:out value="${item.distributorName}"/></td>
-                </tr>
-                <c:set var="count" value="${count + 1}" scope="page"/>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
-    <nav>
-
-        <ul class="pager pull-right">
-            Strana
-            <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/${page - 1}?serviceProviderId=${transactionDTO.serviceProviderId}&serviceProviderName=${transactionDTO.serviceProviderName}&pointOfSaleId=${transactionDTO.pointOfSaleId}&pointOfSaleName=${transactionDTO.pointOfSaleName}&terminalCustomCode=${transactionDTO.terminalCustomCode}&terminalId=${transactionDTO.terminalId}&typeId=${transactionDTO.typeId}&typeDescription=${transactionDTO.typeId}&distributorId=${transactionDTO.distributorId}&distributorName=${transactionDTO.distributorName}"/></c:if>">
-                    <span class="glyphicon glyphicon-backward"></span> Prethodna
-                </a>
-            </li>
-            <c:out value="${page+1} od ${numberOfPages+1}"/>
-            <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/${page + 1}?serviceProviderId=${transactionDTO.serviceProviderId}&serviceProviderName=${transactionDTO.serviceProviderName}&pointOfSaleId=${transactionDTO.pointOfSaleId}&pointOfSaleName=${transactionDTO.pointOfSaleName}&terminalCustomCode=${transactionDTO.terminalCustomCode}&terminalId=${transactionDTO.terminalId}&typeId=${transactionDTO.typeId}&typeDescription=${transactionDTO.typeId}&distributorId=${transactionDTO.distributorId}&distributorName=${transactionDTO.distributorName}"/></c:if>">
-                    <span class="glyphicon glyphicon-forward"></span> Naredna
-                </a>
-            </li>
-        </ul>
-    </nav>
 </form:form>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Šifra</th>
+            <th>Tip</th>
+            <th>Terminal</th>
+            <th>POS</th>
+            <th>Request</th>
+            <th>Response</th>
+            <th>Iznos</th>
+            <th>Service provider</th>
+            <th>Distributor</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="count" value="0" scope="page"/>
+        <c:forEach var="item" items="${data}">
+            <!-- Modal -->
+            <tr>
+                <td><c:out value="${item.id}"/></td>
+                <td><c:out value="${item.typeDescription}"/></td>
+                <td><c:out value="${item.terminalCustomCode}"/></td>
+                <td><c:out value="${item.pointOfSaleName}"/></td>
+                <td><spring:eval expression="item.requestTime"/></td>
+                <td><spring:eval expression="item.responseTime"/></td>
+                <td><spring:eval expression="item.amount"/></td>
+                <td><c:out value="${item.serviceProviderName}"/></td>
+                <td><c:out value="${item.distributorName}"/></td>
+            </tr>
+            <c:set var="count" value="${count + 1}" scope="page"/>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<nav>
+
+    <ul class="pager pull-right">
+        Strana
+        <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/${page - 1}?serviceProviderId=${transactionDTO.serviceProviderId}&serviceProviderName=${transactionDTO.serviceProviderName}&pointOfSaleId=${transactionDTO.pointOfSaleId}&pointOfSaleName=${transactionDTO.pointOfSaleName}&terminalCustomCode=${transactionDTO.terminalCustomCode}&terminalId=${transactionDTO.terminalId}&typeId=${transactionDTO.typeId}&typeDescription=${transactionDTO.typeId}&distributorId=${transactionDTO.distributorId}&distributorName=${transactionDTO.distributorName}"/></c:if>">
+                <span class="glyphicon glyphicon-backward"></span> Prethodna
+            </a>
+        </li>
+        <c:out value="${page+1} od ${numberOfPages+1}"/>
+        <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/${page + 1}?serviceProviderId=${transactionDTO.serviceProviderId}&serviceProviderName=${transactionDTO.serviceProviderName}&pointOfSaleId=${transactionDTO.pointOfSaleId}&pointOfSaleName=${transactionDTO.pointOfSaleName}&terminalCustomCode=${transactionDTO.terminalCustomCode}&terminalId=${transactionDTO.terminalId}&typeId=${transactionDTO.typeId}&typeDescription=${transactionDTO.typeId}&distributorId=${transactionDTO.distributorId}&distributorName=${transactionDTO.distributorName}"/></c:if>">
+                <span class="glyphicon glyphicon-forward"></span> Naredna
+            </a>
+        </li>
+    </ul>
+</nav>
 <script type="text/javascript">
     $('#serviceProviderName').typeahead({
         hint: false,

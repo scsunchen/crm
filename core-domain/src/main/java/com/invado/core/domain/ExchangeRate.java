@@ -4,16 +4,14 @@
  */
 package com.invado.core.domain;
 
-import com.invado.core.dto.ExchangeRateDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.swing.event.DocumentEvent;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -37,12 +35,15 @@ public class ExchangeRate implements Serializable {
             "ExchangeRate.ReadAllByToCurrency";    
     
     private static final long serialVersionUID = 1L;
+
+    @Transient
+    @Autowired
+    private LocalDateConverter localDateConverter;
     
     @Id
     @Column(name = "application_date")
     @NotNull(message = "{ExchangeRate.ApplicationDate.NotNull}")
-    @Convert(converter = LocalDateConverter.class)
-    private LocalDate applicationDate;
+    private Date applicationDate;
     @Id
     @NotNull(message = "{ExchangeRate.ToCurrency.NotNull}")
     @ManyToOne
@@ -68,7 +69,7 @@ public class ExchangeRate implements Serializable {
     @Version
     private Long version;
 
-    public ExchangeRate(LocalDate applicationDate,
+    public ExchangeRate(Date applicationDate,
                         Currency toCurrency) {
         this.applicationDate = applicationDate;
         this.toCurrency = toCurrency;
@@ -132,25 +133,10 @@ public class ExchangeRate implements Serializable {
         this.version = version;
     }
 
-    public LocalDate getApplicationDate() {
+    public Date getApplicationDate() {
         return applicationDate;
     }
 
-    public ExchangeRateDTO getDTO(){
-
-        ExchangeRateDTO exchangeRateDTO = new ExchangeRateDTO();
-
-        exchangeRateDTO.setBuying(this.getBuying());
-        exchangeRateDTO.setSelling(this.getSelling());
-        exchangeRateDTO.setMiddle(this.getMiddle());
-        exchangeRateDTO.setListNumber(this.getListNumber());
-        exchangeRateDTO.setApplicationDate(this.getApplicationDate());
-        exchangeRateDTO.setISOCode(this.getToCurrencyISOCode());
-        exchangeRateDTO.setCurrencyDescription(this.getToCurrencyDescription());
-
-        return exchangeRateDTO;
-
-    }
 
     @Override
     public boolean equals(Object obj) {

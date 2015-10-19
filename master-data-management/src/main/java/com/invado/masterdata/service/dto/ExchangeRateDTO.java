@@ -1,4 +1,4 @@
-package com.invado.core.dto;
+package com.invado.masterdata.service.dto;
 
 import com.invado.core.domain.Currency;
 import com.invado.core.domain.LocalDateConverter;
@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Convert;
+import javax.persistence.Converter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -15,12 +16,12 @@ import java.util.Date;
  */
 public class ExchangeRateDTO {
 
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(style = "M-")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate applicationDate;
     private Currency toCurrency;
-    private String ISOCode;
-    private String currencyDescription;
+    private String currencyISOCode;
+    private String currency;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal buying;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
@@ -47,20 +48,20 @@ public class ExchangeRateDTO {
         this.toCurrency = toCurrency;
     }
 
-    public String getCurrencyDescription() {
-        return currencyDescription;
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setCurrencyDescription(String currencyDescription) {
-        this.currencyDescription = currencyDescription;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
-    public String getISOCode() {
-        return ISOCode;
+    public String getCurrencyISOCode() {
+        return currencyISOCode;
     }
 
-    public void setISOCode(String ISOCode) {
-        this.ISOCode = ISOCode;
+    public void setCurrencyISOCode(String currencyISOCode) {
+        this.currencyISOCode = currencyISOCode;
     }
 
     public BigDecimal getBuying() {

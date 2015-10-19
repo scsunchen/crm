@@ -359,10 +359,27 @@ public class CurrencyService {
     @Transactional(readOnly = true)
     public List<Currency> readByName(String name) {
         try {
-            return dao.createNamedQuery(
+            List<Currency> currencies =  dao.createNamedQuery(
                     Currency.READ_BY_NAME_ORDERBY_NAME,
                     Currency.class)
                     .setParameter("name", ("%" + name + "%").toUpperCase())
+                    .getResultList();
+            return currencies;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "Currency.Exception.ReadItemByDescription"),
+                    ex);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Currency> readByISOCode(String ISOCode) {
+        try {
+            return dao.createNamedQuery(
+                    Currency.READ_BY_ISOCODE_ORDERBY_ISOCODE,
+                    Currency.class)
+                    .setParameter("iso", ("%" + ISOCode + "%").toUpperCase())
                     .getResultList();
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

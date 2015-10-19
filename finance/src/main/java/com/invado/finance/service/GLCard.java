@@ -56,13 +56,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class GLCard{
 
     private static final Logger LOG = Logger.getLogger(GLCard.class.getName());
-    
+
     @PersistenceContext(name = "unit")
     private EntityManager dao;
-    
+
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public ReadLedgerCardsDTO readGLCard(RequestGLCardDTO dto) 
-            throws EntityNotFoundException, 
+    public ReadLedgerCardsDTO readGLCard(RequestGLCardDTO dto)
+            throws EntityNotFoundException,
             ZeroExchangeRateException {
         if (dto.getClientID() == null) {
             throw new EntityNotFoundException(
@@ -81,7 +81,7 @@ public class GLCard{
             if (dao.find(Client.class, dto.getClientID()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("LedgerCard.ClientNotExists",
-                        dto.getClientID()));
+                                dto.getClientID()));
             }
             if (dto.getOrgUnitID() != null && dao.find(OrgUnit.class, dto.getOrgUnitID()) == null) {
                 throw new EntityNotFoundException(getMessage(
@@ -92,7 +92,7 @@ public class GLCard{
                     && dao.find(Account.class, dto.getAccountNumber()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("LedgerCard.AccountNotExists",
-                        dto.getAccountNumber()));
+                                dto.getAccountNumber()));
             }
             List<GeneralLedger> generalLedgerList = this.readGeneralLedgerCard(
                     dao,
@@ -107,29 +107,29 @@ public class GLCard{
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
                     || ex.getCause() instanceof OptimisticLockException) {
-                    throw new SystemException(
-                            getMessage("LedgerCard.OptimisticLock")
-                    );
+                throw new SystemException(
+                        getMessage("LedgerCard.OptimisticLock")
+                );
             } else {
                 LOG.log(Level.WARNING, "", ex);
                 throw new SystemException(
                         getMessage("LedgerCard.Persistence"));
             }
-        } 
+        }
     }
 
     private ReadLedgerCardsDTO getGeneralLedgerCardDTO(
             EntityManager EM,
             RequestGLCardDTO requestDTO,
-            List<GeneralLedger> stavke) 
-            throws EntityNotFoundException, 
-            ZeroExchangeRateException {        
+            List<GeneralLedger> stavke)
+            throws EntityNotFoundException,
+            ZeroExchangeRateException {
         List<LedgerCardDTO> resultList = new ArrayList<>();
         List<String> accountNumbers = new ArrayList<>();
         Integer pageSize = EM.find(ApplicationSetup.class, 1)
-                    .getPageSize();
+                .getPageSize();
         Integer numberOfPages = 0;
-         //group general ledger transactions with same account number
+        //group general ledger transactions with same account number
         for (GeneralLedger item : stavke) {
             if (accountNumbers.contains(item.getAccountNumber()) == true) {
                 continue;
@@ -167,13 +167,13 @@ public class GLCard{
                         calendar.set(Calendar.YEAR, item1.getCreditDebitRelationDate().getYear());
                         calendar.set(Calendar.DAY_OF_YEAR, item1.getCreditDebitRelationDate().getDayOfYear());
                         ExchangeRate exRate = EM.find(ExchangeRate.class,
-                                new ExchangeRatePK( LocalDate.now(),
-                                requestDTO.getForeignCurrencyISOCode()));
+                                new ExchangeRatePK(new Date(calendar.getTimeInMillis()),
+                                        requestDTO.getForeignCurrencyISOCode()));
                         if (exRate == null) {
                             throw new EntityNotFoundException(
                                     getMessage("LedgerCard.ExchangeRateNotExists",
-                                    requestDTO.getForeignCurrencyISOCode(),
-                                    item1.getCreditDebitRelationDate()));
+                                            requestDTO.getForeignCurrencyISOCode(),
+                                            item1.getCreditDebitRelationDate()));
                         } else {
                             exchangeRate = exRate.getMiddle();
                         }
@@ -181,16 +181,16 @@ public class GLCard{
                     if(exchangeRate.compareTo(BigDecimal.ZERO) == 0) {
                         throw new ZeroExchangeRateException(
                                 getMessage(
-                                "LedgerCard.ZeroExchangeRateException",
-                                requestDTO.getForeignCurrencyISOCode(),
-                                item1.getCreditDebitRelationDate()));
+                                        "LedgerCard.ZeroExchangeRateException",
+                                        requestDTO.getForeignCurrencyISOCode(),
+                                        item1.getCreditDebitRelationDate()));
                     }
-                    
+
                     BigDecimal amount = item1.getAmount().divide(
                             exchangeRate,
                             2,
                             RoundingMode.HALF_UP);
-                    
+
                     switch (item1.getChangeType()) {
                         case DEBIT:
                             itemDTO.debit = amount;//item1.getAmount();
@@ -218,7 +218,7 @@ public class GLCard{
                     : items / pageSize + 1);
             numberOfPages = numberOfPages + dto.numberOfPages;
             accountNumbers.add(item.getAccountNumber());
-            resultList.add(dto);            
+            resultList.add(dto);
         }
         ReadLedgerCardsDTO result = new ReadLedgerCardsDTO();
         result.pageSize = pageSize;
@@ -228,7 +228,7 @@ public class GLCard{
         return result;
     }
 
-    private LedgerCardDTO getLedgerCardDTO(EntityManager EM, 
+    private LedgerCardDTO getLedgerCardDTO(EntityManager EM,
                                            RequestGLCardDTO requestDTO,
                                            String accountNumber) {
         LedgerCardDTO dto = new LedgerCardDTO();
@@ -250,20 +250,20 @@ public class GLCard{
         dto.type = LedgerCardTypeDTO.GENERAL_LEDGER;
         dto.currency = requestDTO.getCurrency();
         switch(requestDTO.getCurrency()) {
-            case DOMESTIC :                                
+            case DOMESTIC :
                 dto.currencyISOCode = java.util.Currency.getInstance(Locale.getDefault())
-                                                        .getCurrencyCode();                
+                        .getCurrencyCode();
                 break;
-            case FOREIGN : 
-                dto.currencyISOCode = requestDTO.getForeignCurrencyISOCode();                
+            case FOREIGN :
+                dto.currencyISOCode = requestDTO.getForeignCurrencyISOCode();
                 break;
         }
-        
+
         return dto;
     }
-    
-    private List<GeneralLedger> readGeneralLedgerCard(EntityManager EM, 
-                                                      RequestGLCardDTO dto) {        
+
+    private List<GeneralLedger> readGeneralLedgerCard(EntityManager EM,
+                                                      RequestGLCardDTO dto) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<GeneralLedger> c = cb.createQuery(GeneralLedger.class);
         Root<GeneralLedger> root = c.from(GeneralLedger.class);
@@ -271,7 +271,7 @@ public class GLCard{
         Join<GeneralLedger, OrgUnit> orgUnitJoin =
                 root.join(GeneralLedger_.orgUnit, JoinType.LEFT);
         Join<GeneralLedger, Account> accountJoin =
-                root.join(GeneralLedger_.account, JoinType.LEFT);        
+                root.join(GeneralLedger_.account, JoinType.LEFT);
         List<Predicate> criteria = new ArrayList<>();
         criteria.add(
                 cb.equal(
@@ -290,33 +290,33 @@ public class GLCard{
             criteria.add(cb.equal(accountJoin.get(Account_.number), p));
         }
         if (dto.getCreditDebitRelationDateFrom() != null) {
-            ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class, 
+            ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class,
                     "creditDebitRelationDateFrom");
             criteria.add(cb.greaterThanOrEqualTo(
-                    root.get(GeneralLedger_.creditDebitRelationDate), 
+                    root.get(GeneralLedger_.creditDebitRelationDate),
                     p));
         }
         if (dto.getCreditDebitRelationDateTo() != null) {
-            ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class, 
+            ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class,
                     "creditDebitRelationDateTo");
             criteria.add(cb.lessThanOrEqualTo(root.get(
-                    GeneralLedger_.creditDebitRelationDate), 
+                            GeneralLedger_.creditDebitRelationDate),
                     p));
         }
         if (dto.getValueDateFrom() != null) {
             ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class, "valueFrom");
             criteria.add(cb.greaterThanOrEqualTo(
-                    root.get(GeneralLedger_.valueDate), 
+                    root.get(GeneralLedger_.valueDate),
                     p));
         }
         if (dto.getValueDateTo() != null) {
             ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class, "valueTo");
             criteria.add(cb.lessThanOrEqualTo(
-                    root.get(GeneralLedger_.valueDate), 
+                    root.get(GeneralLedger_.valueDate),
                     p));
         }
         c.where(cb.and(criteria.toArray(new Predicate[0]))).orderBy(
-                cb.asc(accountJoin.get(Account_.number)), 
+                cb.asc(accountJoin.get(Account_.number)),
                 cb.asc(root.get(GeneralLedger_.recordDate)));
         TypedQuery<GeneralLedger> q = EM.createQuery(c);
         q.setParameter("clientID", dto.getClientID());
@@ -327,11 +327,11 @@ public class GLCard{
             q.setParameter("accountNumber", dto.getAccountNumber());
         }
         if(dto.getCreditDebitRelationDateFrom() != null) {
-            q.setParameter("creditDebitRelationDateFrom", 
+            q.setParameter("creditDebitRelationDateFrom",
                     dto.getCreditDebitRelationDateFrom());
         }
         if(dto.getCreditDebitRelationDateTo() != null) {
-            q.setParameter("creditDebitRelationDateTo", 
+            q.setParameter("creditDebitRelationDateTo",
                     dto.getCreditDebitRelationDateTo());
         }
         if(dto.getValueDateFrom() != null) {
@@ -341,5 +341,5 @@ public class GLCard{
             q.setParameter("valueTo", dto.getValueDateTo());
         }
         return q.getResultList();
-    }    
+    }
 }

@@ -5,6 +5,8 @@
  */
 package com.invado.core.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,11 +18,13 @@ import javax.persistence.Converter;
  * @author bdragan
  */
 @Converter
+@Component
 public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
 
     // mapping with java.util.Calendar breaks EclipseLink
     @Override
     public Date convertToDatabaseColumn(LocalDate attribute) {
+        System.out.println("radi konverziju 1");
         if (attribute == null) {
             return null;
         }
@@ -34,6 +38,7 @@ public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
 
     @Override
     public LocalDate convertToEntityAttribute(Date dbData) {
+        System.out.println("radi konverziju 2");
         if (dbData == null) {
             return null;
         }
@@ -44,5 +49,5 @@ public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         return LocalDate.ofYearDay(year, dayOfYear);
     }
-    
+
 }

@@ -72,6 +72,7 @@ public class ItemController {
             @PathVariable String page,
             Map<String, Object> model)
             throws Exception {
+
         if (result.hasErrors()) {
             model.put("action", "create");
             model.put("VATOptions", Arrays.asList(VatPercent.values()));

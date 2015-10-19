@@ -16,19 +16,19 @@ import java.util.Date;
 public class ExchangeRatePK implements Serializable {
 
 
-    @Convert(converter = LocalDateConverter.class)
-    private LocalDate applicationDate;
+
+    private Date applicationDate;
     private String toCurrency;
 
     public ExchangeRatePK() {
     }
 
-    public ExchangeRatePK(LocalDate applicationDate, String toCurrency) {
+    public ExchangeRatePK(Date applicationDate, String toCurrency) {
         this.applicationDate = applicationDate;
         this.toCurrency = toCurrency;
     }
 
-    public LocalDate getApplicationDate() {
+    public Date getApplicationDate() {
         return applicationDate;
     }
 

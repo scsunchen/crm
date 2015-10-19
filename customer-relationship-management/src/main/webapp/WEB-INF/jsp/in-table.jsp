@@ -44,26 +44,24 @@
            action="${pageContext.request.contextPath}/invoicing/0">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
+            <br/>
             <!-- Pretraživanje poslovnih partnera -->
-            <div class="col-md-2 right">
-                <input:inputDate name="invoicingDate" label="Datum do: " placeholder="dd.mm.yyyy."/>
+            <div class="col-md-4 right">
+                <input:inputDate name="invoicingDate" placeholder="Datum do... (dd.mm.yyyy.)"/>
             </div>
-            <div id="bs-example-navbar-collapse-1">
-                <div class="form-group input-group col-md-2 left">
-                    <label for="distributorName">Distributor</label>
+             <div class="col-md-4">
                     <form:input id="distributorName" class="typeahead form-control" type="text"
-                                path="distributorName" style="margin-bottom:  15px;"/>
+                                path="distributorName" style="margin-bottom:  15px;" placeholder="Distributor..."/>
                     <form:hidden id="distributorIdHidden" path="distributorId"/>
                 </div>
                 <button type="submit" class="btn btn-default">Pretraga</button>
-            </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
 </form:form>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped" data-sort-name="item.distributorName">
             <thead>
             <tr>
                 <th>Distributor</th>
@@ -84,7 +82,7 @@
                     <td hidden><c:out value="${item.serviceId}"/></td>
                     <td hidden><c:out value="${item.articleCode}"/></td>
                     <td><c:out value="${item.serviceDescription}"/></td>
-                    <td><spring:eval expression="${item.amount}"/></td>
+                    <td><spring:eval expression="item.amount"/></td>
 
                 </tr>
                 <c:set var="count" value="${count + 1}" scope="page"/>

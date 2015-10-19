@@ -80,6 +80,7 @@
         })
     });
     $('#itemDesc').bind('typeahead:selected', function (obj, datum, name) {
+        console.log(datum['code']);
         $('#itemDescHidden').val(datum['code']);
     });
 </script>

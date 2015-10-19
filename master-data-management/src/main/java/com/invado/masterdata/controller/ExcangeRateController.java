@@ -1,10 +1,9 @@
 package com.invado.masterdata.controller;
 
 import com.invado.core.domain.Currency;
-import com.invado.core.dto.BankCreditorDTO;
-import com.invado.core.dto.ExchangeRateDTO;
+import com.invado.masterdata.service.dto.ExchangeRateDTO;
 import com.invado.masterdata.service.CurrencyService;
-import com.invado.masterdata.service.ExcangeRateService;
+import com.invado.masterdata.service.ExchangeRateService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,19 +24,23 @@ import java.util.Map;
 public class ExcangeRateController {
 
     @Autowired
-    private ExcangeRateService service;
+    private ExchangeRateService service;
     @Autowired
     private CurrencyService currencyService;
 
     @RequestMapping("/exchange-rate/{page}")
     public String showItems(@PathVariable Integer page,
-                            Map<String, Object> model)
+                            Map<String, Object> model, HttpServletRequest httpServletRequest)
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
+
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("applicationDate", httpServletRequest.getParameter("applicationDate")));
+
         ReadRangeDTO<ExchangeRateDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
+        model.put("exchangeRateDTO", new ExchangeRateDTO());
         model.put("numberOfPages", items.getNumberOfPages());
         return "exchange-rate-view";
     }
@@ -56,13 +59,18 @@ public class ExcangeRateController {
                                       Map<String, Object> model)
             throws Exception {
 
+
         if (result.hasErrors()) {
             model.put("action", "create");
             return "exchange-rate-grid";
-        } else {
+        }
+        try {
             this.service.create(item);
-            model.put("message", item.getApplicationDate() + " " + item.getISOCode());
+            model.put("message", item.getApplicationDate() + " " + item.getCurrencyISOCode());
             status.setComplete();
+        } catch (Exception ex) {
+            model.put("exception", ex);
+            return "exchange-rate-grid";
         }
         return "redirect:/exchange-rate/{page}/create";
     }
@@ -99,10 +107,21 @@ public class ExcangeRateController {
         return "redirect:/exchange-rate/{page}";
     }
 
-    @RequestMapping(value = "/masterdata/read-partner/{name}")
+    @RequestMapping(value = "/masterdata/read-currency/byiso/{iso}")
     public
     @ResponseBody
-    List<Currency> findItemByDescription(@PathVariable String name) {
+    List<Currency> findCurrencyByISO(@PathVariable String iso) {
+        System.out.println("ISO je");
+        return currencyService.readByISOCode(iso);
+    }
+
+    @RequestMapping(value = "/read-currency/byname/{name}")
+    public
+    @ResponseBody
+    List<Currency> findCurrencyByName(@PathVariable String name) {
+        System.out.println("name je");
         return currencyService.readByName(name);
     }
+
+
 }

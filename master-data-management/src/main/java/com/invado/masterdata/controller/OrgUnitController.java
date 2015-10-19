@@ -46,7 +46,6 @@ public class OrgUnitController {
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
 
         model.put("item", new OrgUnitDTO());
-        model.put("item", new OrgUnit());
         List<ClientDTO> clients = clientService.readAll(null, null, null, null);
         model.put("clients", clients);
         model.put("action", "create");

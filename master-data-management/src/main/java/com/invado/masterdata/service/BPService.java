@@ -82,7 +82,7 @@ public class BPService {
             businessPartner.setVAT(a.getVAT());
             if (a.getParentBusinessPartnerId() != null)
                 businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
-            businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction()));
+            businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
 
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
@@ -140,7 +140,7 @@ public class BPService {
             if (dto.getCountry() != null)
                 item.setAddress(new Address(dto.getCountry(), dto.getPlace(), dto.getStreet(), dto.getPostCode()));
             if (dto.getContactPersoneName() != null)
-                item.setContactPerson(new ContactPerson(dto.getContactPersoneName(), dto.getContactPersonePhone(), dto.getContactPersoneFunction()));
+                item.setContactPerson(new ContactPerson(dto.getContactPersoneName(), dto.getContactPersonePhone(), dto.getContactPersoneFunction(), dto.getEMail()));
             item.setCurrentAccount(dto.getCurrentAccount());
             item.setEMail(dto.getEMail());
             item.setFax(dto.getFax());
@@ -274,7 +274,7 @@ public class BPService {
             }
         }
         try {
-            Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
+            Integer pageSize = dao.find(ApplicationSetup.class, 2).getPageSize();
 
             Long countEntities = this.count(dao,
                     id,

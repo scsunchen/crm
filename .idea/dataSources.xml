@@ -37,7 +37,7 @@
       <jdbc-url>jdbc:oracle:thin:@//94.127.3.157:1521/xe</jdbc-url>
       <libraries>
         <library>
-          <url>jar://F:/Invado/crm/libs/ojdbc6.jar!/</url>
+          <url>jar://$MAVEN_REPOSITORY$/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar!/</url>
         </library>
       </libraries>
     </data-source>

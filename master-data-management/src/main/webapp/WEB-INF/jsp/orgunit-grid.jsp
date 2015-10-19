@@ -73,6 +73,10 @@
         })
     });
     $('#parentOrgUnitName').bind('typeahead:selected', function (obj, datum, name) {
+        console.log('id je '+datum['id']);
+        console.log('customId je '+datum['customId']);
+        console.log('name je '+datum['name']);
+
         $('#itemDescHidden').val(datum['id']);
     });
 </script>

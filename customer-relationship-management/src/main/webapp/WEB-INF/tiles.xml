@@ -59,7 +59,7 @@
         <put-attribute name="title" value="Sumarni pregled Transakcije"/>
         <put-attribute name="panel-title" value="Sumarni pregled transakcija"/>
         <put-attribute name="filter" value="/WEB-INF/jsp/transaction-filter.jsp"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/in-table.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/in-develop-tabe.jsp"/>
     </definition>
     <definition name="terms-table" extends="main-menu-form">
         <put-attribute name="title" value="Uslovi poslovanja"/>
