@@ -6,36 +6,42 @@
 package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.Article;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.NumberFormat;
 
 /**
- *
  * @author bdragan
  */
 @Entity
 @Table(name = "CRM_BUSINESS_TERMS_ITEMS")
-@NamedQuery(name="test", query = "SELECT x FROM BusinessPartnerTermsItem x WHERE x.terms.id = :terms AND x.ordinal = :o")
+
+@NamedQueries({
+        @NamedQuery(name = BusinessPartnerTermsItem.READ_TERMS_PER_PARTNER_AND_ARTICLE,
+                query = "SELECT it FROM BusinessPartnerRelationshipTermsItems as it " +
+                        " INNER  JOIN it.businessPartnerRelationshipTerms as te " +
+                        " WHERE  te.businessPartner.id = :partner  " +
+                        " AND it.service.id = :serviceId " +
+                        " AND te.endDate is null "),
+        @NamedQuery(name = "test", query = "SELECT x FROM BusinessPartnerTermsItem x WHERE x.terms.id = :terms AND x.ordinal = :o")
+})
 @IdClass(BusinessPartnerTermsItemPK.class)
 public class BusinessPartnerTermsItem implements Serializable {
-    
+
+    public static final String READ_TERMS_PER_PARTNER_AND_ARTICLE = "ReadTermsPerPartnerAndPartner";
+    public static final String READ_TERMS_BY_ID = "ReadTermsById";
+
     @Id
     @ManyToOne
     @JoinColumn(name = "TERMS_ID")
     @NotNull(message = "{BusinessTermsItem.Terms.NotNull}")
     private BusinessPartnerTerms terms;
-    @Id    
+    @Id
     @NotNull(message = "{BusinessTermsItem.Ordinal.NotNull}")
     private Integer ordinal;
     @ManyToOne
@@ -138,5 +144,5 @@ public class BusinessPartnerTermsItem implements Serializable {
     public String toString() {
         return "BusinessPartnerTermsItem{" + "terms=" + terms + ", ordinal=" + ordinal + '}';
     }
-    
+
 }

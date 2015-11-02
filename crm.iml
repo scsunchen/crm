@@ -73,7 +73,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="unit" value="3ced3432-f87a-4876-9c71-9bb7c341df8d" />
+        </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/customer-relationship-management/target/classes/META-INF/crm-persistence.xml" />
       </configuration>
     </facet>

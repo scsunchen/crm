@@ -35,6 +35,7 @@ public class InvoiceItemDTO {
     private char[] password;
     private Long invoiceVersion;
 
+
     public Integer getClientId() {
         return clientId;
     }
@@ -154,6 +155,6 @@ public class InvoiceItemDTO {
     public void setInvoiceVersion(Long invoiceVersion) {
         this.invoiceVersion = invoiceVersion;
     }
-    
-    
+
+
 }

@@ -4,7 +4,7 @@ package com.invado.customer.relationship.service.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -17,8 +17,6 @@ public class TransactionDTO {
     private String statusId;
     private Integer typeId;
     private String typeDescription;
-    @NumberFormat(style = NumberFormat.Style.CURRENCY)
-    private Integer amount;
     private Integer terminalId;
     private String terminalCustomCode;
     private Integer pointOfSaleId;
@@ -27,13 +25,24 @@ public class TransactionDTO {
     private String distributorName;
     private Integer serviceProviderId;
     private String serviceProviderName;
-    @DateTimeFormat( style = "MM")
+    private Integer merchantId;
+    private String merchantName;
+    @DateTimeFormat(style = "MM")
     private LocalDateTime requestTime;
     @DateTimeFormat(style = "MM")
     private LocalDateTime responseTime;
+    @DateTimeFormat(style = "M-")
+    private String invoicingDate;
+    private Boolean invoicingStatus;
+    private String invoicingGenDate;
+    private String invoicingDistributorId;
+    private String invoicingDistributorName;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private BigDecimal amount;
 
 
-    public TransactionDTO(){}
+    public TransactionDTO() {
+    }
 
     public Long getId() {
         return id;
@@ -67,11 +76,11 @@ public class TransactionDTO {
         this.typeDescription = typeDescription;
     }
 
-    public Integer getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -153,5 +162,61 @@ public class TransactionDTO {
 
     public void setResponseTime(LocalDateTime responseTime) {
         this.responseTime = responseTime;
+    }
+
+    public Boolean getInvoicingStatus() {
+        return invoicingStatus;
+    }
+
+    public void setInvoicingStatus(Boolean invoicingStatus) {
+        this.invoicingStatus = invoicingStatus;
+    }
+
+    public Integer getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Integer merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
+
+    public String getInvoicingDate() {
+        return invoicingDate;
+    }
+
+    public void setInvoicingDate(String invoicingDate) {
+        this.invoicingDate = invoicingDate;
+    }
+
+    public String getInvoicingGenDate() {
+        return invoicingGenDate;
+    }
+
+    public void setInvoicingGenDate(String invoicingGenDate) {
+        this.invoicingGenDate = invoicingGenDate;
+    }
+
+    public String getInvoicingDistributorId() {
+        return invoicingDistributorId;
+    }
+
+    public void setInvoicingDistributorId(String invoicingDistributorId) {
+        this.invoicingDistributorId = invoicingDistributorId;
+    }
+
+    public String getInvoicingDistributorName() {
+        return invoicingDistributorName;
+    }
+
+    public void setInvoicingDistributorName(String invoicingDistributorName) {
+        this.invoicingDistributorName = invoicingDistributorName;
     }
 }

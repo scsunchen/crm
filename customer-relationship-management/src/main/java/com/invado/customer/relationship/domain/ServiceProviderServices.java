@@ -1,57 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.Article;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.LocalDateConverter;
+import com.invado.core.domain.LocalDateTimeConverter;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.persistence.*;
 
 /**
  * @author bdragan
  */
 @Entity
 @Table(name = "CRM_SERVICE_PROVIDER_SERVICES")
-@NamedQueries({
-    @NamedQuery(name = ServiceProviderServices.COUNT_ALL,
-            query = "SELECT COUNT(x) FROM ServiceProviderServices x"),
-    @NamedQuery(name = ServiceProviderServices.READ_ALL_ORDERBY_SERVICE_PROVIDER_DESCRIPTION,
-            query = "SELECT x FROM ServiceProviderServices x ORDER BY x.serviceProvider, x.description"),
-    @NamedQuery(name = ServiceProviderServices.READ_BY_BUSINESSPARTNER_SERVICE,
-            query="SELECT x FROM ServiceProviderServices x WHERE "
-                    + "x.service = :service "
-                    + "AND x.serviceProvider= :provider")
-})
 public class ServiceProviderServices implements Serializable {
-    
-    public  static final String COUNT_ALL = "ServiceProviderServices.CountAll";
-    public  static final String READ_BY_BUSINESSPARTNER_SERVICE 
-            = "ServiceProviderServices.ReadByBusinessPartnerService";
-    public  static final String READ_ALL_ORDERBY_SERVICE_PROVIDER_DESCRIPTION = 
-            "ServiceProviderServices.ReadAllOrderByServiceProviderDescription";
-    
-    @Id
+
     @TableGenerator(
             name = "ServiceProviderServicesGenerator",
             table = "id_generator",
@@ -60,32 +27,29 @@ public class ServiceProviderServices implements Serializable {
             pkColumnValue = "ServiceProviderServices",
             allocationSize = 1
     )
-    @GeneratedValue(strategy = GenerationType.TABLE, 
-                    generator = "ServiceProviderServicesGenerator")
+    @GeneratedValue(strategy = GenerationType.TABLE,
+            generator = "ServiceProviderServicesGenerator")
+    @Id
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "SERVICE_PROVIDER")    
-    @NotNull(message = "{ServiceProviderServices.ServiceProvider.NotNull}")
+    @JoinColumn(name = "SERVICE_PROVIDER")
     private BusinessPartner serviceProvider;
-    @NotBlank(message = "{ServiceProviderServices.Description.NotNull}")
+    @Column(name = "DESCRIPTION")
     private String description;
-    @Column(name="MANDATORY_ACTIVATION")
+    @Column(name = "MANDATORY_ACTIVATION")
     private Boolean mandatoryActivation;
-    @NotNull(message = "{ServiceProviderServices.Item.NotNull}")
     @ManyToOne
-    @JoinColumn(name = "SERVICE_ID")    
+    @JoinColumn(name = "SERVICE_ID")
     private Article service;
-    @Column(name="DATE_FROM")
+    @Column(name = "DATE_FROM")
+    @Convert(converter = LocalDateTimeConverter.class)
+    private LocalDateTime dateFrom;
+    @Column(name = "DATE_TO")
     @Convert(converter = LocalDateConverter.class)
-    @DateTimeFormat(style = "M-")
-    private LocalDate dateFrom;
-    @Column(name="DATE_TO")
-    @Convert(converter = LocalDateConverter.class)
-    @DateTimeFormat(style = "M-")
-    private LocalDate dateTo;
+    private LocalDateTime dateTo;
     @Version
     private Long version;
-    
+
     public ServiceProviderServices() {
     }
 
@@ -133,19 +97,19 @@ public class ServiceProviderServices implements Serializable {
         this.service = service;
     }
 
-    public LocalDate getDateFrom() {
+    public LocalDateTime getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(LocalDate dateFrom) {
+    public void setDateFrom(LocalDateTime dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public LocalDate getDateTo() {
+    public LocalDateTime getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(LocalDate dateTo) {
+    public void setDateTo(LocalDateTime dateTo) {
         this.dateTo = dateTo;
     }
 
@@ -182,5 +146,6 @@ public class ServiceProviderServices implements Serializable {
     @Override
     public String toString() {
         return "ServiceProviderServices{" + "description=" + description + '}';
-    }           
+    }
+
 }

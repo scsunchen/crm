@@ -4,7 +4,9 @@
  */
 package com.invado.core.domain;
 
+import javax.persistence.Convert;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,6 +14,8 @@ import java.util.Date;
  * @author Bobic Dragan
  */
 public class ExchangeRatePK implements Serializable {
+
+
 
     private Date applicationDate;
     private String toCurrency;

@@ -33,6 +33,9 @@ import java.util.Objects;
                         + "x.orgUnit.id, x.document"),
         @NamedQuery(name = "Invoice.GetByOrgUnit",
                 query = "SELECT x FROM Invoice x WHERE x.orgUnit = :orgUnit"),
+        @NamedQuery(name = Invoice.READ_MAX_DOCUMENT,
+                query = "SELECT MAX(cast(x.document as integer))+1 FROM Invoice x WHERE "
+                        + "x.client = :client AND x.orgUnitE = :orgUnit"),
         @NamedQuery(
                 name = "Invoice.GetByPartner",
                 query = "SELECT x FROM Invoice x WHERE x.partner.companyIdNumber = :companyIdNumber"
@@ -40,6 +43,8 @@ import java.util.Objects;
 })
 @IdClass(InvoicePK.class)
 public class Invoice implements Serializable {
+
+    public static final String READ_MAX_DOCUMENT = "Invoice.GetMaxDocument";
 
     @Id
     @JoinColumn(name = "company_id", referencedColumnName = "id")

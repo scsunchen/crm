@@ -1,24 +1,24 @@
 package com.invado.customer.relationship.service;
 
 import com.invado.core.domain.ApplicationSetup;
+
+import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.DeviceStatus;
 import com.invado.customer.relationship.domain.DeviceStatus_;
 import com.invado.core.dto.DeviceStatusDTO;
-import com.invado.core.exception.ConstraintViolationException;
-import com.invado.core.exception.PageNotExistsException;
-import com.invado.core.exception.ReferentialIntegrityException;
-import com.invado.core.exception.SystemException;
-import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
+import com.invado.customer.relationship.service.exception.ConstraintViolationException;
+import com.invado.customer.relationship.service.exception.PageNotExistsException;
+import com.invado.customer.relationship.service.exception.ReferentialIntegrityException;
+import com.invado.customer.relationship.service.exception.SystemException;
+import com.invado.customer.relationship.service.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -74,11 +74,11 @@ public class DeviceStatusService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new ConstraintViolationException("", msgs);
+                throw new IllegalArgumentException("", msgs);
             }
             dao.persist(deviceStatus);
             return deviceStatus;
-        } catch (ConstraintViolationException ex) {
+        } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

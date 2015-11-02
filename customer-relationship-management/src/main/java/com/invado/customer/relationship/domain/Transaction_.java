@@ -21,7 +21,9 @@ public class Transaction_ {
     public static volatile SingularAttribute<Transaction, Device> terminal;
     public static volatile SingularAttribute<Transaction, BusinessPartner> pointOfSale;
     public static volatile SingularAttribute<Transaction, Client> distributor;
+    public static volatile SingularAttribute<Transaction, BusinessPartner> merchant;
     public static volatile SingularAttribute<Transaction, BusinessPartner> serviceProvider;
     public static volatile SingularAttribute<Transaction, LocalDateTime> requestTime;
     public static volatile SingularAttribute<Transaction, LocalDateTime> responseTime;
+    public static volatile SingularAttribute<Transaction, Boolean> invoicingStatus;
 }

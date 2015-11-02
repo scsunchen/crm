@@ -25,6 +25,7 @@
     </definition>
     <definition name="partner-view" extends="main-menu-form">
         <put-attribute name="title" value="Poslovni partner"/>
+        <put-attribute name="panel-title" value="Poslovni partner"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-table.jsp"/>
     </definition>
     <definition name="partner-grid" extends="main-menu-form">
@@ -34,6 +35,7 @@
     </definition>
     <definition name="orgunit-view" extends="main-menu-form">
         <put-attribute name="title" value="Organizaciona celina"/>
+        <put-attribute name="panel-title" value="Organizaciona celina"/>
         <put-attribute name="body" value="/WEB-INF/jsp/orgunit-table.jsp"/>
     </definition>
     <definition name="orgunit-grid" extends="main-menu-form">
@@ -43,6 +45,7 @@
     </definition>
     <definition name="client-view" extends="main-menu-form">
         <put-attribute name="title" value="Kompanija korisnik"/>
+        <put-attribute name="panel-title" value="Kompanija korisnik"/>
         <put-attribute name="body" value="/WEB-INF/jsp/client-table.jsp"/>
     </definition>
     <definition name="client-grid" extends="main-menu-form">
@@ -52,6 +55,7 @@
     </definition>
     <definition name="bank-view" extends="main-menu-form">
         <put-attribute name="title" value="Banka"/>
+        <put-attribute name="panel-title" value="Banka"/>
         <put-attribute name="body" value="/WEB-INF/jsp/bank-creditor-table.jsp"/>
     </definition>
     <definition name="bank-grid" extends="main-menu-form">
@@ -80,4 +84,16 @@
         <put-attribute name="panel-title" value="Ažuriranje podataka o valutama"/>
         <put-attribute name="body" value="/WEB-INF/jsp/currency-grid.jsp"/>
     </definition>
+
+    <definition name="exchange-rate-view" extends="main-menu-form">
+        <put-attribute name="title" value="Kursna Lista"/>
+        <put-attribute name="panel-title" value="Kursna Lista"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/exchange-rate-table.jsp"/>
+    </definition>
+    <definition name="exchange-rate-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Kursna Lista"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o kursu"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/exchange-rate-grid.jsp"/>
+    </definition>
+    <definition name="login" template="/WEB-INF/jsp/login.jsp" />
 </tiles-definitions>

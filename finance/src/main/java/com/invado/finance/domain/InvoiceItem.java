@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 
 import com.invado.core.domain.Article;
 import com.invado.core.domain.VatPercent;
+import com.invado.finance.service.dto.InvoiceItemDTO;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -24,13 +25,22 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "r_invoice_item", schema = "devel")
 @IdClass(InvoiceItemPK.class)
-@NamedQuery(
-        name=InvoiceItem.READ_BY_ARTICLE, 
-        query="SELECT x FROM InvoiceItem x WHERE x.article.code = :code"
-)
+@NamedQueries({@NamedQuery(
+        name = InvoiceItem.READ_BY_ARTICLE,
+        query = "SELECT x FROM InvoiceItem x WHERE x.article.code = :code"),
+        @NamedQuery(
+                name = InvoiceItem.READ_ITEMS_BY_INVOICE_AND_ARTICLE,
+                query = " SELECT x FROM InvoiceItem x " +
+                        " WHERE x.invoice.document = :document " +
+                        " and x.invoice.orgUnit = :orgUnit " +
+                        " and x.invoice.client.id = :clientId " +
+                        " and x.article.code = :code ")
+})
 public class InvoiceItem implements Serializable, Comparable<InvoiceItem> {
 
     public static final String READ_BY_ARTICLE = "InvoiceItem.GetByArticle";
+    public static final String READ_ITEMS_BY_INVOICE_AND_ARTICLE = "InvoiceItem.GetByInvoiceAndArticle";
+
     @Id
     @NotNull(message = "{InvoiceItem.Invoice.NotNull}")
     @ManyToOne
@@ -197,7 +207,26 @@ public class InvoiceItem implements Serializable, Comparable<InvoiceItem> {
     public void setArticleVAT(VatPercent articleVAT) {
         this.articleVAT = articleVAT;
     }
-    
+
+    public InvoiceItemDTO getInvoiceItemDTO(){
+
+        InvoiceItemDTO invoiceItemDTO = new InvoiceItemDTO();
+
+        invoiceItemDTO.setClientId(this.getClientId());
+        invoiceItemDTO.setArticleCode(this.getArticle().getCode());
+        invoiceItemDTO.setArticleDesc(this.getArticle().getDescription());
+        invoiceItemDTO.setClientDesc(this.getClientName());
+        invoiceItemDTO.setInvoiceDocument(this.getInvoiceDocument());
+        invoiceItemDTO.setNetPrice(this.getNetPrice());
+        invoiceItemDTO.setOrdinal(this.getOrdinal());
+        invoiceItemDTO.setQuantity(this.getQuantity());
+        invoiceItemDTO.setRabatPercent(this.getRebatePercent());
+        invoiceItemDTO.setTotalCost(this.getTotalCost());
+        invoiceItemDTO.setVATPercent(this.getVatPercent());
+        invoiceItemDTO.setUnitId(this.getOrgUnitId());
+        return invoiceItemDTO;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

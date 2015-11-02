@@ -42,10 +42,12 @@ import org.hibernate.validator.constraints.NotBlank;
                 query = "SELECT x FROM OrgUnit x WHERE x.customId = :pattern"),
         @NamedQuery(name = OrgUnit.READ_BY_CLIENT_AND_NAME_ORDERBY_NAME, 
         query="SELECT x FROM OrgUnit x WHERE x.client.id = :clientId AND UPPER(x.name) LIKE :name ORDER BY x.name"),
+        @NamedQuery(name = OrgUnit.READ_ROOT_BY_CLIENT,
+                query="SELECT x FROM OrgUnit x WHERE x.client.id = :clientId and x.parentOrgUnit is null"),
         @NamedQuery(name = OrgUnit.COUNT_ALL, query = "SELECT COUNT(x) FROM OrgUnit x"),
         @NamedQuery(name = OrgUnit.READ_MAX_ID, query = "SELECT MAX(x.id) FROM OrgUnit x where x.client = :client")
 })
-@SqlResultSetMapping(name = "hierarchy", entities = {@EntityResult(entityClass = com.invado.core.domain.OrgUnit.class,
+@SqlResultSetMapping(name = "hierarchy", entities = {@EntityResult(entityClass = OrgUnit.class,
         fields = {
                 @FieldResult(name = "id", column = "ORG_UNIT_ID"),
                 @FieldResult(name = "customId", column = "CUSTOM_ID"),
@@ -81,6 +83,7 @@ public class OrgUnit implements Serializable {
     public static final String READ_BY_ID_ORDERBY_NAME = "OrgUnit.ReadByIdOrderByName";
     public static final String READ_HIERARCHY = "orgUnit.ReadHierarchy";
     public static final String READ_BY_CUSTOM_ID = "orgUnti.ReadByCustomId";
+    public static final String READ_ROOT_BY_CLIENT = "orgUnit.ReadRootByClient";
 
     @TableGenerator(
             name = "OrgUnitTab",

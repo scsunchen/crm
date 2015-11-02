@@ -4,6 +4,8 @@
  */
 package com.invado.core.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -33,9 +35,12 @@ public class ExchangeRate implements Serializable {
             "ExchangeRate.ReadAllByToCurrency";    
     
     private static final long serialVersionUID = 1L;
+
+    @Transient
+    @Autowired
+    private LocalDateConverter localDateConverter;
     
     @Id
-    @Temporal(TemporalType.DATE)
     @Column(name = "application_date")
     @NotNull(message = "{ExchangeRate.ApplicationDate.NotNull}")
     private Date applicationDate;
@@ -64,13 +69,21 @@ public class ExchangeRate implements Serializable {
     @Version
     private Long version;
 
-    public ExchangeRate(Date applicationDate, 
+    public ExchangeRate(Date applicationDate,
                         Currency toCurrency) {
         this.applicationDate = applicationDate;
         this.toCurrency = toCurrency;
     }
 
     public ExchangeRate() {}
+
+    public Currency getToCurrency() {
+        return toCurrency;
+    }
+
+    public void setToCurrency(Currency toCurrency) {
+        this.toCurrency = toCurrency;
+    }
 
     public String getToCurrencyISOCode() {
         return toCurrency.getISOCode();
@@ -123,6 +136,7 @@ public class ExchangeRate implements Serializable {
     public Date getApplicationDate() {
         return applicationDate;
     }
+
 
     @Override
     public boolean equals(Object obj) {

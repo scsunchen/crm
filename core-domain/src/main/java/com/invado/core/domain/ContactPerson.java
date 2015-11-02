@@ -31,10 +31,11 @@ public class ContactPerson implements Serializable {
     public ContactPerson() {
     }
 
-    public ContactPerson(String name, String phone, String function) {
+    public ContactPerson(String name, String phone, String function, String email) {
         this.name = name;
         this.phone = phone;
         this.function = function;
+        this.email = email;
     }
 
     public String getFunction() {

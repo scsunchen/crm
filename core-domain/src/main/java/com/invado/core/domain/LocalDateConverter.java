@@ -5,6 +5,8 @@
  */
 package com.invado.core.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +18,7 @@ import javax.persistence.Converter;
  * @author bdragan
  */
 @Converter
+@Component
 public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
 
     // mapping with java.util.Calendar breaks EclipseLink

@@ -5,8 +5,6 @@
 
 package com.invado.customer.relationship.service.exception;
 
-import com.invado.core.exception.ApplicationException;
-
 /**
  *
  * @author bdragan

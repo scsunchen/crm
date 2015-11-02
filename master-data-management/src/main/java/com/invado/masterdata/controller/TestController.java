@@ -27,8 +27,8 @@ public class TestController {
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         Locale locale = LocaleContextHolder.getLocale();
-        java.text.DateFormat formatter = DateFormat.getDateInstance();
-        java.time.format.DateTimeFormatter dateTimeFormatter = DateTimeFormatter.
+        DateFormat formatter = DateFormat.getDateInstance();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.
                 ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale);
 
 
