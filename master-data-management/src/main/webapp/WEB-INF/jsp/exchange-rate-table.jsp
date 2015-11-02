@@ -32,7 +32,7 @@
 
 
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table id="example" class="table table-striped display">
         <thead>
         <tr>
             <th><a class="btn btn-primary" href="/masterdata/exchange-rate/${page}/create"><span
@@ -79,9 +79,9 @@
                         </button>
                     </div>
                 </td>
-                <td><spring:eval expression="item.applicationDate"/></td>
+                <td id="appDate"><spring:eval expression="item.applicationDate"/></td>
                 <td><c:out value="${item.listNumber}"/></td>
-                <td><c:out value="${item.currencyISOCode}"/></td>
+                <td id="isocode"><c:out value="${item.currencyISOCode}"/></td>
                 <td><spring:eval expression="item.buying"/></td>
                 <td><spring:eval expression="item.middle"/></td>
                 <td><spring:eval expression="item.selling"/></td>
@@ -108,3 +108,24 @@
         </li>
     </ul>
 </nav>
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable();
+
+        $('#example tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                var isocode = $(this).find("#isocode").html();
+                console.log('isocode  ' + isocode);
+            }
+        });
+
+        $('#button').click(function () {
+            table.row('.selected').remove().draw(false);
+        });
+    });
+</script>

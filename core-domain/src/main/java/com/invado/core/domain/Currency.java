@@ -46,7 +46,7 @@ public class Currency implements Serializable {
     private String ISOCode;
     @Column(name = "currency_name")
     private String currency;
-    @Column(name = "iso_nuumber")
+    @Column(name = "iso_number")
     private Integer ISONumber;
     @Column(name = "description")
     private String description;

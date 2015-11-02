@@ -22,6 +22,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/datepicker3.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/dataTables.css" rel="stylesheet">
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
@@ -31,8 +32,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/locales/bootstrap-datepicker.sr-latin.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/typeahead/typeahead.bundle.min.js"></script>
-
-
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.dataTables.js"></script>
 
 </head>
 <body>
