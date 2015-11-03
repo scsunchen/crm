@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="PoslovniPartnerUnos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="naziv" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pib" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="maticniBroj" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="grad" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="adresa" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="kontaktOsoba" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telefon" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="eMail" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerUnosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PoslovniPartnerUnosResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerUnosSporni">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="naziv" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pib" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="maticniBroj" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="grad" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="adresa" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="kontaktOsoba" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telefon" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="eMail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="napomena" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerUnosSporniResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PoslovniPartnerUnosSporniResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerPretraga">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pib" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerPretragaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PoslovniPartnerPretragaResult" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerIzmena">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="naziv" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pib" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="maticniBroj" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="grad" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="adresa" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="kontaktOsoba" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telefon" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="eMail" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerIzmenaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PoslovniPartnerIzmenaResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerDeaktivacija">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="poslovniPartnerId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PoslovniPartnerDeaktivacijaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PoslovniPartnerDeaktivacijaResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoUnos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="poslovniPartnerId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="naziv" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="vrstaObjektaId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="adresniKod" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="kontaktOsoba" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="telefon" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="eMail" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoUnosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ProdajnoMestoUnosResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoPretragaPoID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="prodajnoMestoId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoPretragaPoIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProdajnoMestoPretragaPoIDResult" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoPretragaPibAdresniKod">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pib" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="adresniKod" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoPretragaPibAdresniKodResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ProdajnoMestoPretragaPibAdresniKodResult" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoIzmena">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="naziv" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pib" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="adresniKod" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="kontaktOsoba" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="vrstaObjektaId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="telefon" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="eMail" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoIzmenaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ProdajnoMestoIzmenaResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoDeaktivacija">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="prodajnoMestoId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ProdajnoMestoDeaktivacijaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ProdajnoMestoDeaktivacijaResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalUnos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipDopuneId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipKonekcijeId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="terminal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="msisdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="radnoVremeOd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="radnoVremeDo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="limitTransakcije" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="dnevniLimit" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="mesecniLimit" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="datumAktivacije" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="ICCID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="serijskiBroj" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="prodajnoMestoId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalUnosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TerminalUnosResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalIzmenaStatusa">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="noviStatus" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="terminalId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalIzmenaStatusaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TerminalIzmenaStatusaResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalPregled">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="terminalId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalPregledResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TerminalPregledResult" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalPregledEV">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="terminal" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalPregledEVResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TerminalPregledEVResult" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalIzmena">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipDopuneId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipKonekcijeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="terminalId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="msisdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="radnoVremeOd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="radnoVremeDo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="limitTransakcije" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="dnevniLimit" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="mesecniLimit" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="datumAktivacije" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="ICCID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="serijskiBroj" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalIzmenaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TerminalIzmenaResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalProveriStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="terminalId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="statusTerminala" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalProveriStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TerminalProveriStatusResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalOtkaziIPonovoAktiviraj">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipDopuneId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipKonekcijeId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="terminal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="msisdn" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="radnoVremeOd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="radnoVremeDo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="limitTransakcije" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="dnevniLimit" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="mesecniLimit" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="datumAktivacije" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="ICCID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="serijskiBroj" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="prodajnoMestoId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TerminalOtkaziIPonovoAktivirajResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TerminalOtkaziIPonovoAktivirajResult" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PoslovniPartnerUnosSoapIn">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerUnos" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerUnosSoapOut">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerUnosResponse" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerUnosSporniSoapIn">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerUnosSporni" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerUnosSporniSoapOut">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerUnosSporniResponse" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerPretragaSoapIn">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerPretraga" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerPretragaSoapOut">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerPretragaResponse" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerIzmenaSoapIn">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerIzmena" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerIzmenaSoapOut">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerIzmenaResponse" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerDeaktivacijaSoapIn">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerDeaktivacija" />
+  </wsdl:message>
+  <wsdl:message name="PoslovniPartnerDeaktivacijaSoapOut">
+    <wsdl:part name="parameters" element="tns:PoslovniPartnerDeaktivacijaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoUnosSoapIn">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoUnos" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoUnosSoapOut">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoUnosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoPretragaPoIDSoapIn">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoPretragaPoID" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoPretragaPoIDSoapOut">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoPretragaPoIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoPretragaPibAdresniKodSoapIn">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoPretragaPibAdresniKod" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoPretragaPibAdresniKodSoapOut">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoPretragaPibAdresniKodResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoIzmenaSoapIn">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoIzmena" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoIzmenaSoapOut">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoIzmenaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoDeaktivacijaSoapIn">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoDeaktivacija" />
+  </wsdl:message>
+  <wsdl:message name="ProdajnoMestoDeaktivacijaSoapOut">
+    <wsdl:part name="parameters" element="tns:ProdajnoMestoDeaktivacijaResponse" />
+  </wsdl:message>
+  <wsdl:message name="TerminalUnosSoapIn">
+    <wsdl:part name="parameters" element="tns:TerminalUnos" />
+  </wsdl:message>
+  <wsdl:message name="TerminalUnosSoapOut">
+    <wsdl:part name="parameters" element="tns:TerminalUnosResponse" />
+  </wsdl:message>
+  <wsdl:message name="TerminalIzmenaStatusaSoapIn">
+    <wsdl:part name="parameters" element="tns:TerminalIzmenaStatusa" />
+  </wsdl:message>
+  <wsdl:message name="TerminalIzmenaStatusaSoapOut">
+    <wsdl:part name="parameters" element="tns:TerminalIzmenaStatusaResponse" />
+  </wsdl:message>
+  <wsdl:message name="TerminalPregledSoapIn">
+    <wsdl:part name="parameters" element="tns:TerminalPregled" />
+  </wsdl:message>
+  <wsdl:message name="TerminalPregledSoapOut">
+    <wsdl:part name="parameters" element="tns:TerminalPregledResponse" />
+  </wsdl:message>
+  <wsdl:message name="TerminalPregledEVSoapIn">
+    <wsdl:part name="parameters" element="tns:TerminalPregledEV" />
+  </wsdl:message>
+  <wsdl:message name="TerminalPregledEVSoapOut">
+    <wsdl:part name="parameters" element="tns:TerminalPregledEVResponse" />
+  </wsdl:message>
+  <wsdl:message name="TerminalIzmenaSoapIn">
+    <wsdl:part name="parameters" element="tns:TerminalIzmena" />
+  </wsdl:message>
+  <wsdl:message name="TerminalIzmenaSoapOut">
+    <wsdl:part name="parameters" element="tns:TerminalIzmenaResponse" />
+  </wsdl:message>
+  <wsdl:message name="TerminalProveriStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:TerminalProveriStatus" />
+  </wsdl:message>
+  <wsdl:message name="TerminalProveriStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:TerminalProveriStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="TerminalOtkaziIPonovoAktivirajSoapIn">
+    <wsdl:part name="parameters" element="tns:TerminalOtkaziIPonovoAktiviraj" />
+  </wsdl:message>
+  <wsdl:message name="TerminalOtkaziIPonovoAktivirajSoapOut">
+    <wsdl:part name="parameters" element="tns:TerminalOtkaziIPonovoAktivirajResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Service1Soap">
+    <wsdl:operation name="PoslovniPartnerUnos">
+      <wsdl:input message="tns:PoslovniPartnerUnosSoapIn" />
+      <wsdl:output message="tns:PoslovniPartnerUnosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerUnosSporni">
+      <wsdl:input message="tns:PoslovniPartnerUnosSporniSoapIn" />
+      <wsdl:output message="tns:PoslovniPartnerUnosSporniSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerPretraga">
+      <wsdl:input message="tns:PoslovniPartnerPretragaSoapIn" />
+      <wsdl:output message="tns:PoslovniPartnerPretragaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerIzmena">
+      <wsdl:input message="tns:PoslovniPartnerIzmenaSoapIn" />
+      <wsdl:output message="tns:PoslovniPartnerIzmenaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerDeaktivacija">
+      <wsdl:input message="tns:PoslovniPartnerDeaktivacijaSoapIn" />
+      <wsdl:output message="tns:PoslovniPartnerDeaktivacijaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoUnos">
+      <wsdl:input message="tns:ProdajnoMestoUnosSoapIn" />
+      <wsdl:output message="tns:ProdajnoMestoUnosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoPretragaPoID">
+      <wsdl:input message="tns:ProdajnoMestoPretragaPoIDSoapIn" />
+      <wsdl:output message="tns:ProdajnoMestoPretragaPoIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoPretragaPibAdresniKod">
+      <wsdl:input message="tns:ProdajnoMestoPretragaPibAdresniKodSoapIn" />
+      <wsdl:output message="tns:ProdajnoMestoPretragaPibAdresniKodSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoIzmena">
+      <wsdl:input message="tns:ProdajnoMestoIzmenaSoapIn" />
+      <wsdl:output message="tns:ProdajnoMestoIzmenaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoDeaktivacija">
+      <wsdl:input message="tns:ProdajnoMestoDeaktivacijaSoapIn" />
+      <wsdl:output message="tns:ProdajnoMestoDeaktivacijaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TerminalUnos">
+      <wsdl:input message="tns:TerminalUnosSoapIn" />
+      <wsdl:output message="tns:TerminalUnosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TerminalIzmenaStatusa">
+      <wsdl:input message="tns:TerminalIzmenaStatusaSoapIn" />
+      <wsdl:output message="tns:TerminalIzmenaStatusaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TerminalPregled">
+      <wsdl:input message="tns:TerminalPregledSoapIn" />
+      <wsdl:output message="tns:TerminalPregledSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TerminalPregledEV">
+      <wsdl:input message="tns:TerminalPregledEVSoapIn" />
+      <wsdl:output message="tns:TerminalPregledEVSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TerminalIzmena">
+      <wsdl:input message="tns:TerminalIzmenaSoapIn" />
+      <wsdl:output message="tns:TerminalIzmenaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TerminalProveriStatus">
+      <wsdl:input message="tns:TerminalProveriStatusSoapIn" />
+      <wsdl:output message="tns:TerminalProveriStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TerminalOtkaziIPonovoAktiviraj">
+      <wsdl:input message="tns:TerminalOtkaziIPonovoAktivirajSoapIn" />
+      <wsdl:output message="tns:TerminalOtkaziIPonovoAktivirajSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Service1Soap" type="tns:Service1Soap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PoslovniPartnerUnos">
+      <soap:operation soapAction="http://tempuri.org/PoslovniPartnerUnos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerUnosSporni">
+      <soap:operation soapAction="http://tempuri.org/PoslovniPartnerUnosSporni" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerPretraga">
+      <soap:operation soapAction="http://tempuri.org/PoslovniPartnerPretraga" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerIzmena">
+      <soap:operation soapAction="http://tempuri.org/PoslovniPartnerIzmena" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerDeaktivacija">
+      <soap:operation soapAction="http://tempuri.org/PoslovniPartnerDeaktivacija" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoUnos">
+      <soap:operation soapAction="http://tempuri.org/ProdajnoMestoUnos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoPretragaPoID">
+      <soap:operation soapAction="http://tempuri.org/ProdajnoMestoPretragaPoID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoPretragaPibAdresniKod">
+      <soap:operation soapAction="http://tempuri.org/ProdajnoMestoPretragaPibAdresniKod" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoIzmena">
+      <soap:operation soapAction="http://tempuri.org/ProdajnoMestoIzmena" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoDeaktivacija">
+      <soap:operation soapAction="http://tempuri.org/ProdajnoMestoDeaktivacija" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalUnos">
+      <soap:operation soapAction="http://tempuri.org/TerminalUnos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalIzmenaStatusa">
+      <soap:operation soapAction="http://tempuri.org/TerminalIzmenaStatusa" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalPregled">
+      <soap:operation soapAction="http://tempuri.org/TerminalPregled" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalPregledEV">
+      <soap:operation soapAction="http://tempuri.org/TerminalPregledEV" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalIzmena">
+      <soap:operation soapAction="http://tempuri.org/TerminalIzmena" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalProveriStatus">
+      <soap:operation soapAction="http://tempuri.org/TerminalProveriStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalOtkaziIPonovoAktiviraj">
+      <soap:operation soapAction="http://tempuri.org/TerminalOtkaziIPonovoAktiviraj" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Service1Soap12" type="tns:Service1Soap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PoslovniPartnerUnos">
+      <soap12:operation soapAction="http://tempuri.org/PoslovniPartnerUnos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerUnosSporni">
+      <soap12:operation soapAction="http://tempuri.org/PoslovniPartnerUnosSporni" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerPretraga">
+      <soap12:operation soapAction="http://tempuri.org/PoslovniPartnerPretraga" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerIzmena">
+      <soap12:operation soapAction="http://tempuri.org/PoslovniPartnerIzmena" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PoslovniPartnerDeaktivacija">
+      <soap12:operation soapAction="http://tempuri.org/PoslovniPartnerDeaktivacija" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoUnos">
+      <soap12:operation soapAction="http://tempuri.org/ProdajnoMestoUnos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoPretragaPoID">
+      <soap12:operation soapAction="http://tempuri.org/ProdajnoMestoPretragaPoID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoPretragaPibAdresniKod">
+      <soap12:operation soapAction="http://tempuri.org/ProdajnoMestoPretragaPibAdresniKod" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoIzmena">
+      <soap12:operation soapAction="http://tempuri.org/ProdajnoMestoIzmena" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProdajnoMestoDeaktivacija">
+      <soap12:operation soapAction="http://tempuri.org/ProdajnoMestoDeaktivacija" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalUnos">
+      <soap12:operation soapAction="http://tempuri.org/TerminalUnos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalIzmenaStatusa">
+      <soap12:operation soapAction="http://tempuri.org/TerminalIzmenaStatusa" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalPregled">
+      <soap12:operation soapAction="http://tempuri.org/TerminalPregled" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalPregledEV">
+      <soap12:operation soapAction="http://tempuri.org/TerminalPregledEV" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalIzmena">
+      <soap12:operation soapAction="http://tempuri.org/TerminalIzmena" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalProveriStatus">
+      <soap12:operation soapAction="http://tempuri.org/TerminalProveriStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TerminalOtkaziIPonovoAktiviraj">
+      <soap12:operation soapAction="http://tempuri.org/TerminalOtkaziIPonovoAktiviraj" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service1">
+    <wsdl:port name="Service1Soap" binding="tns:Service1Soap">
+      <soap:address location="http://evoucherterminaliwsraz/Service1.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Service1Soap12" binding="tns:Service1Soap12">
+      <soap12:address location="http://evoucherterminaliwsraz/Service1.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
