@@ -150,25 +150,6 @@
     </ul>
 </nav>
 <script type="text/javascript">
-    $('#item').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1,
-        limit: 1000
-    }, {
-        display: 'description',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-item/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
-    $('#item').bind('typeahead:selected', function (obj, datum, name) {
-        $('#itemCode').val(datum['code']);
-    });
     $('#partner').typeahead({
         hint: false,
         highlight: true,
