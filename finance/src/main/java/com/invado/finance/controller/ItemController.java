@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 /**
@@ -35,19 +36,27 @@ public class ItemController {
     @Inject
     private ArticleService service;
 
-    @RequestMapping("/item/{page}")
-    public String showItems(@PathVariable Integer page,
-            Map<String, Object> model)
-            throws Exception {
+    @RequestMapping(value="/item/read-page.html",method = RequestMethod.GET)
+    public String readPage(@RequestParam("page") Integer page,
+                           @RequestParam(value = "code", required = false) String code,
+                           @RequestParam(value = "name", required = false) String name,
+                           Map<String, Object> model) 
+                           throws Exception {
         PageRequestDTO request = new PageRequestDTO();
+        request.addSearchCriterion(
+                new PageRequestDTO.SearchCriterion("code", code)
+        );
+        request.addSearchCriterion(
+                new PageRequestDTO.SearchCriterion("name", name)
+        );
         request.setPage(page);
         ReadRangeDTO<Article> items = service.readPage(request);
         model.put("data", items.getData());
-        model.put("page", items.getPage());
+        model.put("page", page);
         model.put("numberOfPages", items.getNumberOfPages());
         return "item-view";
     }
-
+    
     @RequestMapping("/item/{page}/{code}/delete.html")
     public String delete(@PathVariable String code) throws Exception {
         service.delete(code);

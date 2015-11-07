@@ -358,10 +358,10 @@ public class ArticleService {
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
         if (code != null && code.isEmpty() == false) {
-            q.setParameter("code", code.toUpperCase() + "%");
+            q.setParameter("code", "%"+ code.toUpperCase() + "%");
         }
         if (desc != null && desc.isEmpty() == false) {
-            q.setParameter("desc", desc.toUpperCase() + "%");
+            q.setParameter("desc", "%"+desc.toUpperCase() + "%");
         }
         if (dateFrom != null) {
             q.setParameter("updatedFrom", dateFrom);
@@ -423,10 +423,10 @@ public class ArticleService {
                 .orderBy(cb.asc(root.get(Article_.code)));
         TypedQuery<Article> typedQuery = em.createQuery(query);
         if (code != null && code.isEmpty() == false) {
-            typedQuery.setParameter("code", code.toUpperCase() + "%");
+            typedQuery.setParameter("code", "%" + code.toUpperCase() + "%");
         }
         if (desc != null && desc.isEmpty() == false) {
-            typedQuery.setParameter("desc", desc.toUpperCase() + "%");
+            typedQuery.setParameter("desc", "%" + desc.toUpperCase() + "%");
         }
         if (updatedFrom != null) {
             typedQuery.setParameter("updatedFrom", updatedFrom);

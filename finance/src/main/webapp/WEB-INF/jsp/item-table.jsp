@@ -8,9 +8,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- Search items by code and name -->
+<form class=" well well-lg" action="${pageContext.request.contextPath}/item/read-page.html"  method="get">
+    <div class="form-group row" >
+        <div class="col-lg-6" >
+            <label for="code"  ><spring:message code="Article.Label.SearchCode"/></label>
+            <input id="code" name="code" type="text" class="form-control" value="${param['code']}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name" ><spring:message code="Article.Label.SearchDesc" /></label>
+        <input id="name" class="form-control" type="text" name="name" value="${param['name']}"/>
+    </div> 
+    <button type="submit" class="btn btn-primary" name="page" value="0"><spring:message code="FindInvoice.Button.Search" /></button>
+</form>
 <a class="btn btn-primary" href="${page}/create" ><span class="glyphicon glyphicon-plus"></span> 
     <spring:message code="Article.Button.Create" /></a>
-<br/>
 <br/>
 <div class="table-responsive">
     <table class="table table-striped">
@@ -42,7 +56,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                 <spring:message code="Article.Button.Cancel" /></button>
-                            <spring:url value="${page}/${item.code}/delete.html" var="deletehref"/>
+                                <spring:url value="${page}/${item.code}/delete.html" var="deletehref"/>
                             <a type="button" class="btn btn-danger" href="${deletehref}">
                                 <spring:message code="Article.Button.Delete" /></a>
                         </div>
@@ -73,21 +87,23 @@
         </c:forEach>
         </tbody>
     </table>
-</div>
+</div>                   
 <nav>
-    <ul class="pager pull-right">                       
-        <spring:message code="Article.Table.Page" />
+    <ul class="pager pull-right">                
+        <spring:message code="Article.Table.Page" />        
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
-                    <span class="glyphicon glyphicon-backward"></span> 
-                    <spring:message code="Article.Table.PrevPage" />
-                </a>
-            </li>
+            <a href="<c:if test="${page > 0}">
+                   <c:out value="${pageContext.request.contextPath}/item/read-page.html?code=${param['code']}&name=${param['name']}&page=${page-1}"/></c:if>">
+                   <span class="glyphicon glyphicon-backward"></span> 
+               <spring:message code="Article.Table.PrevPage" />
+            </a>
+        </li>
         <c:out value="${page+1} od ${numberOfPages+1}" />
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>" >
-                <span class="glyphicon glyphicon-forward"></span> 
-                    <spring:message code="Article.Table.NextPage" />
+            <a href="<c:if test="${page < numberOfPages}">
+                   <c:out value="${pageContext.request.contextPath}/item/read-page.html?code=${param['code']}&name=${param['name']}&page=${page+1}"/></c:if>" >
+                   <span class="glyphicon glyphicon-forward"></span> 
+               <spring:message code="Article.Table.NextPage" />
             </a>
         </li>
     </ul>

@@ -9,9 +9,55 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
+<script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
+<!-- Search invoices by document, invoiceDate range, business partner -->
+<br/>
+<form:form class="well well-lg" 
+           action="${pageContext.request.contextPath}/invoice/read-page.html"  
+           modelAttribute="requestInvoices" 
+           method="GET">        
+    <div class="form-group row" >
+        <div class="col-lg-6" >
+            <label for="document"  ><spring:message code="FindInvoice.Label.Document"/></label>
+            <form:input id="document" path="document" type="text" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="partner" ><spring:message code="FindInvoice.Label.Partner" /></label>
+            <form:input id="partner" class="typeahead form-control" type="text" path="partnerName" />
+            <form:input id="partner-hidden" type="hidden" path="partnerId"/>
+        </div> 
+
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6" >
+            <spring:bind path="dateFrom" >                    
+                <label for="dateFrom"><spring:message code="FindInvoice.Label.DateFrom" /></label>
+                <form:input id="dateFrom" type="text" class="form-control" path="dateFrom" />
+                <span class="help-inline">
+                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
+                    </span>
+            </spring:bind>
+        </div>
+        <div class="col-lg-6" >
+            <spring:bind path="dateTo" >                    
+                <label for="dateTo"><spring:message code="FindInvoice.Label.DateTo" /></label>
+                <form:input id="dateTo" type="text" class="form-control" path="dateTo"/>
+                <span class="help-inline">
+                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
+                    </span>
+            </spring:bind>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" name="page" value="0">
+        <spring:message code="FindInvoice.Button.Search" />
+    </button>
+</form:form>
 <a class="btn btn-primary" href="${page}/create">
     <span class="glyphicon glyphicon-plus"></span> <spring:message code="Invoice.Button.Create" /></a>
-<br/>
 <br/>
 <div class="table-responsive">
     <table class="table table-striped">
@@ -87,17 +133,58 @@
     <ul class="pager pull-right">                       
         <spring:message code="Invoice.Table.Page" />
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
-                    <span class="glyphicon glyphicon-backward"></span> 
-                <spring:message code="Invoice.Table.PrevPage" />
-                </a>
-            </li>
+            <a href="<c:if test="${page > 0}">
+                   <c:out value="${pageContext.request.contextPath}/invoice/read-page.html?document=${param['document']}&partnerName=${param['partnerName']}&partnerId=${param['partnerId']}&dateFrom=${param['dateFrom']}&dateTo=${param['dateTo']}&page=${page-1}" /></c:if>">
+                   <span class="glyphicon glyphicon-backward"></span> 
+               <spring:message code="Invoice.Table.PrevPage" />
+            </a>
+        </li>
         <c:out value="${page+1} od ${numberOfPages+1}" />
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>" >
-                <span class="glyphicon glyphicon-forward"></span> 
-                <spring:message code="Invoice.Table.NextPage" />
+            <a href="<c:if test="${page < numberOfPages}">
+                   <c:out value="${pageContext.request.contextPath}/invoice/read-page.html?document=${param['document']}&partnerName=${param['partnerName']}&partnerId=${param['partnerId']}&dateFrom=${param['dateFrom']}&dateTo=${param['dateTo']}&page=${page+1}"/></c:if>" >
+                   <span class="glyphicon glyphicon-forward"></span> 
+               <spring:message code="Invoice.Table.NextPage" />
             </a>
         </li>
     </ul>
 </nav>
+<script type="text/javascript">
+    $('#item').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'description',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/invoice/read-item/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#item').bind('typeahead:selected', function (obj, datum, name) {
+        $('#itemCode').val(datum['code']);
+    });
+    $('#partner').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1
+    }, {
+        display: 'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/invoice/read-businesspartner/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#partner').bind('typeahead:selected', function (obj, datum, name) {
+        $('#partner-hidden').val(datum['id']);
+    });
+</script>

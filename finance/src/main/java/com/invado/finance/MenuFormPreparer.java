@@ -30,8 +30,8 @@ public class MenuFormPreparer implements ViewPreparer {
         finance.setActive(false);
         finance.setPath("finance");
         finance.setName("Finansije");
-        finance.put("Fakturisanje", "Artikal", "/finance/item/0");
-        finance.put("Fakturisanje", "Faktura", "/finance/invoice/0");
+        finance.put("Fakturisanje", "Artikal", "/finance/item/read-page.html?code=&name=&page=0");
+        finance.put("Fakturisanje", "Faktura", "/finance/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=0");
         finance.put("Knjigovodstvo", "Opis", "/finance/desc/0");
         finance.put("Knjigovodstvo", "Tip naloga", "/finance/journal-entry-type/0");
         finance.put("Knjigovodstvo", "Konto", "/finance/account/0");

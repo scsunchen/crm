@@ -1,11 +1,5 @@
 package com.invado.core.utils;
 
-
-
-
-
-
-
 import com.invado.core.annotations.NativeQueryResultColumn;
 import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;

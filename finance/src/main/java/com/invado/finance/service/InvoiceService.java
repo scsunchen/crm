@@ -38,6 +38,7 @@ import com.invado.core.exception.ReferentialIntegrityException;
 import com.invado.core.exception.SystemException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1007,31 +1008,26 @@ public class InvoiceService {
             throws PageNotExistsException {
         // TODO : check read invoice permission
         String document = null;
-        Date from = null;
-        Date to = null;
-        String articleCode = null;
-        String businessPartner = null;
+        LocalDate from = null;
+        LocalDate to = null;
+        Integer businessPartner = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("document") && s.getValue() instanceof String) {
                 document = (String) s.getValue();
             }
-            if (s.getKey().equals("from") && s.getValue() instanceof Date) {
-                from = (Date) s.getValue();
+            if (s.getKey().equals("from") && s.getValue() instanceof LocalDate) {
+                from = (LocalDate) s.getValue();
             }
-            if (s.getKey().equals("to") && s.getValue() instanceof Date) {
-                to = (Date) s.getValue();
+            if (s.getKey().equals("to") && s.getValue() instanceof LocalDate) {
+                to = (LocalDate) s.getValue();
             }
-            if (s.getKey().equals("serviceID") && s.getValue() instanceof String) {
-                articleCode = (String) s.getValue();
-            }
-            if (s.getKey().equals("partner") && s.getValue() instanceof String) {
-                businessPartner = (String) s.getValue();
+            if (s.getKey().equals("partner") && s.getValue() instanceof Integer) {
+                businessPartner = (Integer) s.getValue();
             }
         }
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
-            Long countEntities = this.count(dao, document, from, to, businessPartner,
-                    articleCode);
+            Long countEntities = this.count(dao, document, from, to, businessPartner);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             if (p.getPage().compareTo(-1) == -1
@@ -1048,10 +1044,9 @@ public class InvoiceService {
                         from,
                         to,
                         businessPartner,
-                        articleCode,
                         start,
                         pageSize);
-                result.setData(this.convertToDTO(data));
+                result.setData(data.stream().map(Invoice::getDTO).collect(Collectors.toList()));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
@@ -1060,10 +1055,9 @@ public class InvoiceService {
                         from,
                         to,
                         businessPartner,
-                        articleCode,
                         p.getPage() * pageSize,
                         pageSize);
-                result.setData(this.convertToDTO(data));
+                result.setData(data.stream().map(Invoice::getDTO).collect(Collectors.toList()));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(p.getPage());
             }
@@ -1077,21 +1071,12 @@ public class InvoiceService {
         } 
     }
 
-    private List<InvoiceDTO> convertToDTO(List<Invoice> lista) {
-        List<InvoiceDTO> listaDTO = new ArrayList<>();
-        for (Invoice pr : lista) {
-            listaDTO.add(pr.getDTO());
-        }
-        return listaDTO;
-    }
-
     public List<Invoice> search(
             EntityManager EM,
             String document,
-            Date from,
-            Date to,
-            String partner,
-            String articleCode,
+            LocalDate from,
+            LocalDate to,
+            Integer partner,
             int start,
             int range) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
@@ -1099,7 +1084,7 @@ public class InvoiceService {
         Root<Invoice> root = c.from(Invoice.class);
         c.select(root);
         List<Predicate> criteria = new ArrayList<>();
-        if (document != null && document.replace("%", "").isEmpty() == false) {
+        if (document != null && document.isEmpty() == false) {
             criteria.add(
                     cb.like(root.get(Invoice_.document),
                             cb.parameter(String.class, "document")));
@@ -1107,49 +1092,35 @@ public class InvoiceService {
         if (from != null) {
             criteria.add(
                     cb.greaterThanOrEqualTo(root.get(Invoice_.invoiceDate),
-                            cb.parameter(Date.class, "from")));
+                            cb.parameter(LocalDate.class, "from")));
         }
         if (to != null) {
             criteria.add(cb.lessThanOrEqualTo(
                     root.get(Invoice_.invoiceDate),
-                    cb.parameter(Date.class, "to")));
+                    cb.parameter(LocalDate.class, "to")));
         }
         if (partner != null) {
-            criteria.add(cb.like(root.get(Invoice_.partner)
-                    .get(BusinessPartner_.companyIdNumber),
-                    cb.parameter(String.class, "partner")));
+            criteria.add(cb.equal(root.get(Invoice_.partner)
+                    .get(BusinessPartner_.id),
+                    cb.parameter(Integer.class, "partner")));
         }
-        if (articleCode != null && articleCode.isEmpty() == false) {
-            Subquery<InvoiceItem> sq = c.subquery(InvoiceItem.class);
-            Root<InvoiceItem> rootsq = sq.from(InvoiceItem.class);
-            sq.select(rootsq).where(
-                    cb.equal(rootsq.get(InvoiceItem_.article).get(Article_.code),
-                            cb.parameter(Integer.class, "articleCode")),
-                    cb.equal(rootsq.get(InvoiceItem_.invoice)
-                            .get(Invoice_.document), root.get(Invoice_.document)));
-            criteria.add(cb.exists(sq));
-        }
-//        Join<Invoice, OrgUnit> orgUnit = root.join(Invoice_.orgUnit);
         c.where(cb.and(criteria.toArray(new Predicate[0])))
                 .orderBy(
                 cb.asc(root.get(Invoice_.client).get(Client_.id)),
                 cb.asc(root.get(Invoice_.orgUnit)),
                 cb.asc(root.get(Invoice_.document)));
         TypedQuery<Invoice> q = EM.createQuery(c);
-        if (document != null) {
-            q.setParameter("document", document);
+        if (document != null && document.isEmpty() == false) {
+            q.setParameter("document", "%" + document + "%");
         }
         if (from != null) {
             q.setParameter("from", from);
         }
         if (to != null) {
             q.setParameter("to", to);
-        }
+        }        
         if (partner != null) {
-            q.setParameter("partner", partner);
-        }
-        if (articleCode != null && articleCode.isEmpty() == false) {
-            q.setParameter("articleCode", articleCode);
+            q.setParameter("partner",  partner );
         }
         q.setFirstResult(start);
         q.setMaxResults(range);
@@ -1158,10 +1129,9 @@ public class InvoiceService {
 
     public Long count(EntityManager EM,
             String document,
-            Date from,
-            Date to,
-            String partner,
-            String articleCode) {
+            LocalDate from,
+            LocalDate to,
+            Integer partner) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<Invoice> root = c.from(Invoice.class);
@@ -1173,26 +1143,16 @@ public class InvoiceService {
         }
         if (from != null) {
             criteria.add(cb.greaterThanOrEqualTo(root.get(Invoice_.invoiceDate),
-                    cb.parameter(Date.class, "from")));
+                    cb.parameter(LocalDate.class, "from")));
         }
         if (to != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Invoice_.invoiceDate),
-                    cb.parameter(Date.class, "to")));
+                    cb.parameter(LocalDate.class, "to")));
         }
         if (partner != null) {
-            criteria.add(cb.like(root.get(Invoice_.partner)
-                    .get(BusinessPartner_.companyIdNumber),
-                    cb.parameter(String.class, "partner")));
-        }
-        if (articleCode != null && articleCode.isEmpty() == false) {
-            Subquery<InvoiceItem> sq = c.subquery(InvoiceItem.class);
-            Root<InvoiceItem> rootsq = sq.from(InvoiceItem.class);
-            sq.select(rootsq).where(cb.equal(rootsq.get(InvoiceItem_.article)
-                    .get(Article_.code),
-                    cb.parameter(Integer.class, "articleCode")),
-                    cb.equal(rootsq.get(InvoiceItem_.invoice).get(Invoice_.document),
-                            root.get(Invoice_.document)));
-            criteria.add(cb.exists(sq));
+            criteria.add(cb.equal(root.get(Invoice_.partner)
+                    .get(BusinessPartner_.id),
+                    cb.parameter(Integer.class, "partner")));
         }
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
@@ -1207,9 +1167,6 @@ public class InvoiceService {
         }
         if (partner != null) {
             q.setParameter("partner", partner);
-        }
-        if (articleCode != null && articleCode.isEmpty() == false) {
-            q.setParameter("articleCode", articleCode);
         }
         return q.getSingleResult();
     }

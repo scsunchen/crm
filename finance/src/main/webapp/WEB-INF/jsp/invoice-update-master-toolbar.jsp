@@ -107,7 +107,7 @@
    target="_blank">
     <span class="glyphicon glyphicon-search"></span> <spring:message code="Invoice.Button.PrintPreview" /></a>
 <button class="btn btn-default" <c:if test="${invoice.recorded == true}">disabled</c:if> data-toggle="modal" data-target="#dialogInvoiceRecording"><span class="glyphicon glyphicon-edit"></span> <spring:message code="Invoice.Button.Record" /></button>
-<a href="${pageContext.request.contextPath}/invoice/${page}" class="btn btn-default" ><span class="glyphicon glyphicon-backward"></span> <spring:message code="Invoice.Button.Back" /></a>
+<a href="${pageContext.request.contextPath}/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=${page}" class="btn btn-default" ><span class="glyphicon glyphicon-backward"></span> <spring:message code="Invoice.Button.Back" /></a>
 <script type="text/javascript">
     $('#description').typeahead({
         hint: false,

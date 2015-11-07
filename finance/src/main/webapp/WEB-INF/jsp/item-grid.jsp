@@ -88,7 +88,7 @@
                 </c:otherwise>
             </c:choose>
         </button>
-        <a href="${pageContext.request.contextPath}/item/${page}" class="btn btn-default" >
+        <a href="${pageContext.request.contextPath}/item/read-page.html?code=&name=&page=${page}" class="btn btn-default" >
             <span class="glyphicon glyphicon-backward"></span> <spring:message code="Article.Button.Back" /></a>
     </div>
 </form:form>

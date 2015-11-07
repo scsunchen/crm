@@ -13,6 +13,7 @@ import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
 import com.invado.core.exception.ConstraintViolationException;
 import com.invado.core.exception.EntityNotFoundException;
+import com.invado.core.exception.PageNotExistsException;
 import com.invado.finance.controller.report.InvoiceReport;
 import com.invado.finance.domain.InvoiceBusinessPartner;
 import com.invado.finance.domain.InvoiceType;
@@ -27,6 +28,7 @@ import com.invado.finance.service.dto.JournalEntryTypeDTO;
 import com.invado.finance.service.dto.PageRequestDTO;
 import com.invado.finance.service.dto.ReadRangeDTO;
 import com.invado.finance.service.dto.RequestInvoiceRecordingDTO;
+import com.invado.finance.service.dto.RequestInvoicesDTO;
 import com.invado.finance.service.exception.JournalEntryExistsException;
 import com.invado.finance.service.exception.PostedInvoiceException;
 import com.invado.finance.service.exception.ProformaInvoicePostingException;
@@ -73,21 +75,58 @@ public class InvoiceController {
     private RecordInvoiceService recordService;
     @Inject
     private MasterDataService masterDataservice;
-    
 
-    @RequestMapping("/invoice/{page}")
-    public String showInvoices(@PathVariable Integer page,
-            Map<String, Object> model)
-            throws Exception {
-        PageRequestDTO request = new PageRequestDTO();
-        request.setPage(page);
-        ReadRangeDTO<InvoiceDTO> items = invoiceService.readPage(request);
+//    @RequestMapping(value = "/invoice/{page}", method = RequestMethod.GET )
+//    public String showInvoices(@PathVariable Integer page,
+//            Map<String, Object> model)
+//            throws Exception {
+//        PageRequestDTO request = new PageRequestDTO();
+//        request.setPage(page);
+//        ReadRangeDTO<InvoiceDTO> items = invoiceService.readPage(request);
+//        model.put("data", items.getData());
+//        model.put("page", items.getPage());
+//        model.put("numberOfPages", items.getNumberOfPages());
+//        RequestInvoicesDTO requestInvoices = new RequestInvoicesDTO();
+//        requestInvoices.setPage(page);
+//        model.put("requestInvoices", requestInvoices);
+//        return "invoice-table";
+//    }
+    
+    @RequestMapping(value = "/invoice/read-page.html", method = RequestMethod.GET)
+    public String search(Map<String, Object> model,
+                         @ModelAttribute("requestInvoices") RequestInvoicesDTO request,
+                         BindingResult result,
+                         SessionStatus status) 
+                         throws PageNotExistsException {
+        if (result.hasErrors()) {
+            model.put("page", request.getPage());
+            model.put("expand", true);
+            return "invoice-table";
+        }        
+        PageRequestDTO dto = new PageRequestDTO();
+        dto.setPage(request.getPage());
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                "document",
+                request.getDocument()));
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                "from",
+                request.getDateFrom()));
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                "to",
+                request.getDateTo()));
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                "partner",
+                request.getPartnerId())
+        );
+        ReadRangeDTO<InvoiceDTO> items = invoiceService.readPage(dto);
+        status.setComplete();
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
+        model.put("requestInvoices", request);
         return "invoice-table";
     }
-
+    
     @RequestMapping("/invoice/{page}/{clientId}/{unitId}/{document}/delete.html")
     public String delete(
             @PathVariable Integer clientId,
