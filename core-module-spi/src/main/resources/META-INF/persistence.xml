@@ -16,13 +16,11 @@
     <class>com.invado.core.domain.BankCreditor</class>
     <class>com.invado.core.domain.Job</class>
     <class>com.invado.core.domain.Employee</class>
-    <class>com.invado.customer.relationship.domain.DeviceStatus</class>
-    <class>com.invado.customer.relationship.domain.Device</class>
     <class>com.invado.core.domain.Article</class>
+    <class>com.invado.core.domain.Invoice</class>
+    <class>com.invado.core.domain.InvoiceItem</class>
+    <class>com.invado.core.domain.Properties</class>
     <!-- ***************FINANCE*************************************-->
-    <class>com.invado.finance.domain.Invoice</class>
-    <class>com.invado.finance.domain.InvoiceItem</class>
-    <class>com.invado.finance.domain.Properties</class>
     <class>com.invado.finance.domain.journal_entry.RecordInvoiceAccount</class>
     <class>com.invado.finance.domain.journal_entry.Account</class>
     <class>com.invado.finance.domain.journal_entry.Analytical</class>
@@ -33,6 +31,8 @@
     <class>com.invado.finance.domain.journal_entry.JournalEntryItem</class>
     <class>com.invado.finance.domain.journal_entry.PartnerSpecification</class>
     <!-- ***************CRM**************************************************-->
+    <class>com.invado.customer.relationship.domain.DeviceStatus</class>
+    <class>com.invado.customer.relationship.domain.Device</class>
     <class>com.invado.customer.relationship.domain.BusinessPartnerTerms</class>
     <class>com.invado.customer.relationship.domain.BusinessPartnerTermsItem</class>
     <class>com.invado.customer.relationship.domain.Transaction</class>

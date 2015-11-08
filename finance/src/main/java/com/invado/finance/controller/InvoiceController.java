@@ -15,14 +15,14 @@ import com.invado.core.exception.ConstraintViolationException;
 import com.invado.core.exception.EntityNotFoundException;
 import com.invado.core.exception.PageNotExistsException;
 import com.invado.finance.controller.report.InvoiceReport;
-import com.invado.finance.domain.InvoiceBusinessPartner;
-import com.invado.finance.domain.InvoiceType;
+import com.invado.core.domain.InvoiceBusinessPartner;
+import com.invado.core.domain.InvoiceType;
 import com.invado.finance.domain.journal_entry.Description;
 import com.invado.finance.service.MasterDataService;
 import com.invado.finance.service.InvoiceService;
 import com.invado.finance.service.RecordInvoiceService;
-import com.invado.finance.service.dto.InvoiceDTO;
-import com.invado.finance.service.dto.InvoiceItemDTO;
+import com.invado.core.dto.InvoiceDTO;
+import com.invado.core.dto.InvoiceItemDTO;
 import com.invado.finance.service.dto.InvoiceReportDTO;
 import com.invado.finance.service.dto.JournalEntryTypeDTO;
 import com.invado.finance.service.dto.PageRequestDTO;
@@ -135,7 +135,7 @@ public class InvoiceController {
             Map<String, Object> model)
             throws Exception {
         invoiceService.deleteInvoice(clientId, unitId, document);
-        return "redirect:/invoice/{page}";
+        return "redirect:/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=0";
     }
     
     @RequestMapping(value = "/invoice/{page}/create", method = RequestMethod.GET)
@@ -176,7 +176,7 @@ public class InvoiceController {
                                                         dto.getDocument());
             return initUpdateForm(page, tmp, dto, null, model);
         } 
-        return "redirect:/invoice/{page}";
+        return "redirect:/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=0";
     }
     
     @RequestMapping(value = "/invoice/{page}/create", method = RequestMethod.POST)
@@ -385,6 +385,7 @@ public class InvoiceController {
                     item.getInvoiceDocument()));
             model.put("partnerTypes", InvoiceBusinessPartner.values());
             model.put("invoiceTypes", InvoiceType.values());
+            model.put("requestInvoiceRecording", new RequestInvoiceRecordingDTO());
             return "invoice-update-master-detail";
         }
         try {
@@ -409,6 +410,7 @@ public class InvoiceController {
                     item.getInvoiceDocument()));
             model.put("partnerTypes", InvoiceBusinessPartner.values());
             model.put("invoiceTypes", InvoiceType.values());
+            model.put("requestInvoiceRecording", new RequestInvoiceRecordingDTO());
             return "invoice-update-master-detail";
         }
     }
@@ -419,7 +421,8 @@ public class InvoiceController {
             @PathVariable Integer unitId,
             @PathVariable String document)
             throws Exception {
-        InvoiceReportDTO dto = invoiceService.readInvoiceReport(clientId,
+        try {
+            InvoiceReportDTO dto = invoiceService.readInvoiceReport(clientId,
                 unitId,
                 document);
         Locale locale = LocaleContextHolder.getLocale();
@@ -432,6 +435,11 @@ public class InvoiceController {
         ResponseEntity<byte[]> response = new ResponseEntity<>(
                 getPDFFile(report), headers, HttpStatus.OK);
         return response;
+        }catch(Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private byte[] getPDFFile(Pageable pageable) throws Exception {

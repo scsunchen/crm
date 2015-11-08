@@ -7,7 +7,7 @@ package com.invado.finance.controller;
 
 import com.invado.core.domain.ApplicationUser;
 import com.invado.core.domain.Article;
-import com.invado.finance.domain.UnitOfMeasure;
+import com.invado.core.domain.UnitOfMeasure;
 import com.invado.core.domain.VatPercent;
 import com.invado.finance.service.ArticleService;
 import com.invado.finance.service.dto.PageRequestDTO;

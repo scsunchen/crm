@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.finance.service.dto;
+package com.invado.core.dto;
 
-import com.invado.finance.domain.InvoiceBusinessPartner;
-import com.invado.finance.domain.InvoiceType;
+import com.invado.core.domain.InvoiceBusinessPartner;
+import com.invado.core.domain.InvoiceType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -2,21 +2,16 @@ package com.invado.customer.relationship.service;
 
 import com.invado.core.domain.*;
 import com.invado.core.dto.DeviceDTO;
+import com.invado.core.exception.EntityExistsException;
+import com.invado.core.exception.EntityNotFoundException;
+import com.invado.customer.relationship.service.exception.IllegalArgumentException;
 import com.invado.core.exception.*;
+import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.Device;
 import com.invado.customer.relationship.domain.DeviceStatus;
 import com.invado.customer.relationship.domain.Device_;
-import com.invado.masterdata.Utils;
-import com.invado.masterdata.service.dto.PageRequestDTO;
-import com.invado.masterdata.service.dto.ReadRangeDTO;
-import com.invado.masterdata.service.exception.*;
-import com.invado.masterdata.service.exception.ConstraintViolationException;
-import com.invado.masterdata.service.exception.EntityExistsException;
-import com.invado.masterdata.service.exception.EntityNotFoundException;
-import com.invado.masterdata.service.exception.IllegalArgumentException;
-import com.invado.masterdata.service.exception.PageNotExistsException;
-import com.invado.masterdata.service.exception.ReferentialIntegrityException;
-import com.invado.masterdata.service.exception.SystemException;
+import com.invado.customer.relationship.service.dto.PageRequestDTO;
+import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -48,7 +43,6 @@ public class DeviceService {
 
     @Autowired
     private Validator validator;
-    private final String username = "a";
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -447,8 +441,24 @@ public class DeviceService {
                     .getResultList();
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(com.invado.finance.Utils.getMessage(
+            throw new SystemException(Utils.getMessage(
                     "Device.Exception.ReadByCusotmCode"),
+                    ex);
+        }
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Article> readItemByDescription(String desc) {
+        try {
+            return dao.createNamedQuery(
+                    Article.READ_BY_DESCRIPTION_ORDERBY_DESCRIPTION, 
+                    Article.class)
+                    .setParameter("desc", ("%"+desc+"%").toUpperCase())
+                    .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "Device.PersistenceEx.ReadItemByDescription"),
                     ex);
         }
     }

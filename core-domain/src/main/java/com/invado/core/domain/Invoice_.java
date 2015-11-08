@@ -1,11 +1,5 @@
-package com.invado.finance.domain;
+package com.invado.core.domain;
 
-import com.invado.core.domain.ApplicationUser;
-import com.invado.core.domain.BankCreditor;
-import com.invado.core.domain.BusinessPartner;
-import com.invado.core.domain.Client;
-import com.invado.core.domain.Currency;
-import com.invado.core.domain.OrgUnit;
 import java.time.LocalDate;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;

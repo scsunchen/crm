@@ -9,7 +9,7 @@ import com.invado.core.domain.ApplicationUser;
 import com.invado.finance.Utils;
 import com.invado.core.domain.Article;
 import com.invado.core.domain.Article_;
-import com.invado.finance.domain.InvoiceItem;
+import com.invado.core.domain.InvoiceItem;
 import com.invado.finance.service.dto.PageRequestDTO;
 import com.invado.finance.service.dto.ReadRangeDTO;
 import com.invado.core.exception.ConstraintViolationException;

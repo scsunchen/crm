@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.finance.service.dto;
+package com.invado.core.dto;
 
 import java.math.BigDecimal;
 import org.springframework.format.annotation.NumberFormat;

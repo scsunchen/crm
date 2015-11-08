@@ -2,10 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.finance.domain;
+package com.invado.core.domain;
 
-import com.invado.core.domain.*;
-import com.invado.finance.service.dto.InvoiceDTO;
+import com.invado.core.dto.InvoiceDTO;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -224,12 +223,6 @@ public class Invoice implements Serializable {
     public Boolean isDomesticCurrency() {
         return isDomesticCurrency;
     }
-
-//
-//    public String getOrgUnitName() {
-//        return orgUnitE.getName();
-//    }
-//
 
     public String getClientName() {
         return client.getName();

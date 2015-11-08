@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.finance.domain;
+package com.invado.core.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,9 +13,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.invado.core.domain.Article;
-import com.invado.core.domain.VatPercent;
-import com.invado.finance.service.dto.InvoiceItemDTO;
+import com.invado.core.dto.InvoiceItemDTO;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**

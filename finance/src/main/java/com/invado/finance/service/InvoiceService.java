@@ -15,19 +15,17 @@ import com.invado.core.domain.Currency;
 import com.invado.core.domain.OrgUnit;
 import com.invado.finance.Utils;
 import com.invado.core.domain.Article;
-import com.invado.core.domain.Article_;
 import com.invado.core.exception.ConstraintViolationException;
-import com.invado.finance.domain.Invoice;
-import com.invado.finance.domain.InvoiceBusinessPartner;
-import com.invado.finance.domain.InvoiceItem;
-import com.invado.finance.domain.InvoiceItemPK;
-import com.invado.finance.domain.InvoiceItem_;
-import com.invado.finance.domain.InvoicePK;
-import com.invado.finance.domain.InvoiceType;
-import com.invado.finance.domain.Invoice_;
-import com.invado.finance.domain.Properties;
-import com.invado.finance.service.dto.InvoiceDTO;
-import com.invado.finance.service.dto.InvoiceItemDTO;
+import com.invado.core.domain.Invoice;
+import com.invado.core.domain.InvoiceBusinessPartner;
+import com.invado.core.domain.InvoiceItem;
+import com.invado.core.domain.InvoiceItemPK;
+import com.invado.core.domain.InvoicePK;
+import com.invado.core.domain.InvoiceType;
+import com.invado.core.domain.Invoice_;
+import com.invado.core.domain.Properties;
+import com.invado.core.dto.InvoiceDTO;
+import com.invado.core.dto.InvoiceItemDTO;
 import com.invado.finance.service.dto.InvoiceReportDTO;
 import com.invado.finance.service.dto.PageRequestDTO;
 import com.invado.finance.service.dto.ReadRangeDTO;
@@ -40,11 +38,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
@@ -54,11 +52,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
@@ -73,7 +69,7 @@ public class InvoiceService {
 
     @PersistenceContext(name = "unit")
     private EntityManager dao;   
-    @Autowired
+    @Inject
     private Validator validator;
 
     @Transactional(rollbackFor = Exception.class)

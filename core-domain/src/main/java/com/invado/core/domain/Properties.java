@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.finance.domain;
+package com.invado.core.domain;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -71,7 +71,9 @@ public class Properties implements Serializable {
 
     @Override
     public String toString() {
-        return "rs.sproduct.invoice.domain.Properties[ key=" + key + " ]";
+        return "com.invado.core.domain.Properties{" + "key=" + key + ", value=" + value + '}';
     }
+
+   
     
 }
