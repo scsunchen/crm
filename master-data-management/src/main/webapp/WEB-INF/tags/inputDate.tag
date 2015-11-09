@@ -3,8 +3,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ attribute name="name" required="true" rtexprvalue="true"
               description="Name of corresponding property in bean object" %>
-<%@ attribute name="placeholder" required="false" rtexprvalue="true"
-              description="Placeholder" %>
 <%@ attribute name="cssclass" required="false" rtexprvalue="true"
               description="Added css class..." %>
 <%@ attribute name="label" required="false" rtexprvalue="true"
@@ -23,54 +21,16 @@
             <label for="${name}">${label}</label>
         </c:otherwise>
     </c:choose>
-    <c:if test="">
-
-    </c:if>
-
-    <div class="form-group" id="datetimepickcontainer">
-        <div class='input-group date' id='datetimepicker'>
-            <form:input id="${name}" path="${name}"
-                        class="form-control ${cssclass} ${status.error ? 'error' : '' }"
-                        disabled="${disabled}"
-                        autofocus="${autofocus}" placeholder="${placeholder}"/>
-             <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                     </span>
-        </div>
+    <div class="form-group " >
+        <form:input id="${name}" path="${name}"
+                    class="form-control ${cssclass} ${status.error ? 'error' : '' }"
+                    disabled="${disabled}"
+                    autofocus="${autofocus}" />             
+        <span class="help-inline">${status.errorMessage}</span>
     </div>
-    <span class="help-inline">${status.errorMessage}</span>
 </spring:bind>
 <script type="text/javascript">
-    $('#datetimepickcontainer div').datepicker({
-        format: 'dd.mm.yyyy.',
-        todayBtn: true,
-        language: "sr-latin",
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true,
-        todayHighlight: true,
-        beforeShowDay: function (date) {
-            if (date.getMonth() == (new Date()).getMonth())
-                switch (date.getDate()) {
-                    case 4:
-                        return {
-                            tooltip: 'Example tooltip',
-                            classes: 'active'
-                        };
-                    case 8:
-                        return false;
-                    case 12:
-                        return "green";
-                }
-        },
-        beforeShowMonth: function (date) {
-            switch (date.getMonth()) {
-                case 8:
-                    return false;
-            }
-        },
-        toggleActive: true
-    });
+    $('#${name}').datepicker({});
 </script>
 
 

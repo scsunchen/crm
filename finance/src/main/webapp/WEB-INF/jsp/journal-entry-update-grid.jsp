@@ -52,3 +52,6 @@
         <button type="submit" class="btn btn-primary " <c:if test="${journalEntry.isPosted == true}">disabled</c:if>><spring:message code="JournalEntry.Button.Update" /></button>
     </div>
 </form:form>
+<script type="text/javascript">
+    $('#date').datepicker({});
+</script>

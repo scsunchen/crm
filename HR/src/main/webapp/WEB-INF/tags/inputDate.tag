@@ -3,8 +3,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ attribute name="name" required="true" rtexprvalue="true"
               description="Name of corresponding property in bean object" %>
-<%@ attribute name="placeholder" required="false" rtexprvalue="true"
-              description="Placeholder" %>
 <%@ attribute name="cssclass" required="false" rtexprvalue="true"
               description="Added css class..." %>
 <%@ attribute name="label" required="true" rtexprvalue="true"
@@ -15,59 +13,21 @@
               description="When present, it specifies that an <input> element is disabled." %>
 
 <spring:bind path="${name}">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group" id="datetimepickcontainer">
-                    <label for="${name}">${label}</label>
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="${name}">${label}</label>
 
-                    <div class='input-group date' id='datetimepicker'>
-                        <form:input id="${name}" path="${name}"
-                                    class="form-control ${cssclass} ${status.error ? 'error' : '' }"
-                                    disabled="${disabled}"
-                                    autofocus="${autofocus}" placeholder="${placeholder}"/>
-             <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                     </span>
-                    </div>
-                </div>
-            </div>
-            <script type="text/javascript">
-                $('#datetimepickcontainer div').datepicker({
-                    todayBtn: true,
-                    language: "sr-latin",
-                    forceParse: false,
-                    calendarWeeks: true,
-                    autoclose: true,
-                    todayHighlight: true,
-                    beforeShowDay: function (date) {
-                        if (date.getMonth() == (new Date()).getMonth())
-                            switch (date.getDate()) {
-                                case 4:
-                                    return {
-                                        tooltip: 'Example tooltip',
-                                        classes: 'active'
-                                    };
-                                case 8:
-                                    return false;
-                                case 12:
-                                    return "green";
-                            }
-                    },
-                    beforeShowMonth: function (date) {
-                        switch (date.getMonth()) {
-                            case 8:
-                                return false;
-                        }
-                    },
-                    toggleActive: true
-                });
-            </script>
-
+            <form:input id="${name}" path="${name}"
+                        class="form-control ${cssclass} ${status.error ? 'error' : '' }"
+                        disabled="${disabled}"
+                        autofocus="${autofocus}" />
+            <span class="help-inline">${status.errorMessage}</span>
         </div>
-        <span class="help-inline">${status.errorMessage}</span>
     </div>
 </spring:bind>
+<script type="text/javascript">
+    $('#${name}').datepicker({});
+</script>
 
 
 

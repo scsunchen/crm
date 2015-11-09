@@ -39,8 +39,8 @@
                     <div class="row ">                                
                         <spring:bind path="creditDebitRelationDate">
                             <div class="form-group col-lg-6 ">                                
-                                <label for="date" ><spring:message code="JournalEntryItem.Label.Date" /></label>            
-                                <form:input id="date" path="creditDebitRelationDate" 
+                                <label for="creditDebitRelationDate" ><spring:message code="JournalEntryItem.Label.Date" /></label>            
+                                <form:input id="creditDebitRelationDate" path="creditDebitRelationDate" 
                                             class="form-control" />
                                 <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
                                 </div>
@@ -170,6 +170,8 @@
     </table>
 </div>
 <script type="text/javascript">
+    $('#creditDebitRelationDate').datepicker({});
+    $('#valueDate').datepicker({});
     $('#orgUnit').typeahead({
         hint: false,
         highlight: true,

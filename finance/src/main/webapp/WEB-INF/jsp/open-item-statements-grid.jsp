@@ -135,6 +135,8 @@
     </form:form>
 </fieldset>
 <script type="text/javascript">
+    $('#valueDate').datepicker({});
+    $('#printDate').datepicker({});
     $('#client').typeahead({
         hint: false,
         highlight: true,

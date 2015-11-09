@@ -13,41 +13,35 @@
 
 
 <form:form modelAttribute="item" method="post">
+
+    <c:choose>
+        <c:when test="${action == 'update'}">
+            <input:inputField label="Šifra *" name="id" disabled="true"/>
+        </c:when>
+    </c:choose>
+    <input:inputField name="customCode" label="Korisnička šifra"/>
     <div class="form-group">
-
-        <c:choose>
-            <c:when test="${action == 'create'}">
-                <input:inputField label="Šifra *" name="id" disabled="true"/>
-            </c:when>
-        </c:choose>
-        <input:inputField name="customCode" label="Korisnička šifra"/>
-        <div class="form-group">
-            <label for="itemDesc">Tip terminala</label>
-            <form:input id="itemDesc" class="typeahead form-control" type="text"
-                        path="articleDescription" style="margin-bottom:  15px;"/>
-            <form:hidden id="itemDescHidden" path="articleCode"/>
-        </div>
-
-        <input:inputField name="serialNumber" label="Serijski Broj"/>
-        <spring:bind path="deviceStatusId">
-            <div class="form-group">
-                <label for="status">Status</label>
-                <form:select path="deviceStatusId" id="status" class="form-control" itemLabel="status">
-                    <form:option value="${deviceStatusId}">${deviceStatusName}</form:option>
-                    <form:options items="${deviceStatuses}" itemLabel="name" itemValue="id"/>
-                </form:select>
-            </div>
-        </spring:bind>
-            <%--
-                <fmt:formatDate value="${yourObject.date}" var="dateString" pattern="dd/MM/yyyy" />
-                <form:input path="date" value="${dateString} .. />
-            --%>
-        <input:inputDate name="requestTime" label="Datum Kreiranja" placeholder="dd.mm.yyyy."/>
-        <input:inputTime name="workingStartTime" label="Početak rada" placeholder="hh:mi"/>
-        <input:inputTime name="workingEndTime" label="Kraj rada" placeholder="hh:mi"/>
-        <input:inputField name="installedSoftwareVersion" label="Firmware verzija"/>
-        <form:hidden path="version"/>
+        <label for="itemDesc">Tip terminala</label>
+        <form:input id="itemDesc" class="typeahead form-control" type="text"
+                    path="articleDescription" style="margin-bottom:  15px;"/>
+        <form:hidden id="itemDescHidden" path="articleCode"/>
     </div>
+
+    <input:inputField name="serialNumber" label="Serijski Broj"/>
+    <spring:bind path="deviceStatusId">
+        <div class="form-group">
+            <label for="status">Status</label>
+            <form:select path="deviceStatusId" id="status" class="form-control" itemLabel="status">
+                <form:option value="${deviceStatusId}">${deviceStatusName}</form:option>
+                <form:options items="${deviceStatuses}" itemLabel="name" itemValue="id"/>
+            </form:select>
+        </div>
+    </spring:bind>
+    <input:inputDate name="creationDate" label="Datum Kreiranja" placeholder=""/>
+    <input:inputTime name="workingStartTime" label="Početak rada" placeholder="hh:mi"/>
+    <input:inputTime name="workingEndTime" label="Kraj rada" placeholder="hh:mi"/>
+    <input:inputField name="installedSoftwareVersion" label="Firmware verzija"/>
+    <form:hidden path="version"/>
     <div class="form-group">
         <a class="btn btn-primary" href="/crm/device/0">Povratak</a>
         <button type="submit" class="btn btn-primary">

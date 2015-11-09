@@ -73,8 +73,8 @@
                     <spring:message code="ServiceProviderServices.Label.DateTo" />
                 </label>
                 <form:input id="dateTo" path="dateTo" class="form-control"/>                    
-                <span class="help-inline">
-                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
+                    <span class="help-inline">
+                        <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
                     </span>
                 </div>
             </div>
@@ -97,7 +97,10 @@
         </button>
     </div>
 </form:form>
+    
 <script type="text/javascript">
+    $('#dateFrom').datepicker({});
+    $('#dateTo').datepicker({});
     $('#serviceProvider').typeahead({
         hint: false,
         highlight: true,

@@ -76,9 +76,9 @@
         </dependency>
         <!--JDBC driver - MENJACE SE U ORACLE!-->
         <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>6</version>
         </dependency>
         <!-- Validation *****************************************************-->
         <dependency>
@@ -104,13 +104,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>4.1.4.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
             <scope>test</scope>
         </dependency>
 
@@ -164,7 +162,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
                 <configuration>
-                    <warName>masterdata</warName>
+                    <warName>HR</warName>
                 </configuration>
             </plugin>
             <plugin>

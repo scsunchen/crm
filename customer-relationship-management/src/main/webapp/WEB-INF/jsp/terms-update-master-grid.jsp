@@ -85,6 +85,8 @@
     </div>
 </form:form>
 <script type="text/javascript">
+    $('#dateFrom').datepicker({});
+    $('#endDate').datepicker({});
     $('#businessPartner').typeahead({
         hint: false,
         highlight: true,

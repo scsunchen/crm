@@ -252,6 +252,10 @@
     </div>
 </form:form>
 <script type="text/javascript">
+    $('#invoiceDate').datepicker({});
+    $('#creditRelationDate').datepicker({});
+    $('#valueDate').datepicker({});
+    $('#contractDate').datepicker({});
     $('#businessPartner').typeahead({
         hint: false,
         highlight: true,

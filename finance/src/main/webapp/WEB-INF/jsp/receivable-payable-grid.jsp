@@ -88,6 +88,10 @@
     </div>
 </form:form>
 <script type="text/javascript">
+    $('#dateFrom').datepicker({});
+    $('#dateTo').datepicker({});
+    $('#valueDateFrom').datepicker({});
+    $('#valueDateTo').datepicker({});
     $('#client').typeahead({
         hint: false,
         highlight: true,
