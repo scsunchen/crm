@@ -7,12 +7,15 @@ package com.invado.finance;
 
 import com.invado.core.spi.Module;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.tiles.Attribute;
 import org.apache.tiles.AttributeContext;
 import org.apache.tiles.preparer.ViewPreparer;
 import org.apache.tiles.request.Request;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -23,6 +26,70 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class MenuFormPreparer implements ViewPreparer {
 
     private final Set<Module> modules;
+    private static final String[] DATEPICKER_LANGUAGES = new String[]{
+        "ar",
+        "az",
+        "bg",
+        "bs",
+        "ca",
+        "cs",
+        "cy",
+        "da",
+        "de",
+        "el",
+        "en-GB",
+        "es",
+        "et",
+        "eu",
+        "fa",
+        "fi",
+        "fo",
+        "fr-CH",
+        "fr",
+        "gl",
+        "he",
+        "hr",
+        "hu",
+        "hy",
+        "id",
+        "is",
+        "it-CH",
+        "it",
+        "ja",
+        "ka",
+        "kh",
+        "kk",
+        "kr",
+        "lt",
+        "lv",
+        "me",
+        "mk",
+        "ms",
+        "nb",
+        "nl-BE",
+        "nl",
+        "no",
+        "pl",
+        "pt-BR",
+        "pt",
+        "ro",
+        "rs-latin",
+        "rs",
+        "ru",
+        "sk",
+        "sl",
+        "sq",
+        "sr-latin",
+        "sr",
+        "sv",
+        "sw",
+        "th",
+        "tr",
+        "uk",
+        "vi",
+        "zh-CN",
+        "zh-TW"
+    };
 
     public MenuFormPreparer() {
         modules = new HashSet<>();
@@ -56,11 +123,14 @@ public class MenuFormPreparer implements ViewPreparer {
     }
 
     @Override
-    public void execute(Request  request, AttributeContext ac) {
-        HttpServletRequest request1 = ((ServletRequestAttributes) 
-                RequestContextHolder.getRequestAttributes())
+    public void execute(Request request, AttributeContext ac) {
+        HttpServletRequest request1 = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getRequest();
         ac.putAttribute("modules", new Attribute(modules));
+        ac.putAttribute(
+                "datepickerLanguage",
+                new Attribute(resolveBootstrapDatepickerLanguage())
+        );
         for (Module module : modules) {
             if (request1.getRequestURI().contains(module.getPath())) {
                 ac.putAttribute("selectedModule", new Attribute(module));
@@ -68,4 +138,11 @@ public class MenuFormPreparer implements ViewPreparer {
         }
     }
 
+    private String resolveBootstrapDatepickerLanguage() {
+        Locale defaultLocale = LocaleContextHolder.getLocale();
+        return Stream.of(DATEPICKER_LANGUAGES)
+                .filter(p -> p.equalsIgnoreCase(defaultLocale.getLanguage()))
+                .findFirst()
+                .orElse("");
+    }
 }

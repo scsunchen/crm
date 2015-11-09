@@ -70,3 +70,7 @@ i navesti Spring Security filtere:
 </filter-mapping>
 ```
 u security.xml se navodi koje uloge(engl. role) korisnik mora da ima da bi pristupio resursima na serveru, koja jsp stranica pirkazuje formu za proveru identiteta(form-login tag) i koji servis obavlja proveru za prosledjene podatke iz forme(klasa koja implementira UserDetailsService interfejs i koja je registrovana u Spring kontejneru za ubacivanje zavisnosti sa nazivom _userService_ ). Primer za security.xml moze se videti u finance modulu.
+### Bootstrap datepicker
+U svim modulima u sablonu menu-form.jsp bi trebalo postaviti atribut koji odredjuje lokalizaciju za datepicker.
+To se realizuje pozivom: $.fn.datepicker.defaults.language = '${datepickerLanguage}' pri cemu se u datoteci MenuFormPreparer.java popunjava promenljiva ${datepickerLanguage}. 
+Za svako polje koje prikazuje datum trebalo bi napisati kod $('#idPolja').datepicker({});.

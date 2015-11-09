@@ -19,7 +19,7 @@
         <div class="col-lg-4">
             <spring:bind path="middle">
                 <div>
-                    <input:inputDate name="applicationDate" label="Datum Kursne Liste *" placeholder="dd.mm.yyyy"/>
+                    <input:inputDate name="applicationDate" label="Datum Kursne Liste *" />
                     <span class="help-inline"><c:if test="${status.error}"><c:out
                             value="${status.errorMessage}"/></c:if></span>
                 </div>

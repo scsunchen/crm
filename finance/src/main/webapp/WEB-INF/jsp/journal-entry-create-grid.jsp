@@ -65,6 +65,7 @@
     </div>
 </form:form>
 <script type="text/javascript">
+    $('#date').datepicker({});
     $('#client').typeahead({
         hint: false,
         highlight: true,

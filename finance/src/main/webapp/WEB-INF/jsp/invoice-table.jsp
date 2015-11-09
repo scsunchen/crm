@@ -150,6 +150,8 @@
     </ul>
 </nav>
 <script type="text/javascript">
+    $('#dateFrom').datepicker({});
+    $('#dateTo').datepicker({});
     $('#partner').typeahead({
         hint: false,
         highlight: true,

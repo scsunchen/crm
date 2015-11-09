@@ -13,7 +13,7 @@
         <module>core-domain</module>
         <module>core-module-spi</module>
         <module>finance</module>
-        <!--<module>master-data-management</module>-->
+        <module>master-data-management</module>
         <module>customer-relationship-management</module>
         <module>admin</module>
         <module>HR</module>

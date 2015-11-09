@@ -16,7 +16,7 @@ public class DeviceDTO {
     private String serialNumber;
     private Integer deviceStatusId;
     private String deviceStatusName;
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(style = "M-")
     private LocalDate creationDate;
     private String workingStartTime;
     private String workingEndTime;

@@ -24,7 +24,7 @@
         <input:inputField label="Ime *" name="name"/>
         <input:inputField label="Srednje ime" name="middleName"/>
         <input:inputField label="Prezime *" name="lastName"/>
-        <input:inputDate  label="Datum rođenja" name="dateOfBirth" placeholder="dd.mm.yyyy."/>
+        <input:inputDate  label="Datum rođenja" name="dateOfBirth" />
         <input:inputField label="Telefon" name="phone"/>
         <input:inputField label="Email" name="email"/>
         <input:inputField label="Fotografija" name="picture"/>
@@ -37,8 +37,8 @@
                 </form:select>
             </div>
         </spring:bind>
-        <input:inputDate label="Datum zapošljenja" name="hireDate" placeholder="dd.mm.yyyy."/>
-        <input:inputDate label="Datum odlaska" name="endDate" placeholder="dd.mm.yyyy."/>
+        <input:inputDate label="Datum zapošljenja" name="hireDate" />
+        <input:inputDate label="Datum odlaska" name="endDate" />
         <spring:bind path="job.id">
             <div class="form-group">
                 <label for="job">Radno mesto</label>

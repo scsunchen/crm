@@ -13,34 +13,17 @@
               description="When present, it specifies that an <input> element is disabled." %>
 
 <spring:bind path="${name}">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group" id="timepickcontainer">
-                    <label for="${name}">${label}</label>
-
-                    <div class='input-group date' id='timepicker'>
-                        <form:input id="${name}" path="${name}"
-                                    class="form-control ${status.error ? 'error' : '' }"
-                                    disabled="${disabled}"
-                                    autofocus="${autofocus}" placeholder="${placeholder}"/>
-             <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                     </span>
-                    </div>
-                </div>
-            </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('#timepickcontainer div').datetimepicker({
-                        format: 'LT'
-                    });
-                });
-            </script>
-
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <label for="${name}">${label}</label>
+            <form:input id="${name}" path="${name}"
+                        class="form-control ${status.error ? 'error' : '' }"
+                        disabled="${disabled}"
+                        autofocus="${autofocus}" placeholder="${placeholder}"/>
         </div>
-        <span class="help-inline">${status.errorMessage}</span>
     </div>
+
+<span class="help-inline">${status.errorMessage}</span>
 </spring:bind>
 
 
