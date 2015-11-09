@@ -58,6 +58,13 @@
                 <div class="checkbox">
                     <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>
                 </div>
+                <div class="form-group">
+                    <label for="type">Tip</label>
+                    <form:select path="type" id="type" class="form-control" itemLabel="type">
+                        <form:option value="${type}">${typeDescription}</form:option>
+                        <form:options items="${types}" itemLabel="description"/>
+                    </form:select>
+                </div>
             </div>
             <form:hidden path="version"/>
         </div>

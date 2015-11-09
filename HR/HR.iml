@@ -48,7 +48,6 @@
     <orderEntry type="library" name="Maven: org.apache.tiles:tiles-core:3.0.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tiles:tiles-api:3.0.5" level="project" />
     <orderEntry type="library" name="Maven: commons-digester:commons-digester:2.1" level="project" />
-    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.2" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.8" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tiles:tiles-request-servlet-wildcard:1.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tiles:tiles-request-servlet:1.0.6" level="project" />
@@ -65,7 +64,6 @@
     <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.21" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tiles:tiles-velocity:3.0.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity-tools:2.0" level="project" />
-    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: oro:oro:2.0.8" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.7" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
@@ -103,6 +101,8 @@
     <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="module" module-name="core-domain" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="module" module-name="core-service-provider-interface" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:4.1.4.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />

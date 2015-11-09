@@ -364,7 +364,7 @@ public class BusinessPartner implements Serializable {
             businessPartnerDTO.setParentBusinesspartnerName(this.getParentBusinessPartner().getName());
         }
 
-        businessPartnerDTO.setType(this.getType().Description());
+        businessPartnerDTO.setType(this.getType());
         businessPartnerDTO.setLatitude(this.getLatitude());
         businessPartnerDTO.setLongitude(this.getLongitude());
 
@@ -391,6 +391,20 @@ public class BusinessPartner implements Serializable {
                     return Utils.getMessage("BusinessPartner.General");
             }
             return "";
+        }
+
+
+        public static Type getEnum(String s) {
+            if (MERCHANT.name().equals(s)) {
+                return MERCHANT;
+            } else if (POINT_OF_SALE.name().equals(s)) {
+                return POINT_OF_SALE;
+            } else if (SERVICE_PROVIDER.name().equals(s)) {
+                return SERVICE_PROVIDER;
+            } else if (GENERAL.name().equals(s)) {
+                return GENERAL;
+            }
+            throw new IllegalArgumentException("No Enum specified for this string");
         }
     }
     //************************************************************************//

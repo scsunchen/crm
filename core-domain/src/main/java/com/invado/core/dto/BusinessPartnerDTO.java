@@ -1,5 +1,7 @@
 package com.invado.core.dto;
 
+import com.invado.core.domain.BusinessPartner;
+
 /**
  * Created by Nikola on 12/08/2015.
  */
@@ -28,10 +30,12 @@ public class BusinessPartnerDTO {
     private String contactPersonePhone;
     private String contactPersoneFunction;
     private Integer parentBusinessPartnerId;
-    private String type;
+    private BusinessPartner.Type type;
+    private String typeValue;
     private Integer longitude;
     private Integer latitude;
     private String parentBusinesspartnerName;
+    private String namePattern;
 
 
     public Integer getId() {
@@ -210,12 +214,21 @@ public class BusinessPartnerDTO {
         this.contactPersoneFunction = contactPersoneFunction;
     }
 
-    public String getType() {
+
+    public BusinessPartner.Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(BusinessPartner.Type type) {
         this.type = type;
+    }
+
+    public String getTypeValue() {
+        return typeValue;
+    }
+
+    public void setTypeValue(String typeValue) {
+        this.typeValue = typeValue;
     }
 
     public Integer getLongitude() {
@@ -248,5 +261,13 @@ public class BusinessPartnerDTO {
 
     public void setParentBusinesspartnerName(String parentBusinesspartnerName) {
         this.parentBusinesspartnerName = parentBusinesspartnerName;
+    }
+
+    public String getNamePattern() {
+        return namePattern;
+    }
+
+    public void setNamePattern(String namePattern) {
+        this.namePattern = namePattern;
     }
 }

@@ -546,6 +546,7 @@ public class TransactionService {
 //    public Map<Integer, InvoiceDTO> genInvoices(TransactionDTO paramTransactionDTO) throws ReferentialIntegrityException,
 //            ConstraintViolationException, EntityExistsException, EntityNotFoundException {
 //
+// razmisli o tome da kod iz servisa za invoice iskopiras ovde kako bi servisi bili nezavisni...
 //
 //        Integer maxDocument = new Integer(1);
 //        LocalDate invoicingDate = LocalDate.now();

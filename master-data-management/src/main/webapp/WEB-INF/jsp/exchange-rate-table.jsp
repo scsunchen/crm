@@ -16,8 +16,6 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <br/>
-            <!-- Pretraživanje poslovnih partnera -->
-
             <div class="col-lg-4">
                 <input:inputDate name="applicationDate" placeholder="Datum kursne liste (dd.mm.yyyy.)"/>
             </div>

@@ -39,12 +39,26 @@
     <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/InvoicingTransactionSetDTO.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/device-grid.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/device-table.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/devicestatus-grid.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/devicestatus-table.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/in-develop-tabe.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/in-table.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/invoices-review.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-grid.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-details-table.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-master-grid.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-master-toolbar.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/test.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transaction-table.jsp" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transacton-filter.jsp" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/finance" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/MenuFormPreparer.java" charset="windows-1250" />
     <file url="file://$PROJECT_DIR$/master-data-management" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/master-data-management/pom.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MasterdataValidator.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" charset="windows-1250" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/Test.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/Utils.java" charset="windows-1252" />
@@ -62,7 +76,6 @@
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BusinessPartnerContactDetailsService.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ClientService.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/CurrencyService.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ExchangeRateService.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ExchangeRateService.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/OrgUnitService.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/TownshipService.java" charset="windows-1252" />
@@ -101,7 +114,7 @@
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputTextArea.tag" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tags/inputTime.tag" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/web.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/master-data-management/src/test" charset="windows-1252" />
   </component>
 </project>

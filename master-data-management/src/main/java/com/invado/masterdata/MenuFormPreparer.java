@@ -38,7 +38,7 @@ public class MenuFormPreparer implements ViewPreparer {
         masterdata.setName("Maticni Podaci");
         masterdata.put("Opsti sifarnici", "Kompanija Korisnik", "/masterdata/client/0");
         masterdata.put("Opsti sifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
-        masterdata.put("Opsti sifarnici", "Poslovni partner", "/masterdata/partner/0");
+        masterdata.put("Opsti sifarnici", "Poslovni partner", "/masterdata/partner/0?type=MERCHANT");
         masterdata.put("Opsti sifarnici", "Opstina", "/masterdata/township/0");
         masterdata.put("Opsti sifarnici", "Banka", "/masterdata/bank/0");
         masterdata.put("Opsti sifarnici", "Valuta", "/masterdata/currency/0");

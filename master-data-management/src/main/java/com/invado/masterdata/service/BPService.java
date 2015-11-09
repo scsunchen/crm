@@ -259,6 +259,7 @@ public class BPService {
         String companyIdNumber = null;
         String name = null;
         String TIN = null;
+        String type = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("id") && s.getValue() instanceof Integer) {
                 id = (Integer) s.getValue();
@@ -272,7 +273,12 @@ public class BPService {
             if (s.getKey().equals("TIN") && s.getValue() instanceof String) {
                 TIN = (String) s.getValue();
             }
+            if (s.getKey().equals("type") && s.getValue() instanceof String) {
+                type = (String) s.getValue();
+            }
+
         }
+
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 2).getPageSize();
 
@@ -280,7 +286,8 @@ public class BPService {
                     id,
                     companyIdNumber,
                     name,
-                    TIN);
+                    TIN,
+                    type);
             System.out.println("broj entiteta je "+countEntities);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
@@ -296,12 +303,12 @@ public class BPService {
                 //if page number is -1 read last page
                 //first BusinessPartner = last page number * BusinessPartners per page
                 int start = numberOfPages.intValue() * pageSize;
-                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, start, pageSize));
+                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, start, pageSize));
                 result.setData(businessPartnerDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, p.getPage() * pageSize, pageSize));
+                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, p.getPage() * pageSize, pageSize));
                 result.setData(businessPartnerDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
@@ -330,7 +337,8 @@ public class BPService {
             Integer id,
             String companyIdNumber,
             String name,
-            String TIN) {
+            String TIN,
+            String type) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<BusinessPartner> root = c.from(BusinessPartner.class);
@@ -346,13 +354,17 @@ public class BPService {
         }
         if (name != null && name.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(BusinessPartner_.name)),
-                    cb.parameter(String.class, "desc")));
+                    cb.parameter(String.class, "name")));
         }
         if (TIN != null && TIN.isEmpty() == false) {
             criteria.add(cb.like(
                             root.get(BusinessPartner_.TIN),
                             cb.parameter(String.class, "TIN"))
             );
+        }
+        if (type != null) {
+            criteria.add(cb.equal(root.get(BusinessPartner_.type),
+                    cb.parameter(BusinessPartner.Type.class, "type")));
         }
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
@@ -364,12 +376,14 @@ public class BPService {
             q.setParameter("companyIdNumber", companyIdNumber.toUpperCase() + "%");
         }
         if (name != null && name.isEmpty() == false) {
-            q.setParameter("name", name.toUpperCase() + "%");
+            q.setParameter("name", "%"+name.toUpperCase() + "%");
         }
         if (TIN != null && TIN.isEmpty() == false) {
             q.setParameter("TIN", TIN);
         }
-
+        if (type != null) {
+            q.setParameter("type", BusinessPartner.Type.getEnum(type));
+        }
         return q.getSingleResult();
     }
 
@@ -378,6 +392,7 @@ public class BPService {
                                          String companyIdNumber,
                                          String name,
                                          String TIN,
+                                         String type,
                                          int first,
                                          int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -401,7 +416,10 @@ public class BPService {
             criteria.add(cb.like(root.get(BusinessPartner_.TIN),
                     cb.parameter(String.class, "TIN")));
         }
-
+        if (type != null) {
+            criteria.add(cb.equal(root.get(BusinessPartner_.type),
+                    cb.parameter(BusinessPartner.Type.class, "type")));
+        }
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(BusinessPartner_.companyIdNumber)));
         query.orderBy(cb.asc(root.get(BusinessPartner_.name)));
@@ -418,6 +436,9 @@ public class BPService {
         if (TIN != null && TIN.isEmpty() == false) {
             typedQuery.setParameter("TIN", TIN);
         }
+        if (type != null) {
+            typedQuery.setParameter("type", BusinessPartner.Type.getEnum(type));
+        }
         System.out.println("first " + first + " a ps je " + pageSize);
         typedQuery.setFirstResult(first);
         typedQuery.setMaxResults(pageSize);
@@ -429,9 +450,10 @@ public class BPService {
     public List<BusinessPartner> readAll(Integer id,
                                          String companyIdNumber,
                                          String name,
-                                         String TIN) {
+                                         String TIN,
+                                         String type) {
         try {
-            return this.search(dao, id, companyIdNumber, name, TIN, 0, 0);
+            return this.search(dao, id, companyIdNumber, name, TIN, type, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

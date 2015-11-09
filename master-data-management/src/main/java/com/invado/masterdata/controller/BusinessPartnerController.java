@@ -1,16 +1,20 @@
 package com.invado.masterdata.controller;
 
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.domain.Client;
 import com.invado.core.dto.BusinessPartnerDTO;
 import com.invado.masterdata.service.BPService;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +28,22 @@ public class BusinessPartnerController {
     private BPService service;
 
     @RequestMapping("/partner/{page}")
-    public String showItems(@PathVariable Integer page,
-                            Map<String, Object> model)
+    public String showItems(HttpServletRequest httpServletRequest, @PathVariable Integer page,
+                            @ModelAttribute BusinessPartnerDTO businessPartnerDTO, Map<String, Object> model)
             throws Exception {
+
+
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
+
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("id", httpServletRequest.getParameter("id")));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("name", httpServletRequest.getParameter("name")));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("type",  httpServletRequest.getParameter("type")));
+        businessPartnerDTO.setTypeValue(httpServletRequest.getParameter("type"));
         ReadRangeDTO<BusinessPartnerDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
+        model.put("bussinesPartnerDTO", businessPartnerDTO);
         model.put("numberOfPages", items.getNumberOfPages());
 
         //return "item-table";
@@ -42,6 +54,8 @@ public class BusinessPartnerController {
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
         model.put("item", new BusinessPartnerDTO());
         List<BusinessPartner> parents = service.readParentPartners();
+        List<BusinessPartner.Type> types = Arrays.asList(BusinessPartner.Type.values());
+        model.put("types", types);
         model.put("parents", parents);
         model.put("action", "create");
         return "partner-grid";
@@ -96,8 +110,10 @@ public class BusinessPartnerController {
     }
 
     @RequestMapping(value = "/partner/read-partner/{name}")
-    public @ResponseBody
+    public
+    @ResponseBody
     List<BusinessPartner> findItemByDescription(@PathVariable String name) {
         return service.readPartnerByName(name);
     }
+
 }
