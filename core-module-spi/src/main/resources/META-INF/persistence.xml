@@ -41,5 +41,8 @@
     <class>com.invado.customer.relationship.domain.DeviceStatus</class>
     <class>com.invado.customer.relationship.domain.TransactionType</class>
     <class>com.invado.customer.relationship.domain.ServiceProviderServices</class>
+    <class>com.invado.customer.relationship.domain.ConnectionType</class>
+    <class>com.invado.core.domain.POSType</class>
+    <class>com.invado.customer.relationship.domain.PrepaidRefillType</class>
   </persistence-unit>
 </persistence>

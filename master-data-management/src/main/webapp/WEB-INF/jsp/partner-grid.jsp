@@ -11,22 +11,36 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-<form:form modelAttribute="item" method="post">
+<form:form modelAttribute="item" method="post" >
+    <input:alert message="${message}" alertType="${alertType}"/>
     <fieldset class="col-lg-12">
         <div class="form-group">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <c:choose>
-                        <c:when test="${action == 'create'}">
-                            <input:inputField label="Šifra *" name="id" disabled="true"/>
-                        </c:when>
-                    </c:choose>
-                </div>
-                <input:inputField label="Naziv *" name="name"/>
-                <input:inputField label="Dodatni Naziv" name="name1"/>
+            <div class="col-lg-4">
+                <div><h1><c:out value="${item.typeDescription}"/></h1></div>
+                <input:inputField label="Šifra *" name="id" disabled="true"/>
+                <spring:bind path="name">
+                    <div>
+                        <input:inputField label="Naziv *" name="name"/>
+                    <span class="help-inline"><c:if test="${status.error}"><c:out
+                            value="${status.errorMessage}"/></c:if></span>
+                    </div>
+                </spring:bind>
+                <spring:bind path="companyIdNumber">
+                    <div>
+                        <input:inputField label="Matični broj *" name="companyIdNumber"/>
+                    <span class="help-inline"><c:if test="${status.error}"><c:out
+                            value="${status.errorMessage}"/></c:if></span>
+                    </div>
+                </spring:bind>
+                <spring:bind path="TIN">
+                    <div>
+                        <input:inputField label="PIB *" name="TIN"/>
+                    <span class="help-inline"><c:if test="${status.error}"><c:out
+                            value="${status.errorMessage}"/></c:if></span>
+                    </div>
+                </spring:bind>
             </div>
-            <div class="col-lg-3">
-                <input:inputField label="Matični broj" name="companyIdNumber"/>
+            <div class="col-lg-4">
                 <input:inputField name="country" label="Država"/>
                 <input:inputField name="place" label="Mesto"/>
                 <input:inputField name="street" label="Ulica i broj"/>
@@ -35,8 +49,7 @@
                 <input:inputField label="Fax" name="fax"/>
                 <input:inputField label="email" name="EMail"/>
             </div>
-            <div class="col-lg-3">
-                <input:inputField label="PIB" name="TIN"/>
+            <div class="col-lg-4">
                 <input:inputField label="Šifra delatnosti" name="activityCode"/>
                 <input:inputField label="Tekući račun" name="currentAccount"/>
                 <spring:bind path="currencyDesignation">
@@ -58,19 +71,13 @@
                 <div class="checkbox">
                     <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>
                 </div>
-                <div class="form-group">
-                    <label for="type">Tip</label>
-                    <form:select path="type" id="type" class="form-control" itemLabel="type">
-                        <form:option value="${type}">${typeDescription}</form:option>
-                        <form:options items="${types}" itemLabel="description"/>
-                    </form:select>
-                </div>
+                <input:inputField label="TelekomID" name="telekomId"/>
             </div>
             <form:hidden path="version"/>
         </div>
     </fieldset>
     <div class="form-group">
-        <a class="btn btn-primary" href="/masterdata/partner/0">Povratak</a>
+        <a class="btn btn-primary" href="/masterdata/partner/0?type=${pageContext.request.getParameter("type")}">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -81,6 +88,18 @@
                 </c:otherwise>
             </c:choose>
         </button>
+        <div class="btn-group pull-right">
+            <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Telekom WS <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="/masterdata/partner/registerMerchant">Registracija partnera</a></li>
+                <li><a href="/masterdata/partner/updateMerchant">Izmena partnera</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/masterdata/partner/deactivateMerchant">Deaktivacija partnera</a></li>
+            </ul>
+        </div>
     </div>
 </form:form>
 <script type="text/javascript">

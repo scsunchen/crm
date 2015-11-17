@@ -2,13 +2,14 @@ package com.invado.masterdata.service;
 
 import com.invado.core.domain.*;
 import com.invado.core.dto.BusinessPartnerContactDetailsDTO;
+import com.invado.core.exception.ConstraintViolationException;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
 import com.invado.masterdata.service.exception.EntityExistsException;
 import com.invado.masterdata.service.exception.EntityNotFoundException;
-import com.invado.masterdata.service.exception.IllegalArgumentException;
+import com.invado.core.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

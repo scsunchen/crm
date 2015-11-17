@@ -21,12 +21,16 @@ public class Address implements Serializable {
     @Size(max=60, message="{BusinessPartner.Place.Size}")
     @Column(name = "place")
     private String place;
+    @Size(max=10, message="{BusinessPartner.Post.Size}")
+    @Column(name = "post_code")
+    private String postCode;
     @Column(name = "street")
     @Size(max=60, message="{BusinessPartner.Street.Size}")
     private String street;
-    @Column(name = "post_code")
-    @Size(max=10, message="{BusinessPartner.Post.Size}")
-    private String postCode;
+    @Column(name = "house_number")
+    private String houseNumber;
+
+
     
     //************************************************************************//    
     // CONSTRUCTORS //
@@ -76,8 +80,16 @@ public class Address implements Serializable {
     public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
-    
-    //************************************************************************//    
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    //************************************************************************//
     // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//
     

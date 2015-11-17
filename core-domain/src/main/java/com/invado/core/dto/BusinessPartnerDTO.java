@@ -32,10 +32,12 @@ public class BusinessPartnerDTO {
     private Integer parentBusinessPartnerId;
     private BusinessPartner.Type type;
     private String typeValue;
+    private String typeDescription;
     private Integer longitude;
     private Integer latitude;
     private String parentBusinesspartnerName;
     private String namePattern;
+    private Integer telekomId;
 
 
     public Integer getId() {
@@ -227,6 +229,14 @@ public class BusinessPartnerDTO {
         return typeValue;
     }
 
+    public String getTypeDescription() {
+        return typeDescription;
+    }
+
+    public void setTypeDescription(String typeDescription) {
+        this.typeDescription = typeDescription;
+    }
+
     public void setTypeValue(String typeValue) {
         this.typeValue = typeValue;
     }
@@ -269,5 +279,50 @@ public class BusinessPartnerDTO {
 
     public void setNamePattern(String namePattern) {
         this.namePattern = namePattern;
+    }
+
+    public Integer getTelekomId() {
+        return telekomId;
+    }
+
+    public void setTelekomId(Integer telekomId) {
+        this.telekomId = telekomId;
+    }
+
+    @Override
+    public String toString() {
+        return "BusinessPartnerDTO{" +
+                "id=" + id +
+                ", activityCode='" + activityCode + '\'' +
+                ", interestFreeDays=" + interestFreeDays +
+                ", phone='" + phone + '\'' +
+                ", fax='" + fax + '\'' +
+                ", TIN='" + TIN + '\'' +
+                ", EMail='" + EMail + '\'' +
+                ", version=" + version +
+                ", companyIdNumber='" + companyIdNumber + '\'' +
+                ", currencyDesignation='" + currencyDesignation + '\'' +
+                ", country='" + country + '\'' +
+                ", place='" + place + '\'' +
+                ", street='" + street + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", currentAccount='" + currentAccount + '\'' +
+                ", name='" + name + '\'' +
+                ", rebate=" + rebate +
+                ", VAT=" + VAT +
+                ", name1='" + name1 + '\'' +
+                ", contactPersoneName='" + contactPersoneName + '\'' +
+                ", contactPersonePhone='" + contactPersonePhone + '\'' +
+                ", contactPersoneFunction='" + contactPersoneFunction + '\'' +
+                ", parentBusinessPartnerId=" + parentBusinessPartnerId +
+                ", type=" + type +
+                ", typeValue='" + typeValue + '\'' +
+                ", typeDescription='" + typeDescription + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", parentBusinesspartnerName='" + parentBusinesspartnerName + '\'' +
+                ", namePattern='" + namePattern + '\'' +
+                ", telekomId=" + telekomId +
+                '}';
     }
 }

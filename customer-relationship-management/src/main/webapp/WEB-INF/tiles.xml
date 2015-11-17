@@ -57,7 +57,7 @@
     </definition>
     <definition name="terms-table" extends="main-menu-form">
         <put-attribute name="title" value="Uslovi poslovanja"/>
-        <put-attribute name="panel-title" value="Uslovi poslovanja"/>
+        <put-attribute name="panel-title" value="Uslovi poslovanja"
         <put-attribute name="body" value="/WEB-INF/jsp/terms-table.jsp"/>
     </definition>
     <definition name="terms-create-grid" extends="main-menu-form">

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.masterdata.service.exception;
+package com.invado.core.exception;
 
 import java.util.Collection;
 

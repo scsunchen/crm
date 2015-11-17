@@ -8,43 +8,63 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-<form:form role="search" modelAttribute="bussinesPartnerDTO" method="GET"
+<div>
+    <form:form modelAttribute="masterPartnerDTO" method="GET"
+               action="${pageContext.request.contextPath}/partner/details/0">
+        <div class="form-group">
+            <form:input type="hidden" id="selectedType" path="type" value="POINT_OF_SALE"></form:input>
+            <form:input type="hidden" id="selectedPartnerId" path="masterPartnerId"></form:input>
+            <form:input type="hidden" id="selectedPartnerName" path="masterPartnerName"></form:input>
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="form-group container-fluid">
+                <br/>
+                <button type="submit" name="pointOfSale" class="btn btn-primary">POS</button>
+                <button type="submit" name="contacts" class="btn btn-primary">Kontakti</button>
+                <button type="submit" name="documents" class="btn btn-primary">Dokumenta</button>
+            </div>
+        </nav>
+    </form:form>
+</div>
+<form:form role="search" modelAttribute="businessPartnerDTO" method="GET"
            action="${pageContext.request.contextPath}/partner/0">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <br/>
             <!-- Pretraživanje poslovnih partnera -->
             <form:input id="type-hidden" type="hidden" path="typeValue"/>
-            <div class="form-group col-lg-4"  >
+            <div class="form-group col-lg-4">
                 <form:input id="businessPartner" class="typeahead form-control"
-                            placeholder="Naziv poslovnog partnera..." type="text" path="name" />
+                            placeholder="Naziv poslovnog partnera..." type="text" path="name"/>
                 <form:input id="businessPartner-hidden" type="hidden"
                             path="id"/>
             </div>
             <div class="col-lg-4">
-                <button type="submit" class="btn btn-default">Pretraga</button>
+                <button type="submit" class="btn btn-primary"><span class=" glyphicon glyphicon-search"></span></button>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
 </form:form>
+
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table id="example" class="table table-striped">
         <thead>
         <tr>
-            <th><a class="btn btn-primary" href="/masterdata/partner/${page}/create"><span
+            <th><a class="btn btn-primary"
+                   href="/masterdata/partner/${page}/create?type=${pageContext.request.getParameter("type")}"><span
                     class="glyphicon glyphicon-plus"></span>
                 Kreiraj</a></th>
-            <th>Matični broj</th>
-            <th>Naziv</th>
-            <th>Dodatni naziv</th>
-            <th>Adresa</th>
-            <th>Telefon</th>
-            <th>email</th>
-            <th>Račun</th>
-            <th>Kontakt osoba</th>
+            <th><spring:message code="BusinessPartner.Table.CompaniIDNumber"/></th>
+            <th><spring:message code="BusinessPartner.Table.Name"/></th>
+            <th><spring:message code="BusinessPartner.Table.Name1"/></th>
+            <th><spring:message code="BusinessPartner.Table.Address"/></th>
+            <th><spring:message code="BusinessPartner.Table.Phone"/></th>
+            <th><spring:message code="BusinessPartner.Table.eMail"/></th>
+            <th><spring:message code="BusinessPartner.Table.BankAccount"/></th>
+            <th><spring:message code="BusinessPartner.Table.ContactPerson"/></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -71,15 +91,16 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="${page}/update/${item.id}" class="btn btn-primary"><span
+                        <a href="${page}/update/${item.id}?type=${pageContext.request.getParameter("type")}"
+                           class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                                 class="glyphicon glyphicon-trash"></span> brisanje
                         </button>
                     </div>
                 </td>
-                <td><c:out value="${item.companyIdNumber}"/></td>
-                <td><c:out value="${item.name}"/></td>
+                <td id="companyIdNumber"><c:out value="${item.companyIdNumber}"/></td>
+                <td id="name"><c:out value="${item.name}"/></td>
                 <td><c:out value="${item.name1}"/></td>
                 <td class="form-inline">
                     <c:out value="${item.country}"/>
@@ -91,6 +112,7 @@
                 <td><c:out value="${item.EMail}"/></td>
                 <td><c:out value="${item.currentAccount}"/></td>
                 <td><c:out value="${item.contactPersoneName}"/></td>
+                <td id="id" hidden><c:out value="${item.id}"/></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>
@@ -129,9 +151,41 @@
         })
     });
     $('#businessPartner').bind('typeahead:selected', function (obj, datum, name) {
-        console.log("obj "+obj);
-        console.log("datum "+datum);
-        console.log("name "+name);
+        console.log("obj " + obj);
+        console.log("datum " + datum);
+        console.log("name " + name);
         $('#businessPartner-hidden').val(datum['id']);
     });
+</script>
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+                    paging: false,
+                    searching: false,
+                    ordering: false,
+                    info: false
+                }
+        );
+
+        $('#example tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+
+
+                $("#selectedPartnerId").val($(this).find("#id").html());
+                $("#selectedPartnerName").val($(this).find("#name").html());
+                console.log("ovo je id " + $("#selectedPartnerId").val() + " a treba " + $(this).find("#id").html());
+                console.log("ovo je name " + $("#selectedPartnerName").val() + " a treba " + $(this).find("#name").html());
+            }
+        });
+
+        $('#button').click(function () {
+            table.row('.selected').remove().draw(false);
+        });
+    })
+    ;
 </script>

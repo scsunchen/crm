@@ -2,16 +2,19 @@ package com.invado.masterdata.service;
 
 import com.invado.core.domain.*;
 import com.invado.core.dto.BusinessPartnerDTO;
+import com.invado.core.exception.ConstraintViolationException;
+import com.invado.finance.service.dto.BusinessPartnerSpecificationItemDTO;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.exception.*;
-import com.invado.masterdata.service.exception.IllegalArgumentException;
+import com.invado.core.exception.IllegalArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.*;
 import javax.persistence.EntityNotFoundException;
@@ -21,8 +24,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +44,7 @@ public class BPService {
     @PersistenceContext(name = "baza")
     private EntityManager dao;
 
-    @Autowired
+    @Inject
     private Validator validator;
     private final String username = "a";
 
@@ -50,20 +53,26 @@ public class BPService {
     public BusinessPartner create(BusinessPartnerDTO a) throws IllegalArgumentException,
             EntityExistsException, ConstraintViolationException {
         //check CreateBusinessPartnerPermission
+
+        String msgg =  Utils.getMessage("Client.Legal_Entity");
         if (a == null) {
-            throw new IllegalArgumentException(
+            throw new ConstraintViolationException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentEx"));
         }
         if (a.getCompanyIdNumber() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentException.CompanyIdNumber"));
         }
+        if (a.getTIN() == null || a.getTIN().isEmpty() || a.getTIN() == "") {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("BusinessPartner.IllegalArgumentException.TIN"));
+        }
         if (a.getName() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("BusinessPartner.IllegalArgumentException.Name"));
         }
-        try {
 
+        try {
             BusinessPartner businessPartner = new BusinessPartner();
 
             businessPartner.setCompanyIdNumber(a.getCompanyIdNumber());
@@ -83,22 +92,23 @@ public class BPService {
             if (a.getParentBusinessPartnerId() != null)
                 businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
-
-            List<String> msgs = validator.validate(a).stream()
+            List<String> msgs = validator.validate(businessPartner).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                throw new IllegalArgumentException("", msgs);
+                throw new ConstraintViolationException("", msgs);
             }
 
             dao.persist(businessPartner);
             return businessPartner;
-        } catch (IllegalArgumentException | EntityExistsException ex) {
+        } catch (ConstraintViolationException | EntityExistsException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
+            ex.printStackTrace();
             throw new SystemException(
                     Utils.getMessage("BusinessPartner.PersistenceEx.Create" + ex.getMessage(), ex)
+
             );
         }
     }
@@ -260,6 +270,7 @@ public class BPService {
         String name = null;
         String TIN = null;
         String type = null;
+        BusinessPartner parentBusinessPartner = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("id") && s.getValue() instanceof Integer) {
                 id = (Integer) s.getValue();
@@ -276,6 +287,9 @@ public class BPService {
             if (s.getKey().equals("type") && s.getValue() instanceof String) {
                 type = (String) s.getValue();
             }
+            if (s.getKey().equals("parentBusinessPartner") && s.getValue() instanceof BusinessPartner) {
+                parentBusinessPartner = (BusinessPartner) s.getValue();
+            }
 
         }
 
@@ -287,8 +301,9 @@ public class BPService {
                     companyIdNumber,
                     name,
                     TIN,
-                    type);
-            System.out.println("broj entiteta je "+countEntities);
+                    type,
+                    parentBusinessPartner);
+            System.out.println("broj entiteta je " + countEntities);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             Integer pageNumber = p.getPage();
@@ -303,12 +318,12 @@ public class BPService {
                 //if page number is -1 read last page
                 //first BusinessPartner = last page number * BusinessPartners per page
                 int start = numberOfPages.intValue() * pageSize;
-                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, start, pageSize));
+                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, start, pageSize));
                 result.setData(businessPartnerDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, p.getPage() * pageSize, pageSize));
+                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, p.getPage() * pageSize, pageSize));
                 result.setData(businessPartnerDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
@@ -338,7 +353,8 @@ public class BPService {
             String companyIdNumber,
             String name,
             String TIN,
-            String type) {
+            String type,
+            BusinessPartner parentBusinessPartner) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<BusinessPartner> root = c.from(BusinessPartner.class);
@@ -366,6 +382,11 @@ public class BPService {
             criteria.add(cb.equal(root.get(BusinessPartner_.type),
                     cb.parameter(BusinessPartner.Type.class, "type")));
         }
+        if (parentBusinessPartner != null){
+            criteria.add(cb.equal(root.get(BusinessPartner_.parentBusinessPartner),
+                    cb.parameter(BusinessPartner.class, "parentBusinessPartner")));
+        }
+
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
@@ -376,13 +397,16 @@ public class BPService {
             q.setParameter("companyIdNumber", companyIdNumber.toUpperCase() + "%");
         }
         if (name != null && name.isEmpty() == false) {
-            q.setParameter("name", "%"+name.toUpperCase() + "%");
+            q.setParameter("name", "%" + name.toUpperCase() + "%");
         }
         if (TIN != null && TIN.isEmpty() == false) {
             q.setParameter("TIN", TIN);
         }
         if (type != null) {
             q.setParameter("type", BusinessPartner.Type.getEnum(type));
+        }
+        if (parentBusinessPartner != null){
+            q.setParameter("parentBusinessPartner", parentBusinessPartner);
         }
         return q.getSingleResult();
     }
@@ -393,6 +417,7 @@ public class BPService {
                                          String name,
                                          String TIN,
                                          String type,
+                                         BusinessPartner parentBusinessPartner,
                                          int first,
                                          int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -420,6 +445,10 @@ public class BPService {
             criteria.add(cb.equal(root.get(BusinessPartner_.type),
                     cb.parameter(BusinessPartner.Type.class, "type")));
         }
+        if (parentBusinessPartner != null){
+            criteria.add(cb.equal(root.get(BusinessPartner_.parentBusinessPartner),
+                    cb.parameter(BusinessPartner.class, "parentBusinessPartner")));
+        }
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(BusinessPartner_.companyIdNumber)));
         query.orderBy(cb.asc(root.get(BusinessPartner_.name)));
@@ -439,6 +468,9 @@ public class BPService {
         if (type != null) {
             typedQuery.setParameter("type", BusinessPartner.Type.getEnum(type));
         }
+        if (parentBusinessPartner != null){
+            typedQuery.setParameter("parentBusinessPartner", parentBusinessPartner);
+        }
         System.out.println("first " + first + " a ps je " + pageSize);
         typedQuery.setFirstResult(first);
         typedQuery.setMaxResults(pageSize);
@@ -451,9 +483,10 @@ public class BPService {
                                          String companyIdNumber,
                                          String name,
                                          String TIN,
-                                         String type) {
+                                         String type,
+                                         BusinessPartner parentBusinessPartner) {
         try {
-            return this.search(dao, id, companyIdNumber, name, TIN, type, 0, 0);
+            return this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",
@@ -466,11 +499,16 @@ public class BPService {
     @Transactional(readOnly = true)
     public List<BusinessPartner> readPartnerByName(String name) {
         try {
-            return dao.createNamedQuery(
+            System.out.println("evo ga servis " + name);
+            List<BusinessPartner> list = dao.createNamedQuery(
                     BusinessPartner.READ_BY_NAME_ORDERBY_NAME,
                     BusinessPartner.class)
                     .setParameter("name", ("%" + name + "%").toUpperCase())
                     .getResultList();
+            for (BusinessPartner partner : list) {
+                System.out.println("ime partnera " + partner.getName());
+            }
+            return list;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(
@@ -478,4 +516,16 @@ public class BPService {
                     ex);
         }
     }
+
+    public List<BusinessPartner.Type> getTypes() {
+        return Arrays.asList(BusinessPartner.Type.values());
+    }
+
+
+    public BusinessPartner readById(Integer id){
+        return  dao.find(BusinessPartner.class, id);
+    }
+
 }
+
+

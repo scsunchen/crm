@@ -55,6 +55,10 @@
             <artifactId>tiles-extras</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-el</artifactId>
+        </dependency>
+        <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>${jstl-version}</version>

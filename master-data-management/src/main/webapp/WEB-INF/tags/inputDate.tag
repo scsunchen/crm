@@ -11,6 +11,8 @@
               description="When present, it specifies that an <input> element should automatically get focus when the page loads." %>
 <%@ attribute name="disabled" required="false" rtexprvalue="true" type="java.lang.Boolean"
               description="When present, it specifies that an <input> element is disabled." %>
+<%@ attribute name="placeholder" required="false" rtexprvalue="true" type="java.lang.String"
+              description="When present, it specifies value placeholder." %>
 
 <spring:bind path="${name}">
     <c:choose>
@@ -21,11 +23,12 @@
             <label for="${name}">${label}</label>
         </c:otherwise>
     </c:choose>
-    <div class="form-group " >
+    <div class="form-group ">
         <form:input id="${name}" path="${name}"
                     class="form-control ${cssclass} ${status.error ? 'error' : '' }"
                     disabled="${disabled}"
-                    autofocus="${autofocus}" />             
+                    autofocus="${autofocus}"
+                    placeholder="${placeholder}"/>
         <span class="help-inline">${status.errorMessage}</span>
     </div>
 </spring:bind>

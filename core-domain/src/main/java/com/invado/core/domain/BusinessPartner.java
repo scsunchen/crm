@@ -61,7 +61,6 @@ public class BusinessPartner implements Serializable {
     private Integer id;
     @Column(name = "registration_number")
     @Size(max = 13, message = "{BusinessPartner.Id.Size}")
-    @NotBlank(message = "{BusinessPartner.Id.NotBlank}")
     private String companyIdNumber;
     @Size(max = 100, message = "{BusinessPartner.Name.Size}")
     @NotBlank(message = "{BusinessPartner.Name.NotBlank}")
@@ -111,6 +110,11 @@ public class BusinessPartner implements Serializable {
     @ManyToOne
     @JoinColumn(name = "parent_partner_id")
     private BusinessPartner parentBusinessPartner;
+    @ManyToOne
+    @JoinColumn(name = "pos_type_id")
+    private POSType posType;
+    @Column(name = "TELEKOM_ID")
+    private Integer telekomId;
     @Embedded
     private ContactPerson contactPerson;
     @Version
@@ -276,6 +280,14 @@ public class BusinessPartner implements Serializable {
         this.latitude = latitude;
     }
 
+    public POSType getPosType() {
+        return posType;
+    }
+
+    public void setPosType(POSType posType) {
+        this.posType = posType;
+    }
+
     public ContactPerson getContactPerson() {
         return contactPerson;
     }
@@ -311,6 +323,14 @@ public class BusinessPartner implements Serializable {
             return null;
         }
         return address.getPlace();
+    }
+
+    public Integer getTelekomId() {
+        return telekomId;
+    }
+
+    public void setTelekomId(Integer telekomId) {
+        this.telekomId = telekomId;
     }
 
     public Type getType() {
@@ -367,6 +387,8 @@ public class BusinessPartner implements Serializable {
         businessPartnerDTO.setType(this.getType());
         businessPartnerDTO.setLatitude(this.getLatitude());
         businessPartnerDTO.setLongitude(this.getLongitude());
+        if (this.getTelekomId() != null)
+            businessPartnerDTO.setTelekomId(this.getTelekomId());
 
         return businessPartnerDTO;
     }
@@ -379,7 +401,7 @@ public class BusinessPartner implements Serializable {
         SERVICE_PROVIDER, //Provajderi usloga
         GENERAL;
 
-        public String Description() {
+        public String getDescription() {
             switch (this) {
                 case MERCHANT:
                     return Utils.getMessage("Businesspartner.Merchant");

@@ -1,16 +1,15 @@
 package com.invado.masterdata.test;
 
-import com.invado.core.domain.BusinessPartnerContactDetails;
+import com.invado.core.exception.ConstraintViolationException;
+import telekomWS.client.ServiceClient;
 import com.invado.core.domain.Currency;
 import com.invado.core.dto.BusinessPartnerContactDetailsDTO;
-import com.invado.core.exception.*;
 import com.invado.masterdata.service.BusinessPartnerContactDetailsService;
 import com.invado.masterdata.service.dto.ExchangeRateDTO;
 import com.invado.masterdata.service.ExchangeRateService;
-import com.invado.masterdata.service.exception.*;
-import com.invado.masterdata.service.exception.ConstraintViolationException;
+
 import com.invado.masterdata.service.exception.EntityExistsException;
-import com.invado.masterdata.service.exception.IllegalArgumentException;
+import com.invado.core.exception.IllegalArgumentException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +92,12 @@ public class TestQ{
         dto.setPhone("+38163407279");
 
         contactDetailsService.create(dto);
+
+    }
+
+    public void testWS(){
+        ServiceClient serviceClient = new ServiceClient();
+        //serviceClient.poslovniPartnerUnos()
 
     }
 }
