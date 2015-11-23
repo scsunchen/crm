@@ -15,42 +15,45 @@
 <script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
 <!-- Search invoices by document, invoiceDate range, business partner -->
 <br/>
-<form:form class="well well-lg" 
+<form:form class="well well-lg form-inline" 
            action="${pageContext.request.contextPath}/invoice/read-page.html"  
            modelAttribute="requestInvoices" 
            method="GET">        
-    <div class="form-group row" >
-        <div class="col-lg-6" >
-            <label for="document"  ><spring:message code="FindInvoice.Label.Document"/></label>
-            <form:input id="document" path="document" type="text" class="form-control" />
+    <div class="form-group" >
+        <label for="document" class="sr-only" ><spring:message code="FindInvoice.Label.Document" 
+                        var="documentLabel"/></label>
+            <form:input id="document" path="document" type="text" class="form-control" 
+                        placeholder="${documentLabel}" />
         </div>
-        <div class="col-lg-6">
-            <label for="partner" ><spring:message code="FindInvoice.Label.Partner" /></label>
-            <form:input id="partner" class="typeahead form-control" type="text" path="partnerName" />
+        <div class="form-group">
+            <label for="partner" class="sr-only"><spring:message code="FindInvoice.Label.Partner" var="partnerLabel"/></label>
+            <form:input id="partner" class="typeahead form-control" type="text" path="partnerName" 
+                        placeholder="${partnerLabel}" />
             <form:input id="partner-hidden" type="hidden" path="partnerId"/>
         </div> 
 
-    </div>
-    <div class="form-group row">
-        <div class="col-lg-6" >
+    <div class="form-group">
             <spring:bind path="dateFrom" >                    
-                <label for="dateFrom"><spring:message code="FindInvoice.Label.DateFrom" /></label>
-                <form:input id="dateFrom" type="text" class="form-control" path="dateFrom" />
+                <label for="dateFrom" class="sr-only">
+                    <spring:message code="FindInvoice.Label.DateFrom" 
+                                    var = "dateFromLabel"/></label>
+                <form:input id="dateFrom" type="text" class="form-control" path="dateFrom" 
+                            placeholder="${dateFromLabel}"/>
                 <span class="help-inline">
                     <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
                     </span>
             </spring:bind>
         </div>
-        <div class="col-lg-6" >
+        <div class="form-group" >
             <spring:bind path="dateTo" >                    
-                <label for="dateTo"><spring:message code="FindInvoice.Label.DateTo" /></label>
-                <form:input id="dateTo" type="text" class="form-control" path="dateTo"/>
+                <label for="dateTo" class="sr-only"><spring:message code="FindInvoice.Label.DateTo" var="dateToLabel"/></label>
+                <form:input id="dateTo" type="text" class="form-control" path="dateTo"
+                            placeholder="${dateToLabel}"/>
                 <span class="help-inline">
                     <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
                     </span>
             </spring:bind>
         </div>
-    </div>
 
     <button type="submit" class="btn btn-primary" name="page" value="0">
         <spring:message code="FindInvoice.Button.Search" />

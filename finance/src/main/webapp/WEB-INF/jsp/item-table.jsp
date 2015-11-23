@@ -10,16 +10,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- Search items by code and name -->
-<form class=" well well-lg" action="${pageContext.request.contextPath}/item/read-page.html"  method="get">
-    <div class="form-group row" >
-        <div class="col-lg-6" >
-            <label for="code"  ><spring:message code="Article.Label.SearchCode"/></label>
-            <input id="code" name="code" type="text" class="form-control" value="${param['code']}"/>
-        </div>
+<form class=" well well-lg form-inline" 
+      action="${pageContext.request.contextPath}/item/read-page.html"  
+      method="get">
+    <div class="form-group" >
+            <label for="code" class="sr-only"  ><spring:message code="Article.Label.SearchCode"/></label>
+            <input id="code" name="code" placeholder="<spring:message code="Article.Label.SearchCode"/>" 
+                   type="text" class="form-control" value="${param['code']}"/>
     </div>
     <div class="form-group">
-        <label for="name" ><spring:message code="Article.Label.SearchDesc" /></label>
-        <input id="name" class="form-control" type="text" name="name" value="${param['name']}"/>
+        <label for="name" class="sr-only"><spring:message code="Article.Label.SearchDesc" /></label>
+        <input id="name" class="form-control" type="text" name="name" value="${param['name']}"
+                placeholder="<spring:message code="Article.Label.SearchDesc" />" />
     </div> 
     <button type="submit" class="btn btn-primary" name="page" value="0"><spring:message code="FindInvoice.Button.Search" /></button>
 </form>
