@@ -22,19 +22,24 @@ import org.springframework.format.annotation.NumberFormat;
 @Table(name = "CRM_BUSINESS_TERMS_ITEMS")
 
 @NamedQueries({
+    @NamedQuery(name = BusinessPartnerTermsItem.COUNT_TERMS_BY_ID, 
+                query = "SELECT COUNT(x) FROM BusinessPartnerTermsItem x WHERE x.terms.id = :termsId"),
+    @NamedQuery(name = BusinessPartnerTermsItem.READ_TERMS_BY_ID, 
+                query = "SELECT x FROM BusinessPartnerTermsItem x WHERE x.terms.id = :termsId ORDER BY x.ordinal "),
 //        @NamedQuery(name = BusinessPartnerTermsItem.READ_TERMS_PER_PARTNER_AND_ARTICLE,
 //                query = "SELECT it FROM BusinessPartnerRelationshipTermsItems as it " +
 //                        " INNER  JOIN it.businessPartnerRelationshipTerms as te " +
 //                        " WHERE  te.businessPartner.id = :partner  " +
 //                        " AND it.service.id = :serviceId " +
 //                        " AND te.endDate is null "),
-        @NamedQuery(name = "test", query = "SELECT x FROM BusinessPartnerTermsItem x WHERE x.terms.id = :terms AND x.ordinal = :o")
+        @NamedQuery(name = "test", query = "SELECT x FROM BusinessPartnerTermsItem x WHERE x.terms.id = :termsId AND x.ordinal = :o")
 })
 @IdClass(BusinessPartnerTermsItemPK.class)
 public class BusinessPartnerTermsItem implements Serializable {
 
 //    public static final String READ_TERMS_PER_PARTNER_AND_ARTICLE = "ReadTermsPerPartnerAndPartner";
-    public static final String READ_TERMS_BY_ID = "ReadTermsById";
+    public static final String READ_TERMS_BY_ID = "BusinessPartnerTermsItem.ReadTermsById";
+    public static final String COUNT_TERMS_BY_ID = "BusinessPartnerTermsItem.CountTermsById";
 
     @Id
     @ManyToOne

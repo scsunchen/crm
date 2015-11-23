@@ -59,6 +59,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -76,33 +77,17 @@ public class InvoiceController {
     @Inject
     private MasterDataService masterDataservice;
 
-//    @RequestMapping(value = "/invoice/{page}", method = RequestMethod.GET )
-//    public String showInvoices(@PathVariable Integer page,
-//            Map<String, Object> model)
-//            throws Exception {
-//        PageRequestDTO request = new PageRequestDTO();
-//        request.setPage(page);
-//        ReadRangeDTO<InvoiceDTO> items = invoiceService.readPage(request);
-//        model.put("data", items.getData());
-//        model.put("page", items.getPage());
-//        model.put("numberOfPages", items.getNumberOfPages());
-//        RequestInvoicesDTO requestInvoices = new RequestInvoicesDTO();
-//        requestInvoices.setPage(page);
-//        model.put("requestInvoices", requestInvoices);
-//        return "invoice-table";
-//    }
-    
     @RequestMapping(value = "/invoice/read-page.html", method = RequestMethod.GET)
     public String search(Map<String, Object> model,
-                         @ModelAttribute("requestInvoices") RequestInvoicesDTO request,
-                         BindingResult result,
-                         SessionStatus status) 
-                         throws PageNotExistsException {
+            @ModelAttribute("requestInvoices") RequestInvoicesDTO request,
+            BindingResult result,
+            SessionStatus status)
+            throws PageNotExistsException {
         if (result.hasErrors()) {
             model.put("page", request.getPage());
             model.put("expand", true);
             return "invoice-table";
-        }        
+        }
         PageRequestDTO dto = new PageRequestDTO();
         dto.setPage(request.getPage());
         dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
@@ -126,7 +111,7 @@ public class InvoiceController {
         model.put("requestInvoices", request);
         return "invoice-table";
     }
-    
+
     @RequestMapping("/invoice/{page}/{clientId}/{unitId}/{document}/delete.html")
     public String delete(
             @PathVariable Integer clientId,
@@ -137,7 +122,57 @@ public class InvoiceController {
         invoiceService.deleteInvoice(clientId, unitId, document);
         return "redirect:/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=0";
     }
-    
+
+    @RequestMapping(value = "/invoice/record.html", method = RequestMethod.GET)
+    public String initRecordInvoice(
+            @RequestParam Integer clientId,
+            @RequestParam Integer unitId,
+            @RequestParam String document,
+            @RequestParam(required = false) Integer pageNumber,
+            Map<String, Object> model) throws Exception {
+        RequestInvoiceRecordingDTO dto = new RequestInvoiceRecordingDTO();        
+        dto.setClientId(clientId);
+        dto.setOrgUnitId(unitId);
+        dto.setDocument(document);
+        model.put("requestInvoiceRecording", dto);
+        model.put("page", pageNumber);
+        model.put("invoice", invoiceService.readInvoice(clientId, unitId, document));
+        return "invoice-record";
+    }
+
+    @RequestMapping(value = "/invoice/{page}/record.html", method = RequestMethod.POST)
+    public String recordInvoice(
+            @ModelAttribute("requestInvoiceRecording") RequestInvoiceRecordingDTO dto,
+            BindingResult result,
+            SessionStatus status,
+            @PathVariable String page,
+            Map<String, Object> model) throws Exception {
+        if (result.hasErrors()) {
+            model.put("page", page);
+            model.put("invoice", invoiceService.readInvoice(dto.getClientId(), 
+                                                            dto.getOrgUnitId(), 
+                                                            dto.getDocument()));
+            return "invoice-record";
+        }
+        try {
+            String username = ((User) SecurityContextHolder.getContext()
+                    .getAuthentication().getPrincipal()).getUsername();
+            dto.setUser(username);
+            recordService.perform(dto);
+            status.setComplete();
+        } catch (ConstraintViolationException | EntityNotFoundException 
+                | JournalEntryExistsException | PostedInvoiceException 
+                | ProformaInvoicePostingException ex) {
+            model.put("page", page);
+            model.put("invoice", invoiceService.readInvoice(dto.getClientId(), 
+                                                            dto.getOrgUnitId(), 
+                                                            dto.getDocument()));
+            model.put("exception", ex);
+            return "invoice-record";
+        }
+        return "redirect:/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=0";
+    }
+
     @RequestMapping(value = "/invoice/{page}/create", method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
         model.put("invoice", new InvoiceDTO());
@@ -146,51 +181,20 @@ public class InvoiceController {
         model.put("invoiceTypes", InvoiceType.values());
         return "invoice-create-grid";
     }
-    
-    @RequestMapping(value = "/invoice/{page}/recording.html", method = RequestMethod.POST)
-    public String recordInvoice(
-            @ModelAttribute("requestInvoiceRecording") RequestInvoiceRecordingDTO dto,
-            BindingResult result,
-            SessionStatus status,
-            @PathVariable String page,
-            Map<String, Object> model) throws Exception {
-        if (result.hasErrors()) {
-            model.put("showRecordDialog", true);
-            InvoiceDTO tmp = invoiceService.readInvoice(dto.getClientId(), 
-                                                        dto.getOrgUnitId(), 
-                                                        dto.getDocument());
-            return initUpdateForm(page, tmp, dto, null, model);
-        }
-        try {
-            String username = ((User) SecurityContextHolder.getContext()
-                    .getAuthentication().getPrincipal()).getUsername();
-            dto.setUser(username);
-            recordService.perform(dto);
-        } catch(ConstraintViolationException | EntityNotFoundException 
-                | JournalEntryExistsException | PostedInvoiceException
-                | ProformaInvoicePostingException ex) {
-            model.put("recordInvoiceException", ex);
-            model.put("showRecordDialog", true);
-            InvoiceDTO tmp = invoiceService.readInvoice(dto.getClientId(), 
-                                                        dto.getOrgUnitId(), 
-                                                        dto.getDocument());
-            return initUpdateForm(page, tmp, dto, null, model);
-        } 
-        return "redirect:/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=0";
-    }
-    
+
     @RequestMapping(value = "/invoice/{page}/create", method = RequestMethod.POST)
     public String processCreateForm(@ModelAttribute("invoice") InvoiceDTO invoice,
             BindingResult result,
             SessionStatus status,
+            @PathVariable String page,
             Map<String, Object> model) throws Exception {
         if (invoice.getCurrencyISOCode() == null || invoice.getCurrencyISOCode().isEmpty()) {
             invoice.setIsDomesticCurrency(Boolean.TRUE);
         } else {
             invoice.setIsDomesticCurrency(Boolean.FALSE);
         }
-        String username = ((User)SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal()).getUsername();
+        String username = ((User) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal()).getUsername();
         invoice.setUsername(username);
         invoice.setPassword(username.toCharArray());
         if (result.hasErrors()) {
@@ -206,238 +210,36 @@ public class InvoiceController {
             model.put("invoiceTypes", InvoiceType.values());
             return "invoice-create-grid";
         }
-        return String.format("redirect:/invoice/{page}/%d/%d/%s/update.html",
+        return String.format(
+                "redirect:/invoice/update.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s", 
                 invoice.getClientId(),
                 invoice.getOrgUnitId(),
-                invoice.getDocument());
+                invoice.getDocument(),                
+                page);
     }
 
-    @RequestMapping(value = "/invoice/{page}/{clientId}/{unitId}/{document}/update.html",
-            method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String page,
-            @PathVariable Integer clientId,
-            @PathVariable Integer unitId,
-            @PathVariable String document,
-            Map<String, Object> model)
-            throws Exception {
-        InvoiceDTO tmp = invoiceService.readInvoice(clientId, unitId, document);
-        RequestInvoiceRecordingDTO recording = new RequestInvoiceRecordingDTO();
-        recording.setClientId(clientId);
-        recording.setOrgUnitId(unitId);
-        recording.setDocument(document);
-        return initUpdateForm(page, tmp, recording, null, model);
-    }
-
-    @RequestMapping(value = "/invoice/{page}/{clientId}/{unitId}/{document}/update.html",
-            method = RequestMethod.POST)
-    public String processUpdateForm(
-            @ModelAttribute("invoice") InvoiceDTO invoice,
-            BindingResult result,
-            SessionStatus status,
-            @PathVariable String page,
-            Map<String, Object> model) throws Exception {
-        if (invoice.getCurrencyISOCode() == null || invoice.getCurrencyISOCode().isEmpty()) {
-            invoice.setIsDomesticCurrency(Boolean.TRUE);
-        } else {
-            invoice.setIsDomesticCurrency(Boolean.FALSE);
-        }
-        String username = ((User)SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal()).getUsername();
-        invoice.setUsername(username);
-        if (result.hasErrors()) {
-            RequestInvoiceRecordingDTO recording = new RequestInvoiceRecordingDTO();
-            recording.setClientId(invoice.getClientId());
-            recording.setOrgUnitId(invoice.getOrgUnitId());
-            recording.setDocument(invoice.getDocument());
-            return initUpdateForm(page, 
-                    invoice, 
-                    recording,
-                    null,
-                    model);
-        }
-        try{
-            invoiceService.updateInvoice(invoice);
-        } catch(Exception ex) {
-            RequestInvoiceRecordingDTO recording = new RequestInvoiceRecordingDTO();
-            recording.setClientId(invoice.getClientId());
-            recording.setOrgUnitId(invoice.getOrgUnitId());
-            recording.setDocument(invoice.getDocument());
-            return initUpdateForm(page, 
-                    invoice, 
-                    recording,
-                    ex,
-                    model);
-        }
-        return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
-    }
-    
-    private String initUpdateForm(String page,
-            InvoiceDTO dto,
-            RequestInvoiceRecordingDTO requestRecording,
-            Exception ex,
-            Map<String, Object> model)
-            throws Exception {
-        model.put("page", page);
-        InvoiceItemDTO itemDTO = new InvoiceItemDTO();
-        itemDTO.setClientId(dto.getClientId());
-        itemDTO.setUnitId(dto.getOrgUnitId());
-        itemDTO.setInvoiceDocument(dto.getDocument());
-        itemDTO.setInvoiceVersion(dto.getVersion());
-        model.put("invoiceItem", itemDTO);
-        model.put("invoice", dto);
-        model.put("items", invoiceService.readInvoiceItems(
-                dto.getClientId(), 
-                dto.getOrgUnitId(), 
-                dto.getDocument()));
-        model.put("partnerTypes", InvoiceBusinessPartner.values());
-        model.put("invoiceTypes", InvoiceType.values());
-        model.put("exception", ex);
-        model.put("requestInvoiceRecording", requestRecording);        
-        return "invoice-update-master-detail";
-    }
-    
-    @RequestMapping(value = "/invoice/read-client/{name}")
-    public @ResponseBody List<Client> findClientByName(@PathVariable String name) {
-        return masterDataservice.readClientByName(name);
-    }
-
-    @RequestMapping(value = "/invoice/read-orgunit/{name}")
-    public @ResponseBody List<OrgUnit> findOrganizationalUnitByName(@PathVariable String name) {
-        return masterDataservice.readOrgUnitByName(name);
-    }
-
-    @RequestMapping(value = "/invoice/read-businesspartner/{name}")
-    public @ResponseBody List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name) {
-        return masterDataservice.readBusinessPartnerByName(name);
-    }
-
-    @RequestMapping(value = "/invoice/read-bank/{name}")
-    public @ResponseBody List<BankCreditor> findBankByName(@PathVariable String name) {
-        return masterDataservice.readBankByName(name);
-    }
-
-    @RequestMapping(value = "/invoice/read-currency/{iso}")
-    public @ResponseBody List<Currency> findCurrencyByISO(@PathVariable String iso) {
-        return masterDataservice.readCurrencyByISO(iso);
-    }
-
-    @RequestMapping(value = "/invoice/read-item/{desc}")
-    public @ResponseBody List<Article> findItemByDescription(@PathVariable String desc) {
-        return masterDataservice.readItemByDescription(desc);
-    }
-    
-    @RequestMapping(value = "/invoice/read-description/{name}")
-    public @ResponseBody
-    List<Description> findDescriptionByName(@PathVariable String name) {
-        return masterDataservice.readDescByName(name);
-    }
-    
-    @RequestMapping(value = "/invoice/read-journal-entry-type/{name}/{clientId}")
-    public @ResponseBody List<JournalEntryTypeDTO> findTypeByNameAndClientId(
-            @PathVariable String name,
-            @PathVariable Integer clientId) {
-        return masterDataservice.readJournalEntryTypeByNameAndClient(
-                clientId, name);
-    }
-    
-    @RequestMapping(value = "/invoice/{page}/{clientId}/{unitId}/{document}/{ordinal}/{version}/deleteItem.html",
-            method = RequestMethod.GET)
-    public String deleteItem(@PathVariable Integer clientId,
-            @PathVariable Integer unitId,
-            @PathVariable String document,
-            @PathVariable Integer ordinal,
-            @PathVariable Long version)
-            throws Exception {
-        String username = ((User)SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal()).getUsername();
-        invoiceService.removeItem(clientId,
-                unitId,
-                document,
-                ordinal,
-                username,
-                version);
-        return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
-    }
-
-    @RequestMapping(value = "/invoice/{page}/{clientId}/{unitId}/{document}/addItem.html",
-            method = RequestMethod.POST)
-    public String addItem(
-            //nemam pojma zasto invoice parametar moram da stavim
-            @ModelAttribute("invoice") InvoiceDTO invoice,
-            @ModelAttribute("invoiceItem") InvoiceItemDTO item,
-            BindingResult result,
-            SessionStatus status,
-            @PathVariable String page,
-            Map<String, Object> model) throws Exception {
-        invoice.setOrgUnitId(item.getUnitId());
-         if (result.hasErrors()) {
-            model.put("showDialog", Boolean.TRUE);
-            model.put("invoiceItem", item);
-            model.put("page", page);
-            model.put("invoice", invoiceService.readInvoice(
-                    item.getClientId(), 
-                    item.getUnitId(), 
-                    item.getInvoiceDocument())
-            );
-            model.put("items", invoiceService.readInvoiceItems(
-                    item.getClientId(), 
-                    item.getUnitId(), 
-                    item.getInvoiceDocument()));
-            model.put("partnerTypes", InvoiceBusinessPartner.values());
-            model.put("invoiceTypes", InvoiceType.values());
-            model.put("requestInvoiceRecording", new RequestInvoiceRecordingDTO());
-            return "invoice-update-master-detail";
-        }
-        try {
-            String username = ((User)SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal()).getUsername();
-            item.setUsername(username);
-            invoiceService.addItem(item);
-            return "redirect:/invoice/{page}/{clientId}/{unitId}/{document}/update.html";
-        } catch(Exception ex) {
-            model.put("showDialog", Boolean.TRUE);
-            model.put("itemException", ex);
-            model.put("invoiceItem", item);
-            model.put("page", page);
-            model.put("invoice", invoiceService.readInvoice(
-                    item.getClientId(), 
-                    item.getUnitId(), 
-                    item.getInvoiceDocument())
-            );
-            model.put("items", invoiceService.readInvoiceItems(
-                    item.getClientId(), 
-                    item.getUnitId(), 
-                    item.getInvoiceDocument()));
-            model.put("partnerTypes", InvoiceBusinessPartner.values());
-            model.put("invoiceTypes", InvoiceType.values());
-            model.put("requestInvoiceRecording", new RequestInvoiceRecordingDTO());
-            return "invoice-update-master-detail";
-        }
-    }
-
-    @RequestMapping(value = "/invoice/{clientId}/{unitId}/{document}/print-preview.html")
+    @RequestMapping(value = "/invoice/print-preview.html", 
+                    method = RequestMethod.GET)
     public ResponseEntity<byte[]> showPDF(
-            @PathVariable Integer clientId,
-            @PathVariable Integer unitId,
-            @PathVariable String document)
+            @RequestParam Integer clientId,
+            @RequestParam Integer unitId,
+            @RequestParam String document)
             throws Exception {
         try {
             InvoiceReportDTO dto = invoiceService.readInvoiceReport(clientId,
-                unitId,
-                document);
-        Locale locale = LocaleContextHolder.getLocale();
-        InvoiceReport report = new InvoiceReport(dto, locale);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = String.format("%s%d%d", document, clientId, unitId);
-        headers.add("content-disposition", "inline;filename=" + filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<>(
-                getPDFFile(report), headers, HttpStatus.OK);
-        return response;
-        }catch(Exception e) {
-            System.out.println(e.getLocalizedMessage());
-            e.printStackTrace();
+                    unitId,
+                    document);
+            Locale locale = LocaleContextHolder.getLocale();
+            InvoiceReport report = new InvoiceReport(dto, locale);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("application/pdf"));
+            String filename = String.format("%s%d%d", document, clientId, unitId);
+            headers.add("content-disposition", "inline;filename=" + filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            ResponseEntity<byte[]> response = new ResponseEntity<>(
+                    getPDFFile(report), headers, HttpStatus.OK);
+            return response;
+        } catch (Exception e) {
             return null;
         }
     }
@@ -478,4 +280,234 @@ public class InvoiceController {
             return byteStream.toByteArray();
         }
     }
+
+    @RequestMapping(value = "/invoice/read-client/{name}")
+    public @ResponseBody
+    List<Client> findClientByName(@PathVariable String name) {
+        return masterDataservice.readClientByName(name);
+    }
+
+    @RequestMapping(value = "/invoice/read-orgunit/{name}")
+    public @ResponseBody
+    List<OrgUnit> findOrganizationalUnitByName(@PathVariable String name) {
+        return masterDataservice.readOrgUnitByName(name);
+    }
+    
+    @RequestMapping(value = "/invoice/read-orgunit/{name}/{client}")
+    public @ResponseBody
+    List<OrgUnit> findOrganizationalUnitByClientAndName(@PathVariable String name,
+                                                        @PathVariable Integer client) {
+        return masterDataservice.readOrgUnitByClientAndName(client, name);
+    }
+
+    @RequestMapping(value = "/invoice/read-businesspartner/{name}")
+    public @ResponseBody
+    List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name) {
+        return masterDataservice.readBusinessPartnerByName(name);
+    }
+
+    @RequestMapping(value = "/invoice/read-bank/{name}")
+    public @ResponseBody
+    List<BankCreditor> findBankByName(@PathVariable String name) {
+        return masterDataservice.readBankByName(name);
+    }
+
+    @RequestMapping(value = "/invoice/read-currency/{iso}")
+    public @ResponseBody
+    List<Currency> findCurrencyByISO(@PathVariable String iso) {
+        return masterDataservice.readCurrencyByISO(iso);
+    }
+
+    @RequestMapping(value = "/invoice/read-item/{code}")
+    public @ResponseBody List<Article> findItemByDescription(@PathVariable String code) {
+        return masterDataservice.readItemByCode(code);
+    }
+
+    @RequestMapping(value = "/invoice/read-description/{name}")
+    public @ResponseBody
+    List<Description> findDescriptionByName(@PathVariable String name) {
+        return masterDataservice.readDescByName(name);
+    }
+    
+    @RequestMapping(value = "/invoice/read-journal-entry-type/{name}/{clientId}")
+    public @ResponseBody List<JournalEntryTypeDTO> findTypeByNameAndClientId(
+            @PathVariable String name,
+            @PathVariable Integer clientId) {
+        return masterDataservice.readJournalEntryTypeByNameAndClient(
+                clientId, name);
+    }
+    
+    @RequestMapping(value = "/invoice/update.html",
+                    method = RequestMethod.GET)
+    public String initUpdateForm(@RequestParam String page,
+            @RequestParam Integer clientId,
+            @RequestParam Integer unitId,
+            @RequestParam String document,
+            Map<String, Object> model)
+            throws Exception {
+        InvoiceDTO tmp = invoiceService.readInvoice(clientId, unitId, document);
+        model.put("page", page);
+        model.put("invoice", tmp);
+        model.put("partnerTypes", InvoiceBusinessPartner.values());
+        model.put("invoiceTypes", InvoiceType.values());     
+        return "invoice-update";
+    }
+    
+    @RequestMapping(value = "/invoice/{page}/update.html", 
+                    method = RequestMethod.POST)
+    public String processUpdateForm(
+            @ModelAttribute("invoice") InvoiceDTO invoice,
+            BindingResult result,
+            SessionStatus status,
+            @PathVariable String page,
+            Map<String, Object> model) throws Exception {
+        String username = ((User)SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal()).getUsername();
+        invoice.setUsername(username);        
+        if (result.hasErrors()) {
+            model.put("page", page);
+            model.put("partnerTypes", InvoiceBusinessPartner.values());
+            model.put("invoiceTypes", InvoiceType.values());
+            return "invoice-update";
+        }
+        try{
+            invoiceService.updateInvoice(invoice);
+        } catch(Exception ex) {
+            model.put("exception", ex);
+            model.put("page", page);
+            model.put("partnerTypes", InvoiceBusinessPartner.values());
+            model.put("invoiceTypes", InvoiceType.values());
+            return "invoice-update";
+        }
+        return String.format(
+                "redirect:/invoice/update.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s", 
+                invoice.getClientId(),
+                invoice.getOrgUnitId(),
+                invoice.getDocument(),                
+                page);
+    }
+    
+    @RequestMapping(value = "/invoice/details.html", method = RequestMethod.GET)
+    public String initDetailsForm(@RequestParam(required = false) String page,
+            @RequestParam Integer clientId,
+            @RequestParam Integer unitId,
+            @RequestParam String document,
+            @RequestParam(required = false) Integer itemsPage,
+            Map<String, Object> model)
+            throws Exception {
+        PageRequestDTO dto = new PageRequestDTO();
+        dto.setPage(itemsPage);
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                "document",
+                document));
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                "clientId",
+                clientId));
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                "unitId",
+                unitId));
+        ReadRangeDTO<InvoiceItemDTO> items = invoiceService.readIncomeItemsPage(dto);
+        model.put("itemsPage", items.getPage());        
+        model.put("numberOfPages", items.getNumberOfPages());        
+        model.put("items", items.getData());
+        InvoiceDTO invoice = invoiceService.readInvoice(clientId, unitId, document);
+        model.put("invoice", invoice);
+        model.put("page", page);
+        InvoiceItemDTO item = new InvoiceItemDTO();
+        item.setClientId(invoice.getClientId());
+        item.setUnitId(invoice.getOrgUnitId());
+        item.setInvoiceDocument(invoice.getDocument());
+        item.setInvoiceVersion(invoice.getVersion());
+        model.put("invoiceItem", item);
+        return "invoice-details";
+    }
+    
+    @RequestMapping(value = "/invoice/deleteItem.html",
+                    method = RequestMethod.POST)
+    public String deleteItem(@RequestParam Integer clientId,
+                             @RequestParam Integer unitId,
+                             @RequestParam String invoiceDocument,
+                             @RequestParam Integer ordinal,
+                             @RequestParam Long version,
+                             @RequestParam(required = false) String page,
+                             @RequestParam(required = false) String itemsPage)
+                             throws Exception {
+        String username = ((User)SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal()).getUsername();
+        invoiceService.removeItem(
+                clientId,
+                unitId,
+                invoiceDocument,
+                ordinal,
+                username,
+                version
+        );
+        return String.format("redirect:/invoice/details.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s&itemsPage=%5$s",
+                          clientId,
+                          unitId,
+                          invoiceDocument,
+                          page,
+                          itemsPage);
+    }
+
+    @RequestMapping(value = "/invoice/{page}/{itemsPage}/addItem.html",
+                    method = RequestMethod.POST)
+    public String addItem(@ModelAttribute("invoiceItem") InvoiceItemDTO item,
+                          BindingResult result,
+                          SessionStatus status,
+                          @PathVariable String page,
+                          @PathVariable String itemsPage,
+                          Map<String, Object> model) throws Exception {
+        PageRequestDTO dto = new PageRequestDTO();
+        dto.setPage(Integer.valueOf(itemsPage));
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                 "document",
+                 item.getInvoiceDocument()));
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                 "clientId",
+                 item.getClientId()));
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                 "unitId",
+                 item.getUnitId()));
+         if (result.hasErrors()) {
+            model.put("showDialog", Boolean.TRUE);
+            model.put("page", page);
+            ReadRangeDTO<InvoiceItemDTO> range = invoiceService.readIncomeItemsPage(dto);
+            model.put("itemsPage", range.getPage());
+            model.put("numberOfPages", range.getNumberOfPages());        
+            model.put("items", range.getData());
+            InvoiceDTO invoice = invoiceService.readInvoice(item.getClientId(), 
+                                                            item.getUnitId(), 
+                                                            item.getInvoiceDocument());
+            model.put("invoice", invoice);
+            return "invoice-details";
+        }
+        try {
+            String username = ((User)SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal()).getUsername();
+            item.setUsername(username);
+            invoiceService.addItem(item);
+            return String.format("redirect:/invoice/details.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s&itemsPage=%5$s",
+                          item.getClientId(),
+                          item.getUnitId(),
+                          item.getInvoiceDocument(),
+                          page,
+                          itemsPage);
+        } catch(Exception ex) {
+            model.put("showDialog", Boolean.TRUE);
+            model.put("addItemException", ex);
+            model.put("page", page);
+            ReadRangeDTO<InvoiceItemDTO> range = invoiceService.readIncomeItemsPage(dto);
+            model.put("itemsPage", range.getPage());
+            model.put("numberOfPages", range.getNumberOfPages());        
+            model.put("items", range.getData());
+            InvoiceDTO invoice = invoiceService.readInvoice(
+                    item.getClientId(), 
+                    item.getUnitId(), 
+                    item.getInvoiceDocument());
+            model.put("invoice", invoice);
+            return "invoice-details";
+        }
+    }
+    
 }

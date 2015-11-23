@@ -36,6 +36,10 @@ public class PageRequestDTO {
     public void addSearchCriterion(SearchCriterion s) {
         list.add(s);
     }
+    
+    public void addSearchCriterion(String key, Object value) {
+        list.add(new SearchCriterion(key, value));
+    }
 
     public List<SearchCriterion> readAllSearchCriterions() {
         return Collections.unmodifiableList(list);

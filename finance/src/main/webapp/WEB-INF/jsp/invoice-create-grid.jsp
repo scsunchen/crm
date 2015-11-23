@@ -6,6 +6,7 @@
 <%@ taglib prefix="i" tagdir="/WEB-INF/tags" %>
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
 
 <c:if test = "${exception != null}">
     <div class="alert alert-warning">
@@ -60,7 +61,6 @@
             </div>
         </div>
     </div>
-
     <div class="col-lg-6" >
         <div class="form-group row">
             <div class="col-lg-6">
@@ -196,14 +196,23 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-orgunit/%QUERY',
-                wildcard: '%QUERY'
+                url: '${pageContext.request.contextPath}/invoice/read-orgunit/',
+                replace: function (url, query) {
+                    return url.concat(query).concat("/").concat($('#client-hidden').val());
+                }
             }
-        })
+        }),
+        templates: {
+            suggestion: Handlebars.compile('<div><strong>{{clientName}}</strong> &nbsp; {{name}}</div>')
+        }
+
     });
-    $('#orgUnit').bind('typeahead:selected', function (obj, datum, name) {
+    $('#orgUnit').bind('typeahead:selected', function (obj, datum, name) {                
+        $('#client-hidden').val(datum['clientID']);
+        $('#client').val(datum['clientName']);
         $('#orgUnit-hidden').val(datum['id']);
     });
+    
     $('#bank').typeahead({
         hint: false,
         highlight: true,

@@ -5,13 +5,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<label>${journalEntry.clientName}</label>
+<br/>
+<label>${journalEntry.typeName}</label>
+<br/>
+<label><spring:message code="JournalEntry.Label.JournalEntryNumber1" arguments="${journalEntry.journalEntryNumber}" /></label>
+<br/>
+<br/>
 <button data-toggle="modal" data-target="#dialogAddItem" class="btn btn-primary" <c:if test="${journalEntry.isPosted == true}">disabled</c:if>>
     <span class="glyphicon glyphicon-plus"></span><spring:message code="JournalEntry.Button.AddItem" /></button>
 <br/>
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
 <form:form modelAttribute="journalEntryItem" method="post" 
-           action="${pageContext.request.contextPath}/journal-entry/${page}/${journalEntry.clientId}/${journalEntry.typeId}/${journalEntry.journalEntryNumber}/${journalEntry.version}/addItem.html" >
+           action="${pageContext.request.contextPath}/journal-entry/${page}/${itemsPage}/${journalEntry.version}/addItem.html" >
     <div class="modal fade" id="dialogAddItem" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -51,7 +58,7 @@
                                 <form:input id="valueDate" path="valueDate" 
                                             class="form-control" />
                                 <span class="help-inline"><c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if></span>
-                            </div>
+                                </div>
                         </spring:bind>
                     </div>
                     <div class="form-group" >
@@ -106,7 +113,8 @@
             $('#dialogAddItem').modal('show');
         </script>
     </c:if>      
-</form:form>            
+</form:form> 
+
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -143,7 +151,7 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                 <spring:message code="Invoice.Button.Cancel" /></button>
                             <a type="button" class="btn btn-danger" 
-                               href="${pageContext.request.contextPath}/journal-entry/${page}/${item.clientId}/${item.typeId}/${item.journalEntryNumber}/${item.ordinalNumber}/${journalEntry.version}/deleteItem.html">Obriši</a>
+                               href="${pageContext.request.contextPath}/journal-entry/${page}/${itemsPage}/${item.clientId}/${item.typeId}/${item.journalEntryNumber}/${item.ordinalNumber}/${journalEntry.version}/deleteItem.html">Obriši</a>
                         </div>
                     </div>
                 </div>
@@ -152,8 +160,8 @@
             <tr>
                 <td>
                     <button class="btn btn-danger btn-sm" <c:if test="${journalEntry.isPosted == true}">disabled</c:if> data-toggle="modal" data-target="#dialog${item.ordinalNumber}"><span class="glyphicon glyphicon-trash"></span> brisanje</button>
-                </td>
-                <td><spring:eval expression="item.ordinalNumber" /></td>
+                    </td>
+                    <td><spring:eval expression="item.ordinalNumber" /></td>
                 <td><c:out value="${item.unitName}"/></td>
                 <td><c:out value="${item.document}"/></td>
                 <td><spring:eval expression="item.creditDebitRelationDate" /></td>
@@ -169,6 +177,26 @@
         </tbody>
     </table>
 </div>
+<nav>
+    <ul class="pager pull-right">                       
+        <spring:message code="JournalEntry.Table.Page" />
+        <li class="<c:if test="${itemsPage == 0}"><c:out value="disabled" /></c:if>">
+            <a href="<c:if test="${itemsPage > 0}">
+                   <c:out value="${pageContext.request.contextPath}/journal-entry/${page}/${itemsPage - 1}/${journalEntry.clientId}/${journalEntry.typeId}/${journalEntry.journalEntryNumber}/details.html" /></c:if>">
+                    <span class="glyphicon glyphicon-backward"></span> 
+                <spring:message code="JournalEntry.Table.PrevPage" />
+            </a>
+        </li>
+        <spring:message code="JournalEntry.Table.PageRange" arguments="${itemsPage+1}, ${numberOfPages+1}" />            
+        <li class="<c:if test="${itemsPage == numberOfPages}"><c:out value="disabled"/></c:if>">
+            <a href="<c:if test="${itemsPage < numberOfPages}">
+                    <c:out value="${pageContext.request.contextPath}/journal-entry/${page}/${itemsPage + 1}/${journalEntry.clientId}/${journalEntry.typeId}/${journalEntry.journalEntryNumber}/details.html"/></c:if>" >
+                    <span class="glyphicon glyphicon-forward"></span> 
+                <spring:message code="JournalEntry.Table.NextPage" />
+            </a>
+        </li>
+    </ul>
+</nav>
 <script type="text/javascript">
     $('#creditDebitRelationDate').datepicker({});
     $('#valueDate').datepicker({});

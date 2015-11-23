@@ -8,9 +8,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
+<script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
 <%@ taglib prefix="i" tagdir="/WEB-INF/tags" %>
 <form:form modelAttribute="invoice" method="post"
-           action="${pageContext.request.contextPath}/invoice/${page}/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/update.html">
+           action="${pageContext.request.contextPath}/invoice/${page}/update.html">
     <div class="col-lg-6" >
         <div class="form-group">
             <label for="client"><spring:message code="Invoice.Label.Client" /></label>
@@ -74,7 +76,9 @@
 
         </div>
         <div class="form-group ">
-            <label for="bank" style="margin-top: 15px;"><spring:message code="Invoice.Label.Bank" /></label>
+            <label for="bank" style="margin-top: 15px;">
+                <spring:message code="Invoice.Label.Bank" />
+            </label>
             <c:choose>
                 <c:when test="${invoice.recorded == false}">
                     <form:input id="bank" class="typeahead form-control" 
@@ -89,7 +93,9 @@
         </div>
         <div class="form-group row">
             <div class="col-lg-6">
-                <label for="currency" style="margin-top: 15px;"><spring:message code="Invoice.Label.Currency" /></label>
+                <label for="currency" style="margin-top: 15px;">
+                    <spring:message code="Invoice.Label.Currency" />
+                </label>
                 <c:choose>
                     <c:when test="${invoice.recorded == false}">
                         <form:input id="currency" class="typeahead form-control" 
@@ -245,10 +251,11 @@
             </c:otherwise>
         </c:choose>
                 <form:hidden path="version" />
+                <form:hidden path="recorded" />
     </div>
 
     <div class="col-lg-12 form-group">
-        <button type="submit" class="btn btn-default" <c:if test="${invoice.recorded == true}">disabled</c:if>><span class="glyphicon glyphicon-pencil"></span><spring:message code="Invoice.Button.Update" /></button>
+        <button type="submit" class="btn btn-primary" <c:if test="${invoice.recorded == true}">disabled</c:if>><span class="glyphicon glyphicon-pencil"></span><spring:message code="Invoice.Button.Update" /></button>
     </div>
 </form:form>
 <script type="text/javascript">

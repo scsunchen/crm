@@ -18,8 +18,10 @@ public class RequestInvoiceRecordingDTO {
     
     @NotNull(message="{RecordInvoice.IllegalArgument.Client}")
     private Integer clientId;
+    private String clientName;
     @NotNull(message="{RecordInvoice.IllegalArgument.OrgUnit}")
     private Integer orgUnitId;
+    private String orgUnitName;
     @NotBlank(message="{RecordInvoice.IllegalArgument.Document}")
     private String document;
     @NotNull(message="{RecordInvoice.IllegalArgument.JournalEntryDate}")
@@ -46,12 +48,28 @@ public class RequestInvoiceRecordingDTO {
         this.clientId = clientId;
     }
 
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
     public Integer getOrgUnitId() {
         return orgUnitId;
     }
 
     public void setOrgUnitId(Integer orgUnitId) {
         this.orgUnitId = orgUnitId;
+    }
+
+    public String getOrgUnitName() {
+        return orgUnitName;
+    }
+
+    public void setOrgUnitName(String orgUnitName) {
+        this.orgUnitName = orgUnitName;
     }
 
     public String getDocument() {

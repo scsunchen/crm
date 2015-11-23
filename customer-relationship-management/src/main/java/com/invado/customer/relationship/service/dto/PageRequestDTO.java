@@ -16,7 +16,6 @@ public class PageRequestDTO {
 
     private Integer page;
     private final List<SearchCriterion> list = new ArrayList<>();
-    private final SearchCriterion[] listCriteria = new SearchCriterion[20];
 
     public Integer getPage() {
         return page;
@@ -30,15 +29,6 @@ public class PageRequestDTO {
         list.add(s);
     }
 
-    public void addCriterion(SearchCriterion sc) {
-        for (int i = 0; i < listCriteria.length; i++) {
-            if (listCriteria[i] == null) {
-                listCriteria[i] = sc;
-                break;
-            }
-        }
-    }
-
     public List<SearchCriterion> readAllSearchCriterions() {
         return Collections.unmodifiableList(list);
     }
@@ -46,11 +36,6 @@ public class PageRequestDTO {
     public List<SearchCriterion> getList() {
         return list;
     }
-
-    public SearchCriterion[] getListCriteria() {
-        return listCriteria;
-    }
-
 
     public static class SearchCriterion implements Serializable {
 

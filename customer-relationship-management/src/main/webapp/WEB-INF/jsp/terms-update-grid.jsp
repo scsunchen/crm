@@ -17,7 +17,7 @@
     <div class="form-group">
         <label for="partner"><spring:message code="BusinessPartnerTerms.Label.BusinessPartnerName"/></label>
         <form:input id="businessPartner" class="typeahead form-control" 
-                    type="text"   path="businessPartner.name" />
+                    type="text"   path="businessPartner.name"  disabled="true"/>
         <form:input id="businessPartner-hidden" type="hidden" 
                     path="transientPartnerId"/>
     </div>

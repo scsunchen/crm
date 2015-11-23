@@ -32,6 +32,8 @@ import org.springframework.format.annotation.NumberFormat;
 @Table(name = "r_article", schema = "devel")
 @NamedQueries({
 @NamedQuery(name=Article.READ_ALL_ORDERBY_CODE, query = "SELECT x FROM Article x ORDER BY x.code"),
+@NamedQuery(name=Article.READ_BY_CODE_ORDERBY_CODE, 
+        query = "SELECT x FROM Article x WHERE UPPER(x.code) LIKE UPPER(:code) ORDER BY x.code"),
 @NamedQuery(name=Article.READ_BY_DESCRIPTION_ORDERBY_DESCRIPTION, 
         query = "SELECT x FROM Article x WHERE UPPER(x.description) LIKE :desc ORDER BY x.description")
 })
@@ -40,6 +42,7 @@ public class Article implements Serializable {
     public static final String READ_ALL_ORDERBY_CODE = "Article.ReadAllOrderByCode";
     public static final String READ_BY_DESCRIPTION_ORDERBY_DESCRIPTION = 
             "Article.ReadByDescriptionOrderByDescription";
+    public static final String READ_BY_CODE_ORDERBY_CODE = "Article.ReadByCodeOrderByCode";
     private static final long serialVersionUID = 1L;
 
     @Id

@@ -9,7 +9,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
-
+<script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
 <c:if test = "${exception != null}">
     <div class="alert alert-warning">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -39,19 +39,17 @@
                     var="descriptionLabel"/>
     <input:inputField label="${descriptionLabel}" name="description" />        
     <div class="form-group" >
-        <label for="serviceDescription"><spring:message code="ServiceProviderServices.Label.Service" /></label>
+        <label for="serviceCode"><spring:message code="ServiceProviderServices.Label.Service" /></label>
         <c:choose>
                 <c:when test="${action == 'create'}">
-                     <form:input id="serviceDescription" class="typeahead form-control" 
-                                type="text" path="service.description" />
+                     <form:input id="serviceCode" class="typeahead form-control" 
+                                type="text" path="service.code" />
                 </c:when>
                 <c:otherwise>
-                     <form:input id="serviceDescription" class="typeahead form-control" 
-                                type="text" path="service.description" disabled="true" />
+                     <form:input id="serviceCode" class="typeahead form-control" 
+                                type="text" path="service.code" disabled="true" />
                 </c:otherwise>
             </c:choose>
-        <form:input id="serviceDescription-hidden" type="hidden" 
-                    path="service.code"/>
     </div>
     <spring:bind path="dateFrom">
         <div class="form-group row">
@@ -119,13 +117,13 @@
     $('#serviceProvider').bind('typeahead:selected', function (obj, datum, name) {
         $('#serviceProvider-hidden').val(datum['id']);
     });
-    $('#serviceDescription').typeahead({
+    $('#serviceCode').typeahead({
         hint: false,
         highlight: true,
         minLength: 1,
         limit: 1000
     }, {
-        display: 'description',
+        display: 'code',
         source: new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -133,9 +131,9 @@
                 url: '${pageContext.request.contextPath}/service-provider-services/read-item/%QUERY',
                 wildcard: '%QUERY'
             }
-        })
-    });
-    $('#serviceDescription').bind('typeahead:selected', function (obj, datum, name) {
-        $('#serviceDescription-hidden').val(datum['code']);
+        }),
+        templates: {
+            suggestion: Handlebars.compile('<div><strong>{{code}}</strong> &nbsp; {{description}}</div>')
+        }
     });
 </script>

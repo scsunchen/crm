@@ -60,15 +60,25 @@
         <put-attribute name="panel-title" value="Pregled naloga za knjiženje"/>
         <put-attribute name="body" value="/WEB-INF/jsp/journal-entry-table.jsp"/>
     </definition>
-    <definition name="journal-entry-update-master-detail" extends="main-menu-form">
+    <definition name="journal-entry-update-grid" extends="main-menu-form">
         <put-attribute name="head" value=""/>
         <put-attribute name="title" value="Nalog za knjiženje"/>
         <put-attribute name="panel-title" value="Nalog za knjiženje"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/layouts/master-details-form.jsp">
-                <put-attribute name="master-toolbar" value="/WEB-INF/jsp/journal-entry-update-toolbar.jsp" />
-                <put-attribute name="master-grid" value="/WEB-INF/jsp/journal-entry-update-grid.jsp" />
-                <put-attribute name="details-table" value="/WEB-INF/jsp/journal-entry-update-table.jsp" />
+                <put-attribute name="navigation" value="/WEB-INF/jsp/journal-entry-navigator.jsp" />
+                <put-attribute name="content" value="/WEB-INF/jsp/journal-entry-update-grid.jsp" />
+            </definition>
+        </put-attribute>
+    </definition>
+    <definition name="journal-entry-details" extends="main-menu-form">
+        <put-attribute name="head" value=""/>
+        <put-attribute name="title" value="Nalog za knjiženje"/>
+        <put-attribute name="panel-title" value="Nalog za knjiženje"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="navigation" value="/WEB-INF/jsp/journal-entry-navigator.jsp" />
+                <put-attribute name="content" value="/WEB-INF/jsp/journal-entry-details.jsp" />
             </definition>
         </put-attribute>
     </definition>
@@ -112,15 +122,36 @@
         <put-attribute name="panel-title" value="Faktura"/>
         <put-attribute name="body" value="/WEB-INF/jsp/invoice-create-grid.jsp"/>
     </definition>
-    <definition name="invoice-update-master-detail" extends="main-menu-form">
+    <definition name="invoice-record" extends="main-menu-form">
         <put-attribute name="head" value=""/>
         <put-attribute name="title" value="Faktura"/>
         <put-attribute name="panel-title" value="Faktura"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/layouts/master-details-form.jsp">
-                <put-attribute name="master-toolbar" value="/WEB-INF/jsp/invoice-update-master-toolbar.jsp" />
-                <put-attribute name="master-grid" value="/WEB-INF/jsp/invoice-update-master-grid.jsp" />
-                <put-attribute name="details-table" value="/WEB-INF/jsp/invoice-update-details-table.jsp" />
+                <put-attribute name="navigation" value="/WEB-INF/jsp/invoice-navigation.jsp" />
+                <put-attribute name="content" value="/WEB-INF/jsp/invoice-record-grid.jsp" />
+            </definition>
+        </put-attribute>
+    </definition>
+    <definition name="invoice-update" extends="main-menu-form">
+        <put-attribute name="head" value=""/>
+        <put-attribute name="title" value="Faktura"/>
+        <put-attribute name="panel-title" value="Faktura"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="navigation" value="/WEB-INF/jsp/invoice-navigation.jsp" />
+                <put-attribute name="content" value="/WEB-INF/jsp/invoice-update-grid.jsp" />
+            </definition>
+        </put-attribute>
+    </definition>
+    <definition name="invoice-details" extends="main-menu-form">
+        <put-attribute name="head" value=""/>
+        <put-attribute name="title" value="Faktura"/>
+        <put-attribute name="panel-title" value="Faktura"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="navigation" value="/WEB-INF/jsp/invoice-navigation.jsp" />
+                <put-attribute name="content" value="/WEB-INF/jsp/invoice-details-table.jsp" />
             </definition>
         </put-attribute>
     </definition>

@@ -246,7 +246,23 @@ public class MasterDataService {
         } catch(Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(
-                    "MasterDataService.Exception.ReadItemByDescription"),
+                    "MasterDataService.Exception.ReadItem"),
+                    ex);
+        }
+    }
+    
+    @Transactional(readOnly = true)
+    public List<Article> readItemByCode(String code) {
+        try {
+            return dao.createNamedQuery(
+                    Article.READ_BY_CODE_ORDERBY_CODE, 
+                    Article.class)
+                    .setParameter("code", "%"+code+"%")
+                    .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadItem"),
                     ex);
         }
     }

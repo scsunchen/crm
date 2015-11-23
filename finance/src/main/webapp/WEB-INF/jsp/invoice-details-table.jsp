@@ -5,17 +5,21 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="i" tagdir="/WEB-INF/tags" %>
+<link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
+<script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
 <div class="col-lg-12">        
-    <form:form modelAttribute="invoiceItem" method="post" 
-               action="${pageContext.request.contextPath}/invoice/${page}/${invoice.clientId}/${invoice.orgUnitId}/${invoice.document}/addItem.html" >
-        <div class="modal fade" id="dialogAddItem" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
+    <div class="modal fade" id="dialogAddItem" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <form:form modelAttribute="invoiceItem" 
+                       method="POST" 
+                       action="${pageContext.request.contextPath}/invoice/${page}/${itemsPage}/addItem.html" >
                 <div class="modal-content">
                     <div class="modal-body">
-                        <c:if test = "${itemException != null}">
+                        <c:if test = "${addItemException != null}">
                             <div class="alert alert-warning">
                                 <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                ${itemException.message}
+                                ${addItemException.message}
                             </div>
                         </c:if>
                         <form:hidden path="clientId" /> 
@@ -23,10 +27,9 @@
                         <form:hidden path="invoiceDocument" />                         
                         <form:hidden path="invoiceVersion" />                         
                         <div class="form-group" >
-                            <label for="itemDesc"><spring:message code="InvoiceItems.Label.Article" /></label>
-                            <form:input id="itemDesc" class="typeahead form-control" type="text" 
-                                        path="articleDesc" style="margin-bottom:  15px;"/>
-                            <form:hidden id="itemDescHidden" path="articleCode"/>
+                            <label for="itemCode"><spring:message code="InvoiceItems.Label.Article" /></label>
+                            <form:input id="itemCode" class="typeahead form-control" type="text" 
+                                        path="articleCode" style="margin-bottom:  15px;"/>
                         </div>
                         <div class=" row " >                                
                             <spring:bind path="quantity">
@@ -62,14 +65,20 @@
                         <button class="btn btn-primary" type="submit"><spring:message code="Invoice.Button.AddItem" /></button>
                     </div>
                 </div>
-            </div>
+            </form:form> 
         </div>
-        <c:if test="${showDialog}" >
-            <script type="text/javascript">
-                $('#dialogAddItem').modal('show');
-            </script>
-        </c:if>      
-    </form:form>                
+    </div>
+    <c:if test="${showDialog}" >
+        <script type="text/javascript">
+            $('#dialogAddItem').modal('show');
+        </script>
+    </c:if>      
+    <label>${invoice.clientDesc}</label>
+    <label>${invoice.orgUnitDesc}</label>
+    <br/>
+    <label>${invoice.document}</label>
+    <br/>
+    <br/>
     <button data-toggle="modal" data-target="#dialogAddItem" class="btn btn-primary" <c:if test="${invoice.recorded == true}">disabled</c:if>>
         <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoice.Button.AddItem" /></button>
     <br/>
@@ -79,6 +88,7 @@
                 <tr>
                     <th></th>
                     <th><spring:message code="InvoiceItems.Table.Ordinal" /></th>
+                    <th><spring:message code="InvoiceItems.Table.ArticleCode" /></th>
                     <th><spring:message code="InvoiceItems.Table.Article" /></th>
                     <th><spring:message code="InvoiceItems.Table.Quantity" /></th>
                     <th><spring:message code="InvoiceItems.Table.NetPrice" /></th>
@@ -90,32 +100,61 @@
             <tbody>            
                 <c:set var="count" value="0" scope="page" />
                 <c:forEach var="item" items="${items}">
-                <!--DELETE DIALOG********************************************-->
-                <div class="modal fade" id="dialog${item.ordinal}" tabindex="-1" role="dialog" >
+                    <!--DELETE DIALOG********************************************-->
+                <div class="modal fade" id="dialog${item.ordinal}" 
+                     tabindex="-1" role="dialog" >
                     <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">
-                                    <spring:message code="InvoiceItems.Delete.Question" 
-                                                    arguments="${item.ordinal},${item.articleDesc}" />
-                                </h4>
+                        <form method="POST"                          
+                              action="${pageContext.request.contextPath}/invoice/deleteItem.html" >
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        <spring:message code="InvoiceItems.Delete.Question" 
+                                                        arguments="${item.ordinal},${item.articleDesc}" />
+                                    </h4>
+                                    <input type="hidden" value="${item.clientId}" 
+                                           name="clientId" />
+                                    <input type="hidden" value="${item.unitId}" 
+                                           name="unitId" />
+                                    <input type="hidden" 
+                                           value="${item.invoiceDocument}" 
+                                           name="invoiceDocument" />
+                                    <input type="hidden" 
+                                           value="${item.ordinal}" 
+                                           name="ordinal" />
+                                    <input type="hidden" 
+                                           value="${item.invoiceVersion}" 
+                                           name="version" />
+                                    <input type="hidden" 
+                                           value="${page}" 
+                                           name="page" />
+                                    <input type="hidden" 
+                                           value="${itemsPage}" 
+                                           name="itemsPage" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        <spring:message code="Invoice.Button.Cancel" /></button>
+                                    <button type="submit" class="btn btn-danger">
+                                        <spring:message code="Invoice.Button.Delete" />
+                                    </button>
+                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    <spring:message code="Invoice.Button.Cancel" /></button>
-                                <a type="button" class="btn btn-danger" 
-                                   href="${pageContext.request.contextPath}/invoice/${page}/${item.clientId}/${item.unitId}/${item.invoiceDocument}/${item.ordinal}/${invoice.version}/deleteItem.html">Obriši</a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <!--*********************************************************-->
                 <tr>
                     <td>
-                    <button class="btn btn-danger btn-sm" <c:if test="${invoice.recorded == true}">disabled="true"</c:if> data-toggle="modal" data-target="#dialog${item.ordinal}"><span class="glyphicon glyphicon-trash"></span> brisanje</button>
+                        <button class="btn btn-danger btn-sm" <c:if test="${invoice.recorded == true}">disabled="true"</c:if> 
+                                data-toggle="modal" data-target="#dialog${item.ordinal}">
+                            <span class="glyphicon glyphicon-trash"></span> 
+                            <spring:message code="Invoice.Button.DeleteRow" />
+                        </button>
                     </td>
                     <td><spring:eval expression="item.ordinal" /></td>
+                    <td><c:out value="${item.articleCode}"/></td>
                     <td><c:out value="${item.articleDesc}"/></td>
                     <td><spring:eval expression="item.quantity" /></td>
                     <td><spring:eval expression="item.netPrice" /></td>
@@ -127,16 +166,36 @@
             </tbody>
         </table>
     </div>
+    <nav>
+        <ul class="pager pull-right">                       
+            <spring:message code="Invoice.Table.Page" />
+            <li class="<c:if test="${itemsPage == 0}"><c:out value="disabled" /></c:if>">
+                <a href="<c:if test="${itemsPage > 0}">
+                       <c:out value="${pageContext.request.contextPath}/invoice/details.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&page=${page}&itemsPage=${itemsPage-1}" /></c:if>">
+                       <span class="glyphicon glyphicon-backward"></span> 
+                   <spring:message code="Invoice.Table.PrevPage" />
+                </a>
+            </li>
+            <c:out value="${itemsPage+1} od ${numberOfPages+1}" />
+            <li class="<c:if test="${itemsPage == numberOfPages}"><c:out value="disabled"/></c:if>">
+                <a href="<c:if test="${itemsPage < numberOfPages}">
+                       <c:out value="${pageContext.request.contextPath}/invoice/details.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&page=${page}&itemsPage=${itemsPage+1}"/></c:if>" >
+                       <span class="glyphicon glyphicon-forward"></span> 
+                   <spring:message code="Invoice.Table.NextPage" />
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
-                    
-<script type="text/javascript">
-    $('#itemDesc').typeahead({
+
+<script>
+    $('#itemCode').typeahead({
         hint: false,
         highlight: true,
         minLength: 1,
         limit: 1000
     }, {
-        display: 'description',
+        display: 'code',
         source: new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -144,9 +203,9 @@
                 url: '${pageContext.request.contextPath}/invoice/read-item/%QUERY',
                 wildcard: '%QUERY'
             }
-        })
-    });
-    $('#itemDesc').bind('typeahead:selected', function (obj, datum, name) {
-        $('#itemDescHidden').val(datum['code']);
+        }),
+        templates: {
+            suggestion: Handlebars.compile('<div><strong>{{code}}</strong> &nbsp; {{description}}</div>')
+        }
     });
 </script>

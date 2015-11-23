@@ -149,6 +149,18 @@ public class MasterDataService {
                     ex);
         }
     }
+    
+    @Transactional(readOnly = true)
+    public OrgUnit readUnitById(Integer id) {
+        try {
+            return dao.find(OrgUnit.class, id);
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadOrgUnit"),
+                    ex);
+        }
+    }
 
     @Transactional(readOnly = true)
     public List<Client> readClientMinSetByName(String name) {
@@ -225,12 +237,12 @@ public class MasterDataService {
     }
     
     @Transactional(readOnly = true)
-    public List<Article> readItemByDescription(String desc) {
+    public List<Article> readItemByCode(String code) {
         try {
             return dao.createNamedQuery(
-                    Article.READ_BY_DESCRIPTION_ORDERBY_DESCRIPTION, 
+                    Article.READ_BY_CODE_ORDERBY_CODE, 
                     Article.class)
-                    .setParameter("desc", ("%"+desc+"%").toUpperCase())
+                    .setParameter("code", ("%"+code+"%").toUpperCase())
                     .getResultList();
         } catch(Exception ex) {
             LOG.log(Level.WARNING, "", ex);

@@ -151,7 +151,7 @@ public class ServiceProviderServicesController {
 
     @RequestMapping("/service-provider-services/read-item/{query}")
     public @ResponseBody
-    List<Article> readArticleByDescription(@PathVariable String query) {
-        return masterDataService.readItemByDescription(query);
+    List<Article> readArticleByCode(@PathVariable String query) {
+        return masterDataService.readItemByCode(query);
     }
 }

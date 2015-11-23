@@ -2,6 +2,7 @@ package com.invado.customer.relationship.controller;
 
 import com.invado.core.domain.Article;
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.exception.EntityNotFoundException;
 import com.invado.customer.relationship.domain.BusinessPartnerTerms;
 import com.invado.customer.relationship.domain.BusinessPartnerTermsItem;
 import com.invado.customer.relationship.service.BusinessPartnerTermsService;
@@ -59,7 +60,7 @@ public class BusinessPartnerTermsController {
             @PathVariable String page,
             Map<String, Object> model) {
         if (result.hasErrors()) {
-            model.put("action", "create");
+            model.put("page", page);
             return "terms-create-grid";
         }
         try {
@@ -88,10 +89,7 @@ public class BusinessPartnerTermsController {
         BusinessPartnerTerms terms = termsService.read(id);
         model.put("page", page);
         model.put("terms", terms);
-        BusinessPartnerTermsItem itemToAdd = new BusinessPartnerTermsItem(terms, null);
-        itemToAdd.setArticle(new Article());
-        model.put("termsItemToAdd", itemToAdd);
-        return "terms-update-master-detail";
+        return "terms-update-grid";
     }
 
     @RequestMapping(value = "/terms/{page}/{id}/update.html",
@@ -105,25 +103,17 @@ public class BusinessPartnerTermsController {
             throws Exception {
         if (result.hasErrors()) {
             model.put("page", page);            
-            BusinessPartnerTermsItem itemToAdd = new BusinessPartnerTermsItem(item, null);
-            itemToAdd.setArticle(new Article());
-            item.addAll(termsService.read(id).getItems());
             model.put("terms", item);
-            model.put("termsItemToAdd", itemToAdd);
-            return "terms-update-master-detail";
+            return "terms-update-grid";
         } else {
             try {
                 this.termsService.update(item);
                 status.setComplete();
             } catch (Exception ex) {
                 model.put("exception", ex);
-                item.addAll(termsService.read(id).getItems());
                 model.put("page", page);
                 model.put("terms", item);
-                BusinessPartnerTermsItem itemToAdd = new BusinessPartnerTermsItem(item, null);
-                itemToAdd.setArticle(new Article());
-                model.put("termsItemToAdd", itemToAdd);
-                return "terms-update-master-detail";
+                return "terms-update-grid";
             }
         }
         return "redirect:/terms/{page}/{id}/update.html";
@@ -139,61 +129,85 @@ public class BusinessPartnerTermsController {
 
     @RequestMapping("/terms/read-service/{query}")
     public @ResponseBody
-    List<Article> readServiceByDesc(@PathVariable String query) {
-        return masterDataService.readItemByDescription(query);
+    List<Article> readServiceByCode(@PathVariable String query) {
+        return masterDataService.readItemByCode(query);
     }
-
-    @RequestMapping(value = "/terms/{page}/{termsId}/{ordinalNumber}/{termsVersion}/remove-item.html",
+    
+    @RequestMapping(value = "/terms/{page}/{itemsPage}/{termsId}/{ordinalNumber}/{termsVersion}/remove-item.html",
             method = RequestMethod.POST)
     public String deleteItem(@PathVariable Integer termsId,
-            @PathVariable Integer ordinalNumber,
-            @PathVariable Long termsVersion) {
+                             @PathVariable Integer ordinalNumber,
+                             @PathVariable Long termsVersion) {
         termsService.removeItem(termsId, ordinalNumber, termsVersion);
-        return "redirect:/terms/{page}/{termsId}/update.html";
+        return "redirect:/terms/{page}/{itemsPage}/{termsId}/details.html";
     }
-
-    @RequestMapping(value = "/terms/{page}/{termsId}/add-item.html",
+    
+    @RequestMapping(value = "/terms/{page}/{itemsPage}/{termsId}/details.html", 
+                    method = RequestMethod.GET)
+    public String initDetails(
+            @PathVariable Integer page,
+            @PathVariable Integer itemsPage,
+            @PathVariable Integer termsId,
+            Map<String, Object> model)
+            throws Exception {
+        model.put("itemsPage", itemsPage);
+        BusinessPartnerTerms terms = termsService.read(termsId);
+        model.put("page", page);
+        model.put("terms", terms);
+        BusinessPartnerTermsItem item = new BusinessPartnerTermsItem(terms,null);
+        item.setArticle(new Article());
+        model.put("termsItemToAdd", item);
+        PageRequestDTO requestItemPage = new PageRequestDTO();
+        requestItemPage.setPage(itemsPage);
+        requestItemPage.addSearchCriterion(new PageRequestDTO.SearchCriterion("id", termsId));
+        ReadRangeDTO<BusinessPartnerTermsItem> page1 = termsService.readItemsPage(requestItemPage);
+        model.put("items", page1.getData());        
+        model.put("numberOfPages", page1.getNumberOfPages());        
+        return "terms-details";
+    }
+    
+    @RequestMapping(value = "/terms/{page}/{itemsPage}/{termsId}/add-item.html",
             method = RequestMethod.POST)
     public String addItem(
             @ModelAttribute("termsItemToAdd") BusinessPartnerTermsItem item,
             BindingResult result,
             SessionStatus status,
             @PathVariable String page,
-            Map<String, Object> model) {
+            @PathVariable Integer itemsPage,
+            @PathVariable Integer termsId,
+            Map<String, Object> model) throws Exception {
         if (result.hasErrors()) {
             model.put("showDialog", Boolean.TRUE);
             model.put("page", page);
-            try {
-                BusinessPartnerTerms termsToDisplay=termsService.read(
-                        item.getTerms().getId());
-                model.put("terms", termsToDisplay);      
-                item.setTerms(termsToDisplay);
-                model.put("termsItemToAdd", item);
-            }catch(Exception ex) {
-                //DO NOTHING
-            }
-            return "terms-update-master-detail";
+            model.put("itemsPage", itemsPage);
+            BusinessPartnerTerms terms = termsService.read(termsId);
+            model.put("terms", terms);
+            PageRequestDTO requestItemPage = new PageRequestDTO();
+            requestItemPage.setPage(itemsPage);
+            requestItemPage.addSearchCriterion(new PageRequestDTO.SearchCriterion("id", termsId));
+            ReadRangeDTO<BusinessPartnerTermsItem> i = 
+                    termsService.readItemsPage(requestItemPage);
+            model.put("items", i.getData());
+            model.put("numberOfPages", i.getNumberOfPages());
+            return "terms-details";
         }
         try {
             termsService.addItem(item);
             status.setComplete();
-            return "redirect:/terms/{page}/{termsId}/update.html";
+            return "redirect:/terms/{page}/{itemsPage}/{termsId}/details.html";
         } catch (Exception ex) {
             model.put("showDialog", Boolean.TRUE);
             model.put("itemException", ex);
             model.put("page", page);
-            try {
-                BusinessPartnerTerms termsToDisplay=termsService.read(
-                        item.getTerms().getId());
-                model.put("terms", termsToDisplay);                
-                BusinessPartnerTermsItem itemToAdd = new BusinessPartnerTermsItem(termsToDisplay, null);
-                itemToAdd.setArticle(new Article());
-                model.put("termsItemToAdd", itemToAdd);
-            }catch(Exception ex1) {
-                //DO NOTHING
-            }
-            return "terms-update-master-detail";
+            model.put("itemsPage", itemsPage);
+            model.put("terms", termsService.read(termsId));
+            PageRequestDTO requestItemPage = new PageRequestDTO();
+            requestItemPage.setPage(itemsPage);
+            requestItemPage.addSearchCriterion(new PageRequestDTO.SearchCriterion("id", termsId));
+            ReadRangeDTO<BusinessPartnerTermsItem> i = termsService.readItemsPage(requestItemPage);
+            model.put("items", i.getData());
+            model.put("numberOfPages", i.getNumberOfPages());
+            return "terms-details";
         }
     }
-
 }

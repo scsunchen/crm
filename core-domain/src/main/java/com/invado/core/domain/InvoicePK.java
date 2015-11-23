@@ -33,7 +33,22 @@ public class InvoicePK implements Serializable{
     public Integer getOrgUnit() {
         return orgUnit;
     }
-//
+
+    public void setOrgUnit(Integer orgUnit) {
+        this.orgUnit = orgUnit;
+    }
+
+    public void setDocument(String document) {
+        this.document = document;
+    }
+
+    public Integer getClient() {
+        return client;
+    }
+
+    public void setClient(Integer client) {
+        this.client = client;
+    }
 
     @Override
     public int hashCode() {

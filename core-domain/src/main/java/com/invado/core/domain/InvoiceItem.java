@@ -23,21 +23,36 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "r_invoice_item", schema = "devel")
 @IdClass(InvoiceItemPK.class)
-@NamedQueries({@NamedQuery(
+@NamedQueries({
+    @NamedQuery(
         name = InvoiceItem.READ_BY_ARTICLE,
         query = "SELECT x FROM InvoiceItem x WHERE x.article.code = :code"),
-        @NamedQuery(
+    @NamedQuery(
                 name = InvoiceItem.READ_ITEMS_BY_INVOICE_AND_ARTICLE,
                 query = " SELECT x FROM InvoiceItem x " +
                         " WHERE x.invoice.document = :document " +
                         " and x.invoice.orgUnit = :orgUnit " +
                         " and x.invoice.client.id = :clientId " +
-                        " and x.article.code = :code ")
+                        " and x.article.code = :code "),
+    @NamedQuery(
+                name = InvoiceItem.READ_ITEMS_BY_INVOICE,
+                query = " SELECT x FROM InvoiceItem x " +
+                        " WHERE x.invoice.document = :document " +
+                        " and x.invoice.orgUnit = :orgUnit " +
+                        " and x.invoice.client.id = :clientId ORDER BY x.article.description"),
+    @NamedQuery(
+                name = InvoiceItem.COUNT_ITEMS_BY_INVOICE,
+                query = " SELECT COUNT(x) FROM InvoiceItem x " +
+                        " WHERE x.invoice.document = :document " +
+                        " and x.invoice.orgUnit = :orgUnit " +
+                        " and x.invoice.client.id = :clientId")
 })
 public class InvoiceItem implements Serializable, Comparable<InvoiceItem> {
 
     public static final String READ_BY_ARTICLE = "InvoiceItem.GetByArticle";
     public static final String READ_ITEMS_BY_INVOICE_AND_ARTICLE = "InvoiceItem.GetByInvoiceAndArticle";
+    public static final String READ_ITEMS_BY_INVOICE = "InvoiceItem.GetByInvoice";
+    public static final String COUNT_ITEMS_BY_INVOICE = "InvoiceItem.CountByInvoice";
 
     @Id
     @NotNull(message = "{InvoiceItem.Invoice.NotNull}")
@@ -117,9 +132,14 @@ public class InvoiceItem implements Serializable, Comparable<InvoiceItem> {
         return invoice.getClientId();
     }
 
-//    public String getOrgUnitName() {
-//        return invoice.getOrgUnitName();
-//    }
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
 
 
     public String getClientName() {

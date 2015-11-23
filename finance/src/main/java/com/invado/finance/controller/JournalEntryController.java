@@ -39,15 +39,15 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
-import javax.xml.validation.SchemaFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -95,18 +95,7 @@ public class JournalEntryController {
         service.deleteJournalEntry(clientId, typeId, number);
         return "redirect:/journal-entry/{page}";
     }
-
-    @RequestMapping("/journal-entry/{page}/{clientId}/{typeId}/{number}/{ordinal}/{version}/deleteItem.html")
-    public String deleteItem(@PathVariable Integer clientId,
-            @PathVariable Integer typeId,
-            @PathVariable Integer number,
-            @PathVariable Integer ordinal,
-            @PathVariable Long version)
-            throws Exception {
-        itemsService.deleteJournalEntryItem(clientId, typeId, number, ordinal, version);
-        return "redirect:/journal-entry/{page}/{clientId}/{typeId}/{number}/update.html";
-    }
-
+    
     @RequestMapping(value = "/journal-entry/{page}/create.html",
             method = RequestMethod.GET)
     public String initCreateForm(@PathVariable String page,
@@ -144,121 +133,33 @@ public class JournalEntryController {
         }
         return "redirect:/journal-entry/{page}";
     }
-
-    @RequestMapping(value = "/journal-entry/{page}/{clientId}/{typeId}/{number}/update.html",
-            method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable String page,
-            @PathVariable Integer clientId,
-            @PathVariable Integer typeId,
-            @PathVariable Integer number,
-            Map<String, Object> model)
-            throws JournalEntryNotFoundException,
-            PageNotExistsException {
-        JournalEntryDTO master = service.readJournalEntry(clientId,
-                typeId,
-                number);
-        JournalEntryItemDTO dto = new JournalEntryItemDTO();
-        dto.setClientId(clientId);
-        dto.setTypeId(typeId);
-        dto.setJournalEntryNumber(number);
-        model.put("journalEntryItem", dto);
-        return initUpdateFrom(page, master, model);
+    
+    @RequestMapping(value = "/journal-entry/read-orgunit/{name}")
+    public @ResponseBody
+    List<OrgUnit> findOrganizationalUnitByName(@PathVariable String name) {
+        return masterDataservice.readOrgUnitByName(name);
+    }
+    
+    
+    @RequestMapping(value = "/journal-entry/read-businesspartner/{name}")
+    public @ResponseBody
+    List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name) {
+        return masterDataservice.readBusinessPartnerByName(name);
     }
 
-    private String initUpdateFrom(
-            String page,
-            JournalEntryDTO dto,
-            Map<String, Object> model) {
-        model.put("journalEntry", dto);
-        List<JournalEntryItemDTO> items
-                = itemsService.readAllJournalItems(dto.getClientId(),
-                        dto.getTypeId(),
-                        dto.getJournalEntryNumber());
-        model.put("items", items);
-        model.put("page", page);
-        return "journal-entry-update-master-detail";
+    @RequestMapping(value = "/journal-entry/read-description/{name}")
+    public @ResponseBody
+    List<Description> findDescriptionByName(
+            @PathVariable String name) {
+        return masterDataservice.readDescByName(name);
     }
 
-    @RequestMapping(value = "/journal-entry/{page}/{clientId}/{typeId}/{number}/update.html",
-            method = RequestMethod.POST)
-    public String processUpdateForm(
-            @ModelAttribute("journalEntry") JournalEntryDTO entry,
-            BindingResult result,
-            SessionStatus status,
-            @PathVariable String page,
-            Map<String, Object> model) {
-        if (result.hasErrors()) {
-            JournalEntryItemDTO dto = new JournalEntryItemDTO();
-            dto.setClientId(entry.getClientId());
-            dto.setTypeId(entry.getTypeId());
-            dto.setJournalEntryNumber(entry.getJournalEntryNumber());
-            model.put("journalEntryItem", dto);
-            return initUpdateFrom(page, entry, model);
-        }
-        try {
-            service.updateJournalEntry(entry);
-        } catch (JournalEntryNotFoundException | JournalEntryConstraintViolationException | PostedJournalEntryUpdateException | ReferentialIntegrityException | SystemException ex) {
-            model.put("exception", ex);
-            JournalEntryItemDTO dto = new JournalEntryItemDTO();
-            dto.setClientId(entry.getClientId());
-            dto.setTypeId(entry.getTypeId());
-            dto.setJournalEntryNumber(entry.getJournalEntryNumber());
-            model.put("journalEntryItem", dto);
-            return initUpdateFrom(page, entry, model);
-        }
-        return "redirect:/journal-entry/{page}/{clientId}/{typeId}/{number}/update.html";
+    @RequestMapping(value = "/journal-entry/read-account/{number}")
+    public @ResponseBody
+    List<Account> findAccountByNumber(@PathVariable String number) {
+        return masterDataservice.readAccountByCode(number);
     }
-
-    @RequestMapping(value = "/journal-entry/{page}/{clientId}/{typeId}/{number}/{version}/addItem.html",
-            method = RequestMethod.POST)
-    public String addItem(
-            //nemam pojma zasto invoice parametar moram da stavim
-            @ModelAttribute("journalEntry") JournalEntryDTO journalEntry,
-            @ModelAttribute("journalEntryItem") JournalEntryItemDTO item,
-            BindingResult result,
-            SessionStatus status,
-            @PathVariable String page,
-            @PathVariable Long version,
-            Map<String, Object> model) throws Exception {
-        
-        if (result.hasErrors()) {
-            model.put("showDialog", Boolean.TRUE);
-            model.put("journalEntryItem", item);
-            model.put("page", page);
-            model.put("journalEntry", service.readJournalEntry(
-                    item.getClientId(),
-                    item.getTypeId(),
-                    item.getJournalEntryNumber())
-            );
-            model.put("items", itemsService.readAllJournalItems(
-                    item.getClientId(),
-                    item.getTypeId(),
-                    item.getJournalEntryNumber()));
-            return "journal-entry-update-master-detail";
-        }
-        try {
-            String username = "a";
-            item.setUsername(username);
-            itemsService.createJournalEntryItem(item, version);
-            return "redirect:/journal-entry/{page}/{clientId}/{typeId}/{number}/update.html";
-        } catch (Exception ex) {
-            model.put("showDialog", Boolean.TRUE);
-            model.put("journalEntryItem", item);
-            model.put("dialogException", ex);
-            model.put("page", page);
-            model.put("journalEntry", service.readJournalEntry(
-                    item.getClientId(),
-                    item.getTypeId(),
-                    item.getJournalEntryNumber())
-            );
-            model.put("items", itemsService.readAllJournalItems(
-                    item.getClientId(),
-                    item.getTypeId(),
-                    item.getJournalEntryNumber()));
-            return "journal-entry-update-master-detail";
-        }
-    }
-
+    
     @RequestMapping(value = "/journal-entry/{clientId}/{typeId}/{number}/print.html")
     public ResponseEntity<byte[]> showPDF(
             @PathVariable Integer clientId,
@@ -280,7 +181,6 @@ public class JournalEntryController {
                 getPDFFile(report), headers, HttpStatus.OK);
         return response;
         }catch(Exception e) {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+e.getLocalizedMessage());
             e.printStackTrace();
             throw e;
         }
@@ -340,8 +240,8 @@ public class JournalEntryController {
             @PathVariable Integer typeId,
             @PathVariable Integer number)
             throws Exception {
-        
-            JournalEntryReportDTO dto = service.printJournalEntry(clientId,
+
+        JournalEntryReportDTO dto = service.printJournalEntry(clientId,
                 typeId,
                 number);
         JAXBContext context = JAXBContext.newInstance(
@@ -351,9 +251,6 @@ public class JournalEntryController {
         marshaller.setProperty(
                 Marshaller.JAXB_FORMATTED_OUTPUT,
                 Boolean.TRUE
-        );
-        SchemaFactory sf = SchemaFactory.newInstance(
-                W3C_XML_SCHEMA_NS_URI
         );
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         marshaller.marshal(
@@ -368,33 +265,156 @@ public class JournalEntryController {
         ResponseEntity<byte[]> response = new ResponseEntity<>(
                 byteStream.toByteArray(), headers, HttpStatus.OK);
         return response;
+
+    }
+    
+    @RequestMapping(value = "/journal-entry/{page}/{clientId}/{typeId}/{number}/update.html",
+                    method = RequestMethod.GET)
+    public String initUpdateForm(@PathVariable String page,
+            @PathVariable Integer clientId,
+            @PathVariable Integer typeId,
+            @PathVariable Integer number,
+            Map<String, Object> model)
+            throws JournalEntryNotFoundException,
+            PageNotExistsException {
+        JournalEntryDTO journalEntry = service.readJournalEntry(clientId,
+                typeId,
+                number);
+        model.put("journalEntry", journalEntry);
+        model.put("page", page);
+        return "journal-entry-update-grid";
+    }
+
+    @RequestMapping(value = "/journal-entry/{page}/update.html",
+            method = RequestMethod.POST)
+    public String processUpdateForm(
+            @ModelAttribute("journalEntry") JournalEntryDTO entry,
+            BindingResult result,
+            SessionStatus status,
+            @PathVariable String page,
+            Map<String, Object> model) {
+        if (result.hasErrors()) {
+            model.put("page", page);
+            return "journal-entry-update-grid";
+        }
+        try {
+            service.updateJournalEntry(entry);
+        } catch (JournalEntryNotFoundException 
+                | JournalEntryConstraintViolationException 
+                | PostedJournalEntryUpdateException 
+                | ReferentialIntegrityException 
+                | SystemException ex) {
+            model.put("exception", ex);
+            model.put("page", page);
+            return "journal-entry-update-grid";
+        }
+        return String.format("redirect:/journal-entry/{page}/%1$s/%2$s/%3$s/update.html",
+                             entry.getClientId(),
+                             entry.getTypeId(),
+                             entry.getJournalEntryNumber());
+    }
+    
+    @RequestMapping("/journal-entry/{page}/{itemsPage}/{clientId}/{typeId}/{number}/{ordinal}/{version}/deleteItem.html")
+    public String deleteItem(@PathVariable Integer clientId,
+            @PathVariable Integer typeId,
+            @PathVariable Integer number,
+            @PathVariable Integer ordinal,
+            @PathVariable Long version)
+            throws Exception {
+        itemsService.deleteJournalEntryItem(clientId, typeId, number, ordinal, version);
+        return String.format(
+                    "redirect:/journal-entry/{page}/{itemsPage}/%1$s/%2$s/%3$s/details.html",
+                    clientId,
+                    typeId,
+                    number);
+    }
+    
+    @RequestMapping(
+            value = "/journal-entry/{page}/{itemsPage}/{clientId}/{typeId}/{number}/details.html", 
+            method = RequestMethod.GET
+    ) 
+    public String initDetails(@PathVariable Integer clientId,
+                              @PathVariable Integer typeId,
+                              @PathVariable Integer number,
+                              @PathVariable Integer page,
+                              @PathVariable Integer itemsPage,
+                              Map<String, Object> model) 
+                              throws Exception {
+        JournalEntryDTO journalEntry = service.readJournalEntry(clientId,
+                typeId,
+                number);
+        model.put("journalEntry", journalEntry);
+        model.put("page", page);
+        PageRequestDTO itemsPageRequest = new PageRequestDTO(itemsPage);
+        itemsPageRequest.addSearchCriterion("clientId", clientId);
+        itemsPageRequest.addSearchCriterion("journalEntryType", typeId);
+        itemsPageRequest.addSearchCriterion("journalEntryNumber", number);        
+        ReadRangeDTO<JournalEntryItemDTO> items = itemsService
+                .readJournalEntryItemPage(itemsPageRequest);
+        model.put("items", items.getData());
+        model.put("numberOfPages", items.getNumberOfPages());
+        model.put("itemsPage", items.getPage());
+        JournalEntryItemDTO dto = new JournalEntryItemDTO();
+        dto.setClientId(clientId);
+        dto.setTypeId(typeId);
+        dto.setJournalEntryNumber(number);
+        model.put("journalEntryItem", dto); 
+        return "journal-entry-details";
+    }
+    
+    @RequestMapping(value = "/journal-entry/{page}/{itemsPage}/{version}/addItem.html",
+            method = RequestMethod.POST)
+    public String addItem(
+            //nemam pojma zasto invoice parametar moram da stavim
+            @ModelAttribute("journalEntryItem") JournalEntryItemDTO item,
+            BindingResult result,
+            SessionStatus status,
+            @PathVariable String page,
+            @PathVariable String itemsPage,
+            @PathVariable Long version,
+            Map<String, Object> model) throws Exception {
         
+        if (result.hasErrors()) {
+            model.put("showDialog", Boolean.TRUE);
+            model.put("itemsPage", itemsPage);
+            model.put("page", page);
+            model.put("journalEntry", service.readJournalEntry(
+                    item.getClientId(),
+                    item.getTypeId(),
+                    item.getJournalEntryNumber())
+            );
+            model.put("items", itemsService.readAllJournalItems(
+                    item.getClientId(),
+                    item.getTypeId(),
+                    item.getJournalEntryNumber()));
+            return "journal-entry-details";
+        }
+        try {
+            String username = ((User) SecurityContextHolder.getContext()
+                    .getAuthentication().getPrincipal()).getUsername();
+            item.setUsername(username);
+            itemsService.createJournalEntryItem(item, version);
+            return String.format(
+                    "redirect:/journal-entry/{page}/{itemsPage}/%1$s/%2$s/%3$s/details.html",
+                    item.getClientId(),
+                    item.getTypeId(),
+                    item.getJournalEntryNumber());
+        } catch (Exception ex) {
+            model.put("showDialog", Boolean.TRUE);
+            model.put("dialogException", ex);
+            model.put("page", page);
+            model.put("itemsPage", itemsPage);
+            model.put("journalEntry", service.readJournalEntry(
+                    item.getClientId(),
+                    item.getTypeId(),
+                    item.getJournalEntryNumber())
+            );
+            model.put("items", itemsService.readAllJournalItems(
+                    item.getClientId(),
+                    item.getTypeId(),
+                    item.getJournalEntryNumber()));
+            return "journal-entry-details";
+        }
     }
     
-    @RequestMapping(value = "/journal-entry/read-orgunit/{name}")
-    public @ResponseBody
-    List<OrgUnit> findOrganizationalUnitByName(@PathVariable String name) {
-        return masterDataservice.readOrgUnitByName(name);
-    }
-    
-    
-    @RequestMapping(value = "/journal-entry/read-businesspartner/{name}")
-    public @ResponseBody
-    List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name) {
-        return masterDataservice.readBusinessPartnerByName(name);
-    }
-
-    @RequestMapping(value = "/journal-entry/read-description/{name}")
-    public @ResponseBody
-    List<Description> findDescriptionByName(
-            @PathVariable String name) {
-        return masterDataservice.readDescByName(name);
-    }
-
-    @RequestMapping(value = "/journal-entry/read-account/{number}")
-    public @ResponseBody
-    List<Account> findAccountByNumber(@PathVariable String number) {
-        return masterDataservice.readAccountByCode(number);
-    }
-
 }

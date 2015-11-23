@@ -149,8 +149,6 @@ public class BusinessPartnerTermsService {
                 );
             }
             result.setTransientPartnerId(result.getBusinessPartner().getId());
-            //initialize lazy collections of items
-            result.getItemsSize();
             return result;
         } catch (EntityNotFoundException ex) {
             throw ex;
@@ -161,7 +159,72 @@ public class BusinessPartnerTermsService {
                     ex);
         }
     }
+    
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public ReadRangeDTO<BusinessPartnerTermsItem> readItemsPage(PageRequestDTO p)
+                throws PageNotExistsException{
+        Integer id = null;
+        for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
+            if (s.getKey().equals("id")) {
+                id = (Integer) s.getValue();
+            }
+        }
+        try {
+            Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
+            Long countEntities = dao.createNamedQuery(
+                        BusinessPartnerTermsItem.COUNT_TERMS_BY_ID,
+                        Long.class )
+                        .setParameter("termsId", id)
+                        .getSingleResult();
+            Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
+                    ? (countEntities / pageSize - 1) : countEntities / pageSize;
+            Integer pageNumber = p.getPage();
+            if (pageNumber.compareTo(-1) == -1
+                    || pageNumber.compareTo(numberOfPages.intValue()) == 1) {
+                //page number cannot be less than -1 or greater than numberOfPages
+                throw new PageNotExistsException(
+                        Utils.getMessage("BusinessPartnerRelationshipTerms.PageNotExists", pageNumber));
+            }
+            ReadRangeDTO<BusinessPartnerTermsItem> result = new ReadRangeDTO<>();
+            if (pageNumber.equals(-1)) {
+                //if page number is -1 read last page
+                //first BusinessPartnerRelationshipTerms = last page number * BusinessPartnerRelationshipTermss per page
+                int start = numberOfPages.intValue() * pageSize;
+                result.setData(dao.createNamedQuery(
+                        BusinessPartnerTermsItem.READ_TERMS_BY_ID,
+                        BusinessPartnerTermsItem.class )
+                        .setParameter("termsId", id)
+                        .setFirstResult(start)
+                        .setMaxResults(pageSize)
+                        .getResultList()
+                );
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(numberOfPages.intValue());
 
+            } else {
+                result.setData(dao.createNamedQuery(
+                        BusinessPartnerTermsItem.READ_TERMS_BY_ID,
+                        BusinessPartnerTermsItem.class )
+                        .setParameter("termsId", id)
+                        .setFirstResult(p.getPage() * pageSize)
+                        .setMaxResults(pageSize)
+                        .getResultList()
+                );
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(pageNumber);
+            }
+            return result;
+        } catch (PageNotExistsException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "BusinessPartnerRelationshipTerms.PersistenceEx.ReadPage", 
+                    ex)
+            );
+        }
+    }
+    
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ReadRangeDTO<BusinessPartnerTerms> readPage(PageRequestDTO p)
             throws PageNotExistsException {

@@ -20,12 +20,9 @@ import java.util.List;//awt paket ima klasu List!!
 import javax.print.attribute.standard.MediaSize;
 import javax.print.attribute.standard.MediaSizeName;
 import static com.invado.finance.Utils.getMessage;
-import com.invado.finance.domain.journal_entry.ChangeType;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 /**
  *
  * @author bdragan
@@ -349,13 +346,7 @@ public class JournalEntryReport implements Printable,Pageable {
                     rowDrawStart);
             g2d.drawString(nf.format(itemDTO.getDebit()),
                     (float) (pageWidth * 88.25 / 100 - m.stringWidth(nf.format(itemDTO.getDebit()))),
-                    rowDrawStart);
-            g2d.drawString(nf.format(BigDecimal.ZERO),
-                    pageWidth - m.stringWidth(nf.format(BigDecimal.ZERO)),
-                    rowDrawStart);
-            g2d.drawString(nf.format(BigDecimal.ZERO),
-                    (float) (pageWidth * 88.25 / 100 - m.stringWidth(nf.format(BigDecimal.ZERO))),
-                    rowDrawStart);
+                    rowDrawStart);            
             g2d.drawString(nf.format(itemDTO.getCredit()),
                     pageWidth - m.stringWidth(nf.format(itemDTO.getCredit())),
                     rowDrawStart);

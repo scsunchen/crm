@@ -7,7 +7,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="i" tagdir="/WEB-INF/tags" %>
 
-<form:form modelAttribute="journalEntry" method="post" >
+<form:form modelAttribute="journalEntry" method="post" 
+           action="${pageContext.request.contextPath}/journal-entry/${page}/update.html">
     <div class="form-group " >
         <label for="client"><spring:message code="JournalEntry.Label.Client" /></label>
         <form:input id="client" class="form-control" type="text" path="clientName" readonly="true" />

@@ -57,7 +57,7 @@
     </definition>
     <definition name="terms-table" extends="main-menu-form">
         <put-attribute name="title" value="Uslovi poslovanja"/>
-        <put-attribute name="panel-title" value="Uslovi poslovanja"
+        <put-attribute name="panel-title" value="Uslovi poslovanja" />
         <put-attribute name="body" value="/WEB-INF/jsp/terms-table.jsp"/>
     </definition>
     <definition name="terms-create-grid" extends="main-menu-form">
@@ -75,15 +75,25 @@
         <put-attribute name="panel-title" value="Prikaz usluge dobaljača"/>
         <put-attribute name="body" value="/WEB-INF/jsp/service-provider-services-grid.jsp"/>
     </definition>
-    <definition name="terms-update-master-detail" extends="main-menu-form">
+    <definition name="terms-update-grid" extends="main-menu-form">
         <put-attribute name="head" value=""/>
         <put-attribute name="title" value="Uslovi poslovanja"/>
         <put-attribute name="panel-title" value="Uslovi poslovanja"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/layouts/master-details-form.jsp">
-                <put-attribute name="master-toolbar" value="/WEB-INF/jsp/terms-update-master-toolbar.jsp"/>
-                <put-attribute name="master-grid" value="/WEB-INF/jsp/terms-update-master-grid.jsp"/>
-                <put-attribute name="details-table" value="/WEB-INF/jsp/terms-update-details-table.jsp"/>
+                <put-attribute name="navigation" value="/WEB-INF/jsp/terms-navigation.jsp"/>
+                <put-attribute name="content" value="/WEB-INF/jsp/terms-update-grid.jsp"/>
+            </definition>
+        </put-attribute>
+    </definition>
+    <definition name="terms-details" extends="main-menu-form">
+        <put-attribute name="head" value=""/>
+        <put-attribute name="title" value="Uslovi poslovanja"/>
+        <put-attribute name="panel-title" value="Uslovi poslovanja"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="navigation" value="/WEB-INF/jsp/terms-navigation.jsp"/>
+                <put-attribute name="content" value="/WEB-INF/jsp/terms-details-table.jsp"/>
             </definition>
         </put-attribute>
     </definition>
