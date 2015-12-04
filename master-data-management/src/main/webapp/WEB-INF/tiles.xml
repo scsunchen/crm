@@ -25,34 +25,49 @@
     </definition>
 
     <definition name="partner-view" extends="main-menu-form">
-        <put-attribute name="title" value="Merchant"/>
-        <put-attribute name="panel-title" value="Poslovni partner - Merchant"/>
+        <put-attribute name="title" value="Poslovni Partner"/>
+        <put-attribute name="panel-title" value="Poslovni partner"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-table.jsp"/>
     </definition>
     <definition name="partner-grid" extends="main-menu-form">
-        <put-attribute name="title" value="Merchant"/>
-        <put-attribute name="panel-title" value="Unos i ažuriranje merchanta"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/partner-grid.jsp"/>
+        <put-attribute name="title" value="Polsovni Partner"/>
+        <put-attribute name="panel-title" value="Unos i ažuriranje partnera"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="navigation" value="/WEB-INF/jsp/partner-navigation.jsp"/>
+                <put-attribute name="content" value="/WEB-INF/jsp/partner-grid.jsp"/>
+            </definition>
+        </put-attribute>
     </definition>
     <definition name="partner-details-view" extends="main-menu-form">
-        <put-attribute name="title" value="POS"/>
-        <put-attribute name="panel-title" value="Poslovni partner - POS"/>
+        <put-attribute name="title" value="Podređeni partner"/>
+        <put-attribute name="panel-title" value="Poslovni partner - podređeni"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-partner-table.jsp"/>
     </definition>
     <definition name="partner-details-grid" extends="main-menu-form">
-        <put-attribute name="title" value="POS"/>
-        <put-attribute name="panel-title" value="Unos i ažuriranje merchanta"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-partner-grid.jsp"/>
+        <put-attribute name="title" value="Podređeni partner"/>
+        <put-attribute name="panel-title" value="Poslovni partner - podređeni"/>
+        <put-attribute name="body">
+            <definition template="/WEB-INF/layouts/master-details-form.jsp">
+                <put-attribute name="navigation" value="/WEB-INF/jsp/partner-detail-navigation.jsp"/>
+                <put-attribute name="content" value="/WEB-INF/jsp/partner-detail-partner-grid.jsp"/>
+            </definition>
+        </put-attribute>
     </definition>
-    <definition name="partner-contact-details-view" extends="main-menu-form">
-        <put-attribute name="title" value="Kontakti"/>
+    <definition name="business-partner-contact-grid" extends="main-menu-form">
+        <put-attribute name="title" value="POS"/>
         <put-attribute name="panel-title" value="Unosi i ažuriranje kontakta"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-contact-grid.jsp"/>
+    </definition>
+    <definition name="business-partner-contact-view" extends="main-menu-form">
+        <put-attribute name="title" value="Kontakti"/>
+        <put-attribute name="panel-title" value="Kontakti"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-contact-table.jsp"/>
     </definition>
     <definition name="partner-contact-details-grid" extends="main-menu-form">
         <put-attribute name="title" value="POS"/>
-        <put-attribute name="panel-title" value="Unos i ažuriranje merchanta"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-contact-table.jsp"/>
+        <put-attribute name="panel-title" value="Unos i ažuriranje partnera"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-contact-grid.jsp"/>
     </definition>
     <definition name="orgunit-view" extends="main-menu-form">
         <put-attribute name="title" value="Organizaciona celina"/>

@@ -16,5 +16,7 @@ public class BusinessPartnerContactDetails_ {
     public static volatile SingularAttribute<BusinessPartnerContactDetails, LocalDate> dateTo;
     public static volatile SingularAttribute<BusinessPartnerContactDetails, BusinessPartner> merchant;
     public static volatile SingularAttribute<BusinessPartnerContactDetails, BusinessPartner> pointOfSale;
+    public static volatile SingularAttribute<BusinessPartnerContactDetails, Long> version;
+
 }
 

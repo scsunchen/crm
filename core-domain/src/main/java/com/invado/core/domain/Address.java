@@ -44,6 +44,14 @@ public class Address implements Serializable {
         this.street = street;
         this.postCode = postCode;
     }
+
+    public Address(String country, String place, String street, String postCode, String houseNumber) {
+        this.country = country;
+        this.place = place;
+        this.street = street;
+        this.postCode = postCode;
+        this.houseNumber = houseNumber;
+    }
     
     //************************************************************************//    
     // GET/SET METHODS //

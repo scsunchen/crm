@@ -95,7 +95,7 @@ public class MenuFormPreparer implements ViewPreparer {
         modules = new HashSet<>();
         Module finance = new Module();
         finance.setActive(false);
-        finance.setPath("finance");
+        finance.setPath("finance/home");
         finance.setName("Finansije");
         finance.put("Fakturisanje", "Artikal", "/finance/item/0");
         finance.put("Fakturisanje", "Faktura", "/finance/invoice/0");
@@ -105,7 +105,8 @@ public class MenuFormPreparer implements ViewPreparer {
         masterdata.setName("Maticni Podaci");
         masterdata.put("Opsti sifarnici", "Kompanija Korisnik", "/masterdata/client/0");
         masterdata.put("Opsti sifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
-        masterdata.put("Opsti sifarnici", "Poslovni partner", "/masterdata/partner/0?type=MERCHANT");
+        masterdata.put("Opsti sifarnici", "Poslovni partner", "/masterdata/partner/read-page.html?id=&name=&page=0");
+        masterdata.put("Opsti sifarnici", "Kontakti", "/masterdata/contact/0");
         masterdata.put("Opsti sifarnici", "Opstina", "/masterdata/township/0");
         masterdata.put("Opsti sifarnici", "Banka", "/masterdata/bank/0");
         masterdata.put("Opsti sifarnici", "Valuta", "/masterdata/currency/0");

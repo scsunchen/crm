@@ -280,7 +280,7 @@ public class POSTypeService {
         List<Predicate> criteria = new ArrayList<>();
         if (id != null) {
             criteria.add(cb.equal(root.get(POSType_.id),
-                    cb.parameter(Integer.class, "code")));
+                    cb.parameter(Integer.class, "id")));
         }
         if (description != null && description.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(POSType_.description)),
@@ -313,7 +313,7 @@ public class POSTypeService {
         List<Predicate> criteria = new ArrayList<>();
         if (id != null ) {
             criteria.add(cb.equal(root.get(POSType_.id),
-                    cb.parameter(Integer.class, "code")));
+                    cb.parameter(Integer.class, "id")));
         }
         if (description != null && description.isEmpty() == false) {
             criteria.add(cb.like(root.get(POSType_.description),
@@ -324,7 +324,7 @@ public class POSTypeService {
                 .orderBy(cb.asc(root.get(POSType_.id)));
         TypedQuery<POSType> typedQuery = em.createQuery(query);
         if (id != null ) {
-            typedQuery.setParameter("code", id);
+            typedQuery.setParameter("id", id);
         }
         if (description != null && description.isEmpty() == false) {
             typedQuery.setParameter("description", description.toUpperCase() + "%");

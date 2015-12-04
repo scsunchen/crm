@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.validation.Validator;
 
 import javax.persistence.*;
@@ -49,7 +50,7 @@ public class BusinessPartnerContactDetailsService {
 
     @Transactional(rollbackFor = Exception.class)
     public BusinessPartnerContactDetails create(BusinessPartnerContactDetailsDTO a) throws IllegalArgumentException,
-            EntityExistsException, ConstraintViolationException {
+            EntityExistsException, ConstraintViolationException, ContactPartnersOwnersException {
         //check CreateBusinessPartnerContactDetailsPermission
         if (a == null) {
             throw new IllegalArgumentException(
@@ -72,12 +73,21 @@ public class BusinessPartnerContactDetailsService {
             BusinessPartnerContactDetails businessPartnerContactDetails = new BusinessPartnerContactDetails();
             ContactPerson contactPerson = new ContactPerson(a.getName(), a.getPhone(), a.getFunction(), a.getEmail());
             businessPartnerContactDetails.setContactPerson(contactPerson);
-            Address address = new Address(a.getCountry(), a.getPlace(), a.getStreet(), a.getPostCode());
+            Address address = new Address(a.getCountry(), a.getPlace(), a.getStreet(), a.getPostCode(), a.getHouseNumber());
             businessPartnerContactDetails.setAddress(address);
             businessPartnerContactDetails.setDateFrom(LocalDate.now());
-            businessPartnerContactDetails.setMerchant(dao.find(BusinessPartner.class, a.getMerchantId()));
-            businessPartnerContactDetails.setPointOfSale(dao.find(BusinessPartner.class, a.getPointOfSaleId()));
 
+            if (a.getPointOfSaleId() != null) {
+                BusinessPartner pointOfSale = dao.find(BusinessPartner.class, a.getPointOfSaleId());
+                if (a.getMerchantId() != null && a.getMerchantId().intValue() != pointOfSale.getParentBusinessPartner().getId().intValue()) {
+                    throw new ContactPartnersOwnersException(Utils.getMessage("BusinessPartnerContactDetails.PersistenceEx.PartnersMismatch"));
+                } else if (a.getMerchantId() == null) {
+                    businessPartnerContactDetails.setMerchant(dao.find(BusinessPartner.class, pointOfSale.getParentBusinessPartner().getId()));
+                }
+                businessPartnerContactDetails.setPointOfSale(pointOfSale);
+            } else if (a.getMerchantId() != null) {
+                businessPartnerContactDetails.setMerchant(dao.find(BusinessPartner.class, a.getMerchantId()));
+            }
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -86,7 +96,7 @@ public class BusinessPartnerContactDetailsService {
             }
             dao.persist(businessPartnerContactDetails);
             return businessPartnerContactDetails;
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | ContactPartnersOwnersException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -100,7 +110,7 @@ public class BusinessPartnerContactDetailsService {
     public BusinessPartnerContactDetails update(BusinessPartnerContactDetailsDTO dto) throws ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException,
-            IllegalArgumentException{
+            IllegalArgumentException {
         //check UpdateBusinessPartnerContactDetailsPermission
         if (dto == null) {
             throw new IllegalArgumentException(
@@ -131,7 +141,7 @@ public class BusinessPartnerContactDetailsService {
 
             ContactPerson contactPerson = new ContactPerson(dto.getName(), dto.getPhone(), dto.getFunction(), dto.getEmail());
             item.setContactPerson(contactPerson);
-            Address address = new Address(dto.getCountry(), dto.getPlace(), dto.getStreet(), dto.getPostCode());
+            Address address = new Address(dto.getCountry(), dto.getPlace(), dto.getStreet(), dto.getPostCode(), dto.getHouseNumber());
             item.setAddress(address);
             item.setDateFrom(LocalDate.now());
             item.setMerchant(dao.find(BusinessPartner.class, dto.getMerchantId()));
@@ -220,9 +230,10 @@ public class BusinessPartnerContactDetailsService {
             throws PageNotExistsException {
         //TODO : check ReadBusinessPartnerContactDetailsPermission
         Integer id = null;
-        String name = null;
+        String contactName = null;
         Integer merchantId = null;
         Integer pointOfSaleId = null;
+        Integer businessPartnerId  = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("id") && s.getValue() instanceof Integer) {
                 id = (Integer) s.getValue();
@@ -233,14 +244,17 @@ public class BusinessPartnerContactDetailsService {
             if (s.getKey().equals("pointOfSaleId") && s.getValue() instanceof Integer) {
                 pointOfSaleId = (Integer) s.getValue();
             }
-            if (s.getKey().equals("name") && s.getValue() instanceof String) {
-                name = (String) s.getValue();
+            if (s.getKey().equals("contactName") && s.getValue() instanceof String) {
+                contactName = (String) s.getValue();
+            }
+            if (s.getKey().equals("partnerId") && s.getValue() instanceof Integer) {
+                businessPartnerId = (Integer) s.getValue();
             }
         }
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 2).getPageSize();
 
-            Long countEntities = this.count(dao, id, name, merchantId, pointOfSaleId);
+            Long countEntities = this.count(dao, id, contactName, merchantId, pointOfSaleId, businessPartnerId);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             Integer pageNumber = p.getPage();
@@ -256,11 +270,11 @@ public class BusinessPartnerContactDetailsService {
                 //first BusinessPartnerContactDetails = last page number * BusinessPartnerContactDetailss per page
                 int start = numberOfPages.intValue() * pageSize;
 
-                result.setData(convertToDTO(this.search(dao, id, name, merchantId, pointOfSaleId, start, pageSize)));
+                result.setData(convertToDTO(this.search(dao, id, contactName, merchantId, pointOfSaleId, businessPartnerId, start, pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(convertToDTO(this.search(dao, id, name, merchantId, pointOfSaleId,
+                result.setData(convertToDTO(this.search(dao, id, contactName, merchantId, pointOfSaleId, businessPartnerId,
                         p.getPage() * pageSize,
                         pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
@@ -286,43 +300,69 @@ public class BusinessPartnerContactDetailsService {
     }
 
     private Long count(
-            EntityManager EM,
+            EntityManager em,
             Integer id,
-            String name,
+            String contactName,
             Integer merchantId,
-            Integer pointOfSaleId) {
-        CriteriaBuilder cb = EM.getCriteriaBuilder();
+            Integer pointOfSaleId,
+            Integer businessPartnerId) {
+
+
+        BusinessPartner merchant = null;
+        BusinessPartner pointOfSale = null;
+        BusinessPartner businessPartner = null;
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<BusinessPartnerContactDetails> root = c.from(BusinessPartnerContactDetails.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
+
         if (id != null) {
             criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.id),
                     cb.parameter(Integer.class, "id")));
         }
         if (merchantId != null) {
-            BusinessPartner merchant = dao.find(BusinessPartner.class, merchantId);
+            merchant = dao.find(BusinessPartner.class, merchantId);
             criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.merchant),
                     cb.parameter(BusinessPartner.class, "merchant")));
         }
         if (pointOfSaleId != null) {
-            BusinessPartner pointOfSale = dao.find(BusinessPartner.class, pointOfSaleId);
+            pointOfSale = dao.find(BusinessPartner.class, pointOfSaleId);
             criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.pointOfSale),
                     cb.parameter(BusinessPartner.class, "pointOfSale")));
         }
-        if (name != null && name.isEmpty() == false) {
+        if (contactName != null && contactName.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(BusinessPartnerContactDetails_.contactPerson.getName())),
-                    cb.parameter(String.class, "name")));
+                    cb.parameter(String.class, "contactName")));
+        }
+        if (businessPartnerId != null){
+            businessPartner = dao.find(BusinessPartner.class, businessPartnerId);
+            if (businessPartner.getParentBusinessPartner() == null){
+                merchant = dao.find(BusinessPartner.class, businessPartnerId);
+                criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.merchant),
+                        cb.parameter(BusinessPartner.class, "merchant")));
+            }else{
+                pointOfSale = dao.find(BusinessPartner.class, businessPartnerId);
+                criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.pointOfSale),
+                        cb.parameter(BusinessPartner.class, "pointOfSale")));
+            }
         }
 
-
         c.where(cb.and(criteria.toArray(new Predicate[0])));
-        TypedQuery<Long> q = EM.createQuery(c);
+        TypedQuery<Long> q = em.createQuery(c);
+
         if (id != null) {
             q.setParameter("id", id);
         }
-        if (name != null && name.isEmpty() == false) {
-            q.setParameter("name", name.toUpperCase() + "%");
+        if (pointOfSale != null) {
+            q.setParameter("pointOfSale", pointOfSale);
+        }
+        if (merchant != null) {
+            q.setParameter("merchant", merchant);
+        }
+        if (contactName != null && contactName.isEmpty() == false) {
+            q.setParameter("contactName", contactName.toUpperCase() + "%");
         }
 
 
@@ -331,29 +371,50 @@ public class BusinessPartnerContactDetailsService {
 
     private List<BusinessPartnerContactDetails> search(EntityManager em,
                                                        Integer id,
-                                                       String name,
+                                                       String contactName,
                                                        Integer merchantId,
                                                        Integer pointOfSaleId,
+                                                       Integer businessPartnerId,
                                                        int first,
                                                        int pageSize) {
+        BusinessPartner pointOfSale = null;
+        BusinessPartner merchant = null;
+        BusinessPartner businessPartner = null;
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<BusinessPartnerContactDetails> query = cb.createQuery(BusinessPartnerContactDetails.class);
         Root<BusinessPartnerContactDetails> root = query.from(BusinessPartnerContactDetails.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
+        if (id != null) {
+            criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.id),
+                    cb.parameter(Integer.class, "id")));
+        }
         if (merchantId != null) {
-            BusinessPartner merchant = dao.find(BusinessPartner.class, merchantId);
+            merchant = dao.find(BusinessPartner.class, merchantId);
             criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.merchant),
                     cb.parameter(BusinessPartner.class, "merchant")));
         }
         if (pointOfSaleId != null) {
-            BusinessPartner pointOfSale = dao.find(BusinessPartner.class, pointOfSaleId);
+            pointOfSale = dao.find(BusinessPartner.class, pointOfSaleId);
             criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.pointOfSale),
                     cb.parameter(BusinessPartner.class, "pointOfSale")));
         }
-        if (name != null && name.isEmpty() == false) {
+        if (contactName != null && contactName.isEmpty() == false) {
             criteria.add(cb.like(root.get(BusinessPartnerContactDetails_.contactPerson.getName()),
-                    cb.parameter(String.class, "name")));
+                    cb.parameter(String.class, "contactName")));
+        }
+
+        if (businessPartnerId != null){
+            businessPartner = dao.find(BusinessPartner.class, businessPartnerId);
+            if (businessPartner.getParentBusinessPartner() == null){
+                merchant = dao.find(BusinessPartner.class, businessPartnerId);
+                criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.merchant),
+                        cb.parameter(BusinessPartner.class, "merchant")));
+            }else{
+                pointOfSale = dao.find(BusinessPartner.class, businessPartnerId);
+                criteria.add(cb.equal(root.get(BusinessPartnerContactDetails_.pointOfSale),
+                        cb.parameter(BusinessPartner.class, "pointOfSale")));
+            }
         }
 
         query.where(criteria.toArray(new Predicate[0]))
@@ -362,8 +423,14 @@ public class BusinessPartnerContactDetailsService {
         if (id != null) {
             typedQuery.setParameter("id", id);
         }
-        if (name != null && name.isEmpty() == false) {
-            typedQuery.setParameter("name", name.toUpperCase() + "%");
+        if (pointOfSale != null) {
+            typedQuery.setParameter("pointOfSale", pointOfSale);
+        }
+        if (merchant != null) {
+            typedQuery.setParameter("merchant", merchant);
+        }
+        if (contactName != null && contactName.isEmpty() == false) {
+            typedQuery.setParameter("contactName", contactName.toUpperCase() + "%");
         }
 
         typedQuery.setFirstResult(first);
@@ -374,11 +441,12 @@ public class BusinessPartnerContactDetailsService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<BusinessPartnerContactDetailsDTO> readAll(
             Integer id,
-            String name,
+            String contactName,
             Integer merchantId,
-            Integer pointOfSaleId) {
+            Integer pointOfSaleId,
+            Integer businesspartnerId) {
         try {
-            return convertToDTO(this.search(dao, id, name, merchantId, pointOfSaleId, 0, 0));
+            return convertToDTO(this.search(dao, id, contactName, merchantId, pointOfSaleId, businesspartnerId, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

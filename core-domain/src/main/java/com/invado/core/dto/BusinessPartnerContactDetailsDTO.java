@@ -11,8 +11,9 @@ public class BusinessPartnerContactDetailsDTO {
     private Integer id;
     private String country;
     private String place;
-    private String street;
     private String postCode;
+    private String street;
+    private String houseNumber;
     private String name;
     private String phone;
     private String email;
@@ -55,6 +56,14 @@ public class BusinessPartnerContactDetailsDTO {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
     public String getPostCode() {

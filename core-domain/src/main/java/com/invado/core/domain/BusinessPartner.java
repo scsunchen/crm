@@ -25,6 +25,8 @@ import org.hibernate.validator.constraints.NotBlank;
                 query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name ORDER BY x.name"),
         @NamedQuery(name = BusinessPartner.READ_POINT_OF_SALE_BY_NAME_ORDERBY_NAME,
                 query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name AND x.type = 1 ORDER BY x.name"),
+        @NamedQuery(name = BusinessPartner.READ_MERCHANT_BY_NAME_ORDERBY_NAME,
+                query = "SELECT x FROM BusinessPartner x WHERE UPPER(x.name) LIKE :name AND x.type = 0 ORDER BY x.name"),
         @NamedQuery(name = BusinessPartner.READ_POINT_OF_SALE_BY_ID,
                 query = "SELECT x FROM BusinessPartner x WHERE id LIKE :id AND x.type = 1"),
         @NamedQuery(name = BusinessPartner.READ_SERVICE_PROVIDER_BY_NAME_ORDERBY_NAME,
@@ -47,6 +49,7 @@ public class BusinessPartner implements Serializable {
     public static final String READ_GENERAL_NAME_ORDERBY_NAME = "BusinessPartner.ReadGeneralPartnerByName";
     public static final String READ_SERVICE_PROVIDER_BY_ID = "BusinessPartner.ReadGeneralPartnerById";
     public static final String READBY_NAME_TYPE_ORDERBY_NAME = "BusinessPartner.ReadByNameAndTypeOrderByName";
+    public static final String READ_MERCHANT_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadMerchantByName";
 
     @TableGenerator(
             name = "PartnerTab",
@@ -368,6 +371,7 @@ public class BusinessPartner implements Serializable {
             businessPartnerDTO.setPlace(this.getAddress().getPlace());
             businessPartnerDTO.setStreet(this.getAddress().getStreet());
             businessPartnerDTO.setPostCode(this.getPostCode());
+            businessPartnerDTO.setHouseNumber(this.getAddress().getHouseNumber());
         }
         businessPartnerDTO.setCurrentAccount(this.getCurrentAccount());
         businessPartnerDTO.setName(this.getName());
@@ -385,6 +389,7 @@ public class BusinessPartner implements Serializable {
         }
 
         businessPartnerDTO.setType(this.getType());
+        businessPartnerDTO.setTypeDescription(this.getType().getDescription());
         businessPartnerDTO.setLatitude(this.getLatitude());
         businessPartnerDTO.setLongitude(this.getLongitude());
         if (this.getTelekomId() != null)

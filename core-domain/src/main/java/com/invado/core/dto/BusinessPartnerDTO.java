@@ -1,6 +1,7 @@
 package com.invado.core.dto;
 
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.domain.POSType;
 
 /**
  * Created by Nikola on 12/08/2015.
@@ -19,8 +20,9 @@ public class BusinessPartnerDTO {
     private String currencyDesignation;
     private String country;
     private String place;
-    private String street;
     private String postCode;
+    private String street;
+    private String houseNumber;
     private String currentAccount;
     private String name;
     private Integer rebate;
@@ -29,16 +31,22 @@ public class BusinessPartnerDTO {
     private String contactPersoneName;
     private String contactPersonePhone;
     private String contactPersoneFunction;
+    private POSType POStype;
+    private String posTypeId;
+    private String postTypeName;
     private Integer parentBusinessPartnerId;
+    private String parentBusinesspartnerName;
     private BusinessPartner.Type type;
     private String typeValue;
     private String typeDescription;
     private Integer longitude;
     private Integer latitude;
-    private String parentBusinesspartnerName;
     private String namePattern;
     private Integer telekomId;
 
+
+    public BusinessPartnerDTO() {
+    }
 
     public Integer getId() {
         return id;
@@ -142,6 +150,14 @@ public class BusinessPartnerDTO {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
     public String getPostCode() {
@@ -279,6 +295,30 @@ public class BusinessPartnerDTO {
 
     public void setNamePattern(String namePattern) {
         this.namePattern = namePattern;
+    }
+
+    public POSType getPOStype() {
+        return POStype;
+    }
+
+    public void setPOStype(POSType POStype) {
+        this.POStype = POStype;
+    }
+
+    public String getPosTypeId() {
+        return posTypeId;
+    }
+
+    public void setPosTypeId(String posTypeId) {
+        this.posTypeId = posTypeId;
+    }
+
+    public String getPostTypeName() {
+        return postTypeName;
+    }
+
+    public void setPostTypeName(String postTypeName) {
+        this.postTypeName = postTypeName;
     }
 
     public Integer getTelekomId() {

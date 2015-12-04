@@ -25,6 +25,7 @@ public class BusinessPartner_ {
     public static volatile SingularAttribute<BusinessPartner, ContactPerson> contactPerson;
     public static volatile SingularAttribute<BusinessPartner, BusinessPartner> parentBusinessPartner;
     public static volatile SingularAttribute<BusinessPartner, BusinessPartner.Type> type;
+    public static volatile SingularAttribute<BusinessPartner, POSType> posType;
     public static volatile SingularAttribute<BusinessPartner, Integer> longitude;
     public static volatile SingularAttribute<BusinessPartner, Integer> latitude;
     public static volatile SingularAttribute<BusinessPartner, Integer> telekomId;

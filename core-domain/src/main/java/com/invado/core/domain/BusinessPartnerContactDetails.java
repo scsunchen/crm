@@ -17,7 +17,6 @@ import java.time.LocalDate;
 public class BusinessPartnerContactDetails {
 
 
-
     @TableGenerator(
             name = "PartnerContactsTab",
             table = "id_generator",
@@ -71,7 +70,7 @@ public class BusinessPartnerContactDetails {
     }
 
     public void setAddress(Address address) {
-        address = address;
+        this.address = address;
     }
 
     public LocalDate getDateFrom() {
@@ -114,24 +113,32 @@ public class BusinessPartnerContactDetails {
         this.version = version;
     }
 
-    public BusinessPartnerContactDetailsDTO getDTO(){
+    public BusinessPartnerContactDetailsDTO getDTO() {
         BusinessPartnerContactDetailsDTO businessPartnerContactDetailsDTO = new BusinessPartnerContactDetailsDTO();
 
         businessPartnerContactDetailsDTO.setId(this.getId());
         businessPartnerContactDetailsDTO.setDateTo(this.dateTo);
         businessPartnerContactDetailsDTO.setDateFrom(this.dateFrom);
-        businessPartnerContactDetailsDTO.setCountry(this.address.getCountry());
-        businessPartnerContactDetailsDTO.setPlace(this.address.getPlace());
-        businessPartnerContactDetailsDTO.setPostCode(this.address.getPostCode());
-        businessPartnerContactDetailsDTO.setStreet(this.address.getStreet());
-        businessPartnerContactDetailsDTO.setName(this.contactPerson.getName());
-        businessPartnerContactDetailsDTO.setPhone(this.contactPerson.getPhone());
-        businessPartnerContactDetailsDTO.setEmail(this.contactPerson.getEmail());
-        businessPartnerContactDetailsDTO.setFunction(this.contactPerson.getFunction());
-        businessPartnerContactDetailsDTO.setMerchantId(this.getMerchant().getId());
-        businessPartnerContactDetailsDTO.setMerchantName(this.getMerchant().getName());
-        businessPartnerContactDetailsDTO.setPointOfSaleId(this.getPointOfSale().getId());
-        businessPartnerContactDetailsDTO.setPointOfSaleName(this.getPointOfSale().getName());
+        if (this.address != null) {
+            businessPartnerContactDetailsDTO.setCountry(this.address.getCountry());
+            businessPartnerContactDetailsDTO.setPlace(this.address.getPlace());
+            businessPartnerContactDetailsDTO.setPostCode(this.address.getPostCode());
+            businessPartnerContactDetailsDTO.setStreet(this.address.getStreet());
+        }
+        if (this.contactPerson != null) {
+            businessPartnerContactDetailsDTO.setName(this.contactPerson.getName());
+            businessPartnerContactDetailsDTO.setPhone(this.contactPerson.getPhone());
+            businessPartnerContactDetailsDTO.setEmail(this.contactPerson.getEmail());
+            businessPartnerContactDetailsDTO.setFunction(this.contactPerson.getFunction());
+        }
+        if (this.merchant != null) {
+            businessPartnerContactDetailsDTO.setMerchantId(this.getMerchant().getId());
+            businessPartnerContactDetailsDTO.setMerchantName(this.getMerchant().getName());
+        }
+        if (this.pointOfSale != null) {
+            businessPartnerContactDetailsDTO.setPointOfSaleId(this.getPointOfSale().getId());
+            businessPartnerContactDetailsDTO.setPointOfSaleName(this.getPointOfSale().getName());
+        }
         businessPartnerContactDetailsDTO.setVersion(this.getVersion());
 
         return businessPartnerContactDetailsDTO;

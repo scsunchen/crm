@@ -38,7 +38,7 @@ public class BusinessPartnerController {
     @Inject
     private TelekomWSClient telekomWSClient;
 
-
+/*
     @RequestMapping(value = "/partner/{page}")
     public String showItems(@PathVariable Integer page,
                             @RequestParam(value = "id", required = false) String id, @RequestParam(value = "name", required = false) String name,
@@ -90,7 +90,7 @@ public class BusinessPartnerController {
         model.put("selectedName", new String());
         model.put("numberOfPages", items.getNumberOfPages());
 
-        return "Izvrsio se kontakti";
+        return "partner-contact-details-view";
     }
 
     @RequestMapping(value = "/partner/details/{page}", params = "documents")
@@ -193,7 +193,7 @@ public class BusinessPartnerController {
 
     @RequestMapping(value = "/partner/{page}/update/{id}",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") BusinessPartnerDTO item,
+    public String processUpdateForm(@ModelAttribute("item") BusinessPartnerDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -238,8 +238,23 @@ public class BusinessPartnerController {
     @RequestMapping(value = "/partner/read-partner/{name}")
     public
     @ResponseBody
-    List<BusinessPartner> findItemByDescription(@PathVariable String name) {
+    List<BusinessPartner> findPartnerByName(@PathVariable String name) {
         return service.readPartnerByName(name);
     }
 
+    @RequestMapping(value = "/partner/read-merchant/{name}")
+    public
+    @ResponseBody
+    List<BusinessPartner> findMerchantByName(@PathVariable String name) {
+        return service.readMerchantByName(name);
+    }
+
+    @RequestMapping(value = "/partner/read-pos/{name}")
+    public
+    @ResponseBody
+    List<BusinessPartner> findPointOfSaleByName(@PathVariable String name, @RequestParam("merchantId") Integer merchantId) {
+        System.out.println(merchantId);
+        return service.readPointOfSaleByName(name);
+    }
+*/
 }

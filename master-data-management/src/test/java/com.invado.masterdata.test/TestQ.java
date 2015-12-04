@@ -1,6 +1,7 @@
 package com.invado.masterdata.test;
 
 import com.invado.core.exception.ConstraintViolationException;
+import com.invado.masterdata.service.exception.ContactPartnersOwnersException;
 import telekomWS.client.ServiceClient;
 import com.invado.core.domain.Currency;
 import com.invado.core.dto.BusinessPartnerContactDetailsDTO;
@@ -57,7 +58,7 @@ public class TestQ{
 
 
 @Test
-    public void testCreateExcangeRate() throws EntityExistsException, ConstraintViolationException, IllegalArgumentException {
+    public void testCreateExcangeRate() throws EntityExistsException, ConstraintViolationException, IllegalArgumentException, ContactPartnersOwnersException {
 
     ExchangeRateDTO exchangeRateDTO = new ExchangeRateDTO();
 
@@ -76,7 +77,7 @@ public class TestQ{
 }
 
     @Test
-    public void testCreateContacts() throws EntityExistsException, ConstraintViolationException, IllegalArgumentException {
+    public void testCreateContacts() throws EntityExistsException, ConstraintViolationException, IllegalArgumentException, ContactPartnersOwnersException {
 
         BusinessPartnerContactDetailsDTO dto = new BusinessPartnerContactDetailsDTO();
         dto.setDateFrom(LocalDate.now());

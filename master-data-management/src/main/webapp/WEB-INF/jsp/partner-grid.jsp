@@ -11,12 +11,20 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-<form:form modelAttribute="item" method="post" >
+<form:form modelAttribute="item" method="post">
     <input:alert message="${message}" alertType="${alertType}"/>
     <fieldset class="col-lg-12">
         <div class="form-group">
             <div class="col-lg-4">
-                <div><h1><c:out value="${item.typeDescription}"/></h1></div>
+                <spring:bind path="type">
+                    <div class="form-group">
+                        <label for="type">Tip partnera</label>
+                        <form:select path="type" id="type" class="form-control" itemLabel="type">
+                            <form:option value="${item.type}">${item.typeDescription}</form:option>
+                            <form:options items="${types}" itemLabel="description"/>
+                        </form:select>
+                    </div>
+                </spring:bind>
                 <input:inputField label="Šifra *" name="id" disabled="true"/>
                 <spring:bind path="name">
                     <div>
@@ -40,14 +48,64 @@
                     </div>
                 </spring:bind>
             </div>
+
             <div class="col-lg-4">
-                <input:inputField name="country" label="Država"/>
-                <input:inputField name="place" label="Mesto"/>
-                <input:inputField name="street" label="Ulica i broj"/>
-                <input:inputField name="postCode" label="Poštanski Broj"/>
-                <input:inputField label="Telefon" name="phone"/>
-                <input:inputField label="Fax" name="fax"/>
-                <input:inputField label="email" name="EMail"/>
+                <nav class="nav navbar-default">
+                    </br>
+                    <div class="col-lg-12">
+                        <spring:bind path="country">
+                            <div class="form-group">
+                                <label for="country"><spring:message
+                                        code="BusinessPartnerContacts.Table.State"/></label>
+                                <form:input id="country" path="country" class="form-control"/>
+                                <span class="help-inline"><c:if test="${status.error}"><c:out
+                                        value="${status.errorMessage}"/></c:if></span>
+                            </div>
+                        </spring:bind>
+                    </div>
+                    <div class="col-lg-9">
+                        <spring:bind path="place">
+                            <div class="form-group">
+                                <label for="place"><spring:message code="BusinessPartnerContacts.Table.Place"/></label>
+                                <form:input id="place" path="place" class="form-control"/>
+                                <span class="help-inline"><c:if test="${status.error}"><c:out
+                                        value="${status.errorMessage}"/></c:if></span>
+                            </div>
+                        </spring:bind>
+                    </div>
+                    <div class="col-lg-3">
+                        <spring:bind path="postCode">
+                            <div class="form-group">
+                                <label for="postCode"><spring:message
+                                        code="BusinessPartnerContacts.Table.ZipCode"/></label>
+                                <form:input id="place" path="postCode" class="form-control"/>
+                                <span class="help-inline"><c:if test="${status.error}"><c:out
+                                        value="${status.errorMessage}"/></c:if></span>
+                            </div>
+                        </spring:bind>
+                    </div>
+                    <spring:bind path="street">
+                        <div class="form-group col-lg-10">
+                            <label for="street"><spring:message code="BusinessPartnerContacts.Table.Street"/></label>
+                            <form:input id="street" path="street" class="form-control"/>
+                                <span class="help-inline"><c:if test="${status.error}"><c:out
+                                        value="${status.errorMessage}"/></c:if></span>
+                        </div>
+                    </spring:bind>
+                    <spring:bind path="houseNumber">
+                        <div class="form-group col-lg-2">
+                            <label for="houseNumber"><spring:message
+                                    code="BusinessPartnerContacts.Table.HouseNumber"/></label>
+                            <form:input id="houseNumber" path="houseNumber" class="form-control"/>
+                                <span class="help-inline"><c:if test="${status.error}"><c:out
+                                        value="${status.errorMessage}"/></c:if></span>
+                        </div>
+                    </spring:bind>
+                </nav>
+
+                <input:inputField name="phone" label="Telefon"/>
+                <input:inputField name="fax" label="Fax"/>
+                <input:inputField name="EMail" label="email"/>
             </div>
             <div class="col-lg-4">
                 <input:inputField label="Šifra delatnosti" name="activityCode"/>
@@ -77,7 +135,6 @@
         </div>
     </fieldset>
     <div class="form-group">
-        <a class="btn btn-primary" href="/masterdata/partner/0?type=${pageContext.request.getParameter("type")}">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">

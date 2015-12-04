@@ -3,61 +3,87 @@
     Created on : May 8, 2015, 10:07:23 AM
     Author     : Bobic Dragan
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<nav class="navbar navbar-default">
+
+
+<nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] == null}">hidden</c:if>>
+    </br>
     <div class="container-fluid">
-        <h1>${param['masterPartnerId']} ${param['masterPartnerName']}</h1>
+        <div class="navbar-header">
+            <c:choose>
+                <c:when test="${param['pointOfSaleId'] == null}">
+                    <a class="btn btn-default"
+                       href="${pageContext.request.contextPath}/partner/update.html?id=${param['masterPartnerId']}&name=${param['masterPartnerName']}&page=${param['page']}">
+                        <span class="glyphicon glyphicon-backward"></span>
+                        <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
+                </c:when>
+                <c:otherwise>
+                    <a class="btn btn-default"
+                       href="${pageContext.request.contextPath}/partner/update-details.html?id=${param['masterPartnerId']}&name=${param['masterPartnerName']}&page=${param['page']}">
+                        <span class="glyphicon glyphicon-backward"></span>
+                        <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
+            <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
     </div>
 </nav>
-<form:form role="search" modelAttribute="businessPartnerDTO" method="GET"
-           action="${pageContext.request.contextPath}/partner/0">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <br/>
-            <!-- Pretraživanje poslovnih partnera -->
-            <form:input id="type-hidden" type="hidden" path="typeValue"/>
+<nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] != null}">hidden</c:if>>
+    <br/>
+    <!-- Pretraživanje merchant...pos... -->
+    <form:form role="search" method="GET" modelAttribute="filterObjectsList"
+               action="${pageContext.request.contextPath}/contact/0">
+        <c:forEach var="businessPartnerDTOs" items="${filterObjectsList.businessPartnerDTOs}" varStatus="status">
             <div class="form-group col-lg-4">
-                <form:input id="businessPartner" class="typeahead form-control"
-                            placeholder="Naziv poslovnog partnera..." type="text" path="name"/>
-                <form:input id="businessPartner-hidden" type="hidden"
-                            path="id"/>
+                <c:if test="${status.index  == 0}">
+                    <form:input id="merchant" class="typeahead form-control"
+                                placeholder="Merchant..." type="text" path="businessPartnerDTOs[${status.index}].name"/>
+                    <form:input id="merchant-hidden" type="hidden"
+                                path="businessPartnerDTOs[${status.index}].id"/>
+                </c:if>
+                <c:if test="${status.index == 1}">
+                    <form:input id="pointOfSale" class="typeahead form-control"
+                                placeholder="POS..." type="text" path="businessPartnerDTOs[${status.index}].name"/>
+                    <form:input id="pointOfSale-hidden" type="hidden"
+                                path="businessPartnerDTOs[${status.index}].id"/>
+                </c:if>
+
             </div>
-            <div class="col-lg-4">
-                <button type="submit" class="btn btn-primary"><span class=" glyphicon glyphicon-search"></span></button>
-            </div>
-            <!-- /.navbar-collapse -->
+        </c:forEach>
+        <div class="col-lg-4">
+            <button type="submit" class="btn btn-primary"><span class=" glyphicon glyphicon-search"></span></button>
         </div>
-        <!-- /.container-fluid -->
-    </nav>
-</form:form>
+    </form:form>
+</nav>
+
+
 <div class="table-responsive">
 
     <table class="table table-striped">
         <thead>
         <tr>
-            <th><a class="btn btn-primary" href="/masterdata/partnercontacts/${page}/create"><span
+            <th><a class="btn btn-primary"
+                   href="/masterdata/contact/create.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}"><span
                     class="glyphicon glyphicon-plus"></span>
                 Kreiraj</a></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Name"/></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Phone"/></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Email"/></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Position"/></th>
-            <th><spring:message code="BusinessPartnerContacts.Table.State"/></th>
-            <th><spring:message code="BusinessPartnerContacts.Table.Place"/></th>
-            <th><spring:message code="BusinessPartnerContacts.Table.ZipCode"/></th>
-            <th><spring:message code="BusinessPartnerContacts.Table.Street"/></th>
-            <th><spring:message code="BusinessPartnerContacts.Table.HouseNumber"/></th>
+            <th><spring:message code="BusinessPartnerContacts.Table.Address"/></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Merchant"/></th>
             <th><spring:message code="BusinessPartnerContacts.Table.POS"/></th>
         </tr>
         </thead>
         <tbody>
         <c:set var="count" value="0" scope="page"/>
-        <c:forEach var="contactItem" items="${contactData}">
+        <c:forEach var="contactItem" items="${data}">
             <!-- Modal -->
             <div class="modal fade" id="dialog${count}" tabindex="-1" role="dialog"
                  aria-labelledby="myModalLabel" aria-hidden="true">
@@ -72,7 +98,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
                             <a type="button" class="btn btn-danger"
-                               href="${page}/${contactItem.id}/delete.html">Obriši</a>
+                               href="/masterdata/contact/delete.html?id=${contactItem.id}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">Obriši</a>
                         </div>
                     </div>
                 </div>
@@ -80,64 +106,47 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="${page}/update/${item.id}" class="btn btn-primary"><span
+                        <a href="/masterdata/contact/create.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}"
+                           class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                                 class="glyphicon glyphicon-trash"></span> brisanje
                         </button>
                     </div>
                 </td>
-                <td><c:out value="${contactItem.contactPerson.name}"/></td>
-                <td><c:out value="${contactItem.contactPerson.phone}"/></td>
-                <td><c:out value="${contactItem.contactPerson.email}"/></td>
-                <td><c:out value="${contactItem.contactPerson.function}"/>/td>
-                <td><c:out value="${contactItem.contactPerson.country}"/></td>
-                <td><c:out value="${contactItem.contactPerson.place}"/></td>
-                <td><c:out value="${contactItem.contactPerson.postCode}"/></td>
-                <td><c:out value="${contactItem.contactPerson.street}"/></td>
-                <td><c:out value="${contactItem.contactPerson.houseNumber}"/></td>
-                <td><c:out value="${contactItem.merchant.name}"/></td>
-                <td><c:out value="${contactItem.merchant.poinOfSlae}"/></td>
+                <td><c:out value="${contactItem.name}"/></td>
+                <td><c:out value="${contactItem.phone}"/></td>
+                <td><c:out value="${contactItem.email}"/></td>
+                <td><c:out value="${contactItem.function}"/></td>
+                <td><c:out
+                        value="${contactItem.country}, ${contactItem.place} ${contactItem.postCode}, ${contactItem.street} ${contactItem.houseNumber}"/></td>
+                <td><c:out value="${contactItem.merchantName}"/></td>
+                <td><c:out value="${contactItem.pointOfSaleName}"/></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>
         </tbody>
     </table>
 </div>
-<div role="tabpanel" class="tab-pane" id="profile">
-    <div class="list-group">
-        <a href="#" class="list-group-item">
-            <h4 class="list-group-item-heading">text</h4>
 
-            <p class="list-group-item-text">opis</p>
-        </a>
-        <a href="#" class="list-group-item">
-            <h4 class="list-group-item-heading">text</h4>
-
-            <p class="list-group-item-text">opis</p>
-        </a>
-    </div>
-</div>
-
-</div>
 <nav>
     <ul class="pager pull-right">
         Strana
-        <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${page - 1}?type=${bussinesPartnerDTO.type}&name=${bussinesPartnerDTO.name}&id=${bussinesPartnerDTO.id}" /></c:if>">
+        <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${page - 1}??masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page - 1}"/></c:if>">
                 <span class="glyphicon glyphicon-backward"></span> Prethodna
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}?type=${bussinesPartnerDTO.type}&name=${bussinesPartnerDTO.name}&id=${bussinesPartnerDTO.id}"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${page - 1}??masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page + 1}"/></c:if>">
                 <span class="glyphicon glyphicon-forward"></span> Naredna
             </a>
         </li>
     </ul>
 </nav>
 <script type="text/javascript">
-    $('#businessPartner').typeahead({
+    $('#merchant').typeahead({
         highlight: true,
         minLength: 1
     }, {
@@ -146,15 +155,30 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/partner/read-partner/%QUERY',
+                url: '${pageContext.request.contextPath}/partner/read-merchant/%QUERY',
                 wildcard: '%QUERY'
             }
         })
     });
-    $('#businessPartner').bind('typeahead:selected', function (obj, datum, name) {
-        console.log("obj " + obj);
-        console.log("datum " + datum);
-        console.log("name " + name);
-        $('#businessPartner-hidden').val(datum['id']);
+    $('#merchant').bind('typeahead:selected', function (obj, datum, name) {
+
+        $('#merchant-hidden').val(datum['id']);
+    });
+    $('#pointOfSale').typeahead({
+        highlight: true,
+        minLength: 1
+    }, {
+        display: 'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/read-pos/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#pointOfSale').bind('typeahead:selected', function (obj, datum, name) {
+        $('#pointOfSale-hidden').val(datum['id']);
     });
 </script>

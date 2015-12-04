@@ -8,13 +8,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+
 <nav class="navbar navbar-default">
+    </br>
     <div class="container-fluid">
-        <h1>${param['masterPartnerId']} ${param['masterPartnerName']}</h1>
+        <div class="navbar-header">
+            <a class="btn btn-default"
+               href="${pageContext.request.contextPath}/partner/update.html?id=${param['masterPartnerId']}&name=${param['masterPartnerName']}&page=${param['page']}">
+                <span class="glyphicon glyphicon-backward"></span>
+                <spring:message code="BusinessPartnerDetails.Button.Back"/></a></div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
+           <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
     </div>
 </nav>
-<form:form role="search" modelAttribute="businessPartnerDTO" method="GET"
-           action="${pageContext.request.contextPath}/partner/0">
+
+<form:form role="search" modelAttribute="businessPartnerDTO" method="POST"
+           action="${pageContext.request.contextPath}/partner/read-subpartners.html?type=${param['type']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <br/>
@@ -39,18 +49,17 @@
         <thead>
         <tr>
             <th><a class="btn btn-primary"
-                   href="/masterdata/partner/${page}/create?type=${param['type']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}"><span
+                   href="/masterdata/partner/create-detail.html?type=${param['type']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}"><span
                     class="glyphicon glyphicon-plus"></span>
                 Kreiraj</a></th>
             <th><spring:message code="BusinessPartner.Table.CompaniIDNumber"/></th>
             <th><spring:message code="BusinessPartner.Table.Name"/></th>
-            <th><spring:message code="BusinessPartner.Table.Name1"/></th>
             <th><spring:message code="BusinessPartner.Table.Address"/></th>
             <th><spring:message code="BusinessPartner.Table.Phone"/></th>
             <th><spring:message code="BusinessPartner.Table.eMail"/></th>
             <th><spring:message code="BusinessPartner.Table.BankAccount"/></th>
             <th><spring:message code="BusinessPartner.Table.ContactPerson"/></th>
-            <th></th>
+            <th><spring:message code="BusinessPartner.Table.Type"/></th>
         </tr>
         </thead>
         <tbody>
@@ -77,9 +86,8 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="${page}/update/${item.id}?type=${pageContext.request.getParameter("type")}"
-                           class="btn btn-primary"><span
-                                class="glyphicon glyphicon-search"></span> pregled</a>
+                        <a href="update-subpartner.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&id=${item.id}&page=${param['page']}" class="btn btn-primary">
+                           <span class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                                 class="glyphicon glyphicon-trash"></span> brisanje
                         </button>
@@ -87,17 +95,13 @@
                 </td>
                 <td><c:out value="${item.companyIdNumber}"/></td>
                 <td><c:out value="${item.name}"/></td>
-                <td><c:out value="${item.name1}"/></td>
-                <td class="form-inline">
-                    <c:out value="${item.country}"/>
-                    <c:out value="${item.place}"/>
-                    <c:out value="${item.street}"/>
-                    <c:out value="${item.postCode}"/>
-                </td>
+                <td><c:out
+                        value="${item.country} ${item.place} ${item.postCode} ${item.street} ${item.houseNumber}"/></td>
                 <td><c:out value="${item.phone}"/></td>
                 <td><c:out value="${item.EMail}"/></td>
                 <td><c:out value="${item.currentAccount}"/></td>
                 <td><c:out value="${item.contactPersoneName}"/></td>
+                <td><c:out value="${item.typeDescription}"/></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>
@@ -108,13 +112,13 @@
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${page - 1}?type=${bussinesPartnerDTO.type}&name=${bussinesPartnerDTO.name}&id=${bussinesPartnerDTO.id}" /></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="?type=${param['type']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page - 1}" /></c:if>">
                 <span class="glyphicon glyphicon-backward"></span> Prethodna
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}?type=${bussinesPartnerDTO.type}&name=${bussinesPartnerDTO.name}&id=${bussinesPartnerDTO.id}"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="?type=${param['type']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page + 1}"/></c:if>">
                 <span class="glyphicon glyphicon-forward"></span> Naredna
             </a>
         </li>
