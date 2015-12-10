@@ -31,18 +31,18 @@
     <class>com.invado.finance.domain.journal_entry.JournalEntryItem</class>
     <class>com.invado.finance.domain.journal_entry.PartnerSpecification</class>
     <!-- ***************CRM**************************************************-->
-    <class>com.invado.customer.relationship.domain.DeviceStatus</class>
-    <class>com.invado.customer.relationship.domain.Device</class>
+    <class>com.invado.core.domain.DeviceStatus</class>
+    <class>com.invado.core.domain.Device</class>
     <class>com.invado.customer.relationship.domain.BusinessPartnerTerms</class>
     <class>com.invado.customer.relationship.domain.BusinessPartnerTermsItem</class>
     <class>com.invado.customer.relationship.domain.Transaction</class>
-    <class>com.invado.customer.relationship.domain.Device</class>
-    <class>com.invado.customer.relationship.domain.DeviceHolderPartner</class>
-    <class>com.invado.customer.relationship.domain.DeviceStatus</class>
+    <class>com.invado.core.domain.Device</class>
+    <class>com.invado.core.domain.DeviceHolderPartner</class>
+    <class>com.invado.core.domain.DeviceStatus</class>
     <class>com.invado.customer.relationship.domain.TransactionType</class>
     <class>com.invado.customer.relationship.domain.ServiceProviderServices</class>
-    <class>com.invado.customer.relationship.domain.ConnectionType</class>
+    <class>com.invado.core.domain.ConnectionType</class>
     <class>com.invado.core.domain.POSType</class>
-    <class>com.invado.customer.relationship.domain.PrepaidRefillType</class>
+    <class>com.invado.core.domain.PrepaidRefillType</class>
   </persistence-unit>
 </persistence>

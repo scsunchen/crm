@@ -6,6 +6,7 @@
 package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.domain.Client;
 import com.invado.core.domain.LocalDateConverter;
 import com.invado.customer.relationship.Utils;
 import java.io.Serializable;
@@ -78,6 +79,7 @@ public class BusinessPartnerTerms implements Serializable {
     private Long version;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "terms")
     private List<BusinessPartnerTermsItem> items = new ArrayList<>();
+
     @Transient
     private Integer transientPartnerId;
     
@@ -175,7 +177,8 @@ public class BusinessPartnerTerms implements Serializable {
     public List<BusinessPartnerTermsItem> getItems() {
         return Collections.unmodifiableList(items);
     }
-    
+
+
     @Override
     public int hashCode() {
         int hash = 5;

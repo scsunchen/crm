@@ -131,6 +131,9 @@ public class Client implements Serializable {
     @Column(name = "bank_account")
     @Size(max = 50, message = "{Company.BankAccount.Size}")
     private String bankAccount;
+    @Column(name = "invoicing_type")
+    private InovicingType inovicingType;
+
 
     @Transient
     private String bankCreditor;
@@ -343,6 +346,14 @@ public class Client implements Serializable {
         this.employee = employee;
     }
 
+    public InovicingType getInovicingType() {
+        return inovicingType;
+    }
+
+    public void setInovicingType(InovicingType inovicingType) {
+        this.inovicingType = inovicingType;
+    }
+
     public ClientDTO getDTO() {
 
         ClientDTO clientDTO = new ClientDTO();
@@ -373,6 +384,7 @@ public class Client implements Serializable {
         clientDTO.setBankId(this.getBank().getId());
         clientDTO.setBankName(this.getBank().getName());
         clientDTO.setBankAccount(this.getBankAccount());
+        clientDTO.setInovicingType(this.inovicingType);
 
         return clientDTO;
 
@@ -404,6 +416,15 @@ public class Client implements Serializable {
     @Override
     public String toString() {
         return "Client{id=" + id + '}';
+    }
+
+
+
+    public enum InovicingType {
+
+        OUTPUT,
+        INPUT_OUTPUT
+
     }
 
 

@@ -34,6 +34,8 @@ public class InvoiceItemDTO {
     private String username;
     private char[] password;
     private Long invoiceVersion;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private BigDecimal returnValue;
 
 
     public Integer getClientId() {
@@ -156,5 +158,11 @@ public class InvoiceItemDTO {
         this.invoiceVersion = invoiceVersion;
     }
 
+    public BigDecimal getReturnValue() {
+        return returnValue;
+    }
 
+    public void setReturnValue(BigDecimal returnValue) {
+        this.returnValue = returnValue;
+    }
 }

@@ -5,7 +5,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @StaticMetamodel(InvoiceItem.class)
-public class InvoiceItem_ { 
+public class InvoiceItem_ {
 
     public static volatile SingularAttribute<InvoiceItem, Invoice> invoice;
     public static volatile SingularAttribute<InvoiceItem, Integer> ordinal;
@@ -18,5 +18,6 @@ public class InvoiceItem_ {
     public static volatile SingularAttribute<InvoiceItem, BigDecimal> totalCost;
     public static volatile SingularAttribute<InvoiceItem, BigDecimal> rabatPercent;
     public static volatile SingularAttribute<InvoiceItem, BigDecimal> quantity;
+    public static volatile SingularAttribute<InvoiceItem, BigDecimal> returnValue;
 
 }

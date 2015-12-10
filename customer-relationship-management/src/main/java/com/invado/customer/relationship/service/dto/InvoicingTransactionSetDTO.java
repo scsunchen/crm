@@ -38,7 +38,7 @@ public class InvoicingTransactionSetDTO {
     @NativeQueryResultColumn(index=11)
     private Integer treminalId;
     @NativeQueryResultColumn(index=12)
-    private String treminalName;
+    private String terminalName;
     @NativeQueryResultColumn(index=13)
     private Integer rownum;
 
@@ -100,12 +100,12 @@ public class InvoicingTransactionSetDTO {
         this.treminalId = treminalId;
     }
 
-    public String getTreminalName() {
-        return treminalName;
+    public String getTerminalName() {
+        return terminalName;
     }
 
-    public void setTreminalName(String treminalName) {
-        this.treminalName = treminalName;
+    public void setTerminalName(String terminalName) {
+        this.terminalName = terminalName;
     }
 
     public Integer getServiceId() {
@@ -157,6 +157,6 @@ public class InvoicingTransactionSetDTO {
     }
 
     public String toString(){
-        return getDistributorId()+" / "+getDistributorName()+" / "+getMerchantId()+" / "+getMerchantName()+" / "+getTreminalName();
+        return getDistributorId()+" / "+getDistributorName()+" / "+getMerchantId()+" / "+getMerchantName()+" / "+ getTerminalName();
     }
 }

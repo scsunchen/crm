@@ -1,13 +1,7 @@
 package com.invado.masterdata.controller;
 
-import com.invado.core.domain.BusinessPartner;
-import com.invado.core.domain.BusinessPartnerContactDetails;
-import com.invado.core.domain.Currency;
-import com.invado.core.domain.POSType;
-import com.invado.core.dto.BusinessPartnerContactDetailsDTO;
-import com.invado.core.dto.BusinessPartnerDTO;
-import com.invado.core.dto.CurrencyDTO;
-import com.invado.core.dto.POSTypeDTO;
+import com.invado.core.domain.*;
+import com.invado.core.dto.*;
 import com.invado.finance.service.PartnerSpecificationByDate;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.*;
@@ -43,6 +37,10 @@ public class BPController {
     private CurrencyService currencyService;
     @Inject
     private BusinessPartnerContactDetailsService contactDetailsService;
+    @Inject
+    private DeviceService deviceService;
+    @Inject
+    private DeviceHolderPartnerService deviceHolderPartnerService;
 
 
     @RequestMapping(value = "/partner/read-page.html", method = RequestMethod.GET)
@@ -72,6 +70,8 @@ public class BPController {
         return "partner-view";
     }
 
+
+    /* PODREDJENI POSLOVNI PARTNERI */
     @RequestMapping(value = "/partner/read-subpartners.html", method = RequestMethod.GET)
     public String showDetailItems(@RequestParam Integer page,
                                   @RequestParam(value = "masterPartnerId", required = false) Integer id,
@@ -126,11 +126,11 @@ public class BPController {
         return "partner-details-view";
     }
 
-
+    /*KONTAKTI*/
     @RequestMapping(value = "/partner/read-contactsdetals-page.html", method = RequestMethod.GET)
     public String showDetailContacts(@RequestParam Integer page,
                                      @RequestParam(value = "type", required = false) String type,
-                                     @RequestParam(value = "pointOfSaleId", required = false) Integer posId,
+                                     @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
                                      @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
                                      @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
                                      @RequestParam(value = "contactName", required = false) String contactName,
@@ -139,9 +139,11 @@ public class BPController {
 
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerId", masterPartnerId));
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerName", masterPartnerName));
+        if (pointOfSaleId == null) {
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerId", masterPartnerId));
+        } else {
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerId", pointOfSaleId));
+        }
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("contactName", contactName));
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("type", type));
         businessPartnerDTO.setTypeValue(type);
@@ -156,6 +158,28 @@ public class BPController {
 
         return "business-partner-contact-view";
     }
+
+    /* TERMINALI */
+    @RequestMapping(value = "/partner/read-deviceholderdetails-page.html", method = RequestMethod.GET)
+    public String showDetailDeviceHolder(@RequestParam Integer page,
+                                     @RequestParam(value = "type", required = false) String type,
+                                     @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                     @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                     @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                     Map<String, Object> model) throws Exception {
+
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerId", pointOfSaleId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("type", type));
+        ReadRangeDTO<DeviceHolderPartnerDTO> items = deviceHolderPartnerService.readPage(request);
+
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+
+        return "business-partner-device-view";
+    }
+
 
     @RequestMapping(value = "/partner/create.html", method = RequestMethod.GET)
     public String initCreateForm(@RequestParam Integer page,
@@ -330,14 +354,14 @@ public class BPController {
             status.setComplete();
         }
 
-        return "redirect:/partner/read-subpartners.html?posId="+item.getId()+"&masterPartnerId="+item.getParentBusinessPartnerId()+"&masterPartnerName="+item.getParentBusinesspartnerName()+"&page=0";
+        return "redirect:/partner/read-subpartners.html?posId=" + item.getId() + "&masterPartnerId=" + item.getParentBusinessPartnerId() + "&masterPartnerName=" + item.getParentBusinesspartnerName() + "&page=0";
     }
 
     @RequestMapping(value = "partner/registerMerchant")
     public String processTelekomMerchantRegistration(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
         item.setTelekomId(telekomWSClient.merchatnRegistration(item));
-        this.service.update(item);
+        service.update(item);
 
         return "partner-grid";
     }
@@ -346,7 +370,7 @@ public class BPController {
     public String processTelekomMerchantUpdate(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
         item.setTelekomId(telekomWSClient.merchantUpdate(item));
-        this.service.update(item);
+        service.update(item);
 
         return "partner-grid";
     }
@@ -374,6 +398,7 @@ public class BPController {
         return service.readMerchantByName(name);
     }
 
+
     @RequestMapping(value = "/partner/read-pos/{name}")
     public
     @ResponseBody
@@ -382,6 +407,20 @@ public class BPController {
         return service.readPointOfSaleByName(name);
     }
 
+    @RequestMapping(value = "/partner/read-all-pos/{name}")
+    public
+    @ResponseBody
+    List<BusinessPartner> findPointOfSaleByName(@PathVariable String name) {
+        return service.readPointOfSaleByName(name);
+    }
+
+    @RequestMapping(value = "/partner/read-device/{name}")
+    public
+    @ResponseBody
+    List<Device> findDeviceByCusotmCode(@PathVariable String name) {
+        System.out.println("izvrsava se kontroler");
+        return deviceService.readDeviceByCustomCodeAnassigned(name);
+    }
 }
 
 

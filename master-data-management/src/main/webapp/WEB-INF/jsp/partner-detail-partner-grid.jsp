@@ -17,7 +17,7 @@
         <div class="form-group">
             <div class="col-lg-6">
 
-                <input:inputField label="Šifra *" name="id" disabled="true"/>
+                <input:inputField label="Šifra detail *" name="id" disabled="true"/>
 
                 <spring:bind path="type">
                     <div class="form-group">

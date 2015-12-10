@@ -1,9 +1,9 @@
-package com.invado.customer.relationship.controller;
+package com.invado.masterdata.controller;
 
 import com.invado.core.dto.DeviceStatusDTO;
-import com.invado.customer.relationship.service.DeviceStatusService;
-import com.invado.customer.relationship.service.dto.PageRequestDTO;
-import com.invado.customer.relationship.service.dto.ReadRangeDTO;
+import com.invado.masterdata.service.DeviceStatusService;
+import com.invado.masterdata.service.dto.PageRequestDTO;
+import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

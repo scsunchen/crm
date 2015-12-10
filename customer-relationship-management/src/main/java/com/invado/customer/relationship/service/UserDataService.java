@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invado.finance.service;
+package com.invado.customer.relationship.service;
 import com.invado.core.domain.ApplicationUser;
 import com.invado.core.domain.Role;
 import java.util.ArrayList;

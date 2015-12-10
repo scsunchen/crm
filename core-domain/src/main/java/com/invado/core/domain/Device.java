@@ -1,7 +1,5 @@
-package com.invado.customer.relationship.domain;
+package com.invado.core.domain;
 
-import com.invado.core.domain.Article;
-import com.invado.core.domain.LocalDateConverter;
 import com.invado.core.dto.DeviceDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,12 +16,15 @@ import java.time.LocalDate;
         @NamedQuery(name = Device.READ_BY_SERIAL_NUMBER,
                 query = "SELECT x FROM Device x WHERE UPPER(x.serialNumber) LIKE  :serialNumber"),
         @NamedQuery(name = Device.READ_BY_CUSTOM_CODE,
-                query = "SELECT x FROM Device x WHERE UPPER(x.customCode) LIKE :name ORDER BY x.customCode")
+                query = "SELECT x FROM Device x WHERE UPPER(x.customCode) LIKE :name ORDER BY x.customCode"),
+        @NamedQuery(name = Device.READ_BY_CUSTOM_CODE_ANASSIGNED,
+                query = "SELECT x FROM Device x WHERE UPPER(x.customCode) LIKE :name and x.id not in (select y.id from DeviceHolderPartner y) ORDER BY x.customCode ")
 })
 public class Device implements Serializable {
 
     public static final String READ_BY_SERIAL_NUMBER = "Device.ReadBySerialNumber";
     public static final String READ_BY_CUSTOM_CODE = "Device.ReadByCustomCode";
+    public static final String READ_BY_CUSTOM_CODE_ANASSIGNED = "Device.ReadByCustomCodeAnassigned";
 
     @TableGenerator(
             name = "DeviceTab",

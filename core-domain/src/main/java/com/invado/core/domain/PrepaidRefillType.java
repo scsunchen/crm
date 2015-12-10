@@ -1,4 +1,4 @@
-package com.invado.customer.relationship.domain;
+package com.invado.core.domain;
 
 import com.invado.core.domain.BusinessPartner;
 
@@ -29,4 +29,28 @@ public class PrepaidRefillType {
     @JoinColumn(name = "SERVICE_PROVIDER_ID")
     private BusinessPartner serviceProvider;
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BusinessPartner getServiceProvider() {
+        return serviceProvider;
+    }
+
+    public void setServiceProvider(BusinessPartner serviceProvider) {
+        this.serviceProvider = serviceProvider;
+    }
 }

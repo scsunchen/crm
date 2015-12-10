@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Controller
 public class BusinessPartnerContactController {
-    @Autowired
+    @Inject
     private BusinessPartnerContactDetailsService service;
     @Inject
     private BPService bpService;
@@ -58,11 +58,17 @@ public class BusinessPartnerContactController {
 
     @RequestMapping(value = "/contact/create.html", method = RequestMethod.GET)
     public String initCreateForm(@RequestParam String page,
+                                 @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
                                  @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
                                  @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
                                  Map<String, Object> model) {
         BusinessPartnerContactDetailsDTO businessPartnerContactDetailsDTO = new BusinessPartnerContactDetailsDTO();
-        BusinessPartnerDTO businessPartner = bpService.read(masterPartnerId);
+        BusinessPartnerDTO businessPartner = null;
+        if (pointOfSaleId != null) {
+            businessPartner = bpService.read(pointOfSaleId);
+        } else {
+            businessPartner = bpService.read(masterPartnerId);
+        }
         if (businessPartner.getParentBusinessPartnerId() != null) {
             businessPartnerContactDetailsDTO.setMerchantId(businessPartner.getParentBusinessPartnerId());
             businessPartnerContactDetailsDTO.setMerchantName(businessPartner.getParentBusinesspartnerName());
@@ -107,9 +113,13 @@ public class BusinessPartnerContactController {
         return "redirect:/partner/read-contactsdetals-page.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&page=" + 0;
     }
 
-    @RequestMapping(value = "/contact/{page}/update/{code}",
+    @RequestMapping(value = "/contact/update.html",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable Integer id,
+    public String initUpdateForm(@RequestParam String page,
+                                 @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                 @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                 @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                 @RequestParam(value = "id") Integer id,
                                  Map<String, Object> model)
             throws Exception {
         BusinessPartnerContactDetailsDTO item = service.read(id).getDTO();
@@ -117,7 +127,7 @@ public class BusinessPartnerContactController {
         return "business-partner-contact-grid";
     }
 
-    @RequestMapping(value = "/contact/{page}/update/{code}",
+    @RequestMapping(value = "/contact/update.html",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") BusinessPartnerContactDetailsDTO item,
                                       BindingResult result,
@@ -130,6 +140,6 @@ public class BusinessPartnerContactController {
             this.service.update(item);
             status.setComplete();
         }
-        return "redirect:/contact/{page}";
+        return "redirect:/contact/update.html";
     }
 }

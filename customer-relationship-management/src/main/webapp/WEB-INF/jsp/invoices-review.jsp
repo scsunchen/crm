@@ -24,6 +24,7 @@
             <th><spring:message code="Invoice.Table.CreditDebitRelationDate" /></th>
             <th><spring:message code="Invoice.Table.InvoiceDate" /></th>
             <th><spring:message code="Invoice.Table.TotalAmount" /></th>
+            <th><spring:message code="Invoice.Table.ReturnValue" /></th>
         </tr>
         </thead>
         <tbody>
@@ -45,6 +46,7 @@
                 <td><spring:eval expression="invoice.value.creditRelationDate" /></td>
                 <td><spring:eval expression="invoice.value.invoiceDate" /></td>
                 <td><spring:eval expression="invoice.value.totalAmount"/> </td>
+                <td><spring:eval expression="invoice.value.returnValue"/></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>

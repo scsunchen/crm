@@ -41,7 +41,7 @@
     </c:if>
 </form:form>
 <form:form role="search" modelAttribute="transactionDTO" method="GET"
-           action="${pageContext.request.contextPath}/invoicing/0">
+           action="${pageContext.request.contextPath}/in-transactions.html">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <br/>
@@ -49,70 +49,71 @@
             <div class="col-md-4 right">
                 <input:inputDate name="invoicingDate" placeholder="Datum do... (dd.mm.yyyy.)"/>
             </div>
-             <div class="col-md-4">
-                    <form:input id="distributorName" class="typeahead form-control" type="text"
-                                path="distributorName" style="margin-bottom:  15px;" placeholder="Distributor..."/>
-                    <form:hidden id="distributorIdHidden" path="distributorId"/>
-                </div>
-                <button type="submit" class="btn btn-default">Pretraga</button>
+            <div class="col-md-4">
+                <form:input id="distributorName" class="typeahead form-control" type="text"
+                            path="distributorName" style="margin-bottom:  15px;" placeholder="Distributor..."/>
+                <form:hidden id="distributorIdHidden" path="distributorId"/>
+                <form:input id="type-hidden" type="hidden" path="page" value="0"/>
+            </div>
+            <button type="submit" class="btn btn-default">Pretraga</button>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
 </form:form>
-    <div class="table-responsive">
-        <table class="table table-striped" data-sort-name="item.distributorName">
-            <thead>
+<div class="table-responsive">
+    <table class="table table-striped" data-sort-name="item.distributorName">
+        <thead>
+        <tr>
+            <th>Merchant</th>
+            <th>POS</th>
+            <th>Terminal</th>
+            <th>Servis</th>
+            <th>Iznos</th>
+            <th>Distributor</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="count" value="0" scope="page"/>
+        <c:forEach var="item" items="${data}">
+            <!-- Modal -->
             <tr>
-                <th>Distributor</th>
-                <th>Merchant</th>
-                <th>Usluga</th>
-                <th>Iznos za fakturisanje</th>
+                <td><c:out value="${item.merchantName}"/></td>
+                <td><c:out value="${item.posName}"/></td>
+                <td><c:out value="${item.terminalName}"/></td>
+                <td><c:out value="${item.serviceDescription}"/></td>
+                <td><spring:eval expression="item.amount"/></td>
+                <td><c:out value="${item.distributorName}"/></td>
+
             </tr>
-            </thead>
-            <tbody>
-            <c:set var="count" value="0" scope="page"/>
-            <c:forEach var="item" items="${data}">
-                <!-- Modal -->
-                <tr>
-                    <td hidden><c:out value="${item.distributorId}"/></td>
-                    <td><c:out value="${item.distributorName}"/></td>
-                    <td hidden><c:out value="${item.merchantId}"/></td>
-                    <td><c:out value="${item.merchantName}"/></td>
-                    <td hidden><c:out value="${item.serviceId}"/></td>
-                    <td hidden><c:out value="${item.articleCode}"/></td>
-                    <td><c:out value="${item.serviceDescription}"/></td>
-                    <td><spring:eval expression="item.amount"/></td>
+            <c:set var="count" value="${count + 1}" scope="page"/>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<nav>
+    <ul class="pager pull-left">
+        <button data-toggle="modal" data-target="#dialogGenInvoices" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoicing.Button.GenInvoice"/>
+        </button>
+        <br/>
+    </ul>
+    <ul class="pager pull-right">
+        Strana
+        <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/crm/in-transactions.html?&distributorId=${param['distiributorId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
+                <span class="glyphicon glyphicon-backward"></span> Prethodna
+            </a>
+        </li>
+        <c:out value="${page+1} od ${numberOfPages+1}"/>
+        <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
 
-                </tr>
-                <c:set var="count" value="${count + 1}" scope="page"/>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
-    <nav>
-        <ul class="pager pull-left">
-            <button data-toggle="modal" data-target="#dialogGenInvoices" class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoicing.Button.GenInvoice"/>
-            </button>
-            <br/>
-        </ul>
-        <ul class="pager pull-right">
-            Strana
-            <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-                <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/invoicing/${page - 1}?invoicingDate=${transactionDTO.invoicingDate}&distributorName=${transactionDTO.distributorName}&distributorId=${transactionDTO.distributorId}"/></c:if>">
-                    <span class="glyphicon glyphicon-backward"></span> Prethodna
-                </a>
-            </li>
-            <c:out value="${page+1} od ${numberOfPages+1}"/>
-            <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-
-                <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/invoicing/${page + 1}?invoicingDate=${transactionDTO.invoicingDate}&distributorName=${transactionDTO.distributorName}&distributorId=${transactionDTO.distributorId}"/></c:if>">
-                    <span class="glyphicon glyphicon-forward"></span> Naredna
-                </a>
-            </li>
-        </ul>
-    </nav>
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/crm/in-transactions.html?&distributorId=${param['distiributorId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
+                <span class="glyphicon glyphicon-forward"></span> Naredna
+            </a>
+        </li>
+    </ul>
+</nav>
 
 
 <script type="text/javascript">

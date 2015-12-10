@@ -2,6 +2,7 @@ package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
+import com.invado.core.domain.Device;
 import com.invado.core.domain.LocalDateTimeConverter;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
 import org.springframework.format.annotation.NumberFormat;
@@ -60,9 +61,10 @@ import java.time.LocalDateTime;
                 "                    trans.terminal_id, terminal.custom_Code, service.service_id, service.description, a .code )"),
         @NamedNativeQuery(name = Transaction.INVOICING_SUM_PER_MERCHANT, query = " select trans.client_id as distributorId, " +
                 "                     distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
-                "                     service.id as service, a.code as articleCode, service.description as serviceDescription, sum(trans.amount) as amount, null as transactionId " +
+                "                     service.id as service, a.code as articleCode, service.description as serviceDescription, sum(trans.amount) as amount, null as transactionId, " +
+                "                     pos.id posId, pos.name posName, terminal.id terminalId, terminal.custom_code terminalName " +
                 "                     from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
-                "                          crm_Service_Provider_Services service, r_article a " +
+                "                          crm_Service_Provider_Services service, r_article a, c_business_partner pos, crm_device terminal " +
                 "                     where type.invoiceable = 1 " +
                 "                     and type.invoicingStatuses like '%'||trans.statusId||'%' " +
                 "                     and trans.statusId is not null " +
@@ -73,27 +75,34 @@ import java.time.LocalDateTime;
                 "                     and trans.client_id = distributor.id" +
                 "                     and trans.service_Provider_id = service.service_Provider" +
                 "                     and trans.business_partner_id = merchant.id" +
+                "                     and trans.point_of_sale_id = pos.id " +
                 "                     and service.service_id = a.code " +
-                "                     group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name,service.id, a.code, service.description, null " +
+                "                     and trans.terminal_id = terminal.id " +
+                "                     group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name,service.id, a.code, service.description, null," +
+                "                               pos.id, pos.name, terminal.id, terminal.custom_code " +
                 "                     order by 1, 3, 5 "),
         @NamedNativeQuery(name = Transaction.COUNT_INVOICING_SUM_PER_MERCHANT, query = " select count(*) " +
                 " from (select trans.client_id as distributorId, " +
-                "                     distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
-                "                      service.id as service, a.code as articleCode, service.description as serviceDescription, sum(trans.amount) as amount, null as transactionId " +
-                "                         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
-                "                             crm_Service_Provider_Services service, r_article a " +
-                "                         where type.invoiceable = 1 " +
-                "                         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
-                "                        and trans.statusId is not null " +
-                "                        and trans.invoicing_Status = 0 " +
-                "                        and trans.response_Time < :invoicingDate " +
-                "                         and (trans.client_id = :distributorId or :distributorId = 0) " +
-                "                        and trans.type_id = type.id" +
-                "                        and trans.client_id = distributor.id" +
-                "                         and trans.service_Provider_id = service.service_Provider" +
-                "                         and trans.business_partner_id = merchant.id" +
-                "                         and service.service_id = a.code " +
-                "                         group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name,service.id, a.code, service.description, null) "),
+                "                                     distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
+                "                                     service.id as service, a.code as articleCode, service.description as serviceDescription, sum(trans.amount) as amount, null as transactionId, " +
+                "                                     pos.id posId, pos.name posName, terminal.id terminalId, terminal.custom_code terminalName " +
+                "                                     from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
+                "                                          crm_Service_Provider_Services service, r_article a, c_business_partner pos, crm_device terminal " +
+                "                                     where type.invoiceable = 1 " +
+                "                                     and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                "                                     and trans.statusId is not null " +
+                "                                     and trans.invoicing_Status = 0 " +
+                "                                     and trans.response_Time < :invoicingDate " +
+                "                                     and (trans.client_id = :distributorId or :distributorId = 0) " +
+                "                                     and trans.type_id = type.id" +
+                "                                     and trans.client_id = distributor.id" +
+                "                                     and trans.service_Provider_id = service.service_Provider" +
+                "                                     and trans.business_partner_id = merchant.id" +
+                "                                     and trans.point_of_sale_id = pos.id " +
+                "                                     and service.service_id = a.code " +
+                "                                     and trans.terminal_id = terminal.id " +
+                "                                     group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name,service.id, a.code, service.description, null," +
+                "                                               pos.id, pos.name, terminal.id, terminal.custom_code)"),
         @NamedNativeQuery(name = Transaction.INVOICING_CANDIDATES_PER_MERCHANT, query = " select trans.client_id as distributorId, " +
                 "      distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
                 "      service.id as service, a.code as articleCode, service.description as serviceDescription, trans.amount as amount, trans.id as transactionId " +

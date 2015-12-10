@@ -22,11 +22,12 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.core.domain.Job</class>
         <class>com.invado.core.domain.Employee</class>
         <class>com.invado.core.domain.BusinessPartnerContactDetails</class>
-        <class>com.invado.customer.relationship.domain.DeviceStatus</class>
-        <class>com.invado.customer.relationship.domain.Device</class>
-        <class>com.invado.customer.relationship.domain.ConnectionType</class>
+        <class>com.invado.core.domain.DeviceStatus</class>
+        <class>com.invado.core.domain.Device</class>
+        <class>com.invado.core.domain.DeviceHolderPartner</class>
+        <class>com.invado.core.domain.ConnectionType</class>
         <class>com.invado.core.domain.POSType</class>
-        <class>com.invado.customer.relationship.domain.PrepaidRefillType</class>
+        <class>com.invado.core.domain.PrepaidRefillType</class>
         <class>com.invado.finance.domain.Invoice</class>
         <class>com.invado.finance.domain.InvoiceItem</class>
 

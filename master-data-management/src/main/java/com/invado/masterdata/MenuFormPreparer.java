@@ -99,23 +99,30 @@ public class MenuFormPreparer implements ViewPreparer {
         finance.setName("Finansije");
         finance.put("Fakturisanje", "Artikal", "/finance/item/0");
         finance.put("Fakturisanje", "Faktura", "/finance/invoice/0");
+
         modules.add(finance);
         Module masterdata = new Module();
         masterdata.setPath("masterdata");
         masterdata.setName("Maticni Podaci");
-        masterdata.put("Opsti sifarnici", "Kompanija Korisnik", "/masterdata/client/0");
-        masterdata.put("Opsti sifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
-        masterdata.put("Opsti sifarnici", "Poslovni partner", "/masterdata/partner/read-page.html?id=&name=&page=0");
-        masterdata.put("Opsti sifarnici", "Kontakti", "/masterdata/contact/0");
-        masterdata.put("Opsti sifarnici", "Opstina", "/masterdata/township/0");
-        masterdata.put("Opsti sifarnici", "Banka", "/masterdata/bank/0");
-        masterdata.put("Opsti sifarnici", "Valuta", "/masterdata/currency/0");
-        masterdata.put("Opsti sifarnici", "Kursna Lista", "/masterdata/exchange-rate/0");
+        masterdata.put("Opšti sifarnici", "Kompanija Korisnik", "/masterdata/client/0");
+        masterdata.put("Opšti sifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
+        masterdata.put("Opšti sifarnici", "Opstina", "/masterdata/township/0");
+        masterdata.put("Opšti sifarnici", "Kontakti", "/masterdata/contact/0");
+        masterdata.put("Opšti sifarnici", "Banka", "/masterdata/bank/0");
+        masterdata.put("Opšti sifarnici", "Valuta", "/masterdata/currency/0");
+        masterdata.put("Opšti sifarnici", "Kursna Lista", "/masterdata/exchange-rate/0");
+        masterdata.put("Opšti sifarnici", "Poslovni partner", "/masterdata/partner/read-page.html?id=&name=&page=0");
+
+        masterdata.put("Terminali", "Status terminala", "/masterdata/device/devicestatus/0");
+        masterdata.put("Terminali", "Terminal", "/masterdata/device/0");
+        masterdata.put("Terminali", "Zaduženje Terminala", "/masterdata/device/device-assignment.html?businessPartnerId=&deviceCustomCode=&page=0");
+
         modules.add(masterdata);
         Module service = new Module();
         service.setPath("service");
         service.setName("Servis aparata");
         service.put("Proba", "Proba", "/service/proba/0");
+
         modules.add(service);
         Module hr = new Module();
         hr.setPath("HR");

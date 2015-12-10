@@ -111,6 +111,10 @@ public class InvoiceItem implements Serializable, Comparable<InvoiceItem> {
     @Digits(integer=7, fraction=2, message="{InvoiceItem.Quantity.Digits}")
     @Column(name = "quantity")
     private BigDecimal quantity;
+    @Digits(integer=13, fraction=2, message="{InvoiceItem.TotalCost.Digits}")
+    @Column(name = "return_value")
+    private BigDecimal returnValue;
+
 
     public InvoiceItem() {
     }
@@ -226,6 +230,18 @@ public class InvoiceItem implements Serializable, Comparable<InvoiceItem> {
         this.articleVAT = articleVAT;
     }
 
+    public BigDecimal getReturnValue() {
+        return returnValue;
+    }
+
+    public void setReturnValue(BigDecimal returnValue) {
+        this.returnValue = returnValue;
+    }
+
+    public BigDecimal getRabatPercent() {
+        return rabatPercent;
+    }
+
     public InvoiceItemDTO getInvoiceItemDTO(){
 
         InvoiceItemDTO invoiceItemDTO = new InvoiceItemDTO();
@@ -242,6 +258,7 @@ public class InvoiceItem implements Serializable, Comparable<InvoiceItem> {
         invoiceItemDTO.setTotalCost(this.getTotalCost());
         invoiceItemDTO.setVATPercent(this.getVatPercent());
         invoiceItemDTO.setUnitId(this.getOrgUnitId());
+        invoiceItemDTO.setReturnValue(this.getReturnValue());
         return invoiceItemDTO;
     }
 

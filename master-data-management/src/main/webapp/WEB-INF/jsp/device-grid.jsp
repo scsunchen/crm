@@ -38,12 +38,10 @@
         </div>
     </spring:bind>
     <input:inputDate name="creationDate" label="Datum Kreiranja" placeholder=""/>
-    <input:inputTime name="workingStartTime" label="Početak rada" placeholder="hh:mi"/>
-    <input:inputTime name="workingEndTime" label="Kraj rada" placeholder="hh:mi"/>
     <input:inputField name="installedSoftwareVersion" label="Firmware verzija"/>
     <form:hidden path="version"/>
     <div class="form-group">
-        <a class="btn btn-primary" href="/crm/device/0">Povratak</a>
+        <a class="btn btn-primary" href="/masterdata/device/0">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -54,6 +52,19 @@
                 </c:otherwise>
             </c:choose>
         </button>
+        <div class="btn-group pull-right">
+            <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Telekom WS <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="/masterdata/device/registerTerminal">Registracija Terminala</a></li>
+                <li><a href="/masterdata/partner/updateTerminal">Izmena Terminala</a></li>
+                <li><a href="/masterdata/partner/updateTerminalStatus">Izmena Status Terminala</a></li>
+                <li><a href="/masterdata/partner/cancelActivateTerminal">Otkazi/Akirajtiv</a></li>
+                <li><a href="/masterdata/partner/checkTerminalStatus">Provera Status Terminala</a></li>
+            </ul>
+        </div>
     </div>
 </form:form>
 <script type="text/javascript">

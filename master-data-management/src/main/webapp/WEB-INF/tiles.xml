@@ -64,6 +64,52 @@
         <put-attribute name="panel-title" value="Kontakti"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-contact-table.jsp"/>
     </definition>
+
+
+    <definition name="business-partner-device-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Terminal"/>
+        <put-attribute name="panel-title" value="Unosi i ažuriranje terminala"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-device-grid.jsp"/>
+    </definition>
+    <definition name="business-partner-device-view" extends="main-menu-form">
+        <put-attribute name="title" value="Terminali"/>
+        <put-attribute name="panel-title" value="Terminali"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-device-table.jsp"/>
+    </definition>
+
+
+
+    <definition name="devicestatus-view" extends="main-menu-form">
+        <put-attribute name="title" value="Status terminala"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/devicestatus-table.jsp"/>
+    </definition>
+    <definition name="devicestatus-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Status terminala"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o statusima terminala"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/devicestatus-grid.jsp"/>
+    </definition>
+    <definition name="device-view" extends="main-menu-form">
+        <put-attribute name="title" value="Terminal"/>
+        <put-attribute name="panel-title" value="Terminali"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/device-table.jsp"/>
+    </definition>
+    <definition name="device-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Terminal"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o terminalima"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/device-grid.jsp"/>
+    </definition>
+    <definition name="device-assignment" extends="main-menu-form">
+        <put-attribute name="title" value="Terminal"/>
+        <put-attribute name="panel-title" value="Taduženje terminala"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/device-assignment-table.jsp"/>
+    </definition>
+
+    <definition name="device-assignement-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Terminal"/>
+        <put-attribute name="panel-title" value="Taduženje terminala"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/device-assignment-grid.jsp"/>
+    </definition>
+
     <definition name="partner-contact-details-grid" extends="main-menu-form">
         <put-attribute name="title" value="POS"/>
         <put-attribute name="panel-title" value="Unos i ažuriranje partnera"/>

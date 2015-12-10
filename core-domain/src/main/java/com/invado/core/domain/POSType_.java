@@ -9,6 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @StaticMetamodel(POSType.class)
 public class POSType_ {
+
     public static volatile SingularAttribute<POSType, Integer> id;
     public static volatile SingularAttribute<POSType, String> description;
     public static volatile SingularAttribute<POSType, Long> version;

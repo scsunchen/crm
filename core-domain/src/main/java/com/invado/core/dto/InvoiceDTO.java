@@ -10,6 +10,7 @@ import com.invado.core.domain.InvoiceType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
@@ -47,7 +48,10 @@ public class InvoiceDTO  {
     private String bankName;
     private Long version;
     private Integer maxItemOrdinal;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal totalAmount;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private BigDecimal returnValue;
 
     public Integer getClientId() {
         return clientId;
@@ -263,5 +267,13 @@ public class InvoiceDTO  {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public BigDecimal getReturnValue() {
+        return returnValue;
+    }
+
+    public void setReturnValue(BigDecimal returnValue) {
+        this.returnValue = returnValue;
     }
 }

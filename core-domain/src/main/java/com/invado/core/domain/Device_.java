@@ -1,6 +1,4 @@
-package com.invado.customer.relationship.domain;
-
-import com.invado.core.domain.Article;
+package com.invado.core.domain;
 
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;

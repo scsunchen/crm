@@ -77,4 +77,5 @@ public class Role implements Serializable, Principal {
     public String toString() {
         return "Role{roleName=" + name + '}';
     }
+
 }

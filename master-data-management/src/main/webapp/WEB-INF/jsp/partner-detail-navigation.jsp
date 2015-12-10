@@ -16,15 +16,19 @@
   </div>
 </c:if>
 <a class="btn btn-default"
-   href="${pageContext.request.contextPath}/partner/read-contactsdetals-page.html?masterPartnerId=${item.id}&masterPartnerName=${item.name}&page=${param['page']}"
+   href="${pageContext.request.contextPath}/partner/read-contactsdetals-page.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${item.id}&page=${param['page']}"
    <c:if test="${(action == 'create')}">disabled</c:if>>
   <spring:message code="BusinessPartnerDetails.Button.Contacts"/></a>
+<a class="btn btn-default"
+   href="${pageContext.request.contextPath}/partner/read-deviceholderdetails-page.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${item.id}&page=${param['page']}"
+   <c:if test="${(action == 'create')}">disabled</c:if>>
+    <spring:message code="BusinessPartnerDetails.Button.Devices"/></a>
+
 <%--
 <a class="btn btn-default" href="${pageContext.request.contextPath}/invoice/details.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&page=${page}&itemsPage=0"><spring:message code="Invoice.Button.Detals"/></a>
 <a class="btn btn-default" href="${pageContext.request.contextPath}/invoice/record.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&pageNumber=${page}" <c:if test="${invoice.recorded == true}">disabled</c:if> >
-    <spring:message code="Invoice.Button.Record" />
-    --%>
-</a>
+    <spring:message code="Invoice.Button.Record" /></a>
+--%>
 <a href="${pageContext.request.contextPath}/partner/read-subpartners.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}"
    class="btn btn-default">
   <span class="glyphicon glyphicon-backward"></span>

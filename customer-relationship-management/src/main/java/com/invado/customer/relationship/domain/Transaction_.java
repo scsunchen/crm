@@ -2,10 +2,10 @@ package com.invado.customer.relationship.domain;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
+import com.invado.core.domain.Device;
 
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**

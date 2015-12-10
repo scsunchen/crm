@@ -2,11 +2,13 @@ package com.invado.customer.relationship.controller;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
-import com.invado.customer.relationship.domain.Device;
+import com.invado.core.dto.InvoiceDTO;
+import com.invado.core.domain.Device;
 import com.invado.customer.relationship.domain.TransactionType;
 import com.invado.customer.relationship.service.DeviceService;
 import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.TransactionService;
+import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
 import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
@@ -32,10 +34,10 @@ public class TransactionController {
 
 
     @RequestMapping(value = "/transactions/{page}")
-    public String showTransactions(@PathVariable Integer page, 
-                                   Map<String, Object> model, 
+    public String showTransactions(@PathVariable Integer page,
+                                   Map<String, Object> model,
                                    @ModelAttribute TransactionDTO transactionDTO)
-                                   throws Exception {
+            throws Exception {
         PageRequestDTO request = new PageRequestDTO();
 
         request.setPage(page);
@@ -67,8 +69,8 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/transactions/{paramValues}/{page}")
-    public String browsePages(@PathVariable Integer page, 
-                              @PathVariable String paramValues, 
+    public String browsePages(@PathVariable Integer page,
+                              @PathVariable String paramValues,
                               Map<String, Object> model) throws Exception {
 
         String[] params = paramValues.split("-");
@@ -109,7 +111,7 @@ public class TransactionController {
                     break;
                 case 4:
                     if (params[i] != null && !params[i].isEmpty()) {
-                        System.out.println("evo vrednost "+Integer.valueOf(params[i]));
+                        System.out.println("evo vrednost " + Integer.valueOf(params[i]));
                         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId", params[i] == null || params[i].isEmpty() ? null : Integer.valueOf(params[i])));
                         transactionDTO.setDistributorId(Integer.valueOf(params[i]));
                         transactionDTO.setDistributorName(masterDataService.readClientById(Integer.valueOf(params[i])).getName());
@@ -157,10 +159,41 @@ public class TransactionController {
 
     }
 
-    @RequestMapping(value = "/masterdat/read-distributor/{name}")
+
+    @RequestMapping(value = "/in-transactions.html", method = RequestMethod.GET)
+    public String showInovicingCandidatesTransactions(@RequestParam Integer page,
+                                                      @RequestParam Integer distributorId,
+                                                      @RequestParam String invoicingDate,
+                                                      Map<String, Object> model,
+                                                      @ModelAttribute TransactionDTO transactionDTO) throws Exception{
+
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId", distributorId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDate", invoicingDate));
+        ReadRangeDTO<InvoicingTransactionSetDTO> items = transactionService.readInvoicingSetPage(request);
+
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        model.put("transactionDTO", transactionDTO);
+        model.put("numberOfPages", items.getNumberOfPages());
+        return "invoicing-candidates-view";
+    }
+
+    @RequestMapping(value = "/invoicing/review-invoices.html", method = RequestMethod.POST)
+    public String genInvoices(@ModelAttribute TransactionDTO transactionDTO, Map<String, Object> model) throws Exception {
+        System.out.println("izvrsio se bre " + transactionDTO.getInvoicingGenDate() + " " + transactionDTO.getInvoicingDistributorId());
+        //Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesI(transactionDTO);
+        Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
+        model.put("data", genTransactions);
+        return "invoice-table";
+    }
+
+    @RequestMapping(value = "/masterdata/read-distributor/{name}")
     public
     @ResponseBody
     List<Client> findClientByName(@PathVariable String name) {
+        System.out.println("ovo se sigurno izvršava a šta je problem da ga jebbem...");
         return masterDataService.readClientMinSetByName(name);
     }
 

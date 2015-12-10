@@ -1,17 +1,15 @@
-package com.invado.customer.relationship.service;
+package com.invado.masterdata.service;
 
 import com.invado.core.domain.*;
 import com.invado.core.dto.DeviceDTO;
 import com.invado.core.exception.EntityExistsException;
 import com.invado.core.exception.EntityNotFoundException;
-import com.invado.customer.relationship.service.exception.IllegalArgumentException;
 import com.invado.core.exception.*;
-import com.invado.customer.relationship.Utils;
-import com.invado.customer.relationship.domain.Device;
-import com.invado.customer.relationship.domain.DeviceStatus;
-import com.invado.customer.relationship.domain.Device_;
-import com.invado.customer.relationship.service.dto.PageRequestDTO;
-import com.invado.customer.relationship.service.dto.ReadRangeDTO;
+
+import com.invado.core.exception.IllegalArgumentException;
+import com.invado.masterdata.Utils;
+import com.invado.masterdata.service.dto.PageRequestDTO;
+import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -200,7 +198,7 @@ public class DeviceService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
-                    Utils.getMessage("Device.PersistenceEx.Read"),
+                    Utils.getMessage("Device.PersistenceEx.Read", id),
                     ex);
         }
     }
@@ -459,6 +457,21 @@ public class DeviceService {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage(
                     "Device.PersistenceEx.ReadItemByDescription"),
+                    ex);
+        }
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<Device> readDeviceByCustomCodeAnassigned(String name) {
+        try {
+            return dao.createNamedQuery(Device.READ_BY_CUSTOM_CODE_ANASSIGNED, Device.class)
+                    .setParameter("name", ("%" + name + "%").toUpperCase())
+                    .getResultList();
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "Device.Exception.ReadByCusotmCode"),
                     ex);
         }
     }

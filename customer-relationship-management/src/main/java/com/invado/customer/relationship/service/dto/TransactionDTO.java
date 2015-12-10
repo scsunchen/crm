@@ -39,6 +39,7 @@ public class TransactionDTO {
     private String invoicingDistributorName;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal amount;
+    private Integer page;
 
 
     public TransactionDTO() {
@@ -218,5 +219,13 @@ public class TransactionDTO {
 
     public void setInvoicingDistributorName(String invoicingDistributorName) {
         this.invoicingDistributorName = invoicingDistributorName;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
     }
 }

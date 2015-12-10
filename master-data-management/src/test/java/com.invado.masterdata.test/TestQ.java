@@ -1,6 +1,10 @@
 package com.invado.masterdata.test;
 
+import com.invado.core.domain.ConnectionType;
+import com.invado.core.domain.DeviceHolderPartner;
+import com.invado.core.domain.PrepaidRefillType;
 import com.invado.core.exception.ConstraintViolationException;
+import com.invado.masterdata.service.DeviceHolderPartnerService;
 import com.invado.masterdata.service.exception.ContactPartnersOwnersException;
 import telekomWS.client.ServiceClient;
 import com.invado.core.domain.Currency;
@@ -19,10 +23,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by Nikola on 07/10/2015.
@@ -42,6 +48,8 @@ public class TestQ{
     @Autowired
     private BusinessPartnerContactDetailsService contactDetailsService;
 
+    @Inject
+    private DeviceHolderPartnerService deviceHolderPartnerService;
     @PersistenceContext(name = "baza")
     private EntityManager dao;
 
@@ -99,6 +107,18 @@ public class TestQ{
     public void testWS(){
         ServiceClient serviceClient = new ServiceClient();
         //serviceClient.poslovniPartnerUnos()
+
+    }
+
+
+    @Test
+    public void testQueryConnRefill(){
+
+        List<PrepaidRefillType> listaR =  deviceHolderPartnerService.getRefillTypes();
+        System.out.println("liste "+listaR.size());
+
+        List<ConnectionType> listaC =  deviceHolderPartnerService.getConnectionTypes();
+        System.out.println("liste "+listaC.size());
 
     }
 }

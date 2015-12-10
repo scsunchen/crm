@@ -25,6 +25,9 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.finance.domain.InvoiceItem</class>
         <class>com.invado.finance.domain.Properties</class>
         <class>com.invado.core.domain.BusinessPartnerContactDetails</class>
+        <class>com.invado.core.domain.POSType</class>
+        <class>com.invado.core.domain.PrepaidRefillType</class>
+        <class>com.invado.core.domain.ConnectionType</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>

@@ -1,18 +1,20 @@
-package com.invado.customer.relationship.service;
+package com.invado.masterdata.service;
 
 import com.invado.core.domain.ApplicationSetup;
 
-import com.invado.customer.relationship.Utils;
-import com.invado.customer.relationship.domain.DeviceStatus;
-import com.invado.customer.relationship.domain.DeviceStatus_;
+
+import com.invado.core.domain.DeviceStatus;
+import com.invado.core.domain.DeviceStatus_;
 import com.invado.core.dto.DeviceStatusDTO;
-import com.invado.customer.relationship.service.dto.PageRequestDTO;
-import com.invado.customer.relationship.service.dto.ReadRangeDTO;
-import com.invado.customer.relationship.service.exception.ConstraintViolationException;
-import com.invado.customer.relationship.service.exception.PageNotExistsException;
-import com.invado.customer.relationship.service.exception.ReferentialIntegrityException;
-import com.invado.customer.relationship.service.exception.SystemException;
-import com.invado.customer.relationship.service.exception.IllegalArgumentException;
+
+import com.invado.core.exception.ConstraintViolationException;
+import com.invado.core.exception.PageNotExistsException;
+import com.invado.core.exception.ReferentialIntegrityException;
+import com.invado.core.exception.SystemException;
+import com.invado.core.exception.IllegalArgumentException;
+import com.invado.masterdata.Utils;
+import com.invado.masterdata.service.dto.PageRequestDTO;
+import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

@@ -12,12 +12,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
+
+
 <nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] == null}">hidden</c:if>>
     </br>
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="btn btn-default"
-               href="${pageContext.request.contextPath}/partner/read-contactsdetals-page.html?posId=${item.pointOfSaleId}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">
+               href="${pageContext.request.contextPath}/partner/read-contactsdetals-page.html?pointOfSaleId=${param['pointOfSaleId']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">
                 <span class="glyphicon glyphicon-backward"></span>
                 <spring:message code="BusinessPartnerDetails.Button.Back"/></a></div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">

@@ -1,13 +1,14 @@
-package com.invado.customer.relationship.controller;
+package com.invado.masterdata.controller;
 
 import com.invado.core.domain.Article;
+import com.invado.core.domain.BusinessPartner;
+import com.invado.core.domain.Device;
 import com.invado.core.dto.DeviceDTO;
 import com.invado.core.dto.DeviceStatusDTO;
 //import com.invado.finance.service.MasterDataService;
-import com.invado.customer.relationship.service.DeviceService;
-import com.invado.customer.relationship.service.DeviceStatusService;
-import com.invado.customer.relationship.service.dto.PageRequestDTO;
-import com.invado.customer.relationship.service.dto.ReadRangeDTO;
+import com.invado.masterdata.service.*;
+import com.invado.masterdata.service.dto.PageRequestDTO;
+import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +26,14 @@ import java.util.Map;
 @Controller
 public class DeviceController {
 
-    @Autowired
+    @Inject
     private DeviceService deviceService;
-    @Autowired
+    @Inject
     private DeviceStatusService deviceStatusService;
+    @Inject
+    private TelekomWSClient telekomWSClient;
+    @Inject
+    private BPService businessPartnerService;
 
     @RequestMapping("/device/{page}")
     public String showItems(@PathVariable Integer page,
@@ -65,7 +71,7 @@ public class DeviceController {
             /*
             System.out.println(model.get("bank").toString());
             */
-            for( ObjectError e:result.getAllErrors()) {
+            for (ObjectError e : result.getAllErrors()) {
                 resultErrorMessages += e.getDefaultMessage();
             }
             model.put("resulterror", resultErrorMessages);
@@ -113,9 +119,25 @@ public class DeviceController {
         return "redirect:/device/{page}";
     }
 
+    /*
+    map na WS za telekom...doprogramirati...
+
+    <li><a href="/masterdata/device/registerTerminal">Registracija Terminala</a></li>
+    <li><a href="/masterdata/partner/updateTerminal">Izmena Terminala</a></li>
+    <li><a href="/masterdata/partner/updateTerminalStatus">Izmena Status Terminala</a></li>
+    <li><a href="/masterdata/partner/cancelActivateTerminal">Otkazi/Akirajtiv</a></li>
+    <li><a href="/masterdata/partner/checkTerminalStatus">Provera Status Terminala</a></li>
+
+    */
+
+
+
     @RequestMapping(value = "/device/read-item/{desc}")
-    public @ResponseBody
+    public
+    @ResponseBody
     List<Article> findItemByDescription(@PathVariable String desc) {
         return deviceService.readItemByDescription(desc);
     }
+
+
 }
