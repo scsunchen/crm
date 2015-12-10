@@ -18,7 +18,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="btn btn-default"
-               href="${pageContext.request.contextPath}/partner/device-assignment.html?pointOfSaleId=${param['pointOfSaleId']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">
+               href="${pageContext.request.contextPath}/deviceholder/device-assignment.html?businessPartnerId=&deviceCustomCode=&page=0">
                 <span class="glyphicon glyphicon-backward"></span>
                 <spring:message code="BusinessPartnerDetails.Button.Back"/></a></div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">

@@ -64,8 +64,6 @@ public class DeviceService {
             device.setCreationDate(a.getCreationDate());
             device.setCustomCode(a.getCustomCode());
             device.setStatus(dao.find(DeviceStatus.class, a.getDeviceStatusId()));
-            device.setWorkingEndTime(a.getWorkingEndTime());
-            device.setWorkingStartTime(a.getWorkingStartTime());
             device.setInstalledSoftwareVersion(a.getInstalledSoftwareVersion());
             device.setArticle(dao.find(Article.class, a.getArticleCode()));
             List<String> msgs = validator.validate(a).stream()
@@ -122,8 +120,6 @@ public class DeviceService {
             item.setSerialNumber(dto.getSerialNumber());
             item.setStatus(dao.find(DeviceStatus.class, dto.getDeviceStatusId()));
             item.setVersion(dto.getVersion());
-            item.setWorkingEndTime(dto.getWorkingEndTime());
-            item.setWorkingStartTime(dto.getWorkingStartTime());
             item.setArticle(dao.find(Article.class, dto.getArticleCode()));
 
             List<String> msgs = validator.validate(item).stream()

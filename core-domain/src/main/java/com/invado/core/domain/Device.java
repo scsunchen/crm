@@ -49,12 +49,7 @@ public class Device implements Serializable {
     private DeviceStatus status;
     @Column(name = "creation_date")
     @Convert(converter = LocalDateConverter.class)
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate creationDate;
-    @Column(name = "working_start_time")
-    private String workingStartTime;
-    @Column(name = "working_end_time")
-    private String workingEndTime;
     @Column(name = "installed_software_version")
     private String installedSoftwareVersion;
     @Version
@@ -112,22 +107,6 @@ public class Device implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public String getWorkingStartTime() {
-        return workingStartTime;
-    }
-
-    public void setWorkingStartTime(String workingStartTime) {
-        this.workingStartTime = workingStartTime;
-    }
-
-    public String getWorkingEndTime() {
-        return workingEndTime;
-    }
-
-    public void setWorkingEndTime(String workingEndTime) {
-        this.workingEndTime = workingEndTime;
-    }
-
     public String getInstalledSoftwareVersion() {
         return installedSoftwareVersion;
     }
@@ -170,8 +149,6 @@ public class Device implements Serializable {
         deviceDTO.setInstalledSoftwareVersion(this.getInstalledSoftwareVersion());
         deviceDTO.setSerialNumber(this.getSerialNumber());
         deviceDTO.setVersion(this.getVersion());
-        deviceDTO.setWorkingEndTime(this.getWorkingStartTime());
-        deviceDTO.setWorkingStartTime(this.getWorkingEndTime());
 
         return deviceDTO;
     }

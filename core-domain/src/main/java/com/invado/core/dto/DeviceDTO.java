@@ -16,10 +16,8 @@ public class DeviceDTO {
     private String serialNumber;
     private Integer deviceStatusId;
     private String deviceStatusName;
-    @DateTimeFormat(style = "M-")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate creationDate;
-    private String workingStartTime;
-    private String workingEndTime;
     private String installedSoftwareVersion;
     private Long version;
 
@@ -72,21 +70,6 @@ public class DeviceDTO {
         this.creationDate = creationDate;
     }
 
-    public String getWorkingStartTime() {
-        return workingStartTime;
-    }
-
-    public void setWorkingStartTime(String workingStartTime) {
-        this.workingStartTime = workingStartTime;
-    }
-
-    public String getWorkingEndTime() {
-        return workingEndTime;
-    }
-
-    public void setWorkingEndTime(String workingEndTime) {
-        this.workingEndTime = workingEndTime;
-    }
 
     public String getInstalledSoftwareVersion() {
         return installedSoftwareVersion;

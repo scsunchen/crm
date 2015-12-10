@@ -135,8 +135,7 @@ public class MenuFormPreparer implements ViewPreparer {
 
     @Override
     public void execute(Request request, AttributeContext ac) {
-        HttpServletRequest request1 = ((ServletRequestAttributes)
-                RequestContextHolder.getRequestAttributes())
+        HttpServletRequest request1 = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getRequest();
         ac.putAttribute("modules", new Attribute(modules));
         ac.putAttribute(
@@ -149,9 +148,10 @@ public class MenuFormPreparer implements ViewPreparer {
             }
         }
     }
-    
+
     private String resolveBootstrapDatepickerLanguage() {
         Locale defaultLocale = LocaleContextHolder.getLocale();
+        System.out.println("locale "+defaultLocale.toString());
         return Stream.of(DATEPICKER_LANGUAGES)
                 .filter(p -> p.equalsIgnoreCase(defaultLocale.getLanguage()))
                 .findFirst()

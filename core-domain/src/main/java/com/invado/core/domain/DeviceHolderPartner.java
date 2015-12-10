@@ -51,7 +51,7 @@ public class DeviceHolderPartner {
     private String workingEndTime;
     @Column(name = "activation_date")
     @Convert(converter = LocalDateConverter.class)
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    //@DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate activationDate;
     @Column(name = "MSISDN")
     private String MSISDN;

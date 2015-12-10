@@ -37,7 +37,18 @@
             </form:select>
         </div>
     </spring:bind>
-    <input:inputDate name="creationDate" label="Datum Kreiranja" placeholder=""/>
+    <spring:bind path="creationDate">
+        <div class="form-group row">
+            <div class="col-lg-6">
+                <label for="date" style="margin-top: 15px;"><spring:message
+                        code="Device.label.CreationDate"/></label>
+                <form:input id="date" path="creationDate" type="text"
+                            class="form-control"/>
+                            <span class="help-inline"><c:if test="${status.error}"><c:out
+                                    value="${status.errorMessage}"/></c:if></span>
+            </div>
+        </div>
+    </spring:bind>
     <input:inputField name="installedSoftwareVersion" label="Firmware verzija"/>
     <form:hidden path="version"/>
     <div class="form-group">
@@ -68,6 +79,9 @@
     </div>
 </form:form>
 <script type="text/javascript">
+
+    $('#date').datepicker({});
+
     $('#itemDesc').typeahead({
         hint: false,
         highlight: true,

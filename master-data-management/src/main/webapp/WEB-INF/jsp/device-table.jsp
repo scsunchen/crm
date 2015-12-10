@@ -9,7 +9,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-<a class="btn btn-primary" href="/crm/device/${page}/create"><span class="glyphicon glyphicon-plus"></span>
+<a class="btn btn-primary" href="/masterdata/device/create.html"><span class="glyphicon glyphicon-plus"></span>
   Kreiraj</a>
 <br/>
 <br/>
@@ -63,11 +63,7 @@
         <td><c:out value="${item.articleDescription}"/></td>
         <td><c:out value="${item.serialNumber}"/></td>
         <td><c:out value="${item.deviceStatusName}"/></td>
-        <fmt:parseDate value="${item.creationDate}" pattern="yyyy-MM-dd"
-                       var="parsedDate" type="date" />
-        <fmt:formatDate value="${parsedDate}" var="stdDatum"
-                        type="date" pattern="dd.MM.yyyy" />
-        <td><c:out value="${stdDatum}"/></td>
+        <td><spring:eval expression="item.creationDate"/></td>
         <td><c:out value="${item.installedSoftwareVersion}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>

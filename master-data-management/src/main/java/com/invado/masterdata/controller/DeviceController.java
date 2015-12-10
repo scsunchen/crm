@@ -48,8 +48,8 @@ public class DeviceController {
         return "device-view";
     }
 
-    @RequestMapping(value = "/device/{page}/create", method = RequestMethod.GET)
-    public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
+    @RequestMapping(value = "/device/create.html", method = RequestMethod.GET)
+    public String initCreateForm( Map<String, Object> model) {
 
         model.put("item", new DeviceDTO());
         List<DeviceStatusDTO> deviceStatuses = deviceStatusService.readAll(null, null);
@@ -59,7 +59,7 @@ public class DeviceController {
         return "device-grid";
     }
 
-    @RequestMapping(value = "/device/{page}/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/device/create.html", method = RequestMethod.POST)
     public String processCreationForm(@ModelAttribute("item") DeviceDTO item,
                                       BindingResult result,
                                       SessionStatus status,
