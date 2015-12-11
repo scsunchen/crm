@@ -68,6 +68,13 @@
                     <form:options items="${statuses}" itemLabel="description"/>
                 </form:select>
             </div>
+            <div class="form-group">
+                <label for="invoicingType">Način fakturisanja</label>
+                <form:select path="invoicingType" id="invoicingType" class="form-control" itemLabel="status">
+                    <form:option value="${invoicingType}">${inovicingTypeDescription}</form:option>
+                    <form:options items="${invoicingTypes}" itemLabel="description"/>
+                </form:select>
+            </div>
             <input:inputField name="registrationNumber" label="Registracioni broj"/>
             <input:inputField name="logo" label="Logo"/>
         </div>

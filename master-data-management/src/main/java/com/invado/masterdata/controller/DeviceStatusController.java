@@ -7,10 +7,7 @@ import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.Map;
@@ -25,8 +22,8 @@ public class DeviceStatusController {
     private DeviceStatusService service;
 
 
-    @RequestMapping("/devicestatus/{page}")
-    public String showItems(@PathVariable Integer page,
+    @RequestMapping("/devicestatus/read-page.html")
+    public String showItems(@RequestParam Integer page,
                             Map<String, Object> model)
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
@@ -39,14 +36,14 @@ public class DeviceStatusController {
         return "devicestatus-view";
     }
 
-    @RequestMapping(value = "/devicestatus/{page}/create", method = RequestMethod.GET)
-    public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
+    @RequestMapping(value = "/devicestatus/create.html", method = RequestMethod.GET)
+    public String initCreateForm(Map<String, Object> model) {
         model.put("item", new DeviceStatusDTO());
         model.put("action", "create");
         return "devicestatus-grid";
     }
 
-    @RequestMapping(value = "/devicestatus/{page}/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/devicestatus/create.html", method = RequestMethod.POST)
     public String processCreationForm(@ModelAttribute("item") DeviceStatusDTO item,
                                       BindingResult result,
                                       SessionStatus status,
@@ -60,7 +57,7 @@ public class DeviceStatusController {
             status.setComplete();
         }
         //return "redirect:/devicestatus/{page}/create";
-        return "redirect:/devicestatus/{page}/create";
+        return "redirect:/devicestatus/create.html";
     }
 
     @RequestMapping("/devicestatus/{page}/{id}/delete.html")
@@ -69,9 +66,10 @@ public class DeviceStatusController {
         return "redirect:/devicestatus/{page}";
     }
 
-    @RequestMapping(value = "/devicestatus/{page}/update/{id}",
+    @RequestMapping(value = "/devicestatus/update.html",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable Integer id,
+    public String initUpdateForm(@RequestParam Integer id,
+                                 @RequestParam Integer page,
                                  Map<String, Object> model)
             throws Exception {
         DeviceStatusDTO item = service.read(id);
@@ -79,9 +77,11 @@ public class DeviceStatusController {
         return "devicestatus-grid";
     }
 
-    @RequestMapping(value = "/devicestatus/{page}/update/{id}",
+    @RequestMapping(value = "/devicestatus/update.html",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") DeviceStatusDTO item,
+                                      @RequestParam Integer id,
+                                      @RequestParam Integer page,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -93,6 +93,6 @@ public class DeviceStatusController {
             status.setComplete();
         }
         //return "redirect:/devicestatus/{page}";
-        return "redirect:/devicestatus/{page}";
+        return "redirect:/devicestatus/read-page.html?page=0";
     }
 }

@@ -63,7 +63,7 @@
                             </div>
                         </spring:bind>
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                         <spring:bind path="place">
                             <div class="form-group">
                                 <label for="place"><spring:message code="BusinessPartnerContacts.Table.Place"/></label>
@@ -73,7 +73,7 @@
                             </div>
                         </spring:bind>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <spring:bind path="postCode">
                             <div class="form-group">
                                 <label for="postCode"><spring:message

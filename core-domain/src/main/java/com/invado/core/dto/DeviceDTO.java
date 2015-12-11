@@ -9,6 +9,7 @@ import java.util.Date;
  * Created by Nikola on 14/08/2015.
  */
 public class DeviceDTO {
+
     private Integer id;
     private String customCode;
     private String articleCode;
@@ -16,9 +17,10 @@ public class DeviceDTO {
     private String serialNumber;
     private Integer deviceStatusId;
     private String deviceStatusName;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(style = "M-")
     private LocalDate creationDate;
     private String installedSoftwareVersion;
+    private Integer page;
     private Long version;
 
     public Integer getId() {
@@ -101,5 +103,13 @@ public class DeviceDTO {
 
     public void setDeviceStatusName(String deviceStatusName) {
         this.deviceStatusName = deviceStatusName;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
     }
 }

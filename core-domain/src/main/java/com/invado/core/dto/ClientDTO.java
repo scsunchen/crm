@@ -37,7 +37,7 @@ public class ClientDTO {
     private Integer bankId;
     private String bankName;
     private String bankAccount;
-    private Client.InovicingType inovicingType;
+    private Client.InvoicingType invoicingType;
 
     public byte[] getLogo() {
         return logo;
@@ -255,11 +255,11 @@ public class ClientDTO {
         this.typeDescription = typeDescription;
     }
 
-    public Client.InovicingType getInovicingType() {
-        return inovicingType;
+    public Client.InvoicingType getInvoicingType() {
+        return invoicingType;
     }
 
-    public void setInovicingType(Client.InovicingType inovicingType) {
-        this.inovicingType = inovicingType;
+    public void setInvoicingType(Client.InvoicingType invoicingType) {
+        this.invoicingType = invoicingType;
     }
 }

@@ -52,7 +52,7 @@
     <input:inputField name="installedSoftwareVersion" label="Firmware verzija"/>
     <form:hidden path="version"/>
     <div class="form-group">
-        <a class="btn btn-primary" href="/masterdata/device/0">Povratak</a>
+        <a class="btn btn-primary" href="/masterdata/device/read-page?page=0">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">

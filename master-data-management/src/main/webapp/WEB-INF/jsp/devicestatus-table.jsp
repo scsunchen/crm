@@ -10,7 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<a class="btn btn-primary" href="/crm/devicestatus/${page}/create"><span class="glyphicon glyphicon-plus"></span>
+<a class="btn btn-primary" href="/masterdata/devicestatus/create.html"><span class="glyphicon glyphicon-plus"></span>
   Kreiraj</a>
 <br/>
 <br/>
@@ -48,7 +48,7 @@
       <tr>
         <td>
           <div class="btn-group btn-group-sm" role="group">
-            <a href="${page}/update/${item.id}" class="btn btn-primary"><span
+            <a href="update.html?id=${item.id}&page=0" class="btn btn-primary"><span
                     class="glyphicon glyphicon-search"></span> pregled</a>
             <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                     class="glyphicon glyphicon-trash"></span> brisanje

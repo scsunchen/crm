@@ -27,7 +27,7 @@
     <input:inputField label="Opis " name="description"/>
 
     <div class="form-group btn-group-sm">
-        <a class="btn btn-primary" href="/crm/devicestatus/0">Povratak</a>
+        <a class="btn btn-primary" href="/masterdata/devicestatus/read-page.html?page=0">Povratak</a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">

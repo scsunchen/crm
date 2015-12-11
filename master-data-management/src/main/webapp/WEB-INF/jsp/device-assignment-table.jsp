@@ -82,7 +82,7 @@
                     </div>
                 </td>
                 <td><c:out value="${item.deviceCustomCode}"/></td>
-                <td><a href="${pageContext.request.contextPath}/device/0/update/${item.deviceId}"
+                <td><a href="${pageContext.request.contextPath}/device/update.html?id=${item.deviceId}&page=${page}"
                        class="btn btn-primary"><span
                         class="glyphicon glyphicon-search"></span> terminal</a></td>
                 <td><c:out value="${item.deviceSerialNumber}"/></td>

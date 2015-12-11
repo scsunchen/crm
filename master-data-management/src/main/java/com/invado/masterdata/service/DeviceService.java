@@ -330,10 +330,10 @@ public class DeviceService {
             q.setParameter("id", id);
         }
         if (customCode != null && customCode.isEmpty() == false) {
-            q.setParameter("customCode", customCode.toUpperCase() + "%");
+            q.setParameter("customCode", "%"+customCode.toUpperCase() + "%");
         }
         if (serialNumber != null && serialNumber.isEmpty() == false) {
-            q.setParameter("serialNumber", serialNumber);
+            q.setParameter("serialNumber", "%"+serialNumber+"%");
         }
         if (status != null) {
             q.setParameter("status", status);
@@ -391,10 +391,10 @@ public class DeviceService {
             typedQuery.setParameter("id", id);
         }
         if (customCode != null && customCode.isEmpty() == false) {
-            typedQuery.setParameter("customCode", customCode.toUpperCase() + "%");
+            typedQuery.setParameter("customCode", "%"+customCode.toUpperCase() + "%");
         }
         if (serialNumber != null && serialNumber.isEmpty() == false) {
-            typedQuery.setParameter("serialNumber", serialNumber);
+            typedQuery.setParameter("serialNumber", "%"+serialNumber+"%");
         }
         if (status != null) {
             typedQuery.setParameter("status", status);

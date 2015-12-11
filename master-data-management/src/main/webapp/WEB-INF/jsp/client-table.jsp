@@ -23,7 +23,6 @@
             <th>Ulica</th>
             <th>Telefon</th>
             <th>email</th>
-            <th>logo</th>
         </tr>
         </thead>
         <tbody>
@@ -65,7 +64,6 @@
                 <td><c:out value="${item.street}"/></td>
                 <td><c:out value="${item.phone}"/></td>
                 <td><c:out value="${item.EMail}"/></td>
-                <td><c:out value="${item.logo}"/></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>

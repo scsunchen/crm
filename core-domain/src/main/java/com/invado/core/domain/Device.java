@@ -17,6 +17,8 @@ import java.time.LocalDate;
                 query = "SELECT x FROM Device x WHERE UPPER(x.serialNumber) LIKE  :serialNumber"),
         @NamedQuery(name = Device.READ_BY_CUSTOM_CODE,
                 query = "SELECT x FROM Device x WHERE UPPER(x.customCode) LIKE :name ORDER BY x.customCode"),
+        @NamedQuery(name = Device.READ_BY_STATUS,
+                query = "SELECT x FROM Device x WHERE UPPER(x.status) = :status"),
         @NamedQuery(name = Device.READ_BY_CUSTOM_CODE_ANASSIGNED,
                 query = "SELECT x FROM Device x WHERE UPPER(x.customCode) LIKE :name and x.id not in (select y.id from DeviceHolderPartner y) ORDER BY x.customCode ")
 })
@@ -25,6 +27,7 @@ public class Device implements Serializable {
     public static final String READ_BY_SERIAL_NUMBER = "Device.ReadBySerialNumber";
     public static final String READ_BY_CUSTOM_CODE = "Device.ReadByCustomCode";
     public static final String READ_BY_CUSTOM_CODE_ANASSIGNED = "Device.ReadByCustomCodeAnassigned";
+    public static final String READ_BY_STATUS = "Device.ReadByStatus";
 
     @TableGenerator(
             name = "DeviceTab",

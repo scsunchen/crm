@@ -126,7 +126,9 @@
 
 <script type="text/javascript">
 
-    $('#date').datepicker({});
+    $('#date').datepicker({
+        format: 'dd.mm.yyyy.'
+    });
 
     $('#businessPartnerName').typeahead({
         hint: false,

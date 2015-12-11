@@ -34,6 +34,6 @@ public class Client_ {
     public static volatile SingularAttribute<Client, String> vatCertificateNumber;
     public static volatile SingularAttribute<Client, BankCreditor> bank;
     public static volatile SingularAttribute<Client, String> bankAccount;
-    public static volatile SingularAttribute<Client, Client.InovicingType> inovicingType;
+    public static volatile SingularAttribute<Client, Client.InvoicingType> inovicingType;
 
 }

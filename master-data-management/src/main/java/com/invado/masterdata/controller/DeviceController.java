@@ -35,15 +35,21 @@ public class DeviceController {
     @Inject
     private BPService businessPartnerService;
 
-    @RequestMapping("/device/{page}")
-    public String showItems(@PathVariable Integer page,
+    @RequestMapping("/device/read-page.html")
+    public String showItems(@RequestParam Integer page,
+                            @RequestParam(value = "customCode", required = false) String customCode,
+                            @RequestParam(value = "serialNumber", required = false) String serialNumber,
+                            @ModelAttribute DeviceDTO deviceDTO,
                             Map<String, Object> model)
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("customCode", customCode));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("serialNumber", serialNumber));
         request.setPage(page);
         ReadRangeDTO<DeviceDTO> items = deviceService.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
+        model.put("deviceDTO", deviceDTO);
         model.put("numberOfPages", items.getNumberOfPages());
         return "device-view";
     }
@@ -80,7 +86,7 @@ public class DeviceController {
             this.deviceService.create(item);
             status.setComplete();
         }
-        return "redirect:/device/{page}";
+        return "redirect:/device/create.html";
 
     }
 
@@ -91,9 +97,10 @@ public class DeviceController {
         return "redirect:/device/{page}";
     }
 
-    @RequestMapping(value = "/device/{page}/update/{id}",
+    @RequestMapping(value = "/device/update.html",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable Integer id,
+    public String initUpdateForm(@RequestParam Integer id,
+                                 @RequestParam Integer page,
                                  Map<String, Object> model)
             throws Exception {
         DeviceDTO item = deviceService.read(id);
@@ -103,7 +110,7 @@ public class DeviceController {
         return "device-grid";
     }
 
-    @RequestMapping(value = "/device/{page}/update/{id}",
+    @RequestMapping(value = "/device/update.html",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") DeviceDTO item,
                                       BindingResult result,
@@ -116,7 +123,7 @@ public class DeviceController {
             this.deviceService.update(item);
             status.setComplete();
         }
-        return "redirect:/device/{page}";
+        return "redirect:/device/read-page.html?page=0";
     }
 
     /*

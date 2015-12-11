@@ -1,8 +1,6 @@
 package com.invado.masterdata.controller;
 
-import com.invado.core.domain.BankCreditor;
 import com.invado.core.domain.Client;
-import com.invado.core.domain.Township;
 import com.invado.core.dto.BankCreditorDTO;
 import com.invado.core.dto.ClientDTO;
 import com.invado.core.dto.TownshipDTO;
@@ -15,11 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.beans.PropertyEditorSupport;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +61,9 @@ public class ClientController {
 
         List<BankCreditorDTO> bankCreditors = bankCreditorService.readAll(null, null);
         model.put("banks", bankCreditors);
+
+        List<Client.InvoicingType> invoicingTypes = Arrays.asList(Client.InvoicingType.values());
+        model.put("invoicingTypes", invoicingTypes);
 
         model.put("action", "create");
 
