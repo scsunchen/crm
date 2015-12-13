@@ -35,12 +35,12 @@ public class DeviceHolderPartnerController {
     private TelekomWSClient telekomWSClient;
 
 
-    @RequestMapping(value = "/device/device-assignment.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/deviceholder/device-assignment.html", method = RequestMethod.GET)
     public String showDetailDeviceAssignment(@RequestParam Integer page,
-                                         @RequestParam(value = "deviceCustomCode") String deviceCustomCode,
-                                         @RequestParam(value = "businessPartnerId", required = false) Integer businessPartnerId,
-                                         @ModelAttribute DeviceHolderPartnerDTO deviceHolderPartnerDTO,
-                                         Map<String, Object> model) throws Exception {
+                                             @RequestParam(value = "deviceCustomCode", required = false) String deviceCustomCode,
+                                             @RequestParam(value = "businessPartnerId", required = false) Integer businessPartnerId,
+                                             @ModelAttribute DeviceHolderPartnerDTO deviceHolderPartnerDTO,
+                                             Map<String, Object> model) throws Exception {
 
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
@@ -97,15 +97,19 @@ public class DeviceHolderPartnerController {
             service.create(item);
             status.setComplete();
         }
-        return "redirect:/deviceholder/create.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&pointOfSaleId=" + pointOfSaleId + "&page=" + 0;
+
+        if (pointOfSaleId != null)
+            return "redirect:/deviceholder/create.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&pointOfSaleId=" + pointOfSaleId + "&page=" + 0;
+
+        return "redirect:/deviceholder/create.html?masterPartnerId=&masterPartnerName=&pointOfSaleId=&page=0";
     }
 
     @RequestMapping(value = "/deviceholder/create-detail.html", method = RequestMethod.GET)
     public String initCreateDetailForm(@RequestParam String page,
-                                 @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
-                                 @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                                 @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
-                                 Map<String, Object> model) {
+                                       @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                       @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                       @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                       Map<String, Object> model) {
 
         DeviceHolderPartnerDTO deviceHolderPartnerDTO = new DeviceHolderPartnerDTO();
 
@@ -127,13 +131,13 @@ public class DeviceHolderPartnerController {
 
     @RequestMapping(value = "/deviceholder/create-detail.html", method = RequestMethod.POST)
     public String processCreateDetailForm(@RequestParam String page,
-                                    @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
-                                    @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                                    @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
-                                    @ModelAttribute("item") DeviceHolderPartnerDTO item,
-                                    BindingResult result,
-                                    SessionStatus status,
-                                    Map<String, Object> model) throws Exception {
+                                          @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                          @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                          @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                          @ModelAttribute("item") DeviceHolderPartnerDTO item,
+                                          BindingResult result,
+                                          SessionStatus status,
+                                          Map<String, Object> model) throws Exception {
 
         if (result.hasErrors()) {
             model.put("action", "create");
@@ -145,7 +149,7 @@ public class DeviceHolderPartnerController {
         return "redirect:/deviceholder/create-detail.html?masterPartnerId=&masterPartnerName=&pointOfSaleId=&page=0";
     }
 
-    @RequestMapping(value = "/device/update-assignment.html",
+    @RequestMapping(value = "/deviceholder/update-assignment.html",
             method = RequestMethod.GET)
     public String initUpdateForm(@RequestParam String page,
                                  @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
@@ -163,7 +167,7 @@ public class DeviceHolderPartnerController {
         return "device-assignement-grid";
     }
 
-    @RequestMapping(value = "/device/update-assignment.html",
+    @RequestMapping(value = "/deviceholder/update-assignment.html",
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") DeviceHolderPartnerDTO item,
                                       BindingResult result,
@@ -176,153 +180,17 @@ public class DeviceHolderPartnerController {
             this.service.update(item);
             status.setComplete();
         }
-        return "device-assignment";
-    }
-
-    @RequestMapping(value = "/deviceholder/registerTerminal")
-    public String registerTerminal(@ModelAttribute DeviceHolderPartnerDTO deviceHolderPartnerDTO) throws Exception{
-
-        /*Ovo nije završeno jer rerutn statement nije dobar potrebni su parametri....i slično*/
-        deviceHolderPartnerDTO.setTelekomId(telekomWSClient.terminalRegistration(deviceHolderPartnerDTO));
-        service.update(deviceHolderPartnerDTO);
-        return "redirect:/deviceholder/update.html";
+        return "redirect:/deviceholder/device-assignment.html?page=0";
     }
 
 
 
-    /*
-    @RequestMapping(value = "/deviceholder/create.html", method = RequestMethod.POST)
-    public String processCreationForm(@RequestParam String page,
-                                      @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                                      @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
-                                      @ModelAttribute("item") BusinessPartnerContactDetailsDTO item,
-                                      BindingResult result,
-                                      SessionStatus status,
-                                      Map<String, Object> model)
-            throws Exception {
-        if (result.hasErrors()) {
-            model.put("action", "create");
-            return "business-partner-contact-grid";
-        } else {
-            service.create(item);
-            model.put("message", item.getId() + " " + item.getName());
-            status.setComplete();
-        }
-        //return "redirect:/township/{page}";
-        return "redirect:/deviceholder/create.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&page=" + 0;
-    }
-
-
-   @RequestMapping("/deviceholder/{page}")
-    public String showItems(@PathVariable Integer page,
-                            @ModelAttribute("filterObjectsList") FilterObjectsList filterList,
-                            ModelMap modelMap, Map<String, Object> model)
-            throws Exception {
-        PageRequestDTO request = new PageRequestDTO();
-        request.setPage(page);
-        if (filterList.getBusinessPartnerDTOs().size() > 0) {
-            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("merchantId", filterList.getBusinessPartnerDTOs().get(0).getId()));
-            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("pointOfSaleId", filterList.getBusinessPartnerDTOs().get(1).getId()));
-        } else {
-            filterList.getBusinessPartnerDTOs().add(new BusinessPartnerDTO());
-            filterList.getBusinessPartnerDTOs().add(new BusinessPartnerDTO());
-        }
-
-        ReadRangeDTO<BusinessPartnerContactDetailsDTO> items = service.readPage(request);
-
-        modelMap.addAttribute("filterObjects", filterList);
-        modelMap.addAttribute("data", items.getData());
-        modelMap.addAttribute("page", items.getPage());
-        modelMap.addAttribute("numberOfPages", items.getNumberOfPages());
-        //return "item-table";
-        return "business-partner-contact-view";
-    }
-
-    @RequestMapping(value = "/contact/create.html", method = RequestMethod.GET)
-    public String initCreateForm(@RequestParam String page,
-                                 @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
-                                 @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                                 @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
-                                 Map<String, Object> model) {
-        BusinessPartnerContactDetailsDTO businessPartnerContactDetailsDTO = new BusinessPartnerContactDetailsDTO();
-        BusinessPartnerDTO businessPartner = null;
-        if (pointOfSaleId != null) {
-            businessPartner = bpService.read(pointOfSaleId);
-        } else {
-            businessPartner = bpService.read(masterPartnerId);
-        }
-        if (businessPartner.getParentBusinessPartnerId() != null) {
-            businessPartnerContactDetailsDTO.setMerchantId(businessPartner.getParentBusinessPartnerId());
-            businessPartnerContactDetailsDTO.setMerchantName(businessPartner.getParentBusinesspartnerName());
-            businessPartnerContactDetailsDTO.setPointOfSaleId(businessPartner.getId());
-            businessPartnerContactDetailsDTO.setPointOfSaleName(businessPartner.getName());
-        } else {
-            businessPartnerContactDetailsDTO.setMerchantId(businessPartner.getId());
-            businessPartnerContactDetailsDTO.setMerchantName(businessPartner.getName());
-        }
-        model.put("item", businessPartnerContactDetailsDTO);
-        model.put("action", "create");
-        return "business-partner-contact-grid";
-    }
-
-    @RequestMapping(value = "/contact/create.html", method = RequestMethod.POST)
-    public String processCreationForm(@RequestParam String page,
-                                      @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                                      @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
-                                      @ModelAttribute("item") BusinessPartnerContactDetailsDTO item,
-                                      BindingResult result,
-                                      SessionStatus status,
-                                      Map<String, Object> model)
-            throws Exception {
-        if (result.hasErrors()) {
-            model.put("action", "create");
-            return "business-partner-contact-grid";
-        } else {
-            service.create(item);
-            model.put("message", item.getId() + " " + item.getName());
-            status.setComplete();
-        }
-        //return "redirect:/township/{page}";
-        return "redirect:/contact/create.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&page=" + 0;
-    }
-
-    @RequestMapping("/contact/delete.html")
-    public String delete(@RequestParam Integer id, @RequestParam String page,
-                         @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                         @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName) throws Exception {
+    @RequestMapping("/deviceholder/{page}/{id}/delete.html")
+    public String delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
-        //return "redirect:/contact/{page}";
-        return "redirect:/partner/read-contactsdetals-page.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&page=" + 0;
+        return "redirect:/deviceholder/device-assignment.html?page=0";
     }
 
-    @RequestMapping(value = "/contact/update.html",
-            method = RequestMethod.GET)
-    public String initUpdateForm(@RequestParam String page,
-                                 @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
-                                 @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                                 @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
-                                 @RequestParam(value = "id") Integer id,
-                                 Map<String, Object> model)
-            throws Exception {
-        BusinessPartnerContactDetailsDTO item = service.read(id).getDTO();
-        model.put("item", item);
-        return "business-partner-contact-grid";
-    }
 
-    @RequestMapping(value = "/contact/update.html",
-            method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") BusinessPartnerContactDetailsDTO item,
-                                      BindingResult result,
-                                      SessionStatus status,
-                                      Map<String, Object> model)
-            throws Exception {
-        if (result.hasErrors()) {
-            return "business-partner-contact-grid";
-        } else {
-            this.service.update(item);
-            status.setComplete();
-        }
-        return "redirect:/contact/update.html";
-    }
-*/
+
 }

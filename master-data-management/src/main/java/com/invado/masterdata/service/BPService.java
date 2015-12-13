@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import telekomWS.client.ServiceClient;
+import telekomWS.client.exceptions.WSException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
@@ -47,6 +49,8 @@ public class BPService {
     @Inject
     private Validator validator;
     private final String username = "a";
+
+    private ServiceClient telekomWSClient = new ServiceClient();
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -96,7 +100,7 @@ public class BPService {
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
             businessPartner.setVAT(a.getVAT());
             businessPartner.setType(a.getType());
-            businessPartner.setPosType(dao.find(POSType.class, Integer.parseInt(a.getPosTypeId())));
+            businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId().intValue()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
             List<String> msgs = validator.validate(businessPartner).stream()
                     .map(ConstraintViolation::getMessage)
@@ -569,6 +573,53 @@ public class BPService {
         List<BusinessPartner> tempList = typedQuery.getResultList();
         return tempList;
     }
+
+
+    /*MERCHANT*/
+    public Integer merchatnRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        return Integer.valueOf(telekomWSClient.poslovniPartnerUnos(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
+                businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
+                businessPartnerDTO.getEMail()));
+    }
+
+    public Integer merchantUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        return Integer.valueOf(telekomWSClient.poslovniPartnerIzmena(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
+                businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
+                businessPartnerDTO.getEMail()));
+    }
+
+    public Integer merchantDeactivation(Integer telekomId) throws Exception {
+        return Integer.valueOf(telekomWSClient.poslovniPartnerDeaktivacija(telekomId.intValue()));
+    }
+
+
+    /*POS*/
+
+    public Integer pointOfSaleRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+
+        return Integer.valueOf(telekomWSClient.prodajnoMestoUnos(dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId(), businessPartnerDTO.getName(),
+                businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getHouseNumber(), businessPartnerDTO.getPosTypeId(),
+                businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+    }
+
+
+    public Integer pointOfSaleUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+
+        BusinessPartner parentBusinesspartner = dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId());
+
+        return Integer.valueOf(telekomWSClient.prodajnoMestoIzmena(parentBusinesspartner.getTelekomId(), businessPartnerDTO.getName(),
+                Integer.parseInt(parentBusinesspartner.getTIN()), businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(),
+                businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+    }
+
+    public Integer pointOfSaleDeactivation(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        return Integer.valueOf(telekomWSClient.prodajnoMestoDeaktivacija(businessPartnerDTO.getTelekomId()));
+    }
+
+
+
+
+
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<BusinessPartner> readAll(Integer id,

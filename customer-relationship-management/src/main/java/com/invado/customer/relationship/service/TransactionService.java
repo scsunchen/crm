@@ -455,7 +455,7 @@ public class TransactionService {
         Integer distributorId = null;
 
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
-            if (s.getKey().equals("invoicingDate") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+            if (s.getKey().equals("invoicingDateTo") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
                 try {
                     String in = s.getValue().toString();
@@ -470,17 +470,23 @@ public class TransactionService {
             }
         }
 
+        InvoicingTransactions invoicingTransactions = new InvoicingTransactions();
+        TypedQuery<InvoicingTransactions> queryLastInvoicingTransaction = dao.createNamedQuery(InvoicingTransactions.LAST_TRANSACTION, InvoicingTransactions.class);
+        invoicingTransactions = queryLastInvoicingTransaction.getSingleResult();
+
+
         Query query = dao.createNamedQuery(Transaction.INVOICING_SUM_PER_MERCHANT);
         query.setParameter("distributorId", distributorId == null ? new Integer(0) : distributorId);
-        query.setParameter("invoicingDate", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
-
+        query.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
+        query.setParameter("invoicingDateFrom", Date.from(invoicingTransactions.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
             Query countEntitiesQuery = dao.createNamedQuery(Transaction.COUNT_INVOICING_SUM_PER_MERCHANT);
             countEntitiesQuery.setParameter("distributorId", distributorId == null ? new Integer(0) : distributorId);
-            countEntitiesQuery.setParameter("invoicingDate", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
+            countEntitiesQuery.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
+            countEntitiesQuery.setParameter("invoicingDateFrom", Date.from(invoicingTransactions.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
             Long countEntities = new Long(countEntitiesQuery.getSingleResult().toString());
 
@@ -957,19 +963,22 @@ public class TransactionService {
         Integer maxDocument = new Integer(1);
         LocalDate invoicingDate = LocalDate.now();
         Date out = null;
-        Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
-        if (paramTransactionDTO.getInvoicingGenDate() != null) {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-            try {
-                String in = paramTransactionDTO.getInvoicingGenDate();
-                out = formatter.parse(in);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
 
-        queryInvoicingCandidates.setParameter("invoicingDate", out);
+        InvoicingTransactions currentInvoicingTransactions= new InvoicingTransactions();
+        InvoicingTransactions invoicingTransactions = new InvoicingTransactions();
+        TypedQuery<InvoicingTransactions> queryLastInvoicingTransaction = dao.createNamedQuery(InvoicingTransactions.LAST_TRANSACTION, InvoicingTransactions.class);
+        invoicingTransactions = queryLastInvoicingTransaction.getSingleResult();
+
+        Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
+
+
         queryInvoicingCandidates.setParameter("distributorId", paramTransactionDTO.getInvoicingDistributorId());
+        queryInvoicingCandidates.setParameter("invoicingDateTo", Date.from(paramTransactionDTO.getInvoicingGenDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        queryInvoicingCandidates.setParameter("invoicingDateFrom", Date.from(invoicingTransactions.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant()));
+        currentInvoicingTransactions.setInvoicedFrom(invoicingTransactions.getInvoicedTo().plusDays(1));
+        currentInvoicingTransactions.setInvoicedTo(paramTransactionDTO.getInvoicingGenDate());
+        currentInvoicingTransactions.setDitributor(dao.find(Client.class,paramTransactionDTO.getInvoicingDistributorId() ));
+
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
         Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
         Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
@@ -1076,6 +1085,7 @@ public class TransactionService {
 
         }
 
+        dao.persist(currentInvoicingTransactions);
         return invoicePerMerchantMap;
     }
 
@@ -1084,22 +1094,25 @@ public class TransactionService {
             ConstraintViolationException, EntityExistsException, EntityNotFoundException {
 
         Integer maxDocument = new Integer(1);
-        BigDecimal rabat = new BigDecimal(0);
         LocalDate invoicingDate = LocalDate.now();
         Date out = null;
-        Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
-        if (paramTransactionDTO.getInvoicingGenDate() != null) {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-            try {
-                String in = paramTransactionDTO.getInvoicingGenDate();
-                out = formatter.parse(in);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        BigDecimal rabat = null;
 
-        queryInvoicingCandidates.setParameter("invoicingDate", out);
+        InvoicingTransactions currentInvoicingTransactions= new InvoicingTransactions();
+        InvoicingTransactions invoicingTransactions = new InvoicingTransactions();
+        TypedQuery<InvoicingTransactions> queryLastInvoicingTransaction = dao.createNamedQuery(InvoicingTransactions.LAST_TRANSACTION, InvoicingTransactions.class);
+        invoicingTransactions = queryLastInvoicingTransaction.getSingleResult();
+
+        Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
+
+
         queryInvoicingCandidates.setParameter("distributorId", paramTransactionDTO.getInvoicingDistributorId());
+        queryInvoicingCandidates.setParameter("invoicingDateTo", Date.from(paramTransactionDTO.getInvoicingGenDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        queryInvoicingCandidates.setParameter("invoicingDateFrom", Date.from(invoicingTransactions.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant()));
+        currentInvoicingTransactions.setInvoicedFrom(invoicingTransactions.getInvoicedTo().plusDays(1));
+        currentInvoicingTransactions.setInvoicedTo(paramTransactionDTO.getInvoicingGenDate());
+        currentInvoicingTransactions.setDitributor(dao.find(Client.class, paramTransactionDTO.getInvoicingDistributorId()));
+
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
         Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
         Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
@@ -1142,7 +1155,8 @@ public class TransactionService {
                 invoice = invoicePerMerchantMap.get(transactionSetDTO.getMerchantId());
             }
             InvoiceItemDTO invoiceItemDTO = null;
-            try {System.out.println("podaci "+invoice.getDocument()+" "+invoice.getOrgUnitId()+" "+invoice.getClientId());
+            try {
+                System.out.println("podaci " + invoice.getDocument() + " " + invoice.getOrgUnitId() + " " + invoice.getClientId());
                 invoiceItemDTO = dao.createNamedQuery(InvoiceItem.READ_ITEMS_BY_INVOICE_AND_ARTICLE, InvoiceItem.class)
                         .setParameter("document", invoice.getDocument())
                         .setParameter("orgUnit", invoice.getOrgUnitId())
@@ -1208,7 +1222,9 @@ public class TransactionService {
 
         }
 
+        dao.persist(currentInvoicingTransactions);
         return invoicePerMerchantMap;
+
     }
 
     @Transactional(readOnly = true)

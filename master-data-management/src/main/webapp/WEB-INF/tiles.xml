@@ -100,13 +100,13 @@
     </definition>
     <definition name="device-assignment" extends="main-menu-form">
         <put-attribute name="title" value="Terminal"/>
-        <put-attribute name="panel-title" value="Taduženje terminala"/>
+        <put-attribute name="panel-title" value="Zaduženje terminala"/>
         <put-attribute name="body" value="/WEB-INF/jsp/device-assignment-table.jsp"/>
     </definition>
 
     <definition name="device-assignement-grid" extends="main-menu-form">
         <put-attribute name="title" value="Terminal"/>
-        <put-attribute name="panel-title" value="Taduženje terminala"/>
+        <put-attribute name="panel-title" value="Zaduženje terminala"/>
         <put-attribute name="body" value="/WEB-INF/jsp/device-assignment-grid.jsp"/>
     </definition>
 

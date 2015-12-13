@@ -32,7 +32,7 @@ public class BusinessPartnerDTO {
     private String contactPersonePhone;
     private String contactPersoneFunction;
     private POSType POStype;
-    private String posTypeId;
+    private Integer posTypeId;
     private String postTypeName;
     private Integer parentBusinessPartnerId;
     private String parentBusinesspartnerName;
@@ -305,11 +305,11 @@ public class BusinessPartnerDTO {
         this.POStype = POStype;
     }
 
-    public String getPosTypeId() {
+    public Integer getPosTypeId() {
         return posTypeId;
     }
 
-    public void setPosTypeId(String posTypeId) {
+    public void setPosTypeId(Integer posTypeId) {
         this.posTypeId = posTypeId;
     }
 

@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -34,8 +35,9 @@ public class TransactionDTO {
     @DateTimeFormat(style = "M-")
     private String invoicingDate;
     private Boolean invoicingStatus;
-    private String invoicingGenDate;
-    private String invoicingDistributorId;
+    @DateTimeFormat(style = "M-")
+    private LocalDate invoicingGenDate;
+    private Integer invoicingDistributorId;
     private String invoicingDistributorName;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal amount;
@@ -197,19 +199,19 @@ public class TransactionDTO {
         this.invoicingDate = invoicingDate;
     }
 
-    public String getInvoicingGenDate() {
+    public LocalDate getInvoicingGenDate() {
         return invoicingGenDate;
     }
 
-    public void setInvoicingGenDate(String invoicingGenDate) {
+    public void setInvoicingGenDate(LocalDate invoicingGenDate) {
         this.invoicingGenDate = invoicingGenDate;
     }
 
-    public String getInvoicingDistributorId() {
+    public Integer getInvoicingDistributorId() {
         return invoicingDistributorId;
     }
 
-    public void setInvoicingDistributorId(String invoicingDistributorId) {
+    public void setInvoicingDistributorId(Integer invoicingDistributorId) {
         this.invoicingDistributorId = invoicingDistributorId;
     }
 

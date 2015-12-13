@@ -2,9 +2,12 @@ package com.invado.customer.relationship.service.dto;
 
 import com.invado.core.annotations.NativeQueryResultColumn;
 import com.invado.core.annotations.NativeQueryResultEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by Nikola on 06/09/2015.
@@ -30,17 +33,21 @@ public class InvoicingTransactionSetDTO {
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal amount;
     @NativeQueryResultColumn(index=8)
-    private Long transactionId;
-    @NativeQueryResultColumn(index=9)
     private Integer posId;
-    @NativeQueryResultColumn(index=10)
+    @NativeQueryResultColumn(index=9)
     private String posName;
-    @NativeQueryResultColumn(index=11)
+    @NativeQueryResultColumn(index=10)
     private Integer treminalId;
-    @NativeQueryResultColumn(index=12)
+    @NativeQueryResultColumn(index=11)
     private String terminalName;
+    @NativeQueryResultColumn(index=12)
+    @DateTimeFormat(style = "M-")
+    private Date responseTime;
     @NativeQueryResultColumn(index=13)
+    private Long transactionId;
+    @NativeQueryResultColumn(index=14)
     private Integer rownum;
+
 
 
 
@@ -154,6 +161,14 @@ public class InvoicingTransactionSetDTO {
 
     public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public Date getResponseTime() {
+        return responseTime;
+    }
+
+    public void setResponseTime(Date responseTime) {
+        this.responseTime = responseTime;
     }
 
     public String toString(){

@@ -102,7 +102,8 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="${page}/update/${item.id}" class="btn btn-primary"><span
+                        <a href="/masterdata/deviceholder/update-assignment.html?id=${item.id}&pointOfSaleId=${param['pointOfSaleId']}&masterPartnerId=${param['masterPartnerId']}&page=0"
+                           class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                                 class="glyphicon glyphicon-trash"></span> brisanje
@@ -110,7 +111,8 @@
                     </div>
                 </td>
                 <td><c:out value="${item.deviceCustomCode}"/></td>
-                <td><a href="${pageContext.request.contextPath}/device/0/update/${item.deviceId}" class="btn btn-primary"><span
+                <td><a href="${pageContext.request.contextPath}/device/0/update/${item.deviceId}"
+                       class="btn btn-primary"><span
                         class="glyphicon glyphicon-search"></span> terminal</a></td>
                 <td><c:out value="${item.deviceSerialNumber}"/></td>
                 <td><c:out value="${item.businessPartnerName}"/></td>

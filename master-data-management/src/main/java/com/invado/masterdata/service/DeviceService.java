@@ -2,6 +2,7 @@ package com.invado.masterdata.service;
 
 import com.invado.core.domain.*;
 import com.invado.core.dto.DeviceDTO;
+import com.invado.core.dto.DeviceHolderPartnerDTO;
 import com.invado.core.exception.EntityExistsException;
 import com.invado.core.exception.EntityNotFoundException;
 import com.invado.core.exception.*;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import telekomWS.client.ServiceClient;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -22,7 +24,11 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +47,8 @@ public class DeviceService {
 
     @Autowired
     private Validator validator;
+
+    private ServiceClient telekomWSClient = new ServiceClient();
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -409,6 +417,36 @@ public class DeviceService {
         typedQuery.setMaxResults(pageSize);
         return typedQuery.getResultList();
     }
+
+
+    public Integer terminalRegistration(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception {
+
+        GregorianCalendar gcal = GregorianCalendar.from(deviceHolderDTO.getActivationDate().atStartOfDay(ZoneId.systemDefault()));
+        XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+
+        return Integer.valueOf(telekomWSClient.terminalUnos(deviceHolderDTO.getRefillTypeId(), deviceHolderDTO.getConnectionTypeId(), deviceHolderDTO.getDeviceCustomCode(),
+                deviceHolderDTO.getMSISDN(), deviceHolderDTO.getWorkingStartTime(), deviceHolderDTO.getWorkingEndTime(), deviceHolderDTO.getTransactionLimit(),
+                deviceHolderDTO.getLimitPerDay(), deviceHolderDTO.getLimitPerMonth(), xcal, deviceHolderDTO.getICCID(), deviceHolderDTO.getDeviceSerialNumber(),
+                deviceHolderDTO.getTelekomId(), dao.find(BusinessPartner.class, deviceHolderDTO.getBusinessPartnerId()).getParentBusinessPartner().getTelekomId()));
+    }
+
+    public Integer terminalUpdate(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception {
+
+        GregorianCalendar gcal = GregorianCalendar.from(deviceHolderDTO.getActivationDate().atStartOfDay(ZoneId.systemDefault()));
+        XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+
+        return Integer.valueOf(telekomWSClient.terminalIzmena(deviceHolderDTO.getTelekomId(), xcal, deviceHolderDTO.getLimitPerDay(), deviceHolderDTO.getICCID(),
+                deviceHolderDTO.getTransactionLimit(), deviceHolderDTO.getLimitPerMonth(), deviceHolderDTO.getMSISDN(), deviceHolderDTO.getWorkingStartTime(), deviceHolderDTO.getWorkingEndTime(),
+                deviceHolderDTO.getDeviceSerialNumber(), deviceHolderDTO.getTelekomId(), deviceHolderDTO.getTelekomId().toString(), deviceHolderDTO.getRefillTypeId(),
+                deviceHolderDTO.getConnectionTypeId()));
+    }
+
+    public Integer terminalStatusUpdate(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception{
+
+        return Integer.valueOf(telekomWSClient.TerminalIzmenaStatusa(deviceHolderDTO.getTelekomId(), dao.find(Device.class, deviceHolderDTO.getDeviceId()).getStatus().getId().intValue()));
+    }
+
+
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<DeviceDTO> readAll(Integer id,

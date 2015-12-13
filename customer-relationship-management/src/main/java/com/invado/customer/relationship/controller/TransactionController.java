@@ -5,7 +5,6 @@ import com.invado.core.domain.Client;
 import com.invado.core.dto.InvoiceDTO;
 import com.invado.core.domain.Device;
 import com.invado.customer.relationship.domain.TransactionType;
-import com.invado.customer.relationship.service.DeviceService;
 import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.TransactionService;
 import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
@@ -27,8 +26,6 @@ public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
-    @Autowired
-    private DeviceService deviceService;
     @Autowired
     private MasterDataService masterDataService;
 
@@ -99,7 +96,7 @@ public class TransactionController {
                     if (params[i] != null && !params[i].isEmpty()) {
                         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("terminalId", params[i] == null || params[i].isEmpty() ? null : Integer.valueOf(params[i])));
                         transactionDTO.setTerminalId(Integer.valueOf(params[i]));
-                        transactionDTO.setTerminalCustomCode(deviceService.read(Integer.valueOf(params[i])).getCustomCode());
+                        transactionDTO.setTerminalCustomCode(masterDataService.readDevice(Integer.valueOf(params[i])).getCustomCode());
                     }
                     break;
                 case 3:
@@ -170,7 +167,7 @@ public class TransactionController {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId", distributorId));
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDate", invoicingDate));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateTo", invoicingDate));
         ReadRangeDTO<InvoicingTransactionSetDTO> items = transactionService.readInvoicingSetPage(request);
 
         model.put("data", items.getData());
@@ -183,8 +180,8 @@ public class TransactionController {
     @RequestMapping(value = "/invoicing/review-invoices.html", method = RequestMethod.POST)
     public String genInvoices(@ModelAttribute TransactionDTO transactionDTO, Map<String, Object> model) throws Exception {
         System.out.println("izvrsio se bre " + transactionDTO.getInvoicingGenDate() + " " + transactionDTO.getInvoicingDistributorId());
-        //Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesI(transactionDTO);
-        Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
+        Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesI(transactionDTO);
+        //Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
         model.put("data", genTransactions);
         return "invoice-table";
     }
@@ -222,7 +219,7 @@ public class TransactionController {
     public
     @ResponseBody
     List<Device> findTerminalByCustomCode(@PathVariable String name) {
-        return deviceService.readDeviceByCustomCode(name);
+        return masterDataService.readDeviceByCustomCode(name);
     }
 
     @RequestMapping(value = "/masterdat/read-transactiontype/{name}")

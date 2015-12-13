@@ -75,6 +75,8 @@ public class DeviceHolderPartnerService {
             deviceHolderPartner.setLimitPerMonth(a.getLimitPerMonth());
             deviceHolderPartner.setLimitPerDay(a.getLimitPerDay());
             deviceHolderPartner.setMSISDN(a.getMSISDN());
+            deviceHolderPartner.setWorkingStartTime(a.getWorkingStartTime());
+            deviceHolderPartner.setWorkingEndTime(a.getWorkingEndTime());
             deviceHolderPartner.setRefillType(dao.find(PrepaidRefillType.class, a.getRefillTypeId()));
 
 
@@ -139,12 +141,14 @@ public class DeviceHolderPartnerService {
             deviceHolderPartner.setTelekomId(dto.getTelekomId());
             deviceHolderPartner.setActivationDate(dto.getActivationDate());
             deviceHolderPartner.setTransactionLimit(dto.getTransactionLimit());
-            deviceHolderPartner.setConnectionType(dao.find(ConnectionType.class, dto.getConnectionTypeId()));
+            if (dto.getConnectionTypeId() != null)
+                deviceHolderPartner.setConnectionType(dao.find(ConnectionType.class, dto.getConnectionTypeId()));
             deviceHolderPartner.setLimitPerDay(dto.getLimitPerDay());
             deviceHolderPartner.setLimitPerMonth(dto.getLimitPerMonth());
             deviceHolderPartner.setLimitPerDay(dto.getLimitPerDay());
             deviceHolderPartner.setMSISDN(dto.getMSISDN());
-            deviceHolderPartner.setRefillType(dao.find(PrepaidRefillType.class, dto.getRefillTypeId()));
+            if (dto.getRefillTypeId() != null)
+                deviceHolderPartner.setRefillType(dao.find(PrepaidRefillType.class, dto.getRefillTypeId()));
 
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
@@ -359,7 +363,7 @@ Join<Pet, Owner> owner = pet.join(Pet_.owners);*/
             q.setParameter("device", device);
         }
         if (customCode != null && !customCode.isEmpty()) {
-            q.setParameter("customCode", "%"+customCode+"%");
+            q.setParameter("customCode", "%" + customCode + "%");
         }
 
         return q.getSingleResult();
@@ -415,7 +419,7 @@ Join<Pet, Owner> owner = pet.join(Pet_.owners);*/
             typedQuery.setParameter("device", device);
         }
         if (customCode != null && !customCode.isEmpty()) {
-            typedQuery.setParameter("customCode", "%"+customCode+"%");
+            typedQuery.setParameter("customCode", "%" + customCode + "%");
         }
         typedQuery.setFirstResult(first);
         typedQuery.setMaxResults(pageSize);

@@ -15,7 +15,7 @@
     <br/>
     <!-- Pretraživanje merchant...pos... -->
     <form:form role="search" method="GET" modelAttribute="deviceHolderPartnerDTO"
-               action="${pageContext.request.contextPath}/device/device-assignment.html">
+               action="${pageContext.request.contextPath}/deviceholder/device-assignment.html">
         <div class="form-group col-lg-4">
             <form:input class="form-control" id="deviceCustomCode" placeholder="Terminal..." type="text"
                         path="deviceCustomCode"/>
@@ -74,7 +74,7 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="${pageContext.request.contextPath}/device/update-assignment.html?id=${item.id}&page=0" class="btn btn-primary"><span
+                        <a href="${pageContext.request.contextPath}/deviceholder/update-assignment.html?id=${item.id}&page=0" class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
                                 class="glyphicon glyphicon-trash"></span> brisanje
@@ -82,7 +82,7 @@
                     </div>
                 </td>
                 <td><c:out value="${item.deviceCustomCode}"/></td>
-                <td><a href="${pageContext.request.contextPath}/device/update.html?id=${item.deviceId}&page=${page}"
+                <td><a href="${pageContext.request.contextPath}/deviceholder/update.html?id=${item.deviceId}&page=${page}"
                        class="btn btn-primary"><span
                         class="glyphicon glyphicon-search"></span> terminal</a></td>
                 <td><c:out value="${item.deviceSerialNumber}"/></td>

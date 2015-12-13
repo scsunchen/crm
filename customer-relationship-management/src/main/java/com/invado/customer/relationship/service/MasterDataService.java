@@ -5,12 +5,9 @@
  */
 package com.invado.customer.relationship.service;
 
-import com.invado.core.domain.Article;
-import com.invado.core.domain.BankCreditor;
-import com.invado.core.domain.BusinessPartner;
-import com.invado.core.domain.Client;
-import com.invado.core.domain.Currency;
-import com.invado.core.domain.OrgUnit;
+import com.invado.core.domain.*;
+import com.invado.core.dto.DeviceDTO;
+import com.invado.core.exception.EntityNotFoundException;
 import com.invado.core.exception.SystemException;
 import com.invado.customer.relationship.Utils;
 import java.util.List;
@@ -107,7 +104,7 @@ public class MasterDataService {
         try {
             List<BusinessPartner> list =  dao.createNamedQuery(BusinessPartner.READBY_NAME_TYPE_ORDERBY_NAME,
                     BusinessPartner.class)
-                    .setParameter("name", ("%"+name+"%").toUpperCase())
+                    .setParameter("name", ("%" + name + "%").toUpperCase())
                     .setParameter("type", type)
                     .getResultList();
             return list;
@@ -266,6 +263,45 @@ public class MasterDataService {
                     ex);
         }
     }
-    
-    
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public DeviceDTO readDevice(Integer id) throws EntityNotFoundException {
+        //TODO : check ReadDevicePermission
+        //TODO : check ReadDevicePermission
+        if (id == null) {
+            throw new EntityNotFoundException(
+                    Utils.getMessage("Device.IllegalArgumentEx.Code")
+            );
+        }
+        try {
+            Device Device = dao.find(Device.class, id);
+            if (Device == null) {
+                throw new EntityNotFoundException(
+                        Utils.getMessage("Device.EntityNotFoundEx", id)
+                );
+            }
+            return Device.getDTO();
+        } catch (EntityNotFoundException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(
+                    Utils.getMessage("Device.PersistenceEx.Read", id),
+                    ex);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Device> readDeviceByCustomCode(String name) {
+        try {
+            return dao.createNamedQuery(Device.READ_BY_CUSTOM_CODE, Device.class)
+                    .setParameter("name", ("%" + name + "%").toUpperCase())
+                    .getResultList();
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "Device.Exception.ReadByCusotmCode"),
+                    ex);
+        }
+    }
 }

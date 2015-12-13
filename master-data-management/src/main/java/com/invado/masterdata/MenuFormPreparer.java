@@ -115,7 +115,7 @@ public class MenuFormPreparer implements ViewPreparer {
 
         masterdata.put("Terminali", "Status terminala", "/masterdata/devicestatus/read-page.html?page=0");
         masterdata.put("Terminali", "Terminal", "/masterdata/device/read-page.html?page=0");
-        masterdata.put("Terminali", "Zaduenje Terminala", "/masterdata/device/device-assignment.html?businessPartnerId=&deviceCustomCode=&page=0");
+        masterdata.put("Terminali", "Zaduenje Terminala", "/masterdata/deviceholder/device-assignment.html?businessPartnerId=&deviceCustomCode=&page=0");
 
         modules.add(masterdata);
         Module service = new Module();

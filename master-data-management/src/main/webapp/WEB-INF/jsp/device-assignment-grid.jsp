@@ -74,8 +74,29 @@
                         </form:select>
                     </div>
                 </spring:bind>
-                <input:inputTime name="workingStartTime" label="Početak rada" placeholder="hh:mi"/>
-                <input:inputTime name="workingEndTime" label="Kraj rada" placeholder="hh:mi"/>
+                <div class="col-lg-4">
+                    <spring:bind path="workingStartTime">
+                        <div class="form-group row">
+
+                            <label for="workingStartTime" style="margin-top: 15px;"><spring:message
+                                    code="DeviceHolder.label.WorkingStartTime"/></label>
+                            <form:input id="workingStartTime" path="workingStartTime" type="text"
+                                        class="form-control"/>
+                            <span class="help-inline"><c:if test="${status.error}"><c:out
+                                    value="${status.errorMessage}"/></c:if></span>
+                        </div>
+                    </spring:bind>
+                    <spring:bind path="workingEndTime">
+                        <div class="form-group row">
+                            <label for="workingEndTime" style="margin-top: 15px;"><spring:message
+                                    code="DeviceHolder.label.WorkingEndTime"/></label>
+                            <form:input id="workingEndTime" path="workingEndTime" type="text"
+                                        class="form-control"/>
+                            <span class="help-inline"><c:if test="${status.error}"><c:out
+                                    value="${status.errorMessage}"/></c:if></span>
+                        </div>
+                    </spring:bind>
+                </div>
 
             </div>
             <div class="col-lg-6">
@@ -84,6 +105,7 @@
                 <input:inputField name="transactionLimit" label="Limit transakcija"/>
                 <input:inputField name="limitPerDay" label="Dnevni limit"/>
                 <input:inputField name="limitPerMonth" label="Mesecni limit"/>
+
                 <spring:bind path="activationDate">
                     <div class="form-group row">
                         <div class="col-lg-6">
@@ -96,6 +118,7 @@
                         </div>
                     </div>
                 </spring:bind>
+
                 <input:inputField name="telekomId" label="Telekom ID"/>
             </div>
             <form:hidden path="version"/>
@@ -126,8 +149,12 @@
 
 <script type="text/javascript">
 
-    $('#date').datepicker({
-        format: 'dd.mm.yyyy.'
+    $('#date').datepicker({});
+    $('#workingStartTime').datetimepicker({
+        format: 'HH:mm'
+    });
+    $('#workingEndTime').datetimepicker({
+        format: 'HH:mm'
     });
 
     $('#businessPartnerName').typeahead({

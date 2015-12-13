@@ -17,7 +17,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <input:inputDate name="invoicingGenDate" label="Datum do: " placeholder="dd.mm.yyyy."/>
+                    <spring:bind path="invoicingGenDate">
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <form:input id="date" path="invoicingGenDate" type="text"
+                                            class="form-control" placeholder="dd.mm.yyyy." />
+                            <span class="help-inline"><c:if test="${status.error}"><c:out
+                                    value="${status.errorMessage}"/></c:if></span>
+                            </div>
+                        </div>
+                    </spring:bind>
                     <div class="form-group input-group">
                         <label for="invoicingDistributorName">Distributor</label>
                         <form:input id="invoicingDistributorName" class="typeahead form-control" type="text"
@@ -70,6 +79,7 @@
             <th>Terminal</th>
             <th>Servis</th>
             <th>Iznos</th>
+            <th>Datum</th>
             <th>Distributor</th>
         </tr>
         </thead>
@@ -83,6 +93,7 @@
                 <td><c:out value="${item.terminalName}"/></td>
                 <td><c:out value="${item.serviceDescription}"/></td>
                 <td><spring:eval expression="item.amount"/></td>
+                <td><spring:eval expression="item.responseTime"/></td>
                 <td><c:out value="${item.distributorName}"/></td>
 
             </tr>
@@ -101,14 +112,14 @@
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/crm/in-transactions.html?&distributorId=${param['distiributorId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/in-transactions.html?&distributorId=${param['distributorId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
                 <span class="glyphicon glyphicon-backward"></span> Prethodna
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
 
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/crm/in-transactions.html?&distributorId=${param['distiributorId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/in-transactions.html?&distributorId=${param['distributorId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
                 <span class="glyphicon glyphicon-forward"></span> Naredna
             </a>
         </li>
@@ -117,6 +128,9 @@
 
 
 <script type="text/javascript">
+
+    $('#date').datepicker({});
+
     $('#distributorName').typeahead({
         hint: false,
         highlight: true,

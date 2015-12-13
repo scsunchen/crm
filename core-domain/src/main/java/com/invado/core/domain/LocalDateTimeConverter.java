@@ -3,6 +3,7 @@ package com.invado.core.domain;
 import javax.persistence.AttributeConverter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +26,7 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
         return new Date(calendar.getTimeInMillis());
     }
 
+
     @Override
     public LocalDateTime convertToEntityAttribute(Date dbData) {
         if (dbData == null) {
@@ -39,6 +41,7 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
         int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
-        return LocalDateTime.of( year, month, dayOfYear, hourOfDay, second);
+        LocalDateTime ld = LocalDateTime.of( year, ++month, dayOfYear, hourOfDay, second);
+        return ld;
     }
 }

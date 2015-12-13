@@ -32,8 +32,6 @@ public class BPController {
     @Inject
     private POSTypeService posTypeService;
     @Inject
-    private TelekomWSClient telekomWSClient;
-    @Inject
     private CurrencyService currencyService;
     @Inject
     private BusinessPartnerContactDetailsService contactDetailsService;
@@ -357,32 +355,63 @@ public class BPController {
         return "redirect:/partner/read-subpartners.html?posId=" + item.getId() + "&masterPartnerId=" + item.getParentBusinessPartnerId() + "&masterPartnerName=" + item.getParentBusinesspartnerName() + "&page=0";
     }
 
-    @RequestMapping(value = "partner/registerMerchant")
+    @RequestMapping(value = "partner/register/input/MERCHANT")
     public String processTelekomMerchantRegistration(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
-        item.setTelekomId(telekomWSClient.merchatnRegistration(item));
+        item.setTelekomId(service.merchatnRegistration(item));
         service.update(item);
 
         return "partner-grid";
     }
 
-    @RequestMapping(value = "partner/updateMerchant")
+    @RequestMapping(value = "partner/register/update/MERCHANT")
     public String processTelekomMerchantUpdate(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
-        item.setTelekomId(telekomWSClient.merchantUpdate(item));
+        item.setTelekomId(service.merchantUpdate(item));
         service.update(item);
 
         return "partner-grid";
     }
 
-    @RequestMapping(value = "partner/deactivateMerchant")
+    @RequestMapping(value = "partner/register/deactivate/MERCHANT")
     public String processTelekomMerchantDeactivation(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
-        item.setTelekomId(telekomWSClient.merchantDeactivation(item.getTelekomId()));
+        item.setTelekomId(service.merchantDeactivation(item.getTelekomId()));
         this.service.update(item);
 
         return "partner-grid";
     }
+
+
+
+    @RequestMapping(value = "partner/register/input/POINT_OF_SALE")
+    public String processTelekomPOSRegistration(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+
+        item.setTelekomId(service.pointOfSaleRegistration(item));
+        service.update(item);
+
+        return "partner-grid";
+    }
+
+    @RequestMapping(value = "partner/register/update/POINT_OF_SALE")
+    public String processTelekomPOSUpdate(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+
+        item.setTelekomId(service.pointOfSaleUpdate(item));
+        service.update(item);
+
+        return "partner-grid";
+    }
+
+    @RequestMapping(value = "partner/register/deactivation/POINT_OF_SALE")
+    public String processTelekomPOSDeactivation(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+
+        item.setTelekomId(service.pointOfSaleDeactivation(item));
+        this.service.update(item);
+
+        return "partner-grid";
+    }
+
+
 
     @RequestMapping(value = "/partner/read-partner/{name}")
     public

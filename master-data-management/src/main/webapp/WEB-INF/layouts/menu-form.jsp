@@ -19,20 +19,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/css/datepicker3.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/css/dataTables.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/datepicker3.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
 
         <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/typeahead/typeahead.bundle.min.js"></script>
-        <tiles:importAttribute name="datepickerLanguage"/>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/locales/bootstrap-datepicker.${datepickerLanguage}.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/jquery.dataTables.js"></script>
+
+        <tiles:importAttribute name="datepickerLanguage"/>
+
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datepicker.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/locales/bootstrap-datepicker.${datepickerLanguage}.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
+
+
+
         <script type="text/javascript">
             <c:if test="${ not empty datepickerLanguage}">
             $.fn.datepicker.defaults.language = '${datepickerLanguage}';

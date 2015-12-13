@@ -14,6 +14,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +35,8 @@ public class TransactionTest {
 
         Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
         TransactionDTO paramTransactionDTO = new TransactionDTO();
-        paramTransactionDTO.setInvoicingDistributorId("2");
-        paramTransactionDTO.setInvoicingGenDate("05.12.2015");
+        //paramTransactionDTO.setInvoicingDistributorId("2");
+        //paramTransactionDTO.setInvoicingGenDate("05.12.2015");
         try {
             invoicePerMerchantMap = transactionService.genInvoicesI(paramTransactionDTO);
             //invoicePerMerchantMap = transactionService.genInvoicesUI(paramTransactionDTO);
@@ -49,5 +50,12 @@ public class TransactionTest {
             e.printStackTrace();
         }
         System.out.println("evo ga nesto");
+    }
+
+    @Test
+    public void dummy(){
+        int month = 3;
+        System.out.println(LocalDateTime.of( 2015, --month, 25, 0, 0));
+        System.out.println(LocalDateTime.of( 2015, --month, 25, 0, 0));
     }
 }

@@ -2,6 +2,7 @@ package com.invado.masterdata.service;
 
 
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.domain.Device;
 import com.invado.core.dto.BusinessPartnerDTO;
 import com.invado.core.dto.DeviceDTO;
 import com.invado.core.dto.DeviceHolderPartnerDTO;
@@ -49,6 +50,30 @@ public class TelekomWSClient {
         return Integer.valueOf(telekomWSClient.poslovniPartnerDeaktivacija(telekomId.intValue()));
     }
 
+
+    /*POS*/
+
+    public Integer pointOfSaleRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+
+        return Integer.valueOf(telekomWSClient.prodajnoMestoUnos(dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId(), businessPartnerDTO.getName(),
+                businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getHouseNumber(), businessPartnerDTO.getPosTypeId(),
+                businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+    }
+
+
+    public Integer pointOfSaleUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+
+        BusinessPartner parentBusinesspartner = dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId());
+
+        return Integer.valueOf(telekomWSClient.prodajnoMestoIzmena(parentBusinesspartner.getTelekomId(), businessPartnerDTO.getName(),
+                Integer.parseInt(parentBusinesspartner.getTIN()), businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(),
+                businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+    }
+
+    public Integer pointOfSaleDeactivation(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        return Integer.valueOf(telekomWSClient.prodajnoMestoDeaktivacija(businessPartnerDTO.getTelekomId()));
+    }
+
     /*TERMINAL*/
 
     public Integer terminalRegistration(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception {
@@ -56,11 +81,26 @@ public class TelekomWSClient {
         GregorianCalendar gcal = GregorianCalendar.from(deviceHolderDTO.getActivationDate().atStartOfDay(ZoneId.systemDefault()));
         XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
 
-        return Integer.valueOf(telekomWSClient.terminalUnos(deviceHolderDTO.getBusinessPartnerId(), xcal, deviceHolderDTO.getLimitPerDay(), deviceHolderDTO.getICCID(),
-                deviceHolderDTO.getTransactionLimit(), deviceHolderDTO.getLimitPerMonth(), deviceHolderDTO.getMSISDN(), deviceHolderDTO.getWorkingStartTime(), deviceHolderDTO.getWorkingEndTime(),
-                deviceHolderDTO.getDeviceSerialNumber(), dao.find(BusinessPartner.class, deviceHolderDTO.getBusinessPartnerId()).getParentBusinessPartner().getId(),
-                deviceHolderDTO.getDeviceCustomCode(), deviceHolderDTO.getRefillTypeId(), deviceHolderDTO.getConnectionTypeId()));
+        return Integer.valueOf(telekomWSClient.terminalUnos(deviceHolderDTO.getRefillTypeId(), deviceHolderDTO.getConnectionTypeId(), deviceHolderDTO.getDeviceCustomCode(),
+                deviceHolderDTO.getMSISDN(), deviceHolderDTO.getWorkingStartTime(), deviceHolderDTO.getWorkingEndTime(), deviceHolderDTO.getTransactionLimit(),
+                deviceHolderDTO.getLimitPerDay(), deviceHolderDTO.getLimitPerMonth(), xcal, deviceHolderDTO.getICCID(), deviceHolderDTO.getDeviceSerialNumber(),
+                deviceHolderDTO.getTelekomId(), dao.find(BusinessPartner.class, deviceHolderDTO.getBusinessPartnerId()).getParentBusinessPartner().getTelekomId()));
     }
 
+    public Integer terminalUpdate(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception {
+
+        GregorianCalendar gcal = GregorianCalendar.from(deviceHolderDTO.getActivationDate().atStartOfDay(ZoneId.systemDefault()));
+        XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+
+        return Integer.valueOf(telekomWSClient.terminalIzmena(deviceHolderDTO.getTelekomId(), xcal, deviceHolderDTO.getLimitPerDay(), deviceHolderDTO.getICCID(),
+                deviceHolderDTO.getTransactionLimit(), deviceHolderDTO.getLimitPerMonth(), deviceHolderDTO.getMSISDN(), deviceHolderDTO.getWorkingStartTime(), deviceHolderDTO.getWorkingEndTime(),
+                deviceHolderDTO.getDeviceSerialNumber(), deviceHolderDTO.getTelekomId(), deviceHolderDTO.getTelekomId().toString(), deviceHolderDTO.getRefillTypeId(),
+                deviceHolderDTO.getConnectionTypeId()));
+    }
+
+    public Integer terminalStatusUpdate(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception{
+
+        return Integer.valueOf(telekomWSClient.TerminalIzmenaStatusa(deviceHolderDTO.getTelekomId(), dao.find(Device.class, deviceHolderDTO.getDeviceId()).getStatus().getId().intValue()));
+    }
 
 }
