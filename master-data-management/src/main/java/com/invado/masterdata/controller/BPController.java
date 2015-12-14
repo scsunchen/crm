@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import telekomWS.client.AddressServiceClient;
+import telekomWS.client.dto.SelectHouseNumber;
 import telekomWS.client.dto.SelectPlace;
 import telekomWS.client.dto.SelectStreet;
 
@@ -463,10 +464,14 @@ public class BPController {
     }
 
     @RequestMapping(value = "partner/address/read-streets/{name}")
-    public @ResponseBody List<SelectStreet> selectStreets(String place, String pattern) throws Exception{
+    public @ResponseBody List<SelectStreet> selectStreets(@RequestParam("place") String place, String pattern) throws Exception{
         return addressServiceClient.listOfStreetsPerPlace(place, pattern);
     }
 
+    @RequestMapping(value = "partner/address/read-housenumber/{name}")
+    public @ResponseBody List<SelectHouseNumber> selectHouseNumber(@RequestParam("place") String place, @RequestParam("street") String street, String pattern) throws Exception{
+        return addressServiceClient.listOfHouseNumbersPerStreet(place, street, pattern);
+    }
 }
 
 

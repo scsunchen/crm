@@ -23,6 +23,15 @@ public class BusinessPartnerDTO {
     private String postCode;
     private String street;
     private String houseNumber;
+
+    private String tPlace;
+    private String tPlaceCode;
+    private String tPostCode;
+    private String tStreet;
+    private String tStreetCode;
+    private String tHouseNumber;
+    private String tAddressCode;
+
     private String currentAccount;
     private String name;
     private Integer rebate;
@@ -166,6 +175,62 @@ public class BusinessPartnerDTO {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public String gettPlace() {
+        return tPlace;
+    }
+
+    public void settPlace(String tPlace) {
+        this.tPlace = tPlace;
+    }
+
+    public String gettPlaceCode() {
+        return tPlaceCode;
+    }
+
+    public void settPlaceCode(String tPlaceCode) {
+        this.tPlaceCode = tPlaceCode;
+    }
+
+    public String gettPostCode() {
+        return tPostCode;
+    }
+
+    public void settPostCode(String tPostCode) {
+        this.tPostCode = tPostCode;
+    }
+
+    public String gettStreet() {
+        return tStreet;
+    }
+
+    public void settStreet(String tStreet) {
+        this.tStreet = tStreet;
+    }
+
+    public String gettStreetCode() {
+        return tStreetCode;
+    }
+
+    public void settStreetCode(String tStreetCode) {
+        this.tStreetCode = tStreetCode;
+    }
+
+    public String gettHouseNumber() {
+        return tHouseNumber;
+    }
+
+    public void settHouseNumber(String tHouseNumber) {
+        this.tHouseNumber = tHouseNumber;
+    }
+
+    public String gettAddressCode() {
+        return tAddressCode;
+    }
+
+    public void settAddressCode(String tAddressCode) {
+        this.tAddressCode = tAddressCode;
     }
 
     public String getCurrentAccount() {

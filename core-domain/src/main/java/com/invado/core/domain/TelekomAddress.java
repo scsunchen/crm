@@ -9,9 +9,7 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class TelekomAddress {
-    @Size(max=40, message="{BusinessPartner.Country.Size}")
-    @Column(name = "t_country")
-    private String country;
+
     @Size(max=60, message="{BusinessPartner.Place.Size}")
     @Column(name = "t_place")
     private String place;
@@ -33,8 +31,7 @@ public class TelekomAddress {
 
     public TelekomAddress(){}
 
-    public TelekomAddress(String country, String place, String placeCode, String postCode, String street, String streetCode, String houseNumber, String addressCode) {
-        this.country = country;
+    public TelekomAddress(String place, String placeCode, String postCode, String street, String streetCode, String houseNumber, String addressCode) {
         this.place = place;
         this.placeCode = placeCode;
         this.postCode = postCode;
@@ -44,13 +41,6 @@ public class TelekomAddress {
         this.addressCode = addressCode;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
     public String getPlace() {
         return place;
@@ -112,7 +102,6 @@ public class TelekomAddress {
     @Override
     public String toString() {
         return "TelekomAddress{" +
-                "country='" + country + '\'' +
                 ", place='" + place + '\'' +
                 ", placeCode='" + placeCode + '\'' +
                 ", postCode='" + postCode + '\'' +

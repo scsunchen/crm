@@ -597,9 +597,10 @@ public class BPService {
 
     public Integer pointOfSaleRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
 
-        return Integer.valueOf(telekomWSClient.prodajnoMestoUnos(dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId(), businessPartnerDTO.getName(),
-                businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getHouseNumber(), businessPartnerDTO.getPosTypeId(),
-                businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+        return Integer.valueOf(telekomWSClient.prodajnoMestoUnos(dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId(),
+                businessPartnerDTO.getName(), businessPartnerDTO.getPlace(), businessPartnerDTO.gettAddressCode(),businessPartnerDTO.getPosTypeId(),   businessPartnerDTO.getContactPersoneName(),
+                businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+
     }
 
 
@@ -607,9 +608,8 @@ public class BPService {
 
         BusinessPartner parentBusinesspartner = dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId());
 
-        return Integer.valueOf(telekomWSClient.prodajnoMestoIzmena(parentBusinesspartner.getTelekomId(), businessPartnerDTO.getName(),
-                Integer.parseInt(parentBusinesspartner.getTIN()), businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(),
-                businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+        return Integer.valueOf(telekomWSClient.prodajnoMestoIzmena(businessPartnerDTO.getTelekomId(), businessPartnerDTO.getName(), Integer.parseInt(parentBusinesspartner.getTIN()),
+                businessPartnerDTO.gettAddressCode(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
     }
 
     public Integer pointOfSaleDeactivation(BusinessPartnerDTO businessPartnerDTO) throws WSException {

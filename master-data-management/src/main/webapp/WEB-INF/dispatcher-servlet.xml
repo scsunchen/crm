@@ -31,6 +31,7 @@
         </property>
     </bean>
     <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean" />
+    <bean id="addressServiceClient" class="telekomWS.client.AddressServiceClient"/>
     <bean id="messageSource"
           class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames" value="com.invado.masterdata.bundle.server-strings">
