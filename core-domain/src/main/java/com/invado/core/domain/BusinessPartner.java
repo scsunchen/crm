@@ -74,6 +74,8 @@ public class BusinessPartner implements Serializable {
     private String name1;
     @Embedded
     private Address address;
+    @Embedded
+    private TelekomAddress telekomAddress;
     @Column(name = "phone")
     @Size(max = 40, message = "{BusinessPartner.Phone.Size}")
     private String phone;
@@ -185,6 +187,14 @@ public class BusinessPartner implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public TelekomAddress getTelekomAddress() {
+        return telekomAddress;
+    }
+
+    public void setTelekomAddress(TelekomAddress telekomAddress) {
+        this.telekomAddress = telekomAddress;
     }
 
     public String getPhone() {

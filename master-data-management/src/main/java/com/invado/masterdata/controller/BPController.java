@@ -1,5 +1,6 @@
 package com.invado.masterdata.controller;
 
+import bg_bu_gos.webservicelokator.service1.SelectMesto;
 import com.invado.core.domain.*;
 import com.invado.core.dto.*;
 import com.invado.finance.service.PartnerSpecificationByDate;
@@ -14,6 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import telekomWS.client.AddressServiceClient;
+import telekomWS.client.dto.SelectPlace;
+import telekomWS.client.dto.SelectStreet;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +43,8 @@ public class BPController {
     private DeviceService deviceService;
     @Inject
     private DeviceHolderPartnerService deviceHolderPartnerService;
+    @Inject
+    private AddressServiceClient addressServiceClient;
 
 
     @RequestMapping(value = "/partner/read-page.html", method = RequestMethod.GET)
@@ -450,6 +456,17 @@ public class BPController {
         System.out.println("izvrsava se kontroler");
         return deviceService.readDeviceByCustomCodeAnassigned(name);
     }
+
+    @RequestMapping(value = "partner/address/read-mesto/{name}")
+    public @ResponseBody List<SelectPlace> selectPlace(String pattern) throws Exception{
+        return addressServiceClient.listOfPlaces(pattern);
+    }
+
+    @RequestMapping(value = "partner/address/read-streets/{name}")
+    public @ResponseBody List<SelectStreet> selectStreets(String place, String pattern) throws Exception{
+        return addressServiceClient.listOfStreetsPerPlace(place, pattern);
+    }
+
 }
 
 

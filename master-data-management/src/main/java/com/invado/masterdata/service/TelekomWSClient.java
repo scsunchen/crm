@@ -8,6 +8,7 @@ import com.invado.core.dto.DeviceDTO;
 import com.invado.core.dto.DeviceHolderPartnerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import telekomWS.client.AddressServiceClient;
 import telekomWS.client.ServiceClient;
 import telekomWS.client.exceptions.WSException;
 
@@ -31,6 +32,7 @@ public class TelekomWSClient {
     //@Inject
     //private ServiceClient telekomWSClient;
     private ServiceClient telekomWSClient = new ServiceClient();
+    private AddressServiceClient tsAddressClient = new AddressServiceClient();
 
 
     /*MERCHANT*/
@@ -51,7 +53,7 @@ public class TelekomWSClient {
     }
 
 
-    /*POS*/
+    /*POS
 
     public Integer pointOfSaleRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
 
@@ -69,7 +71,7 @@ public class TelekomWSClient {
                 Integer.parseInt(parentBusinesspartner.getTIN()), businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(),
                 businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
     }
-
+*/
     public Integer pointOfSaleDeactivation(BusinessPartnerDTO businessPartnerDTO) throws WSException {
         return Integer.valueOf(telekomWSClient.prodajnoMestoDeaktivacija(businessPartnerDTO.getTelekomId()));
     }
@@ -101,6 +103,10 @@ public class TelekomWSClient {
     public Integer terminalStatusUpdate(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception{
 
         return Integer.valueOf(telekomWSClient.TerminalIzmenaStatusa(deviceHolderDTO.getTelekomId(), dao.find(Device.class, deviceHolderDTO.getDeviceId()).getStatus().getId().intValue()));
+    }
+
+    public Integer selectPlace(String pattern) throws Exception{
+        return Integer.valueOf(tsAddressClient.selectPlace(pattern));
     }
 
 }
