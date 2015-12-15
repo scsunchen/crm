@@ -167,11 +167,11 @@ public class BPController {
     /* TERMINALI */
     @RequestMapping(value = "/partner/read-deviceholderdetails-page.html", method = RequestMethod.GET)
     public String showDetailDeviceHolder(@RequestParam Integer page,
-                                     @RequestParam(value = "type", required = false) String type,
-                                     @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
-                                     @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                                     @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
-                                     Map<String, Object> model) throws Exception {
+                                         @RequestParam(value = "type", required = false) String type,
+                                         @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                         @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                         @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                         Map<String, Object> model) throws Exception {
 
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
@@ -218,6 +218,7 @@ public class BPController {
             model.put("message", Utils.getMessage("Processing.Save.Failure"));
             return "partner-grid";
         } else {
+            item.settAddressCode(addressServiceClient.getPAK(item.gettHouseNumberCode()));
             this.service.create(item);
             status.setComplete();
             redirectAttributes.addFlashAttribute("alertType", "success");
@@ -364,6 +365,8 @@ public class BPController {
 
     @RequestMapping(value = "partner/register/input/MERCHANT")
     public String processTelekomMerchantRegistration(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+        if (item.getId() == null)
+            service.create(item);
 
         item.setTelekomId(service.merchatnRegistration(item));
         service.update(item);
@@ -384,16 +387,17 @@ public class BPController {
     public String processTelekomMerchantDeactivation(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
         item.setTelekomId(service.merchantDeactivation(item.getTelekomId()));
-        this.service.update(item);
+        service.update(item);
 
         return "partner-grid";
     }
 
 
-
     @RequestMapping(value = "partner/register/input/POINT_OF_SALE")
     public String processTelekomPOSRegistration(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
+        if (item.getId() == null)
+            service.create(item);
         item.setTelekomId(service.pointOfSaleRegistration(item));
         service.update(item);
 
@@ -413,11 +417,10 @@ public class BPController {
     public String processTelekomPOSDeactivation(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
         item.setTelekomId(service.pointOfSaleDeactivation(item));
-        this.service.update(item);
+        service.update(item);
 
         return "partner-grid";
     }
-
 
 
     @RequestMapping(value = "/partner/read-partner/{name}")
@@ -458,18 +461,27 @@ public class BPController {
         return deviceService.readDeviceByCustomCodeAnassigned(name);
     }
 
-    @RequestMapping(value = "partner/address/read-mesto/{name}")
-    public @ResponseBody List<SelectPlace> selectPlace(String pattern) throws Exception{
-        return addressServiceClient.listOfPlaces(pattern);
+    @RequestMapping(value = "partner/address/read-mesto/{pattern}")
+    public
+    @ResponseBody
+    List<SelectPlace> selectPlace(@PathVariable String pattern) throws Exception {
+        List<SelectPlace> list = addressServiceClient.listOfPlaces(pattern);
+        return list;
     }
 
-    @RequestMapping(value = "partner/address/read-streets/{name}")
-    public @ResponseBody List<SelectStreet> selectStreets(@RequestParam("place") String place, String pattern) throws Exception{
+    @RequestMapping(value = "partner/address/read-streets/{pattern}")
+    public
+    @ResponseBody
+    List<SelectStreet> selectStreets(@RequestParam("place") String place, @PathVariable String pattern) throws Exception {
         return addressServiceClient.listOfStreetsPerPlace(place, pattern);
     }
 
-    @RequestMapping(value = "partner/address/read-housenumber/{name}")
-    public @ResponseBody List<SelectHouseNumber> selectHouseNumber(@RequestParam("place") String place, @RequestParam("street") String street, String pattern) throws Exception{
+    @RequestMapping(value = "partner/address/read-housenumbers/{pattern}")
+    public
+    @ResponseBody
+    List<SelectHouseNumber> selectHouseNumber(@RequestParam(value = "place", required = false) String place,
+                                              @RequestParam(value = "street", required = false) String street,
+                                              @PathVariable String pattern) throws Exception {
         return addressServiceClient.listOfHouseNumbersPerStreet(place, street, pattern);
     }
 }

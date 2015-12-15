@@ -30,6 +30,7 @@ public class BusinessPartnerDTO {
     private String tStreet;
     private String tStreetCode;
     private String tHouseNumber;
+    private String tHouseNumberCode;
     private String tAddressCode;
 
     private String currentAccount;
@@ -223,6 +224,14 @@ public class BusinessPartnerDTO {
 
     public void settHouseNumber(String tHouseNumber) {
         this.tHouseNumber = tHouseNumber;
+    }
+
+    public String gettHouseNumberCode() {
+        return tHouseNumberCode;
+    }
+
+    public void settHouseNumberCode(String tHouseNumberCode) {
+        this.tHouseNumberCode = tHouseNumberCode;
     }
 
     public String gettAddressCode() {

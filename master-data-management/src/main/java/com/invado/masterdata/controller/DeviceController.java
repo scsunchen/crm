@@ -3,6 +3,7 @@ package com.invado.masterdata.controller;
 import com.invado.core.domain.Article;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Device;
+import com.invado.core.domain.DeviceHolderPartner;
 import com.invado.core.dto.DeviceDTO;
 import com.invado.core.dto.DeviceStatusDTO;
 //import com.invado.finance.service.MasterDataService;
@@ -136,6 +137,8 @@ public class DeviceController {
     <li><a href="/masterdata/partner/checkTerminalStatus">Provera Status Terminala</a></li>
 
     */
+
+
 
 
 

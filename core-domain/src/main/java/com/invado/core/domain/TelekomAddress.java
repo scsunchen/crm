@@ -25,22 +25,24 @@ public class TelekomAddress {
     private String streetCode;
     @Column(name = "t_house_number")
     private String houseNumber;
+    @Column(name = "t_house_number_code")
+    private String houseNumberCode;
     @Column(name = "t_address_code")
     private String addressCode;
 
 
     public TelekomAddress(){}
 
-    public TelekomAddress(String place, String placeCode, String postCode, String street, String streetCode, String houseNumber, String addressCode) {
+    public TelekomAddress(String place, String placeCode, String postCode, String street, String streetCode, String houseNumber, String houseNumberCode, String addressCode) {
         this.place = place;
         this.placeCode = placeCode;
         this.postCode = postCode;
         this.street = street;
         this.streetCode = streetCode;
         this.houseNumber = houseNumber;
+        this.houseNumberCode = houseNumberCode;
         this.addressCode = addressCode;
     }
-
 
     public String getPlace() {
         return place;
@@ -88,6 +90,14 @@ public class TelekomAddress {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
+    }
+
+    public String getHouseNumberCode() {
+        return houseNumberCode;
+    }
+
+    public void setHouseNumberCode(String houseNumberCode) {
+        this.houseNumberCode = houseNumberCode;
     }
 
     public String getAddressCode() {

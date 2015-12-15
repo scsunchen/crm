@@ -64,14 +64,12 @@
                         </spring:bind>
                     </div>
                     <div class="col-lg-8">
-                        <spring:bind path="tPlace">
-                            <div class="form-group">
-                                <label for="tPlace"><spring:message code="BusinessPartnerContacts.Table.Place"/></label>
-                                <form:input id="tPlace" class="typeahead form-control" type="text"
-                                            path="tPlace" style="margin-bottom:  15px;"/>
-                                <form:hidden id="placeCodeHidden" path="tPlaceCode"/>
-                            </div>
-                        </spring:bind>
+                        <div class="form-group">
+                            <label for="tPlace"><spring:message code="BusinessPartnerContacts.Table.Place"/></label>
+                            <form:input id="tPlace" class="typeahead form-control" type="text"
+                                        path="tPlace" style="margin-bottom:  15px;"/>
+                            <form:hidden id="placeCodeHidden" path="tPlaceCode"/>
+                        </div>
                     </div>
                     <div class="col-lg-4">
                         <spring:bind path="postCode">
@@ -84,25 +82,27 @@
                             </div>
                         </spring:bind>
                     </div>
-                    <div class="col-lg-10">
+                    <div class="col-lg-9">
                         <spring:bind path="tStreet">
                             <div class="form-group">
-                                <label for="tStreet"><spring:message code="BusinessPartnerContacts.Table.Street"/></label>
+                                <label for="tStreet"><spring:message
+                                        code="BusinessPartnerContacts.Table.Street"/></label>
                                 <form:input id="tStreet" class="typeahead form-control" type="text"
                                             path="tStreet" style="margin-bottom:  15px;"/>
-                                <form:hidden id="stretCodeHidden" path="tStreetCode"/>
+                                <form:hidden id="streetCodeHidden" path="tStreetCode"/>
                             </div>
                         </spring:bind>
                     </div>
-                    <spring:bind path="houseNumber">
-                        <div class="form-group col-lg-2">
-                            <label for="houseNumber"><spring:message
-                                    code="BusinessPartnerContacts.Table.HouseNumber"/></label>
-                            <form:input id="houseNumber" path="houseNumber" class="form-control"/>
-                                <span class="help-inline"><c:if test="${status.error}"><c:out
-                                        value="${status.errorMessage}"/></c:if></span>
-                        </div>
-                    </spring:bind>
+                    <div class="col-lg-3">
+                        <spring:bind path="tHouseNumber">
+                            <div class="form-group">
+                                <label for="tHouseNumber"><spring:message
+                                        code="BusinessPartnerContacts.Table.HouseNumber"/></label>
+                                <form:input id="tHouseNumber" path="tHouseNumber" class="form-control"/>
+                                <form:hidden id="houseNumberCodeHidden" path="tHouseNumberCode"/>
+                            </div>
+                        </spring:bind>
+                    </div>
                 </nav>
 
                 <input:inputField name="phone" label="Telefon"/>
@@ -198,7 +198,7 @@
             }
         })
     });
-    $('#partnerName').bind('typeahead:selected', function (obj, datum, name) {
+    $('#tPlace').bind('typeahead:selected', function (obj, datum, name) {
         $('#placeCodeHidden').val(datum['adrKod']);
     });
 
@@ -213,9 +213,9 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/partner/address/read-street/%QUERY',
+                url: '${pageContext.request.contextPath}/partner/address/read-streets/%QUERY',
                 replace: function () {
-                    var q = '${pageContext.request.contextPath}/partner/address/read-street' + encodeURIComponent($('#tStreet').val());
+                    var q = '${pageContext.request.contextPath}/partner/address/read-streets/' + encodeURIComponent($('#tStreet').val());
                     if ($('#placeCodeHidden').val()) {
                         q += "?place=" + encodeURIComponent($('#placeCodeHidden').val());
                     }
@@ -241,22 +241,23 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/partner/address//read-housenumber/%QUERY',
+                url: '${pageContext.request.contextPath}/partner/address/read-housenumbers/%QUERY',
                 replace: function () {
-                    var q = '${pageContext.request.contextPath}/partner/address//read-housenumber' + encodeURIComponent($('#tStreet').val());
+                    var q = '${pageContext.request.contextPath}/partner/address/read-housenumbers/' + encodeURIComponent($('#tStreet').val());
                     if ($('#placeCodeHidden').val()) {
                         q += "?place=" + encodeURIComponent($('#placeCodeHidden').val());
                     }
                     if ($('#streetCodeHidden').val()) {
                         q += "&street=" + encodeURIComponent($('#streetCodeHidden').val());
                     }
+                    console.log(q);
                     return q;
                 },
                 wildcard: '%QUERY'
             }
         })
     });
-    $('#tStreet').bind('typeahead:selected', function (obj, datum, name) {
-        $('#streetCodeHidden').val(datum['adrKod']);
+    $('#tHouseNumber').bind('typeahead:selected', function (obj, datum, name) {
+        $('#houseNumberCodeHidden').val(datum['adrKod']);
     });
 </script>

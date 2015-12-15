@@ -69,9 +69,9 @@
                 Telekom WS <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/masterdata/device/registerTerminal">Registracija Terminala</a></li>
-                <li><a href="/masterdata/partner/updateTerminal">Izmena Terminala</a></li>
-                <li><a href="/masterdata/partner/updateTerminalStatus">Izmena Status Terminala</a></li>
+                <li><a href="/masterdata/deviceholder/terminal/register">Registracija Terminala</a></li>
+                <li><a href="/masterdata/deviceholder/terminal/update">Izmena Terminala</a></li>
+                <li><a href="/masterdata/deviceholder/terminal/update-status">Izmena Status Terminala</a></li>
                 <li><a href="/masterdata/partner/cancelActivateTerminal">Otkazi/Akirajtiv</a></li>
                 <li><a href="/masterdata/partner/checkTerminalStatus">Provera Status Terminala</a></li>
             </ul>

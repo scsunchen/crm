@@ -152,7 +152,10 @@ public class BPService {
             businessPartner.setCompanyIdNumber(a.getCompanyIdNumber());
             businessPartner.setName(a.getName());
             businessPartner.setName1(a.getName1());
-            businessPartner.setAddress(new Address(a.getCountry(), a.getPlace(), a.getStreet(), a.getPostCode()));
+            businessPartner.setAddress(new Address(a.getCountry(), a.getPlace() == null ? a.gettPlace() : a.gettPlace(),
+                    a.getStreet() == null ? a.gettStreet() : a.getStreet(), a.getPostCode(), a.gettHouseNumber() == null ? a.gettHouseNumber() : a.gettHouseNumber()));
+            businessPartner.setTelekomAddress(new TelekomAddress(a.gettPlace(), a.gettPlaceCode(), a.getPostCode(), a.getStreet(), a.gettStreetCode(), a.gettHouseNumber(), a.gettHouseNumberCode(),
+                    a.gettAddressCode()));
             businessPartner.setPhone(a.getPhone());
             businessPartner.setFax(a.getStreet());
             businessPartner.setEMail(a.getEMail());
@@ -598,7 +601,7 @@ public class BPService {
     public Integer pointOfSaleRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
 
         return Integer.valueOf(telekomWSClient.prodajnoMestoUnos(dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId(),
-                businessPartnerDTO.getName(), businessPartnerDTO.getPlace(), businessPartnerDTO.gettAddressCode(),businessPartnerDTO.getPosTypeId(),   businessPartnerDTO.getContactPersoneName(),
+                businessPartnerDTO.getName(), businessPartnerDTO.getPlace(), businessPartnerDTO.gettAddressCode(), businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getContactPersoneName(),
                 businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
 
     }
@@ -615,10 +618,6 @@ public class BPService {
     public Integer pointOfSaleDeactivation(BusinessPartnerDTO businessPartnerDTO) throws WSException {
         return Integer.valueOf(telekomWSClient.prodajnoMestoDeaktivacija(businessPartnerDTO.getTelekomId()));
     }
-
-
-
-
 
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)

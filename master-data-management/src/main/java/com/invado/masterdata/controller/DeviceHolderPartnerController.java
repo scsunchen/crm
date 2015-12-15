@@ -184,7 +184,6 @@ public class DeviceHolderPartnerController {
     }
 
 
-
     @RequestMapping("/deviceholder/{page}/{id}/delete.html")
     public String delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
@@ -192,5 +191,49 @@ public class DeviceHolderPartnerController {
     }
 
 
+    @RequestMapping(value = "/deviceholder/terminal/register")
+    public String processTelekomTermnalRegistration(@ModelAttribute("item") DeviceHolderPartnerDTO item) throws Exception {
 
+        if (item.getId() != null)
+            service.create(item);
+        item.setTelekomId(telekomWSClient.terminalRegistration(item));
+        service.update(item);
+
+        return "partner-grid";
+    }
+
+
+    @RequestMapping(value = "/deviceholder/terminal/update")
+    public String processTelekomTerminalUpdate(@ModelAttribute("item") DeviceHolderPartnerDTO item) throws Exception {
+
+        if (item.getId() != null)
+            service.create(item);
+        item.setTelekomId(telekomWSClient.terminalUpdate(item));
+        service.update(item);
+
+        return "partner-grid";
+    }
+
+    @RequestMapping(value = "/deviceholder/terminal/update-status")
+    public String processTelekomTerminalUpdateStatus(@ModelAttribute("item") DeviceHolderPartnerDTO item) throws Exception {
+
+        if (item.getId() != null)
+            service.create(item);
+        item.setTelekomId(telekomWSClient.terminalStatusUpdate(item));
+        service.update(item);
+
+        return "partner-grid";
+    }
+
+
+    @RequestMapping(value = "/deviceholder/terminal/cancel-activate")
+    public String processTelekomTerminalCancleActivate(@ModelAttribute("item") DeviceHolderPartnerDTO item) throws Exception {
+
+        if (item.getId() != null)
+            service.create(item);
+        item.setTelekomId(telekomWSClient.terminalCancelActivate(item));
+        service.update(item);
+
+        return "partner-grid";
+    }
 }
