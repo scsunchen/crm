@@ -146,6 +146,12 @@ public class JournalEntryController {
     List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name) {
         return masterDataservice.readBusinessPartnerByName(name);
     }
+    
+    @RequestMapping(value = "/journal-entry/read-businesspartner/{name}/{max}")
+    public @ResponseBody
+    List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name, @PathVariable Integer max) {
+        return masterDataservice.readBusinessPartnerByName(name, max);
+    }
 
     @RequestMapping(value = "/journal-entry/read-description/{name}")
     public @ResponseBody

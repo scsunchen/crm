@@ -13,6 +13,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <form:form modelAttribute="ledgerCardRequest" method="GET" 
            action="${pageContext.request.contextPath}/receivable-payable-card/read-submit.html">
     <div class="form-group" >
@@ -34,7 +35,7 @@
         <label for="businessPartnerName" style="margin-top:  15px;"><spring:message code="LedgerCard.Label.BusinessPartnerName" /></label>
         <form:input id="businessPartnerName" class="typeahead form-control" 
                     type="text" path="partnerName" />
-        <form:hidden id="businessPartnerRegNo" path="partnerRegNo" />
+        <form:hidden id="businessPartnerId" path="partnerId" />
     </div>
         <form:hidden path="type"></form:hidden>
     <div class="form-group">
@@ -92,29 +93,24 @@
     $('#dateTo').datepicker({});
     $('#valueDateFrom').datepicker({});
     $('#valueDateTo').datepicker({});
-    $('#client').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/receivable-payable-card/read-client/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
-    $('#client').bind('typeahead:selected', function (obj, datum, name) {
+    $('#client').autocomplete(
+            'name',
+            '${pageContext.request.contextPath}/receivable-payable-card/read-client/%QUERY'
+    );
+    $('#client')
+    .bind('typeahead:selected', function (obj, datum, name) {
         $('#clientId').val(datum['id']);
+    })
+    .bind('typeahead:change', function (obj, datum, name) {
+        if(datum === '') {
+            $('#clientId').val('');
+        }
     });
     $('#orgUnit').typeahead({
         hint: false,
-        highlight: true,
-        minLength: 1
+        highlight: true
     }, {
+        limit : 10,
         display: 'name',
         source: new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
@@ -134,53 +130,29 @@
         }
     });
     $('#orgUnit').bind('typeahead:selected', function (obj, datum, name) {
+        $('#clientId').val(datum['clientID']);
+        $('#client').val(datum['clientName']);
         $('#orgUnitId').val(datum['id']);
+    }).bind('typeahead:change', function (obj, datum, name) {
+        if(datum === '') {
+            $('#orgUnitId').val('');
+        }
     });
-    $('#accountNumber').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'number',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/receivable-payable-card/read-account/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
-    $('#businessPartnerName').typeahead({
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/receivable-payable-card/read-businesspartner/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#accountNumber').autocomplete(
+        'number',
+        '${pageContext.request.contextPath}/receivable-payable-card/read-account/%QUERY');    
+    $('#businessPartnerName').autocomplete('name',
+        '${pageContext.request.contextPath}/receivable-payable-card/read-businesspartner/%QUERY/20',
+        10);
     $('#businessPartnerName').bind('typeahead:selected', function (obj, datum, name) {
-        $('#businessPartnerRegNo').val(datum['companyIdNumber']);
+        $('#businessPartnerId').val(datum['id']);
+    })
+    .bind('typeahead:change', function (obj, datum, name) {
+        if(datum === '') {
+            $('#businessPartnerId').val('');
+        }
     });
-    $('#currency').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'isocode',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/receivable-payable-card/read-currency/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#currency').autocomplete(
+        'isocode',
+        '${pageContext.request.contextPath}/receivable-payable-card/read-currency/%QUERY');    
 </script>

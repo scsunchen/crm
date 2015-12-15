@@ -35,6 +35,7 @@ import com.invado.finance.service.dto.RequestPartnerSpecificationDTO;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static com.invado.finance.Utils.getMessage;
 
 @Service
 public class PartnerSpecificationByDate  {
@@ -75,12 +76,11 @@ public class PartnerSpecificationByDate  {
                         DTO.getAccountNumber()));
             }
 
-            if (DTO.getPartnerRegNo() != null
-                    && DTO.getPartnerRegNo().isEmpty() == false
-                    && dao.find(BusinessPartner.class, DTO.getPartnerRegNo()) == null) {
+            if (DTO.getPartnerId() != null
+                    && dao.find(BusinessPartner.class, DTO.getPartnerId()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("PartnerSpecification.BusinessPartnerNotExists",
-                        DTO.getPartnerRegNo()));
+                        DTO.getPartnerId()));
             }
             //******************************************************************
 
@@ -88,7 +88,7 @@ public class PartnerSpecificationByDate  {
                     DTO.getClientID(),
                     DTO.getOrgUnitID(),
                     DTO.getAccountNumber(),
-                    DTO.getPartnerRegNo(),
+                    DTO.getPartnerId(),
                     DTO.getCreditDebitRelationDateFrom(),
                     DTO.getCreditDebitRelationDateTo(),
                     DTO.getValueDateFrom(),
@@ -139,7 +139,7 @@ public class PartnerSpecificationByDate  {
                         client.getName(),
                         DTO.getOrgUnitID(),
                         account,
-                        DTO.getPartnerRegNo(),
+                        DTO.getPartnerId(),
                         DTO.getCreditDebitRelationDateFrom(),
                         DTO.getCreditDebitRelationDateTo(),
                         DTO.getValueDateFrom(),
@@ -169,7 +169,7 @@ public class PartnerSpecificationByDate  {
             String clientName,
             Integer orgUnitID,
             String accountNumber,
-            String partnerID,
+            Integer partnerID,
             LocalDate creditDebitRelationDateFrom,
             LocalDate creditDebitRelationDateTo,
             LocalDate valueDateFrom,
@@ -186,7 +186,7 @@ public class PartnerSpecificationByDate  {
             dto.orgUnitName = "";
         }
         dto.partnerID = partnerID;
-        if (partnerID != null && partnerID.isEmpty() == false) {
+        if (partnerID != null) {
             dto.partnerName = dao.find(BusinessPartner.class, partnerID).getName();
         } else {
             dto.partnerName = "";
@@ -241,7 +241,7 @@ public class PartnerSpecificationByDate  {
             Integer clientId,
             Integer orgUnitId,
             String accountCode,
-            String partnerRegNumber,
+            Integer partnerId,
             LocalDate creditDebitRelationDateFrom,
             LocalDate creditDebitRelationDateTo,
             LocalDate valueDateFrom,
@@ -265,10 +265,10 @@ public class PartnerSpecificationByDate  {
                     .get(Account_.number),
                     cb.parameter(String.class, "account")));
         }
-        if (partnerRegNumber != null && partnerRegNumber.equals("") == false) {
+        if (partnerId != null) {
             criteria = cb.and(criteria, cb.equal(root.get(Analytical_.partner)
-                    .get(BusinessPartner_.companyIdNumber),
-                    cb.parameter(String.class, "partnerRegNumber")));
+                    .get(BusinessPartner_.id),
+                    cb.parameter(Integer.class, "partnerId")));
         }
         if (creditDebitRelationDateFrom != null) {
             criteria = cb.and(criteria,
@@ -302,8 +302,8 @@ public class PartnerSpecificationByDate  {
         if (accountCode != null && accountCode.isEmpty() == false) {
             q.setParameter("account", accountCode);
         }
-        if (partnerRegNumber != null && partnerRegNumber.isEmpty() == false) {
-            q.setParameter("partnerRegNumber", partnerRegNumber);
+        if (partnerId != null) {
+            q.setParameter("partnerId", partnerId);
         }
         if (creditDebitRelationDateFrom != null) {
             q.setParameter("creditDebitRelationDateFrom", creditDebitRelationDateFrom);

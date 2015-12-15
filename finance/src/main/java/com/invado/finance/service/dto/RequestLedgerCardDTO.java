@@ -18,7 +18,7 @@ public class RequestLedgerCardDTO  {
     private Integer orgUnitID;
     private String orgUnitName;
     private String accountNumber;
-    private String partnerRegNo;
+    private Integer  partnerId;
     private String partnerName;
     @DateTimeFormat(style = "M-")
     private LocalDate creditDebitRelationDateFrom;
@@ -79,12 +79,12 @@ public class RequestLedgerCardDTO  {
         this.accountNumber = accountNumber;
     }
 
-    public String getPartnerRegNo() {
-        return partnerRegNo;
+    public Integer getPartnerId() {
+        return partnerId;
     }
 
-    public void setPartnerRegNo(String partnerRegNo) {
-        this.partnerRegNo = partnerRegNo;
+    public void setPartnerId(Integer partnerId) {
+        this.partnerId = partnerId;
     }
 
     public LocalDate getCreditDebitRelationDateFrom() {

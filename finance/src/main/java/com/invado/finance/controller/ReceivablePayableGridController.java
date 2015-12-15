@@ -69,10 +69,12 @@ public class ReceivablePayableGridController extends AbstractController {
         return masterDataservice.readOrgUnitByClientAndName(clientId, name);
     }
 
-    @RequestMapping(value = "/receivable-payable-card/read-businesspartner/{name}")
+    @RequestMapping(value = "/receivable-payable-card/read-businesspartner/{name}/{max}")
     public @ResponseBody
-    List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name) {
-        return masterDataservice.readBusinessPartnerByName(name);
+    List<BusinessPartner> findBussinesPartnerByName(
+            @PathVariable String name,
+            @PathVariable Integer max) {
+        return masterDataservice.readBusinessPartnerByName(name, max);
     }
 
     @RequestMapping(value = "/receivable-payable-card/read-account/{number}")

@@ -33,7 +33,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,6 +72,14 @@ public class PartnerSpecificationGridController extends AbstractController {
         return masterDataservice.readBusinessPartnerByName(name);
     }
 
+    @RequestMapping(value = "/partner-specification/read-businesspartner/{name}/{max}")
+    public @ResponseBody
+    List<BusinessPartner> findBussinesPartnerByName(
+            @PathVariable String name,
+            @PathVariable Integer max) {
+        return masterDataservice.readBusinessPartnerByName(name, max);
+    }
+    
     @RequestMapping(value = "/partner-specification/read-account/{number}")
     public @ResponseBody
     List<Account> findAccountByNumber(@PathVariable String number) {

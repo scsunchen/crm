@@ -7,6 +7,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 
 <c:if test = "${exception != null}">
     <div class="alert alert-warning">
@@ -151,45 +152,22 @@
     $('#creditRelationDate').datepicker({});
     $('#valueDate').datepicker({});
     $('#contractDate').datepicker({});
-    $('#businessPartner').typeahead({
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-businesspartner/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#businessPartner').autocomplete(
+            'name',
+            '${pageContext.request.contextPath}/invoice/read-businesspartner/%QUERY/20',
+            10);
     $('#businessPartner').bind('typeahead:selected', function (obj, datum, name) {
         $('#businessPartner-hidden').val(datum['id']);
     });
-    $('#client').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-client/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#client').autocomplete(
+            'name', 
+            '${pageContext.request.contextPath}/invoice/read-client/%QUERY');
     $('#client').bind('typeahead:selected', function (obj, datum, name) {
         $('#client-hidden').val(datum['id']);
     });
     $('#orgUnit').typeahead({
         hint: false,
-        highlight: true,
-        minLength: 1
+        highlight: true
     }, {
         display: 'name',
         source: new Bloodhound({
@@ -213,37 +191,13 @@
         $('#orgUnit-hidden').val(datum['id']);
     });
     
-    $('#bank').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-bank/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#bank').autocomplete(
+            'name', 
+            '${pageContext.request.contextPath}/invoice/read-bank/%QUERY');
     $('#bank').bind('typeahead:selected', function (obj, datum, name) {
         $('#bank-hidden').val(datum['id']);
     });
-    $('#currency').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'isocode',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-currency/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#currency').autocomplete(
+            'isocode', 
+            '${pageContext.request.contextPath}/invoice/read-currency/%QUERY');
 </script>

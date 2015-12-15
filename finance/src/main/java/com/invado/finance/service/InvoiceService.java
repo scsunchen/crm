@@ -1038,7 +1038,7 @@ public class InvoiceService {
         String document = null;
         LocalDate from = null;
         LocalDate to = null;
-        Integer businessPartner = null;
+        String businessPartner = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("document") && s.getValue() instanceof String) {
                 document = (String) s.getValue();
@@ -1049,8 +1049,8 @@ public class InvoiceService {
             if (s.getKey().equals("to") && s.getValue() instanceof LocalDate) {
                 to = (LocalDate) s.getValue();
             }
-            if (s.getKey().equals("partner") && s.getValue() instanceof Integer) {
-                businessPartner = (Integer) s.getValue();
+            if (s.getKey().equals("partner") && s.getValue() instanceof String) {
+                businessPartner = (String) s.getValue();
             }
         }
         try {
@@ -1104,7 +1104,7 @@ public class InvoiceService {
             String document,
             LocalDate from,
             LocalDate to,
-            Integer partner,
+            String partnerName,
             int start,
             int range) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
@@ -1127,10 +1127,10 @@ public class InvoiceService {
                     root.get(Invoice_.invoiceDate),
                     cb.parameter(LocalDate.class, "to")));
         }
-        if (partner != null) {
-            criteria.add(cb.equal(root.get(Invoice_.partner)
-                    .get(BusinessPartner_.id),
-                    cb.parameter(Integer.class, "partner")));
+        if (partnerName != null && partnerName.isEmpty() == false) {
+            criteria.add(cb.like(cb.upper(root.get(Invoice_.partner)
+                    .get(BusinessPartner_.name)),
+                    cb.parameter(String.class, "partner")));
         }
         c.where(cb.and(criteria.toArray(new Predicate[0])))
                 .orderBy(
@@ -1147,8 +1147,8 @@ public class InvoiceService {
         if (to != null) {
             q.setParameter("to", to);
         }
-        if (partner != null) {
-            q.setParameter("partner", partner);
+        if (partnerName != null && partnerName.isEmpty() == false) {
+            q.setParameter("partner", "%" + partnerName.toUpperCase()+ "%");
         }
         q.setFirstResult(start);
         q.setMaxResults(range);
@@ -1159,13 +1159,13 @@ public class InvoiceService {
             String document,
             LocalDate from,
             LocalDate to,
-            Integer partner) {
+            String partnerName) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<Invoice> root = c.from(Invoice.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
-        if (document != null) {
+        if (document != null && document.isEmpty() == false) {
             criteria.add(cb.like(root.get(Invoice_.document),
                     cb.parameter(String.class, "document")));
         }
@@ -1177,14 +1177,14 @@ public class InvoiceService {
             criteria.add(cb.lessThanOrEqualTo(root.get(Invoice_.invoiceDate),
                     cb.parameter(LocalDate.class, "to")));
         }
-        if (partner != null) {
-            criteria.add(cb.equal(root.get(Invoice_.partner)
-                    .get(BusinessPartner_.id),
-                    cb.parameter(Integer.class, "partner")));
+        if (partnerName != null && partnerName.isEmpty() == false) {
+            criteria.add(cb.like(cb.upper(root.get(Invoice_.partner)
+                    .get(BusinessPartner_.name)),
+                    cb.parameter(String.class, "partner")));
         }
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
-        if (document != null) {
+        if (document != null && document.isEmpty() == false) {
             q.setParameter("document", document);
         }
         if (from != null) {
@@ -1193,8 +1193,8 @@ public class InvoiceService {
         if (to != null) {
             q.setParameter("to", to);
         }
-        if (partner != null) {
-            q.setParameter("partner", partner);
+        if (partnerName != null && partnerName.isEmpty() == false) {
+            q.setParameter("partner", "%" + partnerName.toUpperCase()+ "%");
         }
         return q.getSingleResult();
     }

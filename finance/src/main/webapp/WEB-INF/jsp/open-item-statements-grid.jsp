@@ -8,6 +8,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 
 <div class="modal fade" id="closeItemsDialog" tabindex="-1" role="dialog" >
     <div class="modal-dialog">
@@ -137,28 +138,19 @@
 <script type="text/javascript">
     $('#valueDate').datepicker({});
     $('#printDate').datepicker({});
-    $('#client').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/open-item-statements/read-client/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#client').autocomplete(
+            'name',
+            '${pageContext.request.contextPath}/open-item-statements/read-client/%QUERY');
     $('#client').bind('typeahead:selected', function (obj, datum, name) {
         $('#clientID').val(datum['id']);
+    }).bind('typeahead:change', function (obj, datum, name) {
+        if(datum === '') {
+            $('#clientID').val('');
+        }
     });
     $('#orgUnit').typeahead({
         hint: false,
-        highlight: true,
-        minLength: 1
+        highlight: true
     }, {
         display: 'name',
         source: new Bloodhound({
@@ -170,7 +162,7 @@
                     if ($('#clientID').val().length === 0) {
                         return url.concat(query);
                     }
-                    return url.concat(query).concat("/").concat($('#clientId').val());
+                    return url.concat(query).concat("/").concat($('#clientID').val());
                 }
             }
         }),
@@ -179,38 +171,27 @@
         }
     });
     $('#orgUnit').bind('typeahead:selected', function (obj, datum, name) {
+        $('#clientID').val(datum['clientID']);
+        $('#client').val(datum['clientName']);
         $('#orgUnitId').val(datum['id']);
-    });
-    $('#accountNumber').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'number',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/open-item-statements/read-account/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
-    $('#businessPartnerName').typeahead({
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/open-item-statements/read-businesspartner/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    })
+    .bind('typeahead:change', function (obj, datum, name) {
+        if(datum === '') {
+            $('#orgUnitId').val('');
+        }
+    });;
+    $('#accountNumber').autocomplete(
+            'number',
+            '${pageContext.request.contextPath}/open-item-statements/read-account/%QUERY');
+    $('#businessPartnerName').autocomplete(
+            'name',
+            '${pageContext.request.contextPath}/open-item-statements/read-businesspartner/%QUERY/20',
+            10);
     $('#businessPartnerName').bind('typeahead:selected', function (obj, datum, name) {
         $('#partnerID').val(datum['id']);
-    });    
+    }).bind('typeahead:change', function (obj, datum, name) {
+        if(datum === '') {
+            $('#partnerID').val('');
+        }
+    });
 </script>

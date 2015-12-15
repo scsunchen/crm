@@ -13,6 +13,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <form:form modelAttribute="GLRequest" method="GET" 
            action="${pageContext.request.contextPath}/gl-card/read-general-ledger-submit.html">
     <div class="form-group" >
@@ -76,28 +77,17 @@
     $('#dateTo').datepicker({});
     $('#valueDateFrom').datepicker({});
     $('#valueDateTo').datepicker({});
-    $('#client').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/gl-card/read-client/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
-    $('#client').bind('typeahead:selected', function (obj, datum, name) {
+    $('#client').autocomplete(
+            'name', 
+            '${pageContext.request.contextPath}/gl-card/read-client/%QUERY'
+    );
+    $('#client')
+    .bind('typeahead:selected', function (obj, datum, name) {
         $('#clientId').val(datum['id']);
     });
     $('#orgUnit').typeahead({
         hint: false,
-        highlight: true,
-        minLength: 1
+        highlight: true
     }, {
         display: 'name',
         source: new Bloodhound({
@@ -118,36 +108,22 @@
         }
     });
     $('#orgUnit').bind('typeahead:selected', function (obj, datum, name) {
+        console.log(datum);
+        $('#clientId').val(datum['clientID']);
+        $('#client').val(datum['clientName']);
         $('#orgUnitId').val(datum['id']);
+    })
+    .bind('typeahead:change', function (obj, datum, name) {
+        if(datum === '') {
+            $('#orgUnitId').val('');
+        }
     });
-    $('#accountNumber').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'number',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/gl-card/read-account/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
-    $('#currency').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'isocode',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/gl-card/read-currency/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#accountNumber').autocomplete(
+            'number', 
+            '${pageContext.request.contextPath}/gl-card/read-account/%QUERY'
+    );    
+    $('#currency').autocomplete(
+            'isocode', 
+            '${pageContext.request.contextPath}/gl-card/read-currency/%QUERY'
+    );
 </script>

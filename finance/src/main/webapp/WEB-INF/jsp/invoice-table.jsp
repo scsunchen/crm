@@ -27,9 +27,8 @@
         </div>
         <div class="form-group">
             <label for="partner" class="sr-only"><spring:message code="FindInvoice.Label.Partner" var="partnerLabel"/></label>
-            <form:input id="partner" class="typeahead form-control" type="text" path="partnerName" 
+            <form:input id="partner" class="form-control" type="text" path="partnerName" 
                         placeholder="${partnerLabel}" />
-            <form:input id="partner-hidden" type="hidden" path="partnerId"/>
         </div> 
 
     <div class="form-group">
@@ -156,22 +155,5 @@
 <script type="text/javascript">
     $('#dateFrom').datepicker({});
     $('#dateTo').datepicker({});
-    $('#partner').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-businesspartner/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
-    $('#partner').bind('typeahead:selected', function (obj, datum, name) {
-        $('#partner-hidden').val(datum['id']);
-    });
+    
 </script>

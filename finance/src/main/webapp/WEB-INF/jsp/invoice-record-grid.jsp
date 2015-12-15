@@ -11,6 +11,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/handlebars-v3.0.3.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <form:form modelAttribute="requestInvoiceRecording" 
            method="post" 
            action="${pageContext.request.contextPath}/invoice/${page}/record.html">
@@ -65,29 +66,15 @@
 </form:form>
 <script>
     $('#date').datepicker({});
-    $('#description').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1,
-        limit: 10
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-description/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#description').autocomplete( 
+            'name',
+            '${pageContext.request.contextPath}/invoice/read-description/%QUERY');
     $('#description').bind('typeahead:selected', function (obj, datum, name) {
         $('#descriptionId').val(datum['id']);
     });
     $('#type').typeahead({
         hint: false,
-        highlight: true,
-        minLength: 1
+        highlight: true
     }, {
         display: 'name',
         source: new Bloodhound({

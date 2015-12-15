@@ -80,12 +80,11 @@ public class ReceivablePayableCard  {
                         getMessage("LedgerCard.AccountNotExists",
                         dto.getAccountNumber()));
             }
-            if (dto.getPartnerRegNo() != null
-                    && dto.getPartnerRegNo().equals("") == false
-                    && dao.find(BusinessPartner.class, dto.getPartnerRegNo()) == null) {
+            if (dto.getPartnerId() != null
+                    && dao.find(BusinessPartner.class, dto.getPartnerId()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("LedgerCard.BusinessPartnerNotExists",
-                        dto.getPartnerRegNo()));
+                        dto.getPartnerId()));
             }
 
 
@@ -171,7 +170,7 @@ public class ReceivablePayableCard  {
                             throw new EntityNotFoundException(
                                     getMessage("LedgerCard.ExchangeRateNotExists",
                                     requestDTO.getForeignCurrencyISOCode(),
-                                    item1.getCreditDebitRelationDate()));
+                                    calendar.getTime()));
                         } else {
                             //pitaj za srednji kurs
                             exchangeRate = exRate.getMiddle();
@@ -371,10 +370,10 @@ public class ReceivablePayableCard  {
                     cb.parameter(String.class, "accountNumber");
             criteria.add(cb.equal(accountJoin.get(Account_.number), p));
         }
-        if (dto.getPartnerRegNo() != null && dto.getPartnerRegNo().equals("") == false) {
-            ParameterExpression<String> p =
-                    cb.parameter(String.class, "partner");
-            criteria.add(cb.equal(partnerJoin.get(BusinessPartner_.companyIdNumber), p));
+        if (dto.getPartnerId() != null ) {
+            ParameterExpression<Integer> p =
+                    cb.parameter(Integer.class, "partner");
+            criteria.add(cb.equal(partnerJoin.get(BusinessPartner_.id), p));
         }
         if (dto.getCreditDebitRelationDateFrom() != null) {
             ParameterExpression<LocalDate> p = cb.parameter(LocalDate.class, 
@@ -416,8 +415,8 @@ public class ReceivablePayableCard  {
         if(dto.getAccountNumber() != null && dto.getAccountNumber().equals("") == false) {
             q.setParameter("accountNumber", dto.getAccountNumber());
         }
-        if(dto.getPartnerRegNo() != null && dto.getPartnerRegNo().equals("") == false) {
-            q.setParameter("partner", dto.getPartnerRegNo());
+        if(dto.getPartnerId() != null ) {
+            q.setParameter("partner", dto.getPartnerId());
         }
         if(dto.getCreditDebitRelationDateFrom() != null) {
             q.setParameter("creditDebitRelationFrom", 

@@ -161,19 +161,21 @@ public class GLCard{
                     itemDTO.ordinal = item1.getJournalEntryItemOrdinal();
                     itemDTO.valueDate = item1.getValueDate();
                     BigDecimal exchangeRate = BigDecimal.ONE;
+                    Calendar creditDebitRelationCalendar = Calendar.getInstance();
+                    creditDebitRelationCalendar.clear();
+                    creditDebitRelationCalendar.set(Calendar.YEAR, 
+                            item1.getCreditDebitRelationDate().getYear());
+                    creditDebitRelationCalendar.set(Calendar.DAY_OF_YEAR, 
+                            item1.getCreditDebitRelationDate().getDayOfYear());
                     if (requestDTO.getCurrency() == CurrencyTypeDTO.FOREIGN) {
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.clear();
-                        calendar.set(Calendar.YEAR, item1.getCreditDebitRelationDate().getYear());
-                        calendar.set(Calendar.DAY_OF_YEAR, item1.getCreditDebitRelationDate().getDayOfYear());
                         ExchangeRate exRate = EM.find(ExchangeRate.class,
-                                new ExchangeRatePK(new Date(calendar.getTimeInMillis()),
+                                new ExchangeRatePK(new Date(creditDebitRelationCalendar.getTimeInMillis()),
                                 requestDTO.getForeignCurrencyISOCode()));
                         if (exRate == null) {
                             throw new EntityNotFoundException(
                                     getMessage("LedgerCard.ExchangeRateNotExists",
                                     requestDTO.getForeignCurrencyISOCode(),
-                                    item1.getCreditDebitRelationDate()));
+                                    creditDebitRelationCalendar.getTime()));
                         } else {
                             exchangeRate = exRate.getMiddle();
                         }
@@ -183,7 +185,7 @@ public class GLCard{
                                 getMessage(
                                 "LedgerCard.ZeroExchangeRateException",
                                 requestDTO.getForeignCurrencyISOCode(),
-                                item1.getCreditDebitRelationDate()));
+                                creditDebitRelationCalendar.getTime()));
                     }
                     
                     BigDecimal amount = item1.getAmount().divide(

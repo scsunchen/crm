@@ -191,10 +191,9 @@
 <script>
     $('#itemCode').typeahead({
         hint: false,
-        highlight: true,
-        minLength: 1,
-        limit: 1000
+        highlight: true
     }, {
+        limit: 10,
         display: 'code',
         source: new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
