@@ -20,7 +20,7 @@ public class PartnerSpecificationDTO implements Serializable {
     public String accountNumber;
     public Integer orgUnitID;
     public String orgUnitName;
-    public String partnerID;
+    public Integer partnerID;
     public String partnerName;
     public LocalDate creditDebitRelationDateFrom;
     public LocalDate creditDebitRelationDateTo;

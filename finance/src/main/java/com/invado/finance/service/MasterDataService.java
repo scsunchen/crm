@@ -55,6 +55,23 @@ public class MasterDataService {
             );
         }
     }
+    
+    @Transactional(readOnly = true)
+    public List<BusinessPartner> readBusinessPartnerByName(String name, int maxResults) {
+        try {
+            return dao.createNamedQuery(BusinessPartner.READ_BY_NAME_ORDERBY_NAME,
+                                        BusinessPartner.class)
+                    .setParameter("name", ("%"+name+"%").toUpperCase())
+                    .setMaxResults(maxResults)
+                    .getResultList();
+        } catch(Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "MasterDataService.Exception.ReadBusinessPartnerByName"),
+                    ex
+            );
+        }
+    }
 
     @Transactional(readOnly = true)
     public List<BusinessPartner> readPointOfSaleByName(String name) {

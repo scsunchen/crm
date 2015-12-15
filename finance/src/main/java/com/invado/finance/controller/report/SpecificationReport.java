@@ -210,7 +210,7 @@ public class SpecificationReport implements Printable {
         columnHeaderHeight += (m.getMaxDescent() + m.getLeading());
         
         columnHeaderHeight += m.getMaxAscent();
-        if(dto.partnerID != null && dto.partnerID.isEmpty() == false) {
+        if(dto.partnerID != null ) {
              g.drawString(getMessage("PartnerSpecification.Print.Partner", 
                                          dto.partnerName),
                 0,

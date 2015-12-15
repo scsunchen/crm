@@ -24,7 +24,7 @@
    "${pageContext.request.contextPath}/invoice/print-preview.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}" 
    class="btn btn-default" 
    target="_blank"><span class="glyphicon glyphicon-search" ></span> <spring:message code="Invoice.Button.PrintPreview" /></a>
-<a href="${pageContext.request.contextPath}/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=${page}" 
+<a href="${pageContext.request.contextPath}/invoice/read-page.html?document=&partnerName=&dateFrom=&dateTo=&page=${page}" 
    class="btn btn-default" >
     <span class="glyphicon glyphicon-backward" ></span>
     <spring:message code="Invoice.Button.Back" />

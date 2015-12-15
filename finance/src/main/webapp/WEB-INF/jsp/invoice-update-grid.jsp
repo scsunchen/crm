@@ -10,6 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <%@ taglib prefix="i" tagdir="/WEB-INF/tags" %>
 <form:form modelAttribute="invoice" method="post"
            action="${pageContext.request.contextPath}/invoice/${page}/update.html">
@@ -263,55 +264,20 @@
     $('#creditRelationDate').datepicker({});
     $('#valueDate').datepicker({});
     $('#contractDate').datepicker({});
-    $('#businessPartner').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-businesspartner/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#businessPartner').autocomplete(
+            'name',
+            '${pageContext.request.contextPath}/invoice/read-businesspartner/%QUERY/20',
+            10);
     $('#businessPartner').bind('typeahead:selected', function (obj, datum, name) {
         $('#businessPartner-hidden').val(datum['id']);
     });
-    $('#bank').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-bank/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#bank').autocomplete( 
+            'name',
+            '${pageContext.request.contextPath}/invoice/read-bank/%QUERY');
     $('#bank').bind('typeahead:selected', function (obj, datum, name) {
         $('#bank-hidden').val(datum['id']);
     });
-    $('#currency').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'isocode',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-currency/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#currency').autocomplete(
+            'isocode',
+            '${pageContext.request.contextPath}/invoice/read-currency/%QUERY');
 </script>

@@ -12,6 +12,7 @@
 <%@ taglib prefix="i" tagdir="/WEB-INF/tags" %>
 <link href="${pageContext.request.contextPath}/resources/css/typeahead.css" rel="stylesheet">    
 <script src="${pageContext.request.contextPath}/resources/js/typeahead.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <c:if test = "${exception != null}">
     <div class="alert alert-warning">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -65,21 +66,10 @@
     </div>
 </form:form>
 <script type="text/javascript">
-    $('#client').typeahead({
-        hint: false,
-        highlight: true,
-        minLength: 1
-    }, {
-        display: 'name',
-        source: new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '${pageContext.request.contextPath}/invoice/read-client/%QUERY',
-                wildcard: '%QUERY'
-            }
-        })
-    });
+    $('#client').autocomplete(
+            'name',
+             '${pageContext.request.contextPath}/invoice/read-client/%QUERY'
+    );
     $('#client').bind('typeahead:selected', function (obj, datum, name) {
         $('#client-hidden').val(datum['id']);
     });

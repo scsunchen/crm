@@ -8,7 +8,7 @@ package com.invado.customer.relationship.domain;
 import com.invado.core.domain.BusinessPartner;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -27,5 +27,5 @@ public class BusinessPartnerTerms_ {
     public static volatile SingularAttribute<BusinessPartnerTerms, BigDecimal> rebate;
     public static volatile SingularAttribute<BusinessPartnerTerms, BusinessPartnerTerms.Status> status;
     public static volatile SingularAttribute<BusinessPartnerTerms, Long> version;
-    public static volatile SingularAttribute<BusinessPartnerTerms, List> items;
+    public static volatile ListAttribute<BusinessPartnerTerms, BusinessPartnerTermsItem> items;
 }

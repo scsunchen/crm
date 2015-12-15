@@ -69,7 +69,7 @@ public class OpenItemStatements {
                 throw new EntityNotFoundException(
                         getMessage("OpenItem.GeneralLedgerAccount"));
             }
-            if (dto.getPartnerID() != null && !dto.getPartnerID().equals("") && dao.find(BusinessPartner.class,
+            if (dto.getPartnerID() != null && dao.find(BusinessPartner.class,
                     dto.getPartnerID()) == null) {
                 throw new EntityNotFoundException(
                         getMessage("OpenItem.BusinessPartnerNotExists",
@@ -175,7 +175,7 @@ public class OpenItemStatements {
         Client client = dao.find(Client.class, dto.getClientID());
         Account account = dao.find(Account.class, dto.getAccountNumber());
 
-        if (dto.getPartnerID() != null && dto.getPartnerID().equals("") == false) {
+        if (dto.getPartnerID() != null) {
             //pravi se izvod za jednog poslovnog partnera      
             BusinessPartner businessPartner = dao.find(BusinessPartner.class,
                     dto.getPartnerID());

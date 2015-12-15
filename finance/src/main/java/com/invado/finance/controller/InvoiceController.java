@@ -101,7 +101,7 @@ public class InvoiceController {
                 request.getDateTo()));
         dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
                 "partner",
-                request.getPartnerId())
+                request.getPartnerName())
         );
         ReadRangeDTO<InvoiceDTO> items = invoiceService.readPage(dto);
         status.setComplete();
@@ -120,7 +120,7 @@ public class InvoiceController {
             Map<String, Object> model)
             throws Exception {
         invoiceService.deleteInvoice(clientId, unitId, document);
-        return "redirect:/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=0";
+        return "redirect:/invoice/read-page.html?document=&partnerName=&dateFrom=&dateTo=&page=0";
     }
 
     @RequestMapping(value = "/invoice/record.html", method = RequestMethod.GET)
@@ -170,7 +170,7 @@ public class InvoiceController {
             model.put("exception", ex);
             return "invoice-record";
         }
-        return "redirect:/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=0";
+        return "redirect:/invoice/read-page.html?document=&partnerName=&dateFrom=&dateTo=&page=0";
     }
 
     @RequestMapping(value = "/invoice/{page}/create", method = RequestMethod.GET)
@@ -305,7 +305,15 @@ public class InvoiceController {
     List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name) {
         return masterDataservice.readBusinessPartnerByName(name);
     }
-
+    
+    @RequestMapping(value = "/invoice/read-businesspartner/{name}/{max}")
+    public @ResponseBody
+    List<BusinessPartner> findBussinesPartnerByName(
+            @PathVariable String name,
+            @PathVariable Integer max) {
+        return masterDataservice.readBusinessPartnerByName(name, max);
+    }
+    
     @RequestMapping(value = "/invoice/read-bank/{name}")
     public @ResponseBody
     List<BankCreditor> findBankByName(@PathVariable String name) {
