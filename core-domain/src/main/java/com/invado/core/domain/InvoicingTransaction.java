@@ -1,9 +1,8 @@
-package com.invado.customer.relationship.domain;
+package com.invado.core.domain;
 
-import com.invado.core.domain.Client;
-import com.invado.core.domain.LocalDateConverter;
-import com.invado.core.domain.LocalDateTimeConverter;
-import org.springframework.cglib.core.Local;
+
+
+import com.invado.core.dto.InvoicingTransactionDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,25 +14,25 @@ import java.time.LocalDate;
 @Table(name = "CRM_INVOICING_TRANSACTION")
 
 
-@SqlResultSetMapping(name = "invoicingTransactions", entities = {@EntityResult(entityClass = InvoicingTransactions.class,
+@SqlResultSetMapping(name = "invoicingTransactions", entities = {@EntityResult(entityClass = InvoicingTransaction.class,
         fields = {
                 @FieldResult(name = "id", column = "ID"),
                 @FieldResult(name = "invoicingDate", column = "INVOICING_DATE"),
                 @FieldResult(name = "invoicedFrom", column = "INVOICED_FROM"),
                 @FieldResult(name = "invoicedTo", column = "INVOICED_TO")})})
 @NamedNativeQueries({
-        @NamedNativeQuery(name = InvoicingTransactions.LAST_INVOICING_TRANSACTION, query = " select *  " +
+        @NamedNativeQuery(name = InvoicingTransaction.LAST_INVOICING_TRANSACTION, query = " select *  " +
                 "from (select * from crm_invoicing_transaction order by 3) where rownum=1",
                 resultSetMapping = "invoicingTransactions"),
-        @NamedNativeQuery(name = InvoicingTransactions.LAST_TRANSACTION, query = " select *  " +
-                                " from (select * from crm_invoicing_transaction order by 3) where rownum=1" ,
-                resultClass = InvoicingTransactions.class)})
+        @NamedNativeQuery(name = InvoicingTransaction.LAST_TRANSACTION, query = " select *  " +
+                                " from (select * from crm_invoicing_transaction order by 3 desc) where rownum=1" ,
+                resultClass = InvoicingTransaction.class)})
 
 
-public class InvoicingTransactions {
+public class InvoicingTransaction {
 
-    public static final String LAST_INVOICING_TRANSACTION = "InvoicingTransactions.LastInvoicingTransaction";
-    public static final String LAST_TRANSACTION = "InvoicingTransactions.LastTransaction";
+    public static final String LAST_INVOICING_TRANSACTION = "InvoicingTransaction.LastInvoicingTransaction";
+    public static final String LAST_TRANSACTION = "InvoicingTransaction.LastTransaction";
 
     @TableGenerator(
             name = "InvTransTab",
@@ -107,5 +106,19 @@ public class InvoicingTransactions {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public InvoicingTransactionDTO getDTO(){
+
+        InvoicingTransactionDTO dto = new InvoicingTransactionDTO();
+        dto.setDitributorId(this.getDitributor().getId());
+        dto.setDistributorName(this.getDitributor().getName());
+        dto.setId(this.getId());
+        dto.setInvoicedFrom(this.getInvoicedFrom());
+        dto.setInvoicedTo(this.getInvoicedTo());
+        dto.setInvoicingDate(this.getInvoicingDate());
+        dto.setVersion(this.getVersion());
+        dto.setDisplayPeriod(this.getInvoicedFrom()+" - "+this.getInvoicedTo());
+        return dto;
     }
 }

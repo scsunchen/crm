@@ -29,5 +29,6 @@ public class Invoice_ {
     public static volatile SingularAttribute<Invoice, BankCreditor> bank;
     public static volatile SingularAttribute<Invoice, ApplicationUser> user;
     public static volatile SingularAttribute<Invoice, String> contractNumber;
+    public static volatile SingularAttribute<Invoice, InvoicingTransaction> invoicingTransaction;
 
 }

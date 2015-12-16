@@ -32,6 +32,8 @@ import java.util.Objects;
                         + "x.orgUnit.id, x.document"),
         @NamedQuery(name = "Invoice.GetByOrgUnit",
                 query = "SELECT x FROM Invoice x WHERE x.orgUnit = :orgUnit"),
+        @NamedQuery(name = "Invoice.GetByInvoicingTransaction",
+                query = "SELECT x FROM Invoice x WHERE x.invoicingTransaction = :invoicingTransaction"),
         @NamedQuery(name = Invoice.READ_MAX_DOCUMENT,
                 query = "SELECT MAX(cast(x.document as integer))+1 FROM Invoice x WHERE "
                         + "x.client = :client AND x.orgUnitE = :orgUnit"),
@@ -44,6 +46,7 @@ import java.util.Objects;
 public class Invoice implements Serializable {
 
     public static final String READ_MAX_DOCUMENT = "Invoice.GetMaxDocument";
+    public static final String READ_BY_INVOICING_TRANSACTION = "Invoice.GetByInvoicingTransaction";
 
     @Id
     @JoinColumn(name = "company_id", referencedColumnName = "id")
@@ -122,6 +125,9 @@ public class Invoice implements Serializable {
     @ManyToOne
     @JoinColumn(name = "bank_id")
     private BankCreditor bank;
+    @ManyToOne
+    @JoinColumn(name = "invoicing_transaction_id")
+    private InvoicingTransaction invoicingTransaction;
     @Valid//FIXME : Lazy collection validation
     @OneToMany(cascade = {CascadeType.ALL},
             mappedBy = "invoice",
@@ -374,6 +380,14 @@ public class Invoice implements Serializable {
 
     public String getUserFullName() {
         return user.getDescription();
+    }
+
+    public InvoicingTransaction getInvoicingTransaction() {
+        return invoicingTransaction;
+    }
+
+    public void setInvoicingTransaction(InvoicingTransaction invoicingTransaction) {
+        this.invoicingTransaction = invoicingTransaction;
     }
 
     public void setVersion(Long version) {

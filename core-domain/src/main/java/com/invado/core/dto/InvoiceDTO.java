@@ -9,6 +9,8 @@ import com.invado.core.domain.InvoiceType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.invado.core.domain.InvoicingTransaction;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -52,6 +54,8 @@ public class InvoiceDTO  {
     private BigDecimal totalAmount;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal returnValue;
+    private Integer invoicingTransactionId;
+    private InvoicingTransaction invoicingTransaction;
 
     public Integer getClientId() {
         return clientId;
@@ -275,5 +279,21 @@ public class InvoiceDTO  {
 
     public void setReturnValue(BigDecimal returnValue) {
         this.returnValue = returnValue;
+    }
+
+    public Integer getInvoicingTransactionId() {
+        return invoicingTransactionId;
+    }
+
+    public void setInvoicingTransactionId(Integer invoicingTransactionId) {
+        this.invoicingTransactionId = invoicingTransactionId;
+    }
+
+    public InvoicingTransaction getInvoicingTransaction() {
+        return invoicingTransaction;
+    }
+
+    public void setInvoicingTransaction(InvoicingTransaction invoicingTransaction) {
+        this.invoicingTransaction = invoicingTransaction;
     }
 }

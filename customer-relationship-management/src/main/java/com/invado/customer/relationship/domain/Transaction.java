@@ -1,9 +1,6 @@
 package com.invado.customer.relationship.domain;
 
-import com.invado.core.domain.BusinessPartner;
-import com.invado.core.domain.Client;
-import com.invado.core.domain.Device;
-import com.invado.core.domain.LocalDateTimeConverter;
+import com.invado.core.domain.*;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
 import org.springframework.format.annotation.NumberFormat;
 

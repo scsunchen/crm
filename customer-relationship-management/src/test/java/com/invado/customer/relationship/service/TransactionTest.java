@@ -1,11 +1,6 @@
 package com.invado.customer.relationship.service;
 
-import com.invado.core.dto.InvoiceDTO;
-import com.invado.core.exception.ConstraintViolationException;
-import com.invado.core.exception.EntityExistsException;
-import com.invado.core.exception.EntityNotFoundException;
-import com.invado.core.exception.ReferentialIntegrityException;
-import com.invado.customer.relationship.service.dto.TransactionDTO;
+import com.invado.core.dto.InvoicingTransactionDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,41 +10,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by Nikola on 05/12/2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/application-context.xml" })
+@ContextConfiguration(locations = { "classpath:/application-context-test.xml" })
 @Transactional
 @TransactionConfiguration(defaultRollback = false)
 public class TransactionTest {
 
     @Inject
-    private TransactionService transactionService;
+    private InvoicingTransactionService service;
 
     @Test
     public void testOne(){
 
-        Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
-        TransactionDTO paramTransactionDTO = new TransactionDTO();
-        //paramTransactionDTO.setInvoicingDistributorId("2");
-        //paramTransactionDTO.setInvoicingGenDate("05.12.2015");
-        try {
-            invoicePerMerchantMap = transactionService.genInvoicesI(paramTransactionDTO);
-            //invoicePerMerchantMap = transactionService.genInvoicesUI(paramTransactionDTO);
-        } catch (ReferentialIntegrityException e) {
-            e.printStackTrace();
-        } catch (ConstraintViolationException e) {
-            e.printStackTrace();
-        } catch (EntityExistsException e) {
-            e.printStackTrace();
-        } catch (EntityNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("evo ga nesto");
+       List<InvoicingTransactionDTO> list = service.getAllPeriods();
+        for (InvoicingTransactionDTO item : list)
+            System.out.println(item.getId()+" - "+item.getDisplayPeriod()+" - "+item.getInvoicingDate());
     }
 
     @Test

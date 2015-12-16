@@ -50,7 +50,7 @@
     </c:if>
 </form:form>
 <form:form role="search" modelAttribute="transactionDTO" method="GET"
-           action="${pageContext.request.contextPath}/in-transactions.html">
+           action="${pageContext.request.contextPath}/transactions/in-transactions.html">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <br/>
@@ -112,14 +112,14 @@
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/in-transactions.html?&distributorId=${param['distributorId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions.html?&distributorId=${param['distributorId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
                 <span class="glyphicon glyphicon-backward"></span> Prethodna
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
 
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/in-transactions.html?&distributorId=${param['distributorId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions.html?&distributorId=${param['distributorId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
                 <span class="glyphicon glyphicon-forward"></span> Naredna
             </a>
         </li>

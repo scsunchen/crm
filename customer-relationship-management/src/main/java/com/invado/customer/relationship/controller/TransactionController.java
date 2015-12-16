@@ -4,7 +4,7 @@ import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Client;
 import com.invado.core.dto.InvoiceDTO;
 import com.invado.core.domain.Device;
-import com.invado.customer.relationship.domain.TransactionType;
+import com.invado.core.domain.TransactionType;
 import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.TransactionService;
 import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
@@ -157,7 +157,7 @@ public class TransactionController {
     }
 
 
-    @RequestMapping(value = "/in-transactions.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/transactions/in-transactions.html", method = RequestMethod.GET)
     public String showInovicingCandidatesTransactions(@RequestParam Integer page,
                                                       @RequestParam Integer distributorId,
                                                       @RequestParam String invoicingDate,
@@ -175,6 +175,16 @@ public class TransactionController {
         model.put("transactionDTO", transactionDTO);
         model.put("numberOfPages", items.getNumberOfPages());
         return "invoicing-candidates-view";
+    }
+
+
+    @RequestMapping(value = "/transactions/review-invoicing-transactions.html", method = RequestMethod.POST)
+    public String showInvoicesPerPeriod(@ModelAttribute TransactionDTO transactionDTO, Map<String, Object> model) throws Exception {
+        System.out.println("izvrsio se bre " + transactionDTO.getInvoicingGenDate() + " " + transactionDTO.getInvoicingDistributorId());
+        Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesI(transactionDTO);
+        //Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
+        model.put("data", genTransactions);
+        return "invoice-table";
     }
 
     @RequestMapping(value = "/invoicing/review-invoices.html", method = RequestMethod.POST)
