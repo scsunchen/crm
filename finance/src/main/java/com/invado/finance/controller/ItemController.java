@@ -47,7 +47,7 @@ public class ItemController {
                 new PageRequestDTO.SearchCriterion("code", code)
         );
         request.addSearchCriterion(
-                new PageRequestDTO.SearchCriterion("name", name)
+                new PageRequestDTO.SearchCriterion("description", name)
         );
         request.setPage(page);
         ReadRangeDTO<Article> items = service.readPage(request);
@@ -60,7 +60,7 @@ public class ItemController {
     @RequestMapping("/item/{page}/{code}/delete.html")
     public String delete(@PathVariable String code) throws Exception {
         service.delete(code);
-        return "redirect:/item/{page}";
+        return "redirect:/item/read-page.html?code=&name=&page={page}";
     }
 
     @RequestMapping(value = "/item/{page}/create", method = RequestMethod.GET)
@@ -103,7 +103,7 @@ public class ItemController {
             model.put("page", page);
             return "item-grid";
         }
-        return "redirect:/item/{page}";
+        return "redirect:/item/read-page.html?code=&name=&page=0";
     }
 
     @RequestMapping(value = "/item/{page}/update/{code}",
@@ -151,7 +151,7 @@ public class ItemController {
             model.put("page", page);
             return "item-grid";
         }
-        return "redirect:/item/{page}";
+        return "redirect:/item/read-page.html?code=&name=&page={page}";
     }
 
 }

@@ -20,6 +20,9 @@
     <i:textField label="Desc.Label.Name" name="name" autofocus="true" />
     <form:hidden path="version" />    
     <div class="form-group">
+        <a href="${pageContext.request.contextPath}/desc/${page}" class="btn btn-default" >
+            <span class="glyphicon glyphicon-backward"></span> <spring:message code="Desc.Button.Back" />
+        </a>
         <button type="submit" class="btn btn-primary" >
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -30,8 +33,5 @@
                 </c:otherwise>
             </c:choose>
         </button>
-        <a href="${pageContext.request.contextPath}/desc/${page}" class="btn btn-default" >
-            <span class="glyphicon glyphicon-backward"></span> <spring:message code="Desc.Button.Back" />
-        </a>
     </div>
 </form:form>

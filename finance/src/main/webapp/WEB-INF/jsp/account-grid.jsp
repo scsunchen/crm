@@ -37,6 +37,9 @@
     </div>
     <form:hidden path="version" />
     <div class="form-group">
+        <a href="${pageContext.request.contextPath}/account/${page}" class="btn btn-default" >
+            <span class="glyphicon glyphicon-backward"></span> <spring:message code="Account.Button.Back" />
+        </a>
         <button type="submit" class="btn btn-primary" >
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -47,8 +50,5 @@
                 </c:otherwise>
             </c:choose>
         </button>
-        <a href="${pageContext.request.contextPath}/account/${page}" class="btn btn-default" >
-            <span class="glyphicon glyphicon-backward"></span> <spring:message code="Account.Button.Back" />
-        </a>
     </div>
 </form:form>

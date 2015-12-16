@@ -103,8 +103,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button  class="btn btn-default" data-dismiss="modal"><spring:message code="JournalEntry.Button.Cancel" /></button>
                     <button class="btn btn-primary" type="submit"><spring:message code="JournalEntry.Button.AddItem" /></button>
+                    <button  class="btn btn-default" data-dismiss="modal"><spring:message code="JournalEntry.Button.Cancel" /></button>
                 </div>
             </div>
         </div>

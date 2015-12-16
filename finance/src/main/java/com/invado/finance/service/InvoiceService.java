@@ -92,14 +92,6 @@ public class InvoiceService {
             throw new ConstraintViolationException(
                     Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
-        if (dto.getIsDomesticCurrency() == null) {
-            throw new ConstraintViolationException(Utils.getMessage(
-                    "Invoice.IllegalArgumentException.IsDomesticCurrency"));
-        }
-        if (dto.getIsDomesticCurrency() == false && dto.getCurrencyISOCode() == null) {
-            throw new ConstraintViolationException(Utils.getMessage(
-                    "Invoice.IllegalArgumentException.CurrencyISOCode"));
-        }
         try {
             Invoice temp = dao.find(Invoice.class, new InvoicePK(dto.getClientId(),
                     dto.getOrgUnitId(),
@@ -178,7 +170,6 @@ public class InvoiceService {
                 }
             }
             invoice.setCurrency(currency);
-            invoice.setIsDomesticCurrency(dto.getIsDomesticCurrency());
             invoice.setContractNumber(dto.getContractNumber());
             invoice.setContractDate(dto.getContractDate());
             invoice.setBank(bank);
@@ -187,6 +178,7 @@ public class InvoiceService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
+                System.out.println("Proba");
                 throw new ConstraintViolationException("", msgs);
             }
             dao.persist(invoice);
@@ -295,14 +287,6 @@ public class InvoiceService {
         if (dto.getDocument() == null) {
             throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException.Document"));
         }
-        if (dto.getIsDomesticCurrency() == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("Invoice.IllegalArgumentException.IsDomesticCurrency"));
-        }
-        if (dto.getIsDomesticCurrency() == false && dto.getCurrencyISOCode() == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("Invoice.IllegalArgumentException.CurrencyISOCode"));
-        }
         try {
             Invoice temp = dao.find(Invoice.class,
                     new InvoicePK(dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()),
@@ -372,7 +356,6 @@ public class InvoiceService {
             temp.setCreditRelationDate(dto.getCreditRelationDate());
             temp.setValueDate(dto.getValueDate());
             temp.setCurrency(currency);
-//            temp.setIsDomesticCurrency(dto.getIsDomesticCurrency());
             temp.setContractNumber(dto.getContractNumber());
             temp.setContractDate(dto.getContractDate());
             temp.setUser(user);
@@ -903,7 +886,7 @@ public class InvoiceService {
 
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(rollbackFor = Exception.class)
     public InvoiceReportDTO readInvoiceReport(Integer clientId,
             Integer orgUnitId,
             String document)
@@ -1017,7 +1000,7 @@ public class InvoiceService {
             result.lowerRateBasis = lowerRateBasis.setScale(2, RoundingMode.HALF_UP);
             result.lowerRateTax = lowerRateTax.setScale(2, RoundingMode.HALF_UP);
             result.lowerRatePercent = new BigDecimal(lowerRatePercent);
-            if (temp.getInvoiceType() == (InvoiceType.INVOICE)) {
+            if (temp.getInvoiceType() == InvoiceType.INVOICE) {
                 temp.setPrinted(Boolean.TRUE);
             }
             result.version = temp.getVersion();
