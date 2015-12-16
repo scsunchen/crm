@@ -140,11 +140,11 @@
     </div>
 
     <div class="col-lg-12 form-group">
+        <a href="${pageContext.request.contextPath}/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=${page}" class="btn btn-default" >
+    <span class="glyphicon glyphicon-backward"></span> <spring:message code="Invoice.Button.Back" /></a>
         <button type="submit" class="btn btn-primary" >
             <span class="glyphicon glyphicon-pencil"></span> <spring:message code="Invoice.Button.Create" />
         </button>
-        <a href="${pageContext.request.contextPath}/invoice/read-page.html?document=&partnerName=&partnerId=&dateFrom=&dateTo=&page=${page}" class="btn btn-default" >
-    <span class="glyphicon glyphicon-backward"></span> <spring:message code="Invoice.Button.Back" /></a>
     </div>
 </form:form>
 <script type="text/javascript">

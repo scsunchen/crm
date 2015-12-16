@@ -61,8 +61,8 @@
                         </spring:bind>
                     </div>
                     <div class="modal-footer">
-                        <button  class="btn btn-default" data-dismiss="modal"><spring:message code="Invoice.Button.Cancel" /></button>
                         <button class="btn btn-primary" type="submit"><spring:message code="Invoice.Button.AddItem" /></button>
+                        <button  class="btn btn-default" data-dismiss="modal"><spring:message code="Invoice.Button.Cancel" /></button>
                     </div>
                 </div>
             </form:form> 

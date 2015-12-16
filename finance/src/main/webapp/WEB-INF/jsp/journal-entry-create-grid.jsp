@@ -58,10 +58,10 @@
     </spring:bind>
     <form:hidden path="version" />    
     <div class="form-group">
-        <button type="submit" class="btn btn-primary" ><spring:message code="JournalEntry.Button.Create" /></button>
         <a href="${pageContext.request.contextPath}/journal-entry/${page}" class="btn btn-default" >
             <span class="glyphicon glyphicon-backward"></span> <spring:message code="JournalEntry.Button.Back" />
         </a>
+        <button type="submit" class="btn btn-primary" ><spring:message code="JournalEntry.Button.Create" /></button>
     </div>
 </form:form>
 <script type="text/javascript">

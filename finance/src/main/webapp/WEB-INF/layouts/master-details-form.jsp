@@ -9,8 +9,5 @@
 <tiles:insertAttribute name="navigation" />
 <br/>
 <br/>
-<fieldset>
     <legend class="control-label"></legend>
     <tiles:insertAttribute name="content" />
-</fieldset>
-

@@ -188,11 +188,6 @@ public class InvoiceController {
             SessionStatus status,
             @PathVariable String page,
             Map<String, Object> model) throws Exception {
-        if (invoice.getCurrencyISOCode() == null || invoice.getCurrencyISOCode().isEmpty()) {
-            invoice.setIsDomesticCurrency(Boolean.TRUE);
-        } else {
-            invoice.setIsDomesticCurrency(Boolean.FALSE);
-        }
         String username = ((User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername();
         invoice.setUsername(username);
