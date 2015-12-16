@@ -6,6 +6,7 @@ import com.invado.core.dto.InvoicingTransactionDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by Nikola on 12/09/2015.
@@ -110,6 +111,8 @@ public class InvoicingTransaction {
 
     public InvoicingTransactionDTO getDTO(){
 
+        DateTimeFormatter format;
+        format = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
         InvoicingTransactionDTO dto = new InvoicingTransactionDTO();
         dto.setDitributorId(this.getDitributor().getId());
         dto.setDistributorName(this.getDitributor().getName());
@@ -118,7 +121,7 @@ public class InvoicingTransaction {
         dto.setInvoicedTo(this.getInvoicedTo());
         dto.setInvoicingDate(this.getInvoicingDate());
         dto.setVersion(this.getVersion());
-        dto.setDisplayPeriod(this.getInvoicedFrom()+" - "+this.getInvoicedTo());
+        dto.setDisplayPeriod("Od "+dto.getInvoicedFrom().format(format) +" do "+dto.getInvoicedTo().format(format));
         return dto;
     }
 }

@@ -121,7 +121,7 @@ public class MenuFormPreparer implements ViewPreparer {
         crm.setPath("crm");
         crm.put("Transakcije", "Pregled Transakcija", "/crm/transactions/0");
         crm.put("Transakcije", "Generisanje Faktura", "/crm/transactions/in-transactions.html?distributorId=&invoicingDate=&page=0");
-        crm.put("Transakcije", "Preglde Faktura po periodima fakturisnja", "/crm/transactions/in-transactions.html?distributorId=&invoicingDate=&page=0");
+        crm.put("Transakcije", "Preglde Faktura po periodima fakturisnja", "/crm/transactions/review-invoicing-transactions.html?distributorId=&invoicingPeriod=&page=0");
         crm.put("CRM", "CRM", "/crm/terms/0/read-page.html");
         crm.put("CRM", "Usluge dobavljača", "/crm/service-provider-services/0/read-page.html");
         modules.add(crm);

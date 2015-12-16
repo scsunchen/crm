@@ -5,6 +5,8 @@ import com.invado.core.domain.Client;
 import com.invado.core.dto.InvoiceDTO;
 import com.invado.core.domain.Device;
 import com.invado.core.domain.TransactionType;
+import com.invado.core.dto.InvoicingTransactionDTO;
+import com.invado.customer.relationship.service.InvoicingTransactionService;
 import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.TransactionService;
 import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +28,12 @@ import java.util.Map;
 @Controller
 public class TransactionController {
 
-    @Autowired
+    @Inject
     private TransactionService transactionService;
-    @Autowired
+    @Inject
     private MasterDataService masterDataService;
+    @Inject
+    private InvoicingTransactionService invoicingTransactionService;
 
 
     @RequestMapping(value = "/transactions/{page}")
@@ -177,14 +183,17 @@ public class TransactionController {
         return "invoicing-candidates-view";
     }
 
-
-    @RequestMapping(value = "/transactions/review-invoicing-transactions.html", method = RequestMethod.POST)
-    public String showInvoicesPerPeriod(@ModelAttribute TransactionDTO transactionDTO, Map<String, Object> model) throws Exception {
-        System.out.println("izvrsio se bre " + transactionDTO.getInvoicingGenDate() + " " + transactionDTO.getInvoicingDistributorId());
-        Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesI(transactionDTO);
+    @RequestMapping(value = "/transactions/review-invoicing-transactions.html", method = RequestMethod.GET)
+    public String showInvoicesPerPeriod(@RequestParam(required = false) Integer distributorId,
+                                        @RequestParam(value = "id", required = false) Integer invoicingPeriod,
+                                        @RequestParam Integer page,
+                                        @ModelAttribute InvoicingTransactionDTO invoicingTransactionDTO, Map<String, Object> model) throws Exception {
+        // Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesI(transactionDTO);
         //Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
-        model.put("data", genTransactions);
-        return "invoice-table";
+        model.put("invoicingTransactions", invoicingTransactionService.getAllPeriods());
+        List<InvoiceDTO> invoices = new ArrayList<InvoiceDTO>();
+        model.put("data", invoices);
+        return "review-invoicing-transactions";
     }
 
     @RequestMapping(value = "/invoicing/review-invoices.html", method = RequestMethod.POST)

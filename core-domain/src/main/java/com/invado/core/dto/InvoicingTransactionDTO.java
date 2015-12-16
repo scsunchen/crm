@@ -22,6 +22,8 @@ public class InvoicingTransactionDTO {
     @DateTimeFormat(style = "M-")
     private LocalDate invoicedTo;
     private String displayPeriod;
+    private Integer partnerId;
+    private String partnerName;
     private Long version;
 
     public Integer getId() {
@@ -86,5 +88,21 @@ public class InvoicingTransactionDTO {
 
     public void setDisplayPeriod(String displayPeriod) {
         this.displayPeriod = displayPeriod;
+    }
+
+    public Integer getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(Integer partnerId) {
+        this.partnerId = partnerId;
+    }
+
+    public String getPartnerName() {
+        return partnerName;
+    }
+
+    public void setPartnerName(String partnerName) {
+        this.partnerName = partnerName;
     }
 }

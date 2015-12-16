@@ -48,6 +48,11 @@
         <put-attribute name="panel-title" value="Pregled faktura"/>
         <put-attribute name="body" value="/WEB-INF/jsp/invoices-review.jsp"/>
     </definition>
+    <definition name="review-invoicing-transactions" extends="main-menu-form">
+        <put-attribute name="title" value="Faktura"/>
+        <put-attribute name="panel-title" value="Pregled faktura"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/review-invoicing-transactions.jsp"/>
+    </definition>
     <definition name="terms-table" extends="main-menu-form">
         <put-attribute name="title" value="Uslovi poslovanja"/>
         <put-attribute name="panel-title" value="Uslovi poslovanja"/>

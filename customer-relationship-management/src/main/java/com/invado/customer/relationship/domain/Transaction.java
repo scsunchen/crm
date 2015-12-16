@@ -107,7 +107,7 @@ import java.time.LocalDateTime;
                 "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
                 "             crm_Service_Provider_Services service, r_article a " +
                 "         where type.invoiceable = 1 " +
-                "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                "         and type.invoicingStatuses like '%'||trans.transaction_status||'%' " +
                 "         and trans.statusId is not null " +
                 "         and trans.invoicing_Status = 0 " +
                 "         and trans.response_Time between :invoicingDateFrom and :invoicingDateTo  " +
@@ -122,7 +122,7 @@ import java.time.LocalDateTime;
                 "         from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, " +
                 "             crm_Service_Provider_Services service, r_article a " +
                 "         where type.invoiceable = 1 " +
-                "         and type.invoicingStatuses like '%'||trans.statusId||'%' " +
+                "         and type.invoicingStatuses like '%'||trans.transaction_status||'%' " +
                 "         and trans.statusId is not null " +
                 "         and trans.invoicing_Status = 0 " +
                 "         and trans.response_Time  between :invoicingDateFrom and :invoicingDateTo " +

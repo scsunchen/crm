@@ -639,6 +639,7 @@ public class TransactionService {
             invoice.setContractNumber(dto.getContractNumber());
             invoice.setContractDate(dto.getContractDate());
             invoice.setBank(bank);
+            invoice.setInvoicingTransaction(dto.getInvoicingTransaction());
             List<String> msgs = validator.validate(invoice)
                     .stream()
                     .map(ConstraintViolation::getMessage)
@@ -982,6 +983,10 @@ public class TransactionService {
         currentInvoicingTransaction.setInvoicingDate(LocalDate.now());
         currentInvoicingTransaction.setDitributor(dao.find(Client.class, paramTransactionDTO.getInvoicingDistributorId()));
         dao.persist(currentInvoicingTransaction);
+        dao.flush();
+        dao.refresh(currentInvoicingTransaction);
+
+        System.out.println("id je ovaj " + currentInvoicingTransaction.getId());
 
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
         System.out.println("kandidata "+invoicingTransactionSetDTOs.size());
