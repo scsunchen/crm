@@ -4,9 +4,7 @@
     <root id="archive" name="masterdata.war">
       <element id="artifact" artifact-name="HumanResources:war exploded" />
       <element id="directory" name="WEB-INF">
-        <element id="directory" name="lib">
-          <element id="library" level="application" name="ojdbc6" />
-        </element>
+        <element id="directory" name="lib" />
       </element>
     </root>
   </artifact>

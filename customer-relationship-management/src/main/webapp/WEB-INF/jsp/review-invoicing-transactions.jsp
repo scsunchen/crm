@@ -27,12 +27,12 @@
             </form:select>
         </div>
         <div class="form-group col-lg-4">
-            <label for="partner" class="sr-only"><spring:message code="FindInvoice.Label.Partner"
-                                                                 var="partnerLabel"/></label>
-            <form:input id="partner" class="form-control" type="text" path="partnerName"
-                        placeholder="Partner..."/>
+            <form:input id="merchant" class="typeahead form-control"
+                        placeholder="Merchant..." type="text" path="partnerName"/>
+            <form:input id="merchant-hidden" type="hidden"
+                        path="partnerId"/>
         </div>
-
+        <form:input id="merchant-hidden" type="hidden" path="page" value="0"/>
         <div class="col-lg-4">
             <button type="submit" class="btn btn-primary"><span class=" glyphicon glyphicon-search"></span></button>
         </div>
@@ -114,5 +114,25 @@
 <script type="text/javascript">
     $('#dateFrom').datepicker({});
     $('#dateTo').datepicker({});
+
+    $('#merchant').typeahead({
+        highlight: true,
+        minLength: 1
+    }, {
+        display: 'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/read-merchant/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#merchant').bind('typeahead:selected', function (obj, datum, name) {
+
+        $('#merchant-hidden').val(datum['id']);
+    });
+
 
 </script>

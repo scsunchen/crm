@@ -184,17 +184,18 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/transactions/review-invoicing-transactions.html", method = RequestMethod.GET)
-    public String showInvoicesPerPeriod(@RequestParam(required = false) Integer distributorId,
+    public String showInvoicesPerPeriod(@RequestParam(value = "partnerId", required = false) Integer distributorId,
                                         @RequestParam(value = "id", required = false) Integer invoicingPeriod,
+                                        @RequestParam(value = "partnerName", required = false) String partnerName,
                                         @RequestParam Integer page,
                                         @ModelAttribute InvoicingTransactionDTO invoicingTransactionDTO, Map<String, Object> model) throws Exception {
-        // Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesI(transactionDTO);
-        //Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
+
         model.put("invoicingTransactions", invoicingTransactionService.getAllPeriods());
-        List<InvoiceDTO> invoices = new ArrayList<InvoiceDTO>();
+        List<InvoiceDTO> invoices = transactionService.readInvoiciePerPeriod(invoicingPeriod);
         model.put("data", invoices);
         return "review-invoicing-transactions";
     }
+
 
     @RequestMapping(value = "/invoicing/review-invoices.html", method = RequestMethod.POST)
     public String genInvoices(@ModelAttribute TransactionDTO transactionDTO, Map<String, Object> model) throws Exception {

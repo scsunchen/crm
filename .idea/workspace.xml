@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1d2dfdfd-3ed0-485c-8ab7-ddfd9a35dac6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/test/java/com.invado.masterdata.test/TestQ.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/test/res/application-context-test.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/test/res/META-INF/crm-persistence-test.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/master-data-management/src/test/res/dispatcher-servlet-test.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/in-develop-tabe.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/in-table.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/invoices-review.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-grid.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Documentation/eVoucher/TestCasesEVoucherTerminali.docx" afterPath="$PROJECT_DIR$/Documentation/eVoucher/TestCasesEVoucherTerminali.docx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Documentation/dtm.eap" afterPath="$PROJECT_DIR$/Documentation/dtm.eap" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BPService.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BPService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/BusinessPartnerDTO.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/BusinessPartnerDTO.java" />
+    <list default="true" id="1d2dfdfd-3ed0-485c-8ab7-ddfd9a35dac6" name="Default" comment="WS jar">
+      <change type="DELETED" beforePath="C:\Nikola\Invado\crm\crm\.idea\libraries\Maven__org_slf4j_slf4j_log4j12_1_7_12.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HR/HR.iml" afterPath="$PROJECT_DIR$/HR/HR.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/HR_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/HR_war.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/HR_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/HR_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" afterPath="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/HumanResources_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/HumanResources_war.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Invoice.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Invoice.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/InvoicingTransactionDTO.java" afterPath="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/InvoicingTransactionDTO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core-domain/core-domain.iml" afterPath="$PROJECT_DIR$/core-domain/core-domain.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/customer-relationship-management.iml" afterPath="$PROJECT_DIR$/customer-relationship-management/customer-relationship-management.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crm.iml" afterPath="$PROJECT_DIR$/crm.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/customer_relationship_management_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/customer_relationship_management_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/device-grid.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/device-grid.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/exchange-rate-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/exchange-rate-table.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/finance_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/finance_war.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/finance_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/finance_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/masterdata.iml" afterPath="$PROJECT_DIR$/master-data-management/masterdata.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/masterdata_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/masterdata_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" afterPath="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties" afterPath="$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-details-table.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-details-table.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-master-grid.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-master-grid.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-master-toolbar.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-update-master-toolbar.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transaction-table.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transaction-table.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/review-invoicing-transactions.jsp" afterPath="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/review-invoicing-transactions.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="crm.iws" />
@@ -81,116 +62,102 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BusinessPartnerController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java">
+      <file leaf-file-name="TransactionService.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="40" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.23636363">
+              <caret line="1245" column="53" selection-start-line="1245" selection-start-column="53" selection-end-line="1245" selection-end-column="53" />
               <folding>
-                <element signature="e#4625#4626#0" expanded="true" />
-                <element signature="e#4679#4680#0" expanded="true" />
+                <element signature="e#47951#47969#0" expanded="true" />
+                <element signature="e#48041#48062#0" expanded="true" />
+                <element signature="e#64510#64522#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="partner-grid.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-41.846153">
-              <caret line="64" column="52" selection-start-line="64" selection-start-column="52" selection-end-line="64" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="orgunit-table.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-table.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="partner-table.jsp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36452243">
-              <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusinessPartner.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java">
+      <file leaf-file-name="LocalDateConverter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/LocalDateConverter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="404" column="30" selection-start-line="404" selection-start-column="30" selection-end-line="404" selection-end-column="30" />
+              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BPService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BPService.java">
+      <file leaf-file-name="InvoiceService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/InvoiceService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="275" column="0" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientDTO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/ClientDTO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.882353">
-              <caret line="128" column="22" selection-start-line="128" selection-start-column="11" selection-end-line="128" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusinessPartnerDTO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/BusinessPartnerDTO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="225" column="34" selection-start-line="225" selection-start-column="34" selection-end-line="225" selection-end-column="34" />
+              <caret line="263" column="23" selection-start-line="263" selection-start-column="19" selection-end-line="263" selection-end-column="23" />
               <folding>
-                <element signature="e#4337#4338#0" expanded="true" />
-                <element signature="e#4399#4400#0" expanded="true" />
-                <element signature="e#4448#4449#0" expanded="true" />
-                <element signature="e#4493#4494#0" expanded="true" />
-                <element signature="e#4683#4684#0" expanded="true" />
-                <element signature="e#4710#4711#0" expanded="true" />
-                <element signature="e#4764#4765#0" expanded="true" />
-                <element signature="e#4796#4797#0" expanded="true" />
-                <element signature="e#4864#4865#0" expanded="true" />
-                <element signature="e#4914#4915#0" expanded="true" />
-                <element signature="e#4956#4957#0" expanded="true" />
+                <element signature="method#createInvoice#0;class#InvoiceService#0" expanded="false" />
+                <element signature="method#deleteInvoice#0;class#InvoiceService#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/ClientController.java">
+      <file leaf-file-name="MenuFormPreparer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="60" selection-end-column="40" />
+              <caret line="123" column="142" selection-start-line="123" selection-start-column="142" selection-end-line="123" selection-end-column="142" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="client-grid.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-grid.jsp">
+      <file leaf-file-name="TransactionController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.730769">
-              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="69" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="188" column="114" selection-start-line="188" selection-start-column="114" selection-end-line="188" selection-end-column="114" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="review-invoicing-transactions.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/review-invoicing-transactions.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-15.038462">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="partner-detail-contact-table.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-detail-contact-table.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.576923">
+              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="165" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InvoicingTransactionDTO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/InvoicingTransactionDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="109" column="30" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
+              <folding>
+                <element signature="e#2529#2530#0" expanded="true" />
+                <element signature="e#2570#2571#0" expanded="true" />
+                <element signature="e#2602#2603#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Invoice.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Invoice.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.8076925">
+              <caret line="35" column="101" selection-start-line="35" selection-start-column="81" selection-end-line="35" selection-end-column="101" />
               <folding />
             </state>
           </provider>
@@ -201,8 +168,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -217,57 +184,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/OpenItemStatementsGridController.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/InvoiceController.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/InvoiceService.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/RecordInvoiceService.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice_.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/JournalEntryItemService.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ReceivablePayableCard.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactonController.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TrController.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/resources/com/invado/customer/relationship/bundle/server-strings.properties" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Device.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transacton-filter.jsp" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/layouts/filtered-menu-form.jsp" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/TransactionType.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/MasterDataService.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/device-table.jsp" />
-        <option value="$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/invoice-update-master-grid.jsp" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transaction-table.jsp" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction_.java" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/LocalDateTimeConverter.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/resources/META-INF/crm-persistence.xml" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/POSRegisteredServices.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerServices.java" />
-        <option value="$PROJECT_DIR$/.idea/encodings.xml" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/dispatcher-servlet.xml" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/LocalDateConverter.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/IllegalArgumentException.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/exception/OrgUnitNotExistsEx.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/DeviceStatusService.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/Invoice.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/domain/InvoiceItem.java" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerTermsItem.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/InvoiceItemDTO.java" />
-        <option value="$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/dto/InvoiceDTO.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-tabbed-table-test.jsp" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/exchange-rate-table.jsp" />
-        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner_.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" />
+        <option value="$PROJECT_DIR$/HR/pom.xml" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/device-assignment-grid.jsp" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/DeviceDTO.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/DeviceController.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/DeviceService.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/device-table.jsp" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/device-assignment-table.jsp" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/resources/js/locales/bootstrap-datepicker.sr.min.js" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/device-grid.jsp" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/ClientDTO.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/ClientController.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/resources/com/invado/core/bundle/strings.properties" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-grid.jsp" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-table.jsp" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Device.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/DeviceStatusService.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/devicestatus-table.jsp" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/DeviceStatusController.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/devicestatus-grid.jsp" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp" />
         <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/TelekomAddress.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/TelekomWSClient.java" />
+        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BPController.java" />
         <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BPService.java" />
-        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/BusinessPartnerDTO.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java" />
-        <option value="$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/invoice-perperiod-table.jsp" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/InvoicingTransactionDTO.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/InvoicingTransactions.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/InvoicingTransactions_.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/InvoicingTransaction_.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/test/res/application-context-test.xml" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/test/java/com/invado/customer/relationship/service/TransactionTest.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/InvoicingTransactionService.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/test/res/META-INF/crm-persistence-test.xml" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/in-table.jsp" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/InvoicingTransaction.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/InvoiceDTO.java" />
+        <option value="$PROJECT_DIR$/core-module-spi/src/main/resources/META-INF/persistence.xml" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/InvoicingTransaction.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Invoice_.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/resources/com/invado/customer/relationship/bundle/server-strings.properties" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Invoice.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java" />
+        <option value="$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/InvoicingTransactionDTO.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/review-invoicing-transactions.jsp" />
+        <option value="$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java" />
       </list>
     </option>
   </component>
@@ -325,6 +292,36 @@
           <option name="myItemId" value="" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="HR" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="finance" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="customer-relationship-management" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
       </PATH>
     </treeState>
   </component>
@@ -332,10 +329,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1050" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1696" />
+    <option name="height" value="1026" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -379,9 +376,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -543,12 +537,92 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="crm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customer-relationship-management" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="WEB-INF" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -562,7 +636,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -574,7 +648,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -588,7 +670,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -599,14 +681,6 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -618,37 +692,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -664,11 +708,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
+              <option name="myItemId" value="relationship" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -682,7 +722,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
+              <option name="myItemId" value="customer-relationship-management" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -698,63 +738,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dto" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="master-data-management" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="masterdata" />
+              <option name="myItemId" value="relationship" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="crm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="finance" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -860,6 +848,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -867,13 +858,13 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2792584" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="FullScreen" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.applicationServers" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service" />
     <property name="OverrideImplement.combined" value="true" />
@@ -881,16 +872,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Nikola\Invado\crm\crm\customer-relationship-management\src\test" />
+      <recent name="C:\Nikola\Invado\crm\crm\customer-relationship-management\src\main\webapp\WEB-INF\jsp" />
       <recent name="C:\Invado\crm\customer-relationship-management\src\main\webapp\WEB-INF\jsp" />
       <recent name="C:\Invado\crm\master-data-management\src" />
       <recent name="C:\Invado\crm\core-domain\src\main\java\com\invado\core\domain" />
-      <recent name="C:\Invado\crm\customer-relationship-management\src\main\java\com\invado\customer\relationship\domain" />
-      <recent name="C:\Invado\crm\core-domain\src\main\java\com\invado\core\utils" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\Invado\crm\customer-relationship-management\src\main\webapp\WEB-INF\jsp" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.invado.core.dto" />
+      <recent name="com.invado.core.domain" />
       <recent name="com.invado.customer.relationship" />
       <recent name="com.invado.masterdata.service" />
     </key>
@@ -899,7 +892,33 @@
       <recent name="com.invado.customer.relationship.service" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.masterdata">
+  <component name="RunManager" selected="Tomcat Server.CRM">
+    <configuration default="false" name="TransactionTest.testOne" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.invado.customer.relationship.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="customer-relationship-management" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.invado.customer.relationship.service" />
+      <option name="MAIN_CLASS_NAME" value="com.invado.customer.relationship.service.TransactionTest" />
+      <option name="METHOD_NAME" value="testOne" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
       <deployment />
       <server-settings />
@@ -1097,6 +1116,7 @@
     </configuration>
     <configuration default="true" type="JarApplication" factoryName="JAR Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="JAR_PATH" value="$PROJECT_DIR$/libs/TelekomRegstrationWS.jar" />
       <envs />
       <method />
     </configuration>
@@ -1123,6 +1143,9 @@
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -1402,7 +1425,7 @@
       </method>
     </configuration>
     <configuration default="false" name="masterdata" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.26" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8090/masterdata/home" />
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8090/masterdata/login" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="masterdata:war">
@@ -1547,13 +1570,19 @@
         </option>
       </method>
     </configuration>
-    <list size="5">
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Tomcat Server.HumenaResources" />
       <item index="1" class="java.lang.String" itemvalue="Tomcat Server.finance" />
       <item index="2" class="java.lang.String" itemvalue="Tomcat Server.HR" />
       <item index="3" class="java.lang.String" itemvalue="Tomcat Server.masterdata" />
       <item index="4" class="java.lang.String" itemvalue="Tomcat Server.CRM" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.TransactionTest.testOne" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TransactionTest.testOne" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -1602,6 +1631,13 @@
       <workItem from="1446575094437" duration="914000" />
       <workItem from="1446673218355" duration="3037000" />
       <workItem from="1446887823498" duration="21942000" />
+      <workItem from="1447769776371" duration="1031000" />
+      <workItem from="1448372981490" duration="589000" />
+      <workItem from="1449763582395" duration="18653000" />
+      <workItem from="1450081596631" duration="5112000" />
+      <workItem from="1450104061386" duration="47000" />
+      <workItem from="1450104210854" duration="17933000" />
+      <workItem from="1450341261248" duration="6719000" />
     </task>
     <task id="LOCAL-00001" summary="Transaction commit">
       <created>1440617481217</created>
@@ -1645,45 +1681,69 @@
       <option name="project" value="LOCAL" />
       <updated>1446575217501</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Transaction commit">
+      <created>1449855361922</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1449855361922</updated>
+    </task>
+    <task id="LOCAL-00009" summary="WS Address">
+      <created>1450109375326</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1450109375326</updated>
+    </task>
+    <task id="LOCAL-00010" summary="WS jar">
+      <created>1450109405529</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1450109405529</updated>
+    </task>
+    <task id="LOCAL-00011" summary="WS jar">
+      <created>1450282333210</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1450282333210</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="228828000" />
+    <option name="totallyTimeSpent" value="278912000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1050" extended-state="0" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33218786" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23935558" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1315508" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3161512" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13125764" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18181819" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25316456" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20588236" sideWeight="0.5040092" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22566845" sideWeight="0.49599084" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2728938" sideWeight="0.49599084" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15262516" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32416952" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39633447" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3958573" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39977092" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20253165" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1699,7 +1759,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Transaction commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Transaction commit" />
+    <MESSAGE value="WS Address" />
+    <MESSAGE value="WS jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="WS jar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1724,24 +1786,24 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java</url>
-          <line>375</line>
+          <line>395</line>
           <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java</url>
-          <line>170</line>
+          <line>220</line>
           <properties />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BPService.java</url>
-          <line>275</line>
+          <line>362</line>
           <properties />
           <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="35" />
+      <option name="time" value="39" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1750,94 +1812,173 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/TransactionDTO.java">
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-table.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3076923">
+          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.0">
+          <caret line="115" column="80" selection-start-line="115" selection-start-column="80" selection-end-line="115" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/ArticleService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.423077">
+          <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="198" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="70" selection-start-line="29" selection-start-column="70" selection-end-line="29" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/DeviceStatusService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="186" column="71" selection-start-line="186" selection-start-column="38" selection-end-line="186" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="141" column="53" selection-start-line="141" selection-start-column="53" selection-end-line="141" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="90" column="60" selection-start-line="90" selection-start-column="60" selection-end-line="90" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/devicestatus-table.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="69" selection-start-line="12" selection-start-column="69" selection-end-line="12" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/DeviceStatusController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Documentation/eVoucher/eVoucherTerminaliRaz.wsdl">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/annotations/NativeQueryResultEntity.java">
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/devicestatus-grid.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="80" selection-start-line="29" selection-start-column="80" selection-end-line="29" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/device-grid.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="59" selection-start-line="29" selection-start-column="58" selection-end-line="29" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/device-table.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="71" column="93" selection-start-line="71" selection-start-column="88" selection-end-line="71" selection-end-column="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-detail-partner-grid.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/utils/NativeQueryResultsMapper.java">
+    <entry file="file://$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/invoice-details-table.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+          <caret line="80" column="9" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/DeviceStatus_.java">
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-53.615383">
+          <caret line="223" column="18" selection-start-line="223" selection-start-column="18" selection-end-line="223" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Address.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="30" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="191" column="47" selection-start-line="191" selection-start-column="47" selection-end-line="191" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/TelekomAddress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/TelekomWSClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="83" column="2" selection-start-line="83" selection-start-column="2" selection-end-line="83" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/TelekomRegstrationWS.jar!/bg_bu_gos/webservicelokator/service1/SelectMesto.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2975">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BPController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="482" column="57" selection-start-line="482" selection-start-column="57" selection-end-line="482" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/OrgUnit_.java">
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BPService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="-9.807693">
+          <caret line="594" column="0" selection-start-line="594" selection-start-column="0" selection-end-line="594" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/BusinessPartnerTermsItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/exception/ApplicationException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="22" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#488#0" expanded="false" />
-            <element signature="e#464#465#0" expanded="false" />
-            <element signature="e#484#485#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/exception/ClientNotExistsEx.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="14" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#307#0" expanded="false" />
-            <element signature="e#283#284#0" expanded="false" />
-            <element signature="e#303#304#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BankCreditorService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="74" column="45" selection-start-line="74" selection-start-column="44" selection-end-line="74" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/test/java/com/invado/customer/relationship/service/ServiceProviderServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/Test.java">
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/dto/InvoicingTransactionSetDTO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
@@ -1845,163 +1986,348 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/test/res/META-INF/crm-persistence-test.xml">
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/tiles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.230769">
+          <caret line="49" column="17" selection-start-line="49" selection-start-column="17" selection-end-line="49" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/invoice-table.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.9615384">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BankCreditor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="39" column="19" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/InvoicingTransaction_.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="65" selection-start-line="19" selection-start-column="65" selection-end-line="19" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/test/res/dispatcher-servlet-test.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/master-data-management/src/test/java/com.invado.masterdata.test/TestQ.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.19669421">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="38" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/test/res/application-context-test.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.846154">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Device.java">
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/test/java/com/invado/customer/relationship/service/TransactionTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <caret line="30" column="21" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/test/res/META-INF/crm-persistence-test.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.0">
+          <caret line="80" column="3" selection-start-line="80" selection-start-column="3" selection-end-line="80" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/in-table.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.653847">
+          <caret line="121" column="120" selection-start-line="121" selection-start-column="120" selection-end-line="121" selection-end-column="120" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/InvoicingTransactionService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/InvoiceDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="291" column="59" selection-start-line="291" selection-start-column="59" selection-end-line="291" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#7057#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1815#1816#0" expanded="false" />
+            <element signature="e#1846#1847#0" expanded="false" />
+            <element signature="e#1895#1896#0" expanded="false" />
+            <element signature="e#1935#1936#0" expanded="false" />
+            <element signature="e#1972#1973#0" expanded="false" />
+            <element signature="e#2005#2006#0" expanded="false" />
+            <element signature="e#2057#2058#0" expanded="false" />
+            <element signature="e#2101#2102#0" expanded="false" />
+            <element signature="e#2138#2139#0" expanded="false" />
+            <element signature="e#2170#2171#0" expanded="false" />
+            <element signature="e#2221#2222#0" expanded="false" />
+            <element signature="e#2263#2264#0" expanded="false" />
+            <element signature="e#2301#2302#0" expanded="false" />
+            <element signature="e#2335#2336#0" expanded="false" />
+            <element signature="e#2389#2390#0" expanded="false" />
+            <element signature="e#2435#2436#0" expanded="false" />
+            <element signature="e#2470#2471#0" expanded="false" />
+            <element signature="e#2501#2502#0" expanded="false" />
+            <element signature="e#2549#2550#0" expanded="false" />
+            <element signature="e#2589#2590#0" expanded="false" />
+            <element signature="e#2626#2627#0" expanded="false" />
+            <element signature="e#2658#2659#0" expanded="false" />
+            <element signature="e#2709#2710#0" expanded="false" />
+            <element signature="e#2751#2752#0" expanded="false" />
+            <element signature="e#2789#2790#0" expanded="false" />
+            <element signature="e#2823#2824#0" expanded="false" />
+            <element signature="e#2877#2878#0" expanded="false" />
+            <element signature="e#2923#2924#0" expanded="false" />
+            <element signature="e#2964#2965#0" expanded="false" />
+            <element signature="e#2998#2999#0" expanded="false" />
+            <element signature="e#3055#3056#0" expanded="false" />
+            <element signature="e#3101#3102#0" expanded="false" />
+            <element signature="e#3149#3150#0" expanded="false" />
+            <element signature="e#3190#3191#0" expanded="false" />
+            <element signature="e#3261#3262#0" expanded="false" />
+            <element signature="e#3321#3322#0" expanded="false" />
+            <element signature="e#3360#3361#0" expanded="false" />
+            <element signature="e#3392#3393#0" expanded="false" />
+            <element signature="e#3445#3446#0" expanded="false" />
+            <element signature="e#3487#3488#0" expanded="false" />
+            <element signature="e#3523#3524#0" expanded="false" />
+            <element signature="e#3554#3555#0" expanded="false" />
+            <element signature="e#3603#3604#0" expanded="false" />
+            <element signature="e#3643#3644#0" expanded="false" />
+            <element signature="e#3675#3676#0" expanded="false" />
+            <element signature="e#3702#3703#0" expanded="false" />
+            <element signature="e#3743#3744#0" expanded="false" />
+            <element signature="e#3775#3776#0" expanded="false" />
+            <element signature="e#3810#3811#0" expanded="false" />
+            <element signature="e#3840#3841#0" expanded="false" />
+            <element signature="e#3887#3888#0" expanded="false" />
+            <element signature="e#3925#3926#0" expanded="false" />
+            <element signature="e#3965#3966#0" expanded="false" />
+            <element signature="e#3996#3997#0" expanded="false" />
+            <element signature="e#4049#4050#0" expanded="false" />
+            <element signature="e#4089#4090#0" expanded="false" />
+            <element signature="e#4143#4144#0" expanded="false" />
+            <element signature="e#4177#4178#0" expanded="false" />
+            <element signature="e#4247#4248#0" expanded="false" />
+            <element signature="e#4293#4294#0" expanded="false" />
+            <element signature="e#4339#4340#0" expanded="false" />
+            <element signature="e#4380#4381#0" expanded="false" />
+            <element signature="e#4449#4450#0" expanded="false" />
+            <element signature="e#4509#4510#0" expanded="false" />
+            <element signature="e#4551#4552#0" expanded="false" />
+            <element signature="e#4589#4590#0" expanded="false" />
+            <element signature="e#4651#4652#0" expanded="false" />
+            <element signature="e#4705#4706#0" expanded="false" />
+            <element signature="e#4744#4745#0" expanded="false" />
+            <element signature="e#4779#4780#0" expanded="false" />
+            <element signature="e#4835#4836#0" expanded="false" />
+            <element signature="e#4883#4884#0" expanded="false" />
+            <element signature="e#4918#4919#0" expanded="false" />
+            <element signature="e#4949#4950#0" expanded="false" />
+            <element signature="e#4997#4998#0" expanded="false" />
+            <element signature="e#5037#5038#0" expanded="false" />
+            <element signature="e#5072#5073#0" expanded="false" />
+            <element signature="e#5103#5104#0" expanded="false" />
+            <element signature="e#5151#5152#0" expanded="false" />
+            <element signature="e#5191#5192#0" expanded="false" />
+            <element signature="e#5232#5233#0" expanded="false" />
+            <element signature="e#5269#5270#0" expanded="false" />
+            <element signature="e#5329#5330#0" expanded="false" />
+            <element signature="e#5381#5382#0" expanded="false" />
+            <element signature="e#5423#5424#0" expanded="false" />
+            <element signature="e#5458#5459#0" expanded="false" />
+            <element signature="e#5517#5518#0" expanded="false" />
+            <element signature="e#5565#5566#0" expanded="false" />
+            <element signature="e#5599#5600#0" expanded="false" />
+            <element signature="e#5628#5629#0" expanded="false" />
+            <element signature="e#5673#5674#0" expanded="false" />
+            <element signature="e#5709#5710#0" expanded="false" />
+            <element signature="e#5744#5745#0" expanded="false" />
+            <element signature="e#5775#5776#0" expanded="false" />
+            <element signature="e#5823#5824#0" expanded="false" />
+            <element signature="e#5863#5864#0" expanded="false" />
+            <element signature="e#5895#5896#0" expanded="false" />
+            <element signature="e#5925#5926#0" expanded="false" />
+            <element signature="e#5969#5970#0" expanded="false" />
+            <element signature="e#6007#6008#0" expanded="false" />
+            <element signature="e#6049#6050#0" expanded="false" />
+            <element signature="e#6086#6087#0" expanded="false" />
+            <element signature="e#6147#6148#0" expanded="false" />
+            <element signature="e#6199#6200#0" expanded="false" />
+            <element signature="e#6241#6242#0" expanded="false" />
+            <element signature="e#6275#6276#0" expanded="false" />
+            <element signature="e#6333#6334#0" expanded="false" />
+            <element signature="e#6379#6380#0" expanded="false" />
+            <element signature="e#6421#6422#0" expanded="false" />
+            <element signature="e#6455#6456#0" expanded="false" />
+            <element signature="e#6513#6514#0" expanded="false" />
+            <element signature="e#6559#6560#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-module-spi/src/main/resources/META-INF/persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="15" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/InvoicingTransaction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <marker date="1450353315382" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1450353315382" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/domain/Transaction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="130" column="13" selection-start-line="130" selection-start-column="13" selection-end-line="130" selection-end-column="13" />
+          <caret line="102" column="78" selection-start-line="102" selection-start-column="45" selection-end-line="102" selection-end-column="78" />
           <folding>
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select trans..crm_Transaction_Type..." />
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select count..." />
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select 1 ser..." />
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select trans..crm_Transaction_Type..." />
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select count..client_id..." />
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select trans..crm_Transaction_Type..." />
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select trans..crm_Transaction_Type..." />
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select count..crm_Transaction_Type..." />
-            <marker date="1443175863753" expanded="true" signature="-1:-1" placeholder="select 1 fro..crm_Transaction_Type..." />
+            <element signature="imports" expanded="false" />
+            <element signature="e#14443#14444#0" expanded="false" />
+            <element signature="e#14468#14469#0" expanded="false" />
+            <element signature="e#14502#14503#0" expanded="false" />
+            <element signature="e#14530#14531#0" expanded="false" />
+            <element signature="e#14565#14566#0" expanded="false" />
+            <element signature="e#14596#14597#0" expanded="false" />
+            <element signature="e#14644#14645#0" expanded="false" />
+            <element signature="e#14684#14685#0" expanded="false" />
+            <element signature="e#14724#14725#0" expanded="false" />
+            <element signature="e#14751#14752#0" expanded="false" />
+            <element signature="e#14800#14801#0" expanded="false" />
+            <element signature="e#14832#14833#0" expanded="false" />
+            <element signature="e#14869#14870#0" expanded="false" />
+            <element signature="e#14898#14899#0" expanded="false" />
+            <element signature="e#14946#14947#0" expanded="false" />
+            <element signature="e#14982#14983#0" expanded="false" />
+            <element signature="e#15017#15018#0" expanded="false" />
+            <element signature="e#15048#15049#0" expanded="false" />
+            <element signature="e#15096#15097#0" expanded="false" />
+            <element signature="e#15136#15137#0" expanded="false" />
+            <element signature="e#15183#15184#0" expanded="false" />
+            <element signature="e#15217#15218#0" expanded="false" />
+            <element signature="e#15280#15281#0" expanded="false" />
+            <element signature="e#15326#15327#0" expanded="false" />
+            <element signature="e#15364#15365#0" expanded="false" />
+            <element signature="e#15398#15399#0" expanded="false" />
+            <element signature="e#15452#15453#0" expanded="false" />
+            <element signature="e#15498#15499#0" expanded="false" />
+            <element signature="e#15549#15550#0" expanded="false" />
+            <element signature="e#15587#15588#0" expanded="false" />
+            <element signature="e#15658#15659#0" expanded="false" />
+            <element signature="e#15712#15713#0" expanded="false" />
+            <element signature="e#15758#15759#0" expanded="false" />
+            <element signature="e#15792#15793#0" expanded="false" />
+            <element signature="e#15853#15854#0" expanded="false" />
+            <element signature="e#15899#15900#0" expanded="false" />
+            <element signature="e#15945#15946#0" expanded="false" />
+            <element signature="e#15980#15981#0" expanded="false" />
+            <element signature="e#16043#16044#0" expanded="false" />
+            <element signature="e#16091#16092#0" expanded="false" />
+            <element signature="e#16133#16134#0" expanded="false" />
+            <element signature="e#16171#16172#0" expanded="false" />
+            <element signature="e#16234#16235#0" expanded="false" />
+            <element signature="e#16288#16289#0" expanded="false" />
+            <element signature="e#16332#16333#0" expanded="false" />
+            <element signature="e#16363#16364#0" expanded="false" />
+            <element signature="e#16427#16428#0" expanded="false" />
+            <element signature="e#16474#16475#0" expanded="false" />
+            <element signature="e#16517#16518#0" expanded="false" />
+            <element signature="e#16555#16556#0" expanded="false" />
+            <element signature="e#17982#17983#0" expanded="false" />
+            <element signature="e#18021#18022#0" expanded="false" />
+            <element signature="e#18076#18077#0" expanded="false" />
+            <element signature="e#18116#18117#0" expanded="false" />
+            <element signature="e#18278#18279#0" expanded="false" />
+            <element signature="e#18317#18318#0" expanded="false" />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select trans..crm_Transaction_Type..." />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select count..." />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select 1 ser..." />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select trans..crm_Transaction_Type..." />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select count..client_id..." />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select trans..crm_Transaction_Type..." />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select trans..crm_Transaction_Type..." />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select 1 fro..crm_Transaction_Type..." />
+            <marker date="1450353315408" expanded="true" signature="-1:-1" placeholder="select count..crm_Transaction_Type..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/pom.xml">
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/resources/com/invado/customer/relationship/bundle/server-strings.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/terms-table.jsp">
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/MenuFormPreparer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="123" column="142" selection-start-line="123" selection-start-column="142" selection-end-line="123" selection-end-column="142" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/tiles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.9411764">
-          <caret line="28" column="64" selection-start-line="28" selection-start-column="63" selection-end-line="28" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-tabbed-table.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5">
-          <caret line="13" column="63" selection-start-line="13" selection-start-column="63" selection-end-line="13" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-tabbed-table-test.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.153847">
-          <caret line="190" column="9" selection-start-line="190" selection-start-column="9" selection-end-line="190" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/webapp/WEB-INF/jsp/invoice-create-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="33.366665">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="39" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.1.4.RELEASE/spring-web-4.1.4.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.8560157">
-          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/MasterDataService.java">
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/InvoicingTransactionDTO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="12" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/controller/InvoiceController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.382353">
-          <caret line="314" column="58" selection-start-line="314" selection-start-column="44" selection-end-line="314" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/ExcangeRateController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="72" selection-start-line="39" selection-start-column="72" selection-end-line="39" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="548" column="3" selection-start-line="548" selection-start-column="3" selection-end-line="548" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ExchangeRateService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="367" column="38" selection-start-line="367" selection-start-column="38" selection-end-line="367" selection-end-column="38" />
+          <caret line="109" column="30" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
           <folding>
-            <element signature="method#create#0;class#ExchangeRateService#0" expanded="false" />
-            <element signature="method#update#0;class#ExchangeRateService#0" expanded="false" />
-            <element signature="method#delete#0;class#ExchangeRateService#0" expanded="false" />
-            <element signature="method#readPage#0;class#ExchangeRateService#0" expanded="false" />
-            <element signature="method#convertToDTO#0;class#ExchangeRateService#0" expanded="false" />
-            <element signature="method#getDTO#0;class#ExchangeRateService#0" expanded="false" />
+            <element signature="e#2529#2530#0" expanded="true" />
+            <element signature="e#2570#2571#0" expanded="true" />
+            <element signature="e#2602#2603#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/exchange-rate-table.jsp">
+    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-detail-contact-table.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="20" selection-end-column="18" />
+        <state vertical-scroll-proportion="-6.576923">
+          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="165" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/Utils.java">
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/review-invoicing-transactions.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        <state vertical-scroll-proportion="-15.038462">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2009,191 +2335,63 @@
     <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/controller/TransactionController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="80" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="80" />
+          <caret line="188" column="114" selection-start-line="188" selection-start-column="114" selection-end-line="188" selection-end-column="114" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/webapp/WEB-INF/jsp/transaction-table.jsp">
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Invoice_.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.26923">
-          <caret line="97" column="13" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.7752066">
+          <caret line="31" column="96" selection-start-line="31" selection-start-column="96" selection-end-line="31" selection-end-column="96" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/4.1.4.RELEASE/spring-aop-4.1.4.RELEASE.jar!/org/springframework/aop/framework/CglibAopProxy.class">
+    <entry file="file://$PROJECT_DIR$/finance/src/main/java/com/invado/finance/service/InvoiceService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3569794">
-          <caret line="461" column="0" selection-start-line="461" selection-start-column="0" selection-end-line="461" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="263" column="23" selection-start-line="263" selection-start-column="19" selection-end-line="263" selection-end-column="23" />
+          <folding>
+            <element signature="method#createInvoice#0;class#InvoiceService#0" expanded="false" />
+            <element signature="method#deleteInvoice#0;class#InvoiceService#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Invoice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.8076925">
+          <caret line="35" column="101" selection-start-line="35" selection-start-column="81" selection-end-line="35" selection-end-column="101" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-tx/4.1.4.RELEASE/spring-tx-4.1.4.RELEASE.jar!/org/springframework/transaction/interceptor/TransactionAspectSupport.class">
+    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/LocalDateConverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3318078">
-          <caret line="158" column="0" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/4.1.4.RELEASE/spring-core-4.1.4.RELEASE.jar!/org/springframework/cglib/proxy/MethodProxy.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3318078">
-          <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+        <state vertical-scroll-proportion="3.0350878">
+          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/resources/com/invado/masterdata/bundle/server-strings.properties">
+    <entry file="file://$PROJECT_DIR$/customer-relationship-management/src/main/java/com/invado/customer/relationship/service/TransactionService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="108" selection-start-line="18" selection-start-column="108" selection-end-line="18" selection-end-column="108" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner_.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="82" selection-start-line="26" selection-start-column="82" selection-end-line="26" selection-end-column="82" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/MenuFormPreparer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="98" selection-start-line="40" selection-start-column="98" selection-end-line="40" selection-end-column="98" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Article.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4793233">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-table.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="29.423077">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="396" column="13" selection-start-line="396" selection-start-column="13" selection-end-line="396" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/client-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.730769">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="69" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/ClientController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="60" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/ClientDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.882353">
-          <caret line="128" column="22" selection-start-line="128" selection-start-column="11" selection-end-line="128" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/ClientService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.9172932">
-          <caret line="97" column="42" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/domain/BusinessPartner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="404" column="30" selection-start-line="404" selection-start-column="30" selection-end-line="404" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/service/BPService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="275" column="0" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core-domain/src/main/java/com/invado/core/dto/BusinessPartnerDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="225" column="34" selection-start-line="225" selection-start-column="34" selection-end-line="225" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.23636363">
+          <caret line="1245" column="53" selection-start-line="1245" selection-start-column="53" selection-end-line="1245" selection-end-column="53" />
           <folding>
-            <element signature="e#4337#4338#0" expanded="true" />
-            <element signature="e#4399#4400#0" expanded="true" />
-            <element signature="e#4448#4449#0" expanded="true" />
-            <element signature="e#4493#4494#0" expanded="true" />
-            <element signature="e#4683#4684#0" expanded="true" />
-            <element signature="e#4710#4711#0" expanded="true" />
-            <element signature="e#4764#4765#0" expanded="true" />
-            <element signature="e#4796#4797#0" expanded="true" />
-            <element signature="e#4864#4865#0" expanded="true" />
-            <element signature="e#4914#4915#0" expanded="true" />
-            <element signature="e#4956#4957#0" expanded="true" />
+            <element signature="e#47951#47969#0" expanded="true" />
+            <element signature="e#48041#48062#0" expanded="true" />
+            <element signature="e#64510#64522#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/java/com/invado/masterdata/controller/BusinessPartnerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="40" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
-          <folding>
-            <element signature="e#4625#4626#0" expanded="true" />
-            <element signature="e#4679#4680#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-grid.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-41.846153">
-          <caret line="64" column="52" selection-start-line="64" selection-start-column="52" selection-end-line="64" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/orgunit-table.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/master-data-management/src/main/webapp/WEB-INF/jsp/partner-table.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36452243">
-          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2203,7 +2401,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>customer-relationship-management:war</last-edited>
+          <last-edited>masterdata:war</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -2220,7 +2418,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.2792584" />
               </list>
             </option>
           </splitter-proportions>
@@ -2280,7 +2478,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.2792584" />
               </list>
             </option>
           </splitter-proportions>

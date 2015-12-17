@@ -24,6 +24,7 @@ public class InvoicingTransactionDTO {
     private String displayPeriod;
     private Integer partnerId;
     private String partnerName;
+    private Integer page;
     private Long version;
 
     public Integer getId() {
@@ -104,5 +105,13 @@ public class InvoicingTransactionDTO {
 
     public void setPartnerName(String partnerName) {
         this.partnerName = partnerName;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
     }
 }

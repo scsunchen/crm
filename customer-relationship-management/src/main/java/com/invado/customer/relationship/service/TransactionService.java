@@ -965,7 +965,7 @@ public class TransactionService {
         LocalDate invoicingDate = LocalDate.now();
         Date out = null;
 
-        InvoicingTransaction currentInvoicingTransaction= new InvoicingTransaction();
+        InvoicingTransaction currentInvoicingTransaction = new InvoicingTransaction();
         InvoicingTransaction lastInvoicingTransaction = new InvoicingTransaction();
         TypedQuery<InvoicingTransaction> queryLastInvoicingTransaction = dao.createNamedQuery(InvoicingTransaction.LAST_TRANSACTION, InvoicingTransaction.class);
         lastInvoicingTransaction = queryLastInvoicingTransaction.getSingleResult();
@@ -989,7 +989,7 @@ public class TransactionService {
         System.out.println("id je ovaj " + currentInvoicingTransaction.getId());
 
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
-        System.out.println("kandidata "+invoicingTransactionSetDTOs.size());
+        System.out.println("kandidata " + invoicingTransactionSetDTOs.size());
         Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
         Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
         InvoiceDTO invoice = new InvoiceDTO();
@@ -1236,6 +1236,20 @@ public class TransactionService {
         dao.persist(currentInvoicingTransaction);
         return invoicePerMerchantMap;
 
+    }
+
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+    public List<InvoiceDTO> readInvoiciePerPeriod(Integer invoicingTransactionid) {
+
+        List<InvoiceDTO> listDTO = new ArrayList<InvoiceDTO>();
+        if (invoicingTransactionid != null) {
+            List<Invoice> list = dao.createNamedQuery(Invoice.READ_BY_INVOICING_TRANSACTION, Invoice.class)
+                    .setParameter("invoicingTransaction", dao.find(InvoicingTransaction.class, invoicingTransactionid))
+                    .getResultList();
+            for (Invoice invoice : list)
+                listDTO.add(invoice.getDTO());
+        }
+        return listDTO;
     }
 
     @Transactional(readOnly = true)
