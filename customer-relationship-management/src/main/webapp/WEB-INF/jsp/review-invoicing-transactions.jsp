@@ -23,6 +23,7 @@
         <br/>
         <div class="form-group col-lg-4">
             <form:select path="id" id="status" class="form-control" itemLabel="status">
+                <form:option value="" label="Period faktirisanja..." />
                 <form:options items="${invoicingTransactions}" itemLabel="displayPeriod" itemValue="id"/>
             </form:select>
         </div>
@@ -96,7 +97,7 @@
         <spring:message code="Invoice.Table.Page"/>
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}">
-                   <c:out value="${pageContext.request.contextPath}/invoice/read-page.html?document=${param['document']}&partnerName=${param['partnerName']}&partnerId=${param['partnerId']}&dateFrom=${param['dateFrom']}&dateTo=${param['dateTo']}&page=${page-1}" /></c:if>">
+                   <c:out value="${pageContext.request.contextPath}/transactions/review-invoicing-transactions.html?id=${param['id']}&partnerId=${param['partnerId']}&page=${page-1}" /></c:if>">
                 <span class="glyphicon glyphicon-backward"></span>
                 <spring:message code="Invoice.Table.PrevPage"/>
             </a>
@@ -104,7 +105,7 @@
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}">
-                   <c:out value="${pageContext.request.contextPath}/invoice/read-page.html?document=${param['document']}&partnerName=${param['partnerName']}&partnerId=${param['partnerId']}&dateFrom=${param['dateFrom']}&dateTo=${param['dateTo']}&page=${page+1}"/></c:if>">
+                   <c:out value="${pageContext.request.contextPath}/transactions/review-invoicing-transactions.html?id=${param['id']}&partnerId=${param['partnerId']}&page=${page+1}"/></c:if>">
                 <span class="glyphicon glyphicon-forward"></span>
                 <spring:message code="Invoice.Table.NextPage"/>
             </a>
@@ -124,7 +125,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/partner/read-merchant/%QUERY',
+                url: '${pageContext.request.contextPath}/masterdata/read-merchant/%QUERY',
                 wildcard: '%QUERY'
             }
         })

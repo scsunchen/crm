@@ -184,14 +184,14 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/transactions/review-invoicing-transactions.html", method = RequestMethod.GET)
-    public String showInvoicesPerPeriod(@RequestParam(value = "partnerId", required = false) Integer distributorId,
+    public String showInvoicesPerPeriod(@RequestParam(value = "partnerId", required = false) Integer partnerId,
                                         @RequestParam(value = "id", required = false) Integer invoicingPeriod,
                                         @RequestParam(value = "partnerName", required = false) String partnerName,
                                         @RequestParam Integer page,
                                         @ModelAttribute InvoicingTransactionDTO invoicingTransactionDTO, Map<String, Object> model) throws Exception {
 
         model.put("invoicingTransactions", invoicingTransactionService.getAllPeriods());
-        List<InvoiceDTO> invoices = transactionService.readInvoiciePerPeriod(invoicingPeriod);
+        List<InvoiceDTO> invoices = transactionService.readInvoiciePerPeriod(invoicingPeriod, partnerId);
         model.put("data", invoices);
         return "review-invoicing-transactions";
     }
@@ -248,4 +248,13 @@ public class TransactionController {
     List<TransactionType> findTransactiontypeByType(@PathVariable String name) {
         return transactionService.readTransactionTypeByType(name);
     }
+
+    @RequestMapping(value = "/masterdata/read-merchant/{name}")
+    public
+    @ResponseBody
+    List<BusinessPartner> findMerchantByName(@PathVariable String name) {
+        return masterDataService.readMerchantByName(name);
+    }
+
+
 }

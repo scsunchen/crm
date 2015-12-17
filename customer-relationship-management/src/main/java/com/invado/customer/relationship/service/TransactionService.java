@@ -1239,13 +1239,18 @@ public class TransactionService {
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
-    public List<InvoiceDTO> readInvoiciePerPeriod(Integer invoicingTransactionid) {
+    public List<InvoiceDTO> readInvoiciePerPeriod(Integer invoicingTransactionid, Integer partnerId) {
 
         List<InvoiceDTO> listDTO = new ArrayList<InvoiceDTO>();
         if (invoicingTransactionid != null) {
-            List<Invoice> list = dao.createNamedQuery(Invoice.READ_BY_INVOICING_TRANSACTION, Invoice.class)
-                    .setParameter("invoicingTransaction", dao.find(InvoicingTransaction.class, invoicingTransactionid))
-                    .getResultList();
+            Query q = dao.createNamedQuery(Invoice.READ_BY_INVOICING_TRANSACTION, Invoice.class)
+                    .setParameter("invoicingTransaction", dao.find(InvoicingTransaction.class, invoicingTransactionid));
+            if (partnerId != null) {
+                q.setParameter("partner", dao.find(BusinessPartner.class, partnerId));
+            }else{
+                q.setParameter("partner", null);
+            }
+            List<Invoice> list = q.getResultList();
             for (Invoice invoice : list)
                 listDTO.add(invoice.getDTO());
         }

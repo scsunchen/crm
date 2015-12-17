@@ -80,6 +80,25 @@ public class MasterDataService {
             );
         }
     }
+
+    @Transactional(readOnly = true)
+    public List<BusinessPartner> readMerchantByName(String name) {
+        try {
+            List<BusinessPartner> list = dao.createNamedQuery(
+                    BusinessPartner.READ_MERCHANT_BY_NAME_ORDERBY_NAME,
+                    BusinessPartner.class)
+                    .setParameter("name", ("%" + name + "%").toUpperCase())
+                    .getResultList();
+            return list;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "BusinessPartner.Exception.ReadItemByDescription"),
+                    ex);
+        }
+    }
+
+
     @Transactional(readOnly = true)
     public List<BusinessPartner> readServiceProviderByName(String name) {
         try {

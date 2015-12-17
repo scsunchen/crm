@@ -33,7 +33,8 @@ import java.util.Objects;
         @NamedQuery(name = "Invoice.GetByOrgUnit",
                 query = "SELECT x FROM Invoice x WHERE x.orgUnit = :orgUnit"),
         @NamedQuery(name = Invoice.READ_BY_INVOICING_TRANSACTION,
-                query = "SELECT x FROM Invoice x WHERE x.invoicingTransaction = :invoicingTransaction"),
+                query = "SELECT x FROM Invoice x WHERE x.invoicingTransaction = :invoicingTransaction" +
+                        " and (x.partner = :partner or :partner is null) "),
         @NamedQuery(name = Invoice.READ_MAX_DOCUMENT,
                 query = "SELECT MAX(cast(x.document as integer))+1 FROM Invoice x WHERE "
                         + "x.client = :client AND x.orgUnitE = :orgUnit"),
