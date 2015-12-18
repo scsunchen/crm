@@ -196,6 +196,7 @@ public class TransactionController {
         ReadRangeDTO<InvoiceDTO> result = transactionService.readInvPerPeriodPage(invoicingPeriod, partnerId, page);
         model.put("data", result.getData());
         model.put("numberOfPages", result.getNumberOfPages());
+        model.put("page", page);
         return "review-invoicing-transactions";
     }
 
