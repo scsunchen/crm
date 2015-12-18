@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,7 +127,7 @@ public class Invoice implements Serializable {
     @ManyToOne
     @JoinColumn(name = "bank_id")
     private BankCreditor bank;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "invoicing_transaction_id")
     private InvoicingTransaction invoicingTransaction;
     @Valid//FIXME : Lazy collection validation
@@ -134,6 +135,10 @@ public class Invoice implements Serializable {
             mappedBy = "invoice",
             fetch = FetchType.LAZY)
     private List<InvoiceItem> items = new ArrayList<>();
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
+    @Column(name = "return_value")
+    private BigDecimal returnValue;
     @Version()
     @Column(name = "version")
     private Long version;
@@ -216,6 +221,8 @@ public class Invoice implements Serializable {
         result.setContractDate(this.getContractDate());
         result.setBankID(this.getBankID());
         result.setBankName(bank.getName());
+        result.setTotalAmount(this.getTotalAmount());
+        result.setReturnValue(this.getReturnValue());
         return result;
     }
 
@@ -389,6 +396,22 @@ public class Invoice implements Serializable {
 
     public void setInvoicingTransaction(InvoicingTransaction invoicingTransaction) {
         this.invoicingTransaction = invoicingTransaction;
+    }
+
+    public BigDecimal getReturnValue() {
+        return returnValue;
+    }
+
+    public void setReturnValue(BigDecimal returnValue) {
+        this.returnValue = returnValue;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public void setVersion(Long version) {

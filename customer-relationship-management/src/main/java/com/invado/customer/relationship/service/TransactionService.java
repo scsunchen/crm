@@ -19,6 +19,7 @@ import com.invado.customer.relationship.service.exception.IllegalArgumentExcepti
 import com.invado.core.exception.PageNotExistsException;
 import com.invado.core.exception.ReferentialIntegrityException;
 import com.invado.core.exception.SystemException;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -640,6 +641,8 @@ public class TransactionService {
             invoice.setContractDate(dto.getContractDate());
             invoice.setBank(bank);
             invoice.setInvoicingTransaction(dto.getInvoicingTransaction());
+            invoice.setTotalAmount(dto.getTotalAmount());
+            invoice.setReturnValue(dto.getReturnValue());
             List<String> msgs = validator.validate(invoice)
                     .stream()
                     .map(ConstraintViolation::getMessage)
@@ -653,6 +656,120 @@ public class TransactionService {
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Create"), ex);
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Long updateInvoice(InvoiceDTO dto) throws ConstraintViolationException,
+            ReferentialIntegrityException,
+            EntityNotFoundException {
+        // TODO : check update invoice permission
+        if (dto == null) {
+            throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException"));
+        }
+        if (dto.getClientId() == null) {
+            throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException.Client"));
+        }
+        if (dto.getOrgUnitId() == null) {
+            throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException.OrgUnit"));
+        }
+        if (dto.getDocument() == null) {
+            throw new ConstraintViolationException(Utils.getMessage("Invoice.IllegalArgumentException.Document"));
+        }
+        try {
+            Invoice temp = dao.find(Invoice.class,
+                    new InvoicePK(dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()),
+                    LockModeType.OPTIMISTIC);
+            if (temp == null) {
+                throw new EntityNotFoundException(
+                        Utils.getMessage("Invoice.EntityNotFoundException", dto.getClientId(),
+                                dto.getOrgUnitId(), dto.getDocument()));
+            }
+            if (temp.isRecorded().equals(Boolean.TRUE)) {
+                throw new ConstraintViolationException(
+                        Utils.getMessage("Invoice.IllegalArgumentException.UpdateRecorded")
+                );
+            }
+            BusinessPartner partner = null;
+            if (dto.getPartnerID() != null) {
+                partner = dao.find(BusinessPartner.class, dto.getPartnerID());
+                if (partner == null) {
+                    throw new ReferentialIntegrityException(
+                            Utils.getMessage("Invoice.ReferentialIntegrityException.Partner",
+                                    dto.getPartnerID()));
+                }
+            }
+            ApplicationUser user = dao.createNamedQuery(
+                    ApplicationUser.READ_BY_USERNAME,
+                    ApplicationUser.class)
+                    .setParameter(1, dto.getUsername())
+                    .getSingleResult();
+            Currency currency = null;
+            String ISOCode = dao.find(Properties.class, "domestic_currency")
+                    .getValue();
+            if (dto.getCurrencyISOCode() == null
+                    || (dto.getCurrencyISOCode().equals(ISOCode) | dto.getCurrencyISOCode().isEmpty())) {
+                temp.setIsDomesticCurrency(Boolean.TRUE);
+                //read domestic currency ISO code from application properties
+                currency = dao.find(Currency.class, ISOCode);
+                //if domestic currency does not exists in database create it
+                if (currency == null) {
+                    Currency domesticCurrency = new Currency(ISOCode);
+                    domesticCurrency.setDescription("");
+                    currency = dao.merge(domesticCurrency);
+                    dao.flush();
+                }
+            } else {
+                temp.setIsDomesticCurrency(Boolean.FALSE);
+                currency = dao.find(Currency.class, dto.getCurrencyISOCode());
+                if (currency == null) {
+                    throw new ReferentialIntegrityException(
+                            Utils.getMessage(
+                                    "Invoice.ReferentialIntegrityException.Currency",
+                                    dto.getCurrencyISOCode())
+                    );
+                }
+            }
+            BankCreditor bank = (dto.getBankID() == null) ? null : dao.find(BankCreditor.class, dto.getBankID());
+            if (dto.getBankID() != null & bank == null) {
+                throw new ReferentialIntegrityException(
+                        Utils.getMessage("Invoice.ReferentialIntegrityException.Bank",
+                                dto.getBankID()));
+            }
+            temp.setPartner(partner);
+//            //partner type korisnik ne moze da promeni
+            temp.setInvoiceType(dto.getProForma());
+            temp.setPaid(dto.getPaid());
+//            //printed korisnik ne moze da promeni
+            temp.setInvoiceDate(dto.getInvoiceDate());
+            temp.setCreditRelationDate(dto.getCreditRelationDate());
+            temp.setValueDate(dto.getValueDate());
+            temp.setCurrency(currency);
+            temp.setContractNumber(dto.getContractNumber());
+            temp.setContractDate(dto.getContractDate());
+            temp.setUser(user);
+            temp.setBank(bank);
+            List<String> msgs = validator.validate(temp).stream()
+                    .map(ConstraintViolation::getMessage)
+                    .collect(Collectors.toList());
+            if (msgs.size() > 0) {
+                throw new ConstraintViolationException("", msgs);
+            }
+            if (temp.getVersion().compareTo(dto.getVersion()) != 0) {
+                throw new OptimisticLockException();
+            }
+            return temp.getVersion();
+        } catch (EntityNotFoundException | ReferentialIntegrityException | ConstraintViolationException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            if (ex instanceof OptimisticLockException
+                    || ex.getCause() instanceof OptimisticLockException) {
+                throw new SystemException(Utils.getMessage("Invoice.OptimisticLockEx",
+                        dto.getClientId(), dto.getOrgUnitId(), dto.getDocument()), ex);
+            } else {
+                LOG.log(Level.WARNING, "Invoice.PersistenceEx.Update", ex);
+                throw new SystemException(Utils.getMessage("Invoice.PersistenceEx.Update"), ex);
+            }
         }
     }
 
@@ -1126,9 +1243,11 @@ public class TransactionService {
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
         Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
         Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
+        Map<InvoiceDTO, Map<String, InvoiceItemDTO>> invoiceItemsPerMerchantMap = new HashMap<InvoiceDTO, Map<String, InvoiceItemDTO>>();
         InvoiceDTO invoice = new InvoiceDTO();
 
         for (InvoicingTransactionSetDTO transactionSetDTO : invoicingTransactionSetDTOs) {
+
 
             if (invoicePerMerchantMap.get(transactionSetDTO.getMerchantId()) == null) {
                 Client client = dao.find(Client.class, transactionSetDTO.getDistributorId());
@@ -1145,7 +1264,7 @@ public class TransactionService {
                 maxDocument = dao.createNamedQuery(Invoice.READ_MAX_DOCUMENT, Integer.class)
                         .setParameter("client", client)
                         .setParameter("orgUnit", orgUnit).getSingleResult();
-                invoice.setDocument(maxDocument == null ? new Integer("1") + "" : maxDocument + "");
+                invoice.setDocument(maxDocument == null ? new Integer("1") + "" : (maxDocument + invoicingTransactionSetDTOs.indexOf(transactionSetDTO)) + "");
                 invoice.setClientId(client.getId());
                 invoice.setClientDesc(client.getName());
                 invoice.setCreditRelationDate(invoicingDate);
@@ -1160,8 +1279,11 @@ public class TransactionService {
                 invoice.setValueDate(invoicingDate);
                 invoice.setUsername("nikola");
                 invoice.setInvoicingTransactionId(currentInvoicingTransaction.getId());
+                invoice.setInvoicingTransaction(currentInvoicingTransaction);
+                invoice.setTotalAmount(new BigDecimal(0));
+                invoice.setReturnValue(new BigDecimal(0));
                 invoicePerMerchantMap.put(transactionSetDTO.getMerchantId(), invoice);
-                createInvoice(invoice);
+                //createInvoice(invoice);
             } else {
                 invoice = invoicePerMerchantMap.get(transactionSetDTO.getMerchantId());
             }
@@ -1184,6 +1306,9 @@ public class TransactionService {
                 invoiceItemDTO.setInvoiceDocument(invoice.getDocument());
                 invoiceItemDTO.setUnitId(invoice.getOrgUnitId());
                 invoiceItemDTO.setArticleCode(transactionSetDTO.getArticleCode());
+                Map<String, InvoiceItemDTO> invoiceItemPerArticle = new HashMap<String, InvoiceItemDTO>();
+                invoiceItemPerArticle.put(invoiceItemDTO.getArticleCode(), invoiceItemDTO);
+                invoiceItemsPerMerchantMap.put(invoice, invoiceItemPerArticle);
                 Article article = dao.find(Article.class, transactionSetDTO.getArticleCode());
                 BigDecimal vatPercent = null;
                 switch (article.getVATRate()) {
@@ -1215,7 +1340,7 @@ public class TransactionService {
                 invoice.setMaxItemOrdinal(invoiceItemDTO.getOrdinal());
                 invoice.setTotalAmount(invoiceItemDTO.getTotalCost());
                 invoice.setReturnValue(invoiceItemDTO.getReturnValue());
-                addItem(invoiceItemDTO);
+                //addItem(invoiceItemDTO);
             } else {
                 invoiceItemDTO.setNetPrice(invoiceItemDTO.getNetPrice().add(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent().add(new BigDecimal(1)), 2, RoundingMode.HALF_UP)));
                 invoiceItemDTO.setReturnValue(invoiceItemDTO.getReturnValue().add(transactionSetDTO.getAmount().multiply(rabat)).setScale(2, RoundingMode.HALF_UP));
@@ -1224,19 +1349,97 @@ public class TransactionService {
                 invoice.setReturnValue(invoice.getReturnValue() == null ? invoiceItemDTO.getReturnValue() : invoice.getReturnValue().add(invoiceItemDTO.getReturnValue()));
                 invoiceItemDTO.setUsername(invoice.getUsername());
                 invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
-                updateItem(invoiceItemDTO);
+                //updateItem(invoiceItemDTO);
             }
-
             Transaction transaction = dao.find(Transaction.class, transactionSetDTO.getTransactionId());
             transaction.setInvoicingStatus(true);
             dao.persist(transaction);
-
         }
-
         dao.persist(currentInvoicingTransaction);
-        return invoicePerMerchantMap;
 
+        Iterator it = invoicePerMerchantMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            InvoiceDTO persistingInvoiceDTO = (InvoiceDTO) pair.getValue();
+            createInvoice(persistingInvoiceDTO);
+            Iterator itItem = invoiceItemsPerMerchantMap.get(persistingInvoiceDTO).entrySet().iterator();
+            while (itItem.hasNext()) {
+                Map.Entry itemPairs = (Map.Entry) itItem.next();
+                addItem((InvoiceItemDTO) itemPairs.getValue());
+            }
+        }
+        return invoicePerMerchantMap;
     }
+
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public ReadRangeDTO<InvoiceDTO> readInvPerPeriodPage(Integer invoicingTransactionid, Integer partnerId, Integer page)
+            throws PageNotExistsException {
+        //TODO : check ReadTransactionPermission
+        Integer id = null;
+        Integer distributorId = null;
+        Integer pointOfSaleId = null;
+        Integer serviceProviderId = null;
+        Integer terminalId = null;
+        Integer typeId = null;
+        List<InvoiceDTO> listDTO = new ArrayList<InvoiceDTO>();
+        Query q = dao.createNamedQuery(Invoice.READ_BY_INVOICING_TRANSACTION, Invoice.class);
+        ReadRangeDTO<InvoiceDTO> result = new ReadRangeDTO<>();
+        try {
+            Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
+            Long countEntities = new Long(0);
+
+            if (invoicingTransactionid != null) {
+                q.setParameter("invoicingTransaction", dao.find(InvoicingTransaction.class, invoicingTransactionid));
+                if (partnerId != null) {
+                    q.setParameter("partner", dao.find(BusinessPartner.class, partnerId));
+                } else {
+                    q.setParameter("partner", null);
+                }
+                countEntities = Long.valueOf(q.getResultList().size() + 1);
+                System.out.println("evo ga "+countEntities+" "+pageSize);
+                Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
+                        ? (countEntities / pageSize - 1) : countEntities / pageSize;
+                Integer pageNumber = page;
+                if (pageNumber.compareTo(-1) == -1
+                        || pageNumber.compareTo(numberOfPages.intValue()) == 1) {
+                    //page number cannot be less than -1 or greater than numberOfPages
+                    throw new PageNotExistsException(
+                            Utils.getMessage("Transaction.PageNotExists", pageNumber));
+                }
+
+                if (pageNumber.equals(-1)) {
+                    //if page number is -1 read last page
+                    //first Transaction = last page number * Transaction per page
+                    int start = numberOfPages.intValue() * pageSize;
+                    q.setFirstResult(start);
+                    result.setNumberOfPages(numberOfPages.intValue());
+                    result.setPage(numberOfPages.intValue());
+                } else {
+                    int start = page * pageSize;
+                    q.setFirstResult(start);
+                    result.setNumberOfPages(numberOfPages.intValue());
+                    result.setPage(pageNumber);
+                }
+                q.setMaxResults(pageSize);
+
+
+                List<Invoice> list = q.getResultList();
+                for (Invoice invoice : list)
+                    listDTO.add(invoice.getDTO());
+            }
+            result.setData(listDTO);
+            return result;
+        } catch (PageNotExistsException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(
+                    Utils.getMessage("Transaction.Exception.ReadAll", ex)
+            );
+        }
+    }
+
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public List<InvoiceDTO> readInvoiciePerPeriod(Integer invoicingTransactionid, Integer partnerId) {
@@ -1247,9 +1450,10 @@ public class TransactionService {
                     .setParameter("invoicingTransaction", dao.find(InvoicingTransaction.class, invoicingTransactionid));
             if (partnerId != null) {
                 q.setParameter("partner", dao.find(BusinessPartner.class, partnerId));
-            }else{
+            } else {
                 q.setParameter("partner", null);
             }
+
             List<Invoice> list = q.getResultList();
             for (Invoice invoice : list)
                 listDTO.add(invoice.getDTO());

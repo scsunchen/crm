@@ -168,7 +168,7 @@ public class TransactionController {
                                                       @RequestParam Integer distributorId,
                                                       @RequestParam String invoicingDate,
                                                       Map<String, Object> model,
-                                                      @ModelAttribute TransactionDTO transactionDTO) throws Exception{
+                                                      @ModelAttribute TransactionDTO transactionDTO) throws Exception {
 
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
@@ -190,9 +190,12 @@ public class TransactionController {
                                         @RequestParam Integer page,
                                         @ModelAttribute InvoicingTransactionDTO invoicingTransactionDTO, Map<String, Object> model) throws Exception {
 
+        PageRequestDTO request = new PageRequestDTO();
         model.put("invoicingTransactions", invoicingTransactionService.getAllPeriods());
-        List<InvoiceDTO> invoices = transactionService.readInvoiciePerPeriod(invoicingPeriod, partnerId);
-        model.put("data", invoices);
+        //List<InvoiceDTO> invoices = transactionService.readInvoiciePerPeriod(invoicingPeriod, partnerId);
+        ReadRangeDTO<InvoiceDTO> result = transactionService.readInvPerPeriodPage(invoicingPeriod, partnerId, page);
+        model.put("data", result.getData());
+        model.put("numberOfPages", result.getNumberOfPages());
         return "review-invoicing-transactions";
     }
 
@@ -200,7 +203,7 @@ public class TransactionController {
     @RequestMapping(value = "/invoicing/review-invoices.html", method = RequestMethod.POST)
     public String genInvoices(@ModelAttribute TransactionDTO transactionDTO, Map<String, Object> model) throws Exception {
         System.out.println("izvrsio se bre " + transactionDTO.getInvoicingGenDate() + " " + transactionDTO.getInvoicingDistributorId());
-        Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesI(transactionDTO);
+        Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
         //Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
         model.put("data", genTransactions);
         return "invoice-table";

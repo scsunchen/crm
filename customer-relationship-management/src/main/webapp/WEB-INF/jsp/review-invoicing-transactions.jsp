@@ -21,9 +21,10 @@
 
     <nav class="navbar navbar-default">
         <br/>
+
         <div class="form-group col-lg-4">
             <form:select path="id" id="status" class="form-control" itemLabel="status">
-                <form:option value="" label="Period faktirisanja..." />
+                <form:option value="" label="Period faktirisanja..."/>
                 <form:options items="${invoicingTransactions}" itemLabel="displayPeriod" itemValue="id"/>
             </form:select>
         </div>
@@ -53,7 +54,8 @@
             <th><spring:message code="Invoice.Table.Status"/></th>
             <th><spring:message code="Invoice.Table.CreditDebitRelationDate"/></th>
             <th><spring:message code="Invoice.Table.InvoiceDate"/></th>
-            <th><spring:message code="Invoice.Table.Recorded"/></th>
+            <th><spring:message code="Invoice.Table.TotalAmount"/></th>
+            <th><spring:message code="Invoice.Table.ReturnValue"/></th>
         </tr>
         </thead>
         <tbody>
@@ -76,16 +78,8 @@
                 <td><c:out value="${invoice.proForma.description}"/></td>
                 <td><spring:eval expression="invoice.creditRelationDate"/></td>
                 <td><spring:eval expression="invoice.invoiceDate"/></td>
-                <td>
-                    <c:choose>
-                        <c:when test="${invoice.recorded}">
-                            <spring:message code="Invoice.Table.Recorded"/>
-                        </c:when>
-                        <c:otherwise>
-                            <spring:message code="Invoice.Table.NotRecorded"/>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
+                <td><spring:eval expression="invoice.totalAmount"></spring:eval></td>
+                <td><spring:eval expression="invoice.returnValue"></spring:eval></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>

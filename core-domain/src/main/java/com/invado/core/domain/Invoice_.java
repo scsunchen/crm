@@ -1,5 +1,6 @@
 package com.invado.core.domain;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
@@ -30,5 +31,6 @@ public class Invoice_ {
     public static volatile SingularAttribute<Invoice, ApplicationUser> user;
     public static volatile SingularAttribute<Invoice, String> contractNumber;
     public static volatile SingularAttribute<Invoice, InvoicingTransaction> invoicingTransaction;
-
+    public static volatile SingularAttribute<Invoice, BigDecimal> totalAmount;
+    public static volatile SingularAttribute<Invoice, BigDecimal> returnValue;
 }

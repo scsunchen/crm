@@ -1,7 +1,6 @@
 package com.invado.core.domain;
 
 import com.invado.core.dto.DeviceHolderPartnerDTO;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,7 +23,7 @@ public class DeviceHolderPartner {
     )
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "DeviceHolderTab")
     @Id
-    private Integer Id;
+    private Integer id;
     @NotNull(message = "{DeviceHolder.Device.NotNull}")
     @ManyToOne
     @JoinColumn(name = "device_id")
@@ -71,11 +70,11 @@ public class DeviceHolderPartner {
     private Long version;
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public Device getDevice() {
