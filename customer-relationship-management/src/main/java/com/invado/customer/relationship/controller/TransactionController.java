@@ -1,10 +1,7 @@
 package com.invado.customer.relationship.controller;
 
-import com.invado.core.domain.BusinessPartner;
-import com.invado.core.domain.Client;
+import com.invado.core.domain.*;
 import com.invado.core.dto.InvoiceDTO;
-import com.invado.core.domain.Device;
-import com.invado.core.domain.TransactionType;
 import com.invado.core.dto.InvoicingTransactionDTO;
 import com.invado.customer.relationship.service.InvoicingTransactionService;
 import com.invado.customer.relationship.service.MasterDataService;
@@ -18,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,30 +34,30 @@ public class TransactionController {
     @Inject
     private InvoicingTransactionService invoicingTransactionService;
 
+    @RequestMapping(value = "/transactions/view-transactions-page.html", method = RequestMethod.GET)
+    public String showTransactions(@RequestParam Integer page,
+                                   @RequestParam(value = "serviceProviderName", required = false) String serviceProviderName,
+                                   @RequestParam(value = "serviceProviderId", required = false) Integer serviceProviderId,
+                                   @RequestParam(value = "pointOfSaleName", required = false) String pointOfSaleName,
+                                   @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                   @RequestParam(value = "terminalCustomCode", required = false) String terminalCustomCode,
+                                   @RequestParam(value = "terminalId", required = false) Integer terminalId,
+                                   @RequestParam(value = "typeDescription", required = false) String typeDescription,
+                                   @RequestParam(value = "typeId", required = false) Integer typeId,
 
-    @RequestMapping(value = "/transactions/{page}")
-    public String showTransactions(@PathVariable Integer page,
                                    Map<String, Object> model,
                                    @ModelAttribute TransactionDTO transactionDTO)
             throws Exception {
+
+        Client client = masterDataService.readClient();
         PageRequestDTO request = new PageRequestDTO();
 
         request.setPage(page);
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId",
-                transactionDTO.getDistributorId() == null || transactionDTO.getDistributorName() == null || transactionDTO.getDistributorName().isEmpty()
-                        ? null : transactionDTO.getDistributorId()));
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("pointOfSaleId",
-                transactionDTO.getPointOfSaleId() == null || transactionDTO.getPointOfSaleName() == null || transactionDTO.getPointOfSaleName().isEmpty()
-                        ? null : transactionDTO.getPointOfSaleId()));
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("serviceProviderId",
-                transactionDTO.getServiceProviderId() == null || transactionDTO.getServiceProviderName() == null || transactionDTO.getServiceProviderName().isEmpty()
-                        ? null : transactionDTO.getServiceProviderId()));
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("terminalId",
-                transactionDTO.getTerminalId() == null || transactionDTO.getTerminalCustomCode() == null || transactionDTO.getTerminalCustomCode().isEmpty()
-                        ? null : transactionDTO.getTerminalId()));
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("typeId",
-                transactionDTO.getTypeId() == null || transactionDTO.getTypeDescription() == null || transactionDTO.getTypeDescription().isEmpty()
-                        ? null : transactionDTO.getTypeId()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId", client.getId()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("pointOfSaleId", pointOfSaleId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("serviceProviderId", serviceProviderId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("terminalId", terminalId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("typeId", typeId));
         ReadRangeDTO<TransactionDTO> items = transactionService.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
@@ -164,16 +163,19 @@ public class TransactionController {
 
 
     @RequestMapping(value = "/transactions/in-transactions.html", method = RequestMethod.GET)
-    public String showInovicingCandidatesTransactions(@RequestParam Integer page,
-                                                      @RequestParam Integer distributorId,
-                                                      @RequestParam String invoicingDate,
+    public String showInvoicingCandidatesTransactions(@RequestParam Integer page,
+                                                      @RequestParam(value = "merchantId", required = false) Integer merchantId,
+                                                      @RequestParam(value = "invoicingDate", required = false) String invoicingDate,
+                                                      @RequestParam(value = "invoicingStatus", required = false) Integer invoicingStatus,
                                                       Map<String, Object> model,
                                                       @ModelAttribute TransactionDTO transactionDTO) throws Exception {
 
+
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId", distributorId));
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateTo", invoicingDate));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("merchantId", merchantId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingStatus", 0));
         ReadRangeDTO<InvoicingTransactionSetDTO> items = transactionService.readInvoicingSetPage(request);
 
         model.put("data", items.getData());
@@ -183,13 +185,70 @@ public class TransactionController {
         return "invoicing-candidates-view";
     }
 
+    @RequestMapping(value = "/transactions/in-transactions-per-pos.html", method = RequestMethod.GET)
+    public String showInvoicingCandidatesTransactionsPerPos(@RequestParam Integer page,
+                                                            @RequestParam(value = "invoicingDate", required = false) String invoicingDate,
+                                                            @RequestParam(value = "merchantId", required = false) Integer merchantId,
+                                                            Map<String, Object> model,
+                                                            @ModelAttribute TransactionDTO transactionDTO) throws Exception {
+
+        BigDecimal totalAmount = BigDecimal.valueOf(0.0);
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateTo", invoicingDate));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("merchantId", merchantId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingStatus", 0));
+
+        ReadRangeDTO<InvoicingTransactionSetDTO> items = transactionService.readInvoicingPerPosSetPage(request);
+
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        for (InvoicingTransactionSetDTO item : items.getData())
+            totalAmount = totalAmount.add(item.getAmount());
+        model.put("totalAmount", totalAmount);
+        model.put("transactionDTO", transactionDTO);
+        model.put("numberOfPages", items.getNumberOfPages());
+        return "invoicing-candidates-per-pos-view";
+    }
+
+
+    @RequestMapping(value = "/transactions/in-transactions-per-article.html", method = RequestMethod.GET)
+    public String showInvoicingCandidatesTransactionsPerArticle(@RequestParam Integer page,
+                                                                @RequestParam(value = "invoicingDate", required = false) String invoicingDate,
+                                                                @RequestParam(value = "merchantName", required = false) String merchantName,
+                                                                @RequestParam(value = "merchantId", required = false) Integer merchantId,
+                                                                @RequestParam(value = "posName", required = false) String posName,
+                                                                @RequestParam(value = "posId", required = false) Integer posId,
+                                                                Map<String, Object> model,
+                                                                @ModelAttribute TransactionDTO transactionDTO) throws Exception {
+
+        BigDecimal totalAmount = BigDecimal.valueOf(0.0);
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateTo", invoicingDate));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("merchantId", merchantId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingStatus", 0));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("posId", posId));
+
+        ReadRangeDTO<InvoicingTransactionSetDTO> items = transactionService.readInvoicingPerArticleSetPage(request);
+
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        for (InvoicingTransactionSetDTO item : items.getData())
+            totalAmount = totalAmount.add(item.getAmount());
+        model.put("totalAmount", totalAmount);
+        model.put("transactionDTO", transactionDTO);
+        model.put("numberOfPages", items.getNumberOfPages());
+        return "invoicing-candidates-per-article-view";
+    }
+
     @RequestMapping(value = "/transactions/review-invoicing-transactions.html", method = RequestMethod.GET)
     public String showInvoicesPerPeriod(@RequestParam(value = "partnerId", required = false) Integer partnerId,
                                         @RequestParam(value = "id", required = false) Integer invoicingPeriod,
                                         @RequestParam(value = "partnerName", required = false) String partnerName,
                                         @RequestParam Integer page,
                                         @ModelAttribute InvoicingTransactionDTO invoicingTransactionDTO, Map<String, Object> model) throws Exception {
-
+/* ne menjaj */
         PageRequestDTO request = new PageRequestDTO();
         model.put("invoicingTransactions", invoicingTransactionService.getAllPeriods());
         //List<InvoiceDTO> invoices = transactionService.readInvoiciePerPeriod(invoicingPeriod, partnerId);
@@ -203,50 +262,127 @@ public class TransactionController {
 
     @RequestMapping(value = "/invoicing/review-invoices.html", method = RequestMethod.POST)
     public String genInvoices(@ModelAttribute TransactionDTO transactionDTO, Map<String, Object> model) throws Exception {
-        System.out.println("izvrsio se bre " + transactionDTO.getInvoicingGenDate() + " " + transactionDTO.getInvoicingDistributorId());
-        Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
+
+        Map<Integer, InvoiceDTO> genTransactions = null;
+        Client client = masterDataService.readClient();
+        if (client.getInvoicingType() == Client.InvoicingType.OUTPUT) {
+            genTransactions = transactionService.genInvoicesI(transactionDTO);
+        } else {
+            genTransactions = transactionService.genInvoicesUI(transactionDTO);
+        }
         //Map<Integer, InvoiceDTO> genTransactions = transactionService.genInvoicesUI(transactionDTO);
         model.put("data", genTransactions);
         return "invoice-table";
     }
 
-    @RequestMapping(value = "/masterdata/read-distributor/{name}")
+
+    @RequestMapping(value = "/transactions/in-transactions-per-period.html", method = RequestMethod.GET)
+    public String showInvoicedTransactionsPerPeriod(@RequestParam Integer page,
+                                                  @RequestParam(value = "merchantId", required = false) Integer merchantId,
+                                                  @RequestParam(value = "id", required = false) Integer id,
+                                                  Map<String, Object> model,
+                                                  @ModelAttribute InvoicingTransactionDTO invoicingTransactionDTO) throws Exception {
+
+
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+        InvoicingTransactionDTO it = null;
+        if (id != null) {
+            it = invoicingTransactionService.getbyId(id);
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateTo", it.getInvoicedTo().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateFrom", it.getInvoicedFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+        } else {
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateTo", null));
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateFrom", null));
+        }
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("merchantId", merchantId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingStatus", 1));
+
+        ReadRangeDTO<InvoicingTransactionSetDTO> items = transactionService.readInvoicingSetPage(request);
+
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        model.put("invoicingTransactions", invoicingTransactionService.getAllPeriods());
+        model.put("invoicingTransactionDTO", invoicingTransactionDTO);
+        model.put("numberOfPages", items.getNumberOfPages());
+        return "invoiced-candidates-per-period-view";
+    }
+
+    @RequestMapping(value = "/transactions/in-transactions-per-pos-per-period.html", method = RequestMethod.GET)
+    public String showInvoicedTransactionsPerPeriodPerPOS(@RequestParam Integer page,
+                                                  @RequestParam(value = "merchantId", required = false) Integer merchantId,
+                                                  @RequestParam(value = "id", required = false) Integer id,
+                                                  Map<String, Object> model,
+                                                  @ModelAttribute InvoicingTransactionDTO invoicingTransactionDTO) throws Exception {
+
+
+        BigDecimal totalAmount = BigDecimal.valueOf(0.0);
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+        InvoicingTransactionDTO it = null;
+        if (id != null) {
+            it = invoicingTransactionService.getbyId(id);
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateTo", it.getInvoicedTo().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateFrom", it.getInvoicedFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+        } else {
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateTo", null));
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingDateFrom", null));
+        }
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("merchantId", merchantId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("invoicingStatus", 1));
+
+        ReadRangeDTO<InvoicingTransactionSetDTO> items = transactionService.readInvoicingPerPosSetPage(request);
+
+        for (InvoicingTransactionSetDTO item : items.getData())
+            totalAmount = totalAmount.add(item.getAmount());
+        model.put("totalAmount", totalAmount);
+
+
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        model.put("invoicingTransactions", invoicingTransactionService.getAllPeriods());
+        model.put("invoicingTransactionDTO", invoicingTransactionDTO);
+        model.put("numberOfPages", items.getNumberOfPages());
+        return "invoiced-candidates-per-period-per-pos-view";
+    }
+
+
+    @RequestMapping(value = "/crm/read-distributor/{name}")
     public
     @ResponseBody
     List<Client> findClientByName(@PathVariable String name) {
-        System.out.println("ovo se sigurno izvršava a šta je problem da ga jebbem...");
         return masterDataService.readClientMinSetByName(name);
     }
 
-    @RequestMapping(value = "/masterdat/read-pointofsale/{name}")
+    @RequestMapping(value = "/crm/read-pointofsale/{name}")
     public
     @ResponseBody
     List<BusinessPartner> findPointOfSaleByName(@PathVariable String name) {
         return masterDataService.readPointOfSaleByName(name);
     }
 
-    @RequestMapping(value = "/masterdat/read-businesspartner/{name}")
+    @RequestMapping(value = "/crm/read-businesspartner/{name}")
     public
     @ResponseBody
     List<BusinessPartner> findBusinessPartnerByName(@PathVariable String name) {
         return masterDataService.readBusinessPartnerByName(name);
     }
 
-    @RequestMapping(value = "/masterdat/read-serviceprovider/{name}")
+    @RequestMapping(value = "/crm/read-serviceprovider/{name}")
     public
     @ResponseBody
     List<BusinessPartner> findServiceProviderByName(@PathVariable String name) {
         return masterDataService.readServiceProviderByName(name);
     }
 
-    @RequestMapping(value = "/masterdat/read-terminal/{name}")
+    @RequestMapping(value = "/crm/read-terminal/{name}")
     public
     @ResponseBody
     List<Device> findTerminalByCustomCode(@PathVariable String name) {
         return masterDataService.readDeviceByCustomCode(name);
     }
 
-    @RequestMapping(value = "/masterdat/read-transactiontype/{name}")
+    @RequestMapping(value = "/crm/read-transactiontype/{name}")
     public
     @ResponseBody
     List<TransactionType> findTransactiontypeByType(@PathVariable String name) {

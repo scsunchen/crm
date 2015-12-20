@@ -22,7 +22,8 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
         //calendar.set(Calendar.YEAR, attribute.getYear());
         // avoid 0 vs 1 based months
         //calendar.set(Calendar.DAY_OF_YEAR, attribute.getDayOfYear());
-        calendar.set(attribute.getYear(), attribute.getMonthValue(), attribute.getDayOfMonth(), attribute.getHour(), attribute.getMinute(), attribute.getSecond());
+        int mont = attribute.getMonthValue()-1;
+        calendar.set(attribute.getYear(), mont, attribute.getDayOfMonth(), attribute.getHour(), attribute.getMinute(), attribute.getSecond());
         return new Date(calendar.getTimeInMillis());
     }
 

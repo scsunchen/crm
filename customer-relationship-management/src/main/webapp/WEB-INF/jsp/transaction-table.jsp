@@ -12,7 +12,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <form:form role="search" modelAttribute="transactionDTO" method="GET"
-           action="${pageContext.request.contextPath}/transactions/0">
+           action="${pageContext.request.contextPath}/transactions/view-transactions-page.html?page=0">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Pretraživanje poslovnih partnera -->
@@ -39,11 +39,7 @@
                             path="typeDescription" style="margin-bottom:  15px;" placeholder="Tip transakcije..."/>
                 <form:hidden id="typeIdHidden" path="typeId"/>
             </div>
-            <div class="col-md-2">
-                <form:input id="distributorName" class="typeahead form-control" type="text"
-                            path="distributorName" style="margin-bottom:  15px;" placeholder="Distributor..."/>
-                <form:hidden id="distributorIdHidden" path="distributorId"/>
-            </div>
+            <form:hidden id="page" path="page" valu="0"/>
             <button type="submit" class="btn btn-default">Pretraga</button>
 
             <!-- /.navbar-collapse -->
@@ -92,13 +88,13 @@
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/${page - 1}?serviceProviderId=${transactionDTO.serviceProviderId}&serviceProviderName=${transactionDTO.serviceProviderName}&pointOfSaleId=${transactionDTO.pointOfSaleId}&pointOfSaleName=${transactionDTO.pointOfSaleName}&terminalCustomCode=${transactionDTO.terminalCustomCode}&terminalId=${transactionDTO.terminalId}&typeId=${transactionDTO.typeId}&typeDescription=${transactionDTO.typeId}&distributorId=${transactionDTO.distributorId}&distributorName=${transactionDTO.distributorName}"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/view-transactions-page.html?page=${page - 1}&serviceProviderId=${param['serviceProviderId']}&pointOfSaleId=${param['pointOfSaleId']}&&terminalCustomCode=${param['terminalCustomCode']}&terminalId=${param['terminalId']}&typeId=${param['typeId']}"/></c:if>">
                 <span class="glyphicon glyphicon-backward"></span> Prethodna
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/${page + 1}?serviceProviderId=${transactionDTO.serviceProviderId}&serviceProviderName=${transactionDTO.serviceProviderName}&pointOfSaleId=${transactionDTO.pointOfSaleId}&pointOfSaleName=${transactionDTO.pointOfSaleName}&terminalCustomCode=${transactionDTO.terminalCustomCode}&terminalId=${transactionDTO.terminalId}&typeId=${transactionDTO.typeId}&typeDescription=${transactionDTO.typeId}&distributorId=${transactionDTO.distributorId}&distributorName=${transactionDTO.distributorName}"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/view-transactions-page.html?page=${page + 1}&serviceProviderId=${param['serviceProviderId']}&pointOfSaleId=${param['pointOfSaleId']}&&terminalCustomCode=${param['terminalCustomCode']}&terminalId=${param['terminalId']}&typeId=${param['typeId']}"/></c:if>">
                 <span class="glyphicon glyphicon-forward"></span> Naredna
             </a>
         </li>
@@ -116,7 +112,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdata/read-serviceprovider/%QUERY',
+                url: '${pageContext.request.contextPath}/crm/read-serviceprovider/%QUERY',
                 wildcard: '%QUERY'
             }
         })
@@ -137,7 +133,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdata/read-businesspartner/%QUERY',
+                url: '${pageContext.request.contextPath}/crm/read-businesspartner/%QUERY',
                 wildcard: '%QUERY'
             }
         })
@@ -158,7 +154,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdata/read-terminal/%QUERY',
+                url: '${pageContext.request.contextPath}/crm/read-terminal/%QUERY',
                 wildcard: '%QUERY'
             }
         })
@@ -179,7 +175,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdata/read-transactiontype/%QUERY',
+                url: '${pageContext.request.contextPath}/crm/read-transactiontype/%QUERY',
                 wildcard: '%QUERY'
             }
         })
@@ -200,7 +196,7 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdata/read-distributor/%QUERY',
+                url: '${pageContext.request.contextPath}/crm/read-distributor/%QUERY',
                 wildcard: '%QUERY'
             }
         })

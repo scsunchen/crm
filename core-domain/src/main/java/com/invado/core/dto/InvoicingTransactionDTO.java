@@ -16,10 +16,13 @@ public class InvoicingTransactionDTO {
     private Integer ditributorId;
     private String DistributorName;
     @DateTimeFormat(style = "M-")
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate invoicingDate;
     @DateTimeFormat(style = "M-")
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate invoicedFrom;
     @DateTimeFormat(style = "M-")
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate invoicedTo;
     private String displayPeriod;
     private Integer partnerId;

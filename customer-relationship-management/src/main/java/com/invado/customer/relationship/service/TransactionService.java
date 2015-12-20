@@ -453,7 +453,10 @@ public class TransactionService {
 
 
         Date invoicingDate = null;
+        Date invoicingDateFrom = null;
         Integer distributorId = null;
+        Integer merchantId = new Integer(-1);
+        Integer invoicingStatus = null;
 
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("invoicingDateTo") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
@@ -464,10 +467,25 @@ public class TransactionService {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                //out = (Date)s.getValue();
+
+            }
+            if (s.getKey().equals("invoicingDateFrom") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+                    String in = s.getValue().toString();
+                    invoicingDateFrom = formatter.parse(in);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             if (s.getKey().equals("distributorId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
                 distributorId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("merchantId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                merchantId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("invoicingStatus") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                invoicingStatus = Integer.valueOf(s.getValue().toString());
             }
         }
 
@@ -477,17 +495,21 @@ public class TransactionService {
 
 
         Query query = dao.createNamedQuery(Transaction.INVOICING_SUM_PER_MERCHANT);
-        query.setParameter("distributorId", distributorId == null ? new Integer(0) : distributorId);
+        query.setParameter("merchantId", merchantId);
+        query.setParameter("invoicingStatus", invoicingStatus);
         query.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
-        query.setParameter("invoicingDateFrom", Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        query.setParameter("invoicingDateFrom", invoicingDateFrom == null ? Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()) : invoicingDateFrom);
 
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
             Query countEntitiesQuery = dao.createNamedQuery(Transaction.COUNT_INVOICING_SUM_PER_MERCHANT);
-            countEntitiesQuery.setParameter("distributorId", distributorId == null ? new Integer(0) : distributorId);
+            countEntitiesQuery.setParameter("merchantId", merchantId);
+            countEntitiesQuery.setParameter("invoicingStatus", invoicingStatus);
             countEntitiesQuery.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
-            countEntitiesQuery.setParameter("invoicingDateFrom", Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            if (invoicingDateFrom == null)
+                invoicingDateFrom = Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            countEntitiesQuery.setParameter("invoicingDateFrom",   invoicingDateFrom);
 
             Long countEntities = new Long(countEntitiesQuery.getSingleResult().toString());
 
@@ -529,6 +551,209 @@ public class TransactionService {
         }
     }
 
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public ReadRangeDTO<InvoicingTransactionSetDTO> readInvoicingPerPosSetPage(PageRequestDTO p)
+            throws PageNotExistsException {
+        //TODO : check ReadTransactionPermission
+
+
+        Date invoicingDate = null;
+        Date invoicingDateFrom = null;
+        Integer distributorId = null;
+        Integer merchantId = null;
+        Integer invoicingStatus = null;
+
+        for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
+            if (s.getKey().equals("invoicingDateTo") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+                    String in = s.getValue().toString();
+                    invoicingDate = formatter.parse(in);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            if (s.getKey().equals("invoicingDateFrom") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+                    String in = s.getValue().toString();
+                    invoicingDateFrom = formatter.parse(in);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (s.getKey().equals("distributorId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                distributorId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("merchantId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                merchantId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("invoicingStatus") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                invoicingStatus = Integer.valueOf(s.getValue().toString());
+            }
+        }
+
+        InvoicingTransaction invoicingTransaction = new InvoicingTransaction();
+        TypedQuery<InvoicingTransaction> queryLastInvoicingTransaction = dao.createNamedQuery(InvoicingTransaction.LAST_TRANSACTION, InvoicingTransaction.class);
+        invoicingTransaction = queryLastInvoicingTransaction.getSingleResult();
+
+
+        Query query = dao.createNamedQuery(Transaction.INVOICING_SUM_PER_POS);
+        query.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
+        query.setParameter("invoicingDateFrom", invoicingDateFrom == null ? Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()) : invoicingDateFrom);
+        query.setParameter("merchantId", merchantId);
+        query.setParameter("invoicingStatus", invoicingStatus);
+
+        try {
+            Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
+
+            Query countEntitiesQuery = dao.createNamedQuery(Transaction.COUNT_INVOICING_SUM_PER_POS);
+            countEntitiesQuery.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
+            countEntitiesQuery.setParameter("invoicingDateFrom", invoicingDateFrom == null ? Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()) : invoicingDateFrom);
+            countEntitiesQuery.setParameter("merchantId", merchantId);
+            countEntitiesQuery.setParameter("invoicingStatus", invoicingStatus);
+
+            Long countEntities = new Long(countEntitiesQuery.getSingleResult().toString());
+
+            Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
+                    ? (countEntities / pageSize - 1) : countEntities / pageSize;
+            Integer pageNumber = p.getPage();
+            if (pageNumber.compareTo(-1) == -1
+                    || pageNumber.compareTo(numberOfPages.intValue()) == 1) {
+                //page number cannot be less than -1 or greater than numberOfPages
+                throw new PageNotExistsException(
+                        Utils.getMessage("Transaction.PageNotExists", pageNumber));
+            }
+            ReadRangeDTO<InvoicingTransactionSetDTO> result = new ReadRangeDTO<>();
+            if (pageNumber.equals(-1)) {
+                int start = numberOfPages.intValue() * pageSize;
+                query.setFirstResult(start);
+                query.setMaxResults(pageSize);
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(numberOfPages.intValue());
+            } else {
+                int start = p.getPage() * pageSize;
+                query.setFirstResult(start);
+                query.setMaxResults(pageSize);
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(pageNumber);
+            }
+
+            List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(query.getResultList(), InvoicingTransactionSetDTO.class);
+            result.setData(invoicingTransactionSetDTOs);
+
+            return result;
+        } catch (PageNotExistsException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(
+                    Utils.getMessage("Transaction.Exception.ReadAll", ex)
+            );
+        }
+    }
+
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public ReadRangeDTO<InvoicingTransactionSetDTO> readInvoicingPerArticleSetPage(PageRequestDTO p)
+            throws PageNotExistsException {
+        //TODO : check ReadTransactionPermission
+
+
+        Date invoicingDate = null;
+        Integer distributorId = null;
+        Integer merchantId = null;
+        Integer posId = null;
+        Integer invoicingStatus = null;
+        List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = new ArrayList<InvoicingTransactionSetDTO>();
+
+        for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
+            if (s.getKey().equals("invoicingDateTo") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+                    String in = s.getValue().toString();
+                    invoicingDate = formatter.parse(in);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //out = (Date)s.getValue();
+            }
+            if (s.getKey().equals("distributorId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                distributorId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("merchantId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                merchantId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("posId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                posId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("invoicingStatus") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                invoicingStatus = Integer.valueOf(s.getValue().toString());
+            }
+        }
+
+        InvoicingTransaction invoicingTransaction = new InvoicingTransaction();
+        TypedQuery<InvoicingTransaction> queryLastInvoicingTransaction = dao.createNamedQuery(InvoicingTransaction.LAST_TRANSACTION, InvoicingTransaction.class);
+        invoicingTransaction = queryLastInvoicingTransaction.getSingleResult();
+
+
+        Query query = dao.createNamedQuery(Transaction.INVOICING_SUM_PER_ARTICLE);
+        query.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
+        query.setParameter("invoicingDateFrom", Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        query.setParameter("merchantId", merchantId);
+        query.setParameter("posId", posId);
+        query.setParameter("invoicingStatus", invoicingStatus);
+
+        try {
+            Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
+
+            Query countEntitiesQuery = dao.createNamedQuery(Transaction.COUNT_INVOICING_SUM_PER_ARTICLE);
+            countEntitiesQuery.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
+            countEntitiesQuery.setParameter("invoicingDateFrom", Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            countEntitiesQuery.setParameter("merchantId", merchantId);
+            countEntitiesQuery.setParameter("posId", posId);
+            countEntitiesQuery.setParameter("invoicingStatus", invoicingStatus);
+            Long countEntities = new Long(countEntitiesQuery.getSingleResult().toString());
+
+            Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
+                    ? (countEntities / pageSize - 1) : countEntities / pageSize;
+            Integer pageNumber = p.getPage();
+            if (pageNumber.compareTo(-1) == -1
+                    || pageNumber.compareTo(numberOfPages.intValue()) == 1) {
+                //page number cannot be less than -1 or greater than numberOfPages
+                throw new PageNotExistsException(
+                        Utils.getMessage("Transaction.PageNotExists", pageNumber));
+            }
+            ReadRangeDTO<InvoicingTransactionSetDTO> result = new ReadRangeDTO<>();
+            if (pageNumber.equals(-1)) {
+                int start = numberOfPages.intValue() * pageSize;
+                query.setFirstResult(start);
+                query.setMaxResults(pageSize);
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(numberOfPages.intValue());
+            } else {
+                int start = p.getPage() * pageSize;
+                query.setFirstResult(start);
+                query.setMaxResults(pageSize);
+                result.setNumberOfPages(numberOfPages.intValue());
+                result.setPage(pageNumber);
+            }
+
+            invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(query.getResultList(), InvoicingTransactionSetDTO.class);
+            result.setData(invoicingTransactionSetDTOs);
+
+            return result;
+        } catch (PageNotExistsException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(
+                    Utils.getMessage("Transaction.Exception.ReadAll", ex)
+            );
+        }
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public void createInvoice(InvoiceDTO dto) throws ConstraintViolationException,
@@ -836,13 +1061,14 @@ public class TransactionService {
                                 dto.getArticleCode()));
             }
             //can't throw nouniqueresultexception
+            /* setuje se spolja
             Integer max = dao.createNamedQuery("Invoice.GetMaxOrdinalNumber",
                     Integer.class)
                     .setParameter("document", dto.getInvoiceDocument())
                     .setParameter("orgUnit", unit)
                     .getSingleResult();
-            Integer ordinalNumber = (max == null) ? 1 : (max + 1);
-            InvoiceItem item = new InvoiceItem(invoice, ordinalNumber);
+            Integer ordinalNumber = (max == null) ? 1 : (max + 1);*/
+            InvoiceItem item = new InvoiceItem(invoice, dto.getOrdinal());
             //ne moze da se desi da imam dve stavke sa istim kljucem
             item.setNetPrice(dto.getNetPrice());
             BigDecimal vatPercent = null;
@@ -1081,6 +1307,7 @@ public class TransactionService {
         Integer maxDocument = new Integer(1);
         LocalDate invoicingDate = LocalDate.now();
         Date out = null;
+        BigDecimal rabat = null;
 
         InvoicingTransaction currentInvoicingTransaction = new InvoicingTransaction();
         InvoicingTransaction lastInvoicingTransaction = new InvoicingTransaction();
@@ -1090,26 +1317,19 @@ public class TransactionService {
         Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
 
 
-        queryInvoicingCandidates.setParameter("distributorId", paramTransactionDTO.getInvoicingDistributorId());
         queryInvoicingCandidates.setParameter("invoicingDateTo", Date.from(paramTransactionDTO.getInvoicingGenDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        System.out.println("Do " + Date.from(paramTransactionDTO.getInvoicingGenDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         queryInvoicingCandidates.setParameter("invoicingDateFrom", Date.from(lastInvoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant()));
-        System.out.println("od " + Date.from(lastInvoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant()));
         currentInvoicingTransaction.setInvoicedFrom(lastInvoicingTransaction.getInvoicedTo().plusDays(1));
         currentInvoicingTransaction.setInvoicedTo(paramTransactionDTO.getInvoicingGenDate());
         currentInvoicingTransaction.setInvoicingDate(LocalDate.now());
-        currentInvoicingTransaction.setDitributor(dao.find(Client.class, paramTransactionDTO.getInvoicingDistributorId()));
-        dao.persist(currentInvoicingTransaction);
-        dao.flush();
-        dao.refresh(currentInvoicingTransaction);
-
-        System.out.println("id je ovaj " + currentInvoicingTransaction.getId());
+        currentInvoicingTransaction.setDitributor(dao.createQuery("SELECT c FROM Client c", Client.class).getSingleResult());
 
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
-        System.out.println("kandidata " + invoicingTransactionSetDTOs.size());
         Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
         Map<Integer, InvoiceDTO> invoicePerMerchantMap = new HashMap<Integer, InvoiceDTO>();
+        Map<InvoiceDTO, Map<String, InvoiceItemDTO>> invoiceItemsPerMerchantMap = new HashMap<InvoiceDTO, Map<String, InvoiceItemDTO>>();
         InvoiceDTO invoice = new InvoiceDTO();
+
 
         for (InvoicingTransactionSetDTO transactionSetDTO : invoicingTransactionSetDTOs) {
 
@@ -1128,7 +1348,7 @@ public class TransactionService {
                 maxDocument = dao.createNamedQuery(Invoice.READ_MAX_DOCUMENT, Integer.class)
                         .setParameter("client", client)
                         .setParameter("orgUnit", orgUnit).getSingleResult();
-                invoice.setDocument(maxDocument == null ? new Integer("1") + "" : maxDocument + "");
+                invoice.setDocument(maxDocument == null ? new Integer(1 + invoicingTransactionSetDTOs.indexOf(transactionSetDTO)) + "" : (maxDocument + invoicingTransactionSetDTOs.indexOf(transactionSetDTO)) + "");
                 invoice.setClientId(client.getId());
                 invoice.setClientDesc(client.getName());
                 invoice.setCreditRelationDate(invoicingDate);
@@ -1142,21 +1362,20 @@ public class TransactionService {
                 invoice.setBankID(client.getBank().getId());
                 invoice.setValueDate(invoicingDate);
                 invoice.setUsername("nikola");
+                invoice.setInvoicingTransactionId(currentInvoicingTransaction.getId());
                 invoice.setInvoicingTransaction(currentInvoicingTransaction);
+                invoice.setTotalAmount(new BigDecimal(0));
+                invoice.setReturnValue(new BigDecimal(0));
                 invoicePerMerchantMap.put(transactionSetDTO.getMerchantId(), invoice);
-                createInvoice(invoice);
+                //createInvoice(invoice);
             } else {
                 invoice = invoicePerMerchantMap.get(transactionSetDTO.getMerchantId());
             }
             InvoiceItemDTO invoiceItemDTO = null;
             try {
-                invoiceItemDTO = dao.createNamedQuery(InvoiceItem.READ_ITEMS_BY_INVOICE_AND_ARTICLE, InvoiceItem.class)
-                        .setParameter("document", invoice.getDocument())
-                        .setParameter("orgUnit", invoice.getOrgUnitId())
-                        .setParameter("clientId", invoice.getClientId())
-                        .setParameter("code", transactionSetDTO.getArticleCode())
-                        .getSingleResult().getInvoiceItemDTO();
-            } catch (NoResultException ex) {
+                System.out.println("podaci " + invoice.getDocument() + " " + invoice.getOrgUnitId() + " " + invoice.getClientId());
+                invoiceItemDTO = invoiceItemsPerMerchantMap.get(invoice).get(transactionSetDTO.getArticleCode());
+            } catch (NullPointerException ex) {
                 invoiceItemDTO = null;
             }
             if (invoiceItemDTO == null) {
@@ -1166,6 +1385,8 @@ public class TransactionService {
                 invoiceItemDTO.setInvoiceDocument(invoice.getDocument());
                 invoiceItemDTO.setUnitId(invoice.getOrgUnitId());
                 invoiceItemDTO.setArticleCode(transactionSetDTO.getArticleCode());
+                Map<String, InvoiceItemDTO> invoiceItemPerArticle = new HashMap<String, InvoiceItemDTO>();
+                invoiceItemsPerMerchantMap.put(invoice, invoiceItemPerArticle);
                 Article article = dao.find(Article.class, transactionSetDTO.getArticleCode());
                 BigDecimal vatPercent = null;
                 switch (article.getVATRate()) {
@@ -1194,7 +1415,8 @@ public class TransactionService {
                 invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
                 invoice.setMaxItemOrdinal(invoiceItemDTO.getOrdinal());
                 invoice.setTotalAmount(invoiceItemDTO.getTotalCost());
-                addItem(invoiceItemDTO);
+                invoicePerMerchantMap.put(transactionSetDTO.getMerchantId(), invoice);
+                //addItem(invoiceItemDTO);
             } else {
                 invoiceItemDTO.setNetPrice(invoiceItemDTO.getNetPrice().add(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent().add(new BigDecimal(1)), 2, RoundingMode.HALF_UP)));
                 invoiceItemDTO.setTotalCost(invoiceItemDTO.getTotalCost().add(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent().add(new BigDecimal(1)))
@@ -1211,11 +1433,26 @@ public class TransactionService {
 
         }
 
+        dao.persist(currentInvoicingTransaction);
+
+        Iterator it = invoicePerMerchantMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            InvoiceDTO persistingInvoiceDTO = (InvoiceDTO) pair.getValue();
+            createInvoice(persistingInvoiceDTO);
+            int i = 1;
+            Iterator itItem = invoiceItemsPerMerchantMap.get(persistingInvoiceDTO).entrySet().iterator();
+            while (itItem.hasNext()) {
+                Map.Entry itemPairs = (Map.Entry) itItem.next();
+                ((InvoiceItemDTO) itemPairs.getValue()).setOrdinal(i++);
+                addItem((InvoiceItemDTO) itemPairs.getValue());
+            }
+        }
 
         return invoicePerMerchantMap;
     }
 
-    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
     public Map<Integer, InvoiceDTO> genInvoicesUI(TransactionDTO paramTransactionDTO) throws ReferentialIntegrityException,
             ConstraintViolationException, EntityExistsException, EntityNotFoundException {
 
@@ -1232,13 +1469,12 @@ public class TransactionService {
         Query queryInvoicingCandidates = dao.createNamedQuery(Transaction.INVOICING_CANDIDATES_PER_MERCHANT);
 
 
-        queryInvoicingCandidates.setParameter("distributorId", paramTransactionDTO.getInvoicingDistributorId());
         queryInvoicingCandidates.setParameter("invoicingDateTo", Date.from(paramTransactionDTO.getInvoicingGenDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         queryInvoicingCandidates.setParameter("invoicingDateFrom", Date.from(lastInvoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant()));
         currentInvoicingTransaction.setInvoicedFrom(lastInvoicingTransaction.getInvoicedTo().plusDays(1));
         currentInvoicingTransaction.setInvoicedTo(paramTransactionDTO.getInvoicingGenDate());
-        currentInvoicingTransaction.setDitributor(dao.find(Client.class, paramTransactionDTO.getInvoicingDistributorId()));
         currentInvoicingTransaction.setInvoicingDate(LocalDate.now());
+        currentInvoicingTransaction.setDitributor(dao.createQuery("SELECT c FROM Client c", Client.class).getSingleResult());
 
         List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = NativeQueryResultsMapper.map(queryInvoicingCandidates.getResultList(), InvoicingTransactionSetDTO.class);
         Map<Integer, Invoice> invoicesPerPOSMap = new HashMap<Integer, Invoice>();
@@ -1264,7 +1500,7 @@ public class TransactionService {
                 maxDocument = dao.createNamedQuery(Invoice.READ_MAX_DOCUMENT, Integer.class)
                         .setParameter("client", client)
                         .setParameter("orgUnit", orgUnit).getSingleResult();
-                invoice.setDocument(maxDocument == null ? new Integer("1") + "" : (maxDocument + invoicingTransactionSetDTOs.indexOf(transactionSetDTO)) + "");
+                invoice.setDocument(maxDocument == null ? new Integer(1 + invoicingTransactionSetDTOs.indexOf(transactionSetDTO))+"" : (maxDocument + invoicingTransactionSetDTOs.indexOf(transactionSetDTO)) + "");
                 invoice.setClientId(client.getId());
                 invoice.setClientDesc(client.getName());
                 invoice.setCreditRelationDate(invoicingDate);
@@ -1290,13 +1526,8 @@ public class TransactionService {
             InvoiceItemDTO invoiceItemDTO = null;
             try {
                 System.out.println("podaci " + invoice.getDocument() + " " + invoice.getOrgUnitId() + " " + invoice.getClientId());
-                invoiceItemDTO = dao.createNamedQuery(InvoiceItem.READ_ITEMS_BY_INVOICE_AND_ARTICLE, InvoiceItem.class)
-                        .setParameter("document", invoice.getDocument())
-                        .setParameter("orgUnit", invoice.getOrgUnitId())
-                        .setParameter("clientId", invoice.getClientId())
-                        .setParameter("code", transactionSetDTO.getArticleCode())
-                        .getSingleResult().getInvoiceItemDTO();
-            } catch (NoResultException ex) {
+                invoiceItemDTO = invoiceItemsPerMerchantMap.get(invoice).get(transactionSetDTO.getArticleCode());
+            } catch (NullPointerException ex) {
                 invoiceItemDTO = null;
             }
             if (invoiceItemDTO == null) {
@@ -1362,9 +1593,11 @@ public class TransactionService {
             Map.Entry pair = (Map.Entry) it.next();
             InvoiceDTO persistingInvoiceDTO = (InvoiceDTO) pair.getValue();
             createInvoice(persistingInvoiceDTO);
+            int i = 1;
             Iterator itItem = invoiceItemsPerMerchantMap.get(persistingInvoiceDTO).entrySet().iterator();
             while (itItem.hasNext()) {
                 Map.Entry itemPairs = (Map.Entry) itItem.next();
+                ((InvoiceItemDTO) itemPairs.getValue()).setOrdinal(i++);
                 addItem((InvoiceItemDTO) itemPairs.getValue());
             }
         }

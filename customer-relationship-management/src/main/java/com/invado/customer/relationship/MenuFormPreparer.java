@@ -106,21 +106,22 @@ public class MenuFormPreparer implements ViewPreparer {
         /*Mati�nio podaci modul*/
         Module masterdata = new Module();
         masterdata.setPath("masterdata");
-        masterdata.setName("Mati�ni Podaci");
-        masterdata.put("Op�ti �ifarnici", "Kompanija Klijent", "/masterdata/client/0");
-        masterdata.put("Op�ti �ifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
-        masterdata.put("Op�ti �ifarnici", "Poslovni partner", "/masterdata/partner/0");
-        masterdata.put("Op�ti �ifarnici", "Banka", "/masterdata/bank/0");
-        masterdata.put("Op�ti �ifarnici", "Op�tina", "/masterdata/township/0");
-        masterdata.put("Op�ti �ifarnici", "Valuta", "/masterdata/currency/0");
-        masterdata.put("Op�ti �ifarnici", "Kurs", "/core/exchange-rate/0");
+        masterdata.setName("Matični Podaci");
+        masterdata.put("Opšti šifarnici", "Kompanija Klijent", "/masterdata/client/0");
+        masterdata.put("Opšti šifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
+        masterdata.put("Opšti šifarnici", "Poslovni partner", "/masterdata/partner/0");
+        masterdata.put("Opšti šifarnici", "Banka", "/masterdata/bank/0");
+        masterdata.put("Opšti šifarnici", "Opština", "/masterdata/township/0");
+        masterdata.put("Opšti šifarnici", "Valuta", "/masterdata/currency/0");
+        masterdata.put("Opšti šifarnici", "Kurs", "/core/exchange-rate/0");
         modules.add(masterdata);
 
         /*CRM modul*/
         Module crm = new Module();
         crm.setPath("crm");
-        crm.put("Transakcije", "Pregled transakcija", "/crm/transactions/0");
-        crm.put("Transakcije", "Generisanje faktura", "/crm/transactions/in-transactions.html?distributorId=&invoicingDate=&page=0");
+        crm.put("Transakcije", "Pregled transakcija", "/crm/transactions/view-transactions-page.html?page=0");
+        crm.put("Transakcije", "Predled suma za fakturisanje (generisanje)", "/crm/transactions/in-transactions.html?merchantId=&invoicingDate=&page=0");
+        crm.put("Transakcije", "Predled fakturisanih suma po periodima", "/crm/transactions/in-transactions-per-period.html?merchantId=&id=&page=0");
         crm.put("Transakcije", "Pregled faktura po periodima fakturisnja", "/crm/transactions/review-invoicing-transactions.html?partnerId=&id=&page=0");
         crm.put("CRM", "CRM", "/crm/terms/0/read-page.html");
         crm.put("CRM", "Usluge dobavljača", "/crm/service-provider-services/0/read-page.html");

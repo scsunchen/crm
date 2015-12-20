@@ -39,4 +39,8 @@ public class InvoicingTransactionService {
 
         return listDTO;
     }
+
+    public InvoicingTransactionDTO getbyId(Integer id){
+        return em.find(InvoicingTransaction.class, id).getDTO();
+    }
 }

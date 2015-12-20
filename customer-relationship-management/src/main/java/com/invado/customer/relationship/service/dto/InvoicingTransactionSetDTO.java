@@ -47,6 +47,8 @@ public class InvoicingTransactionSetDTO {
     private Long transactionId;
     @NativeQueryResultColumn(index=14)
     private Integer rownum;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private BigDecimal totalAmount;
 
 
 

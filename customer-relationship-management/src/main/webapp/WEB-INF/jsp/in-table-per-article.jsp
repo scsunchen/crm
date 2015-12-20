@@ -27,6 +27,12 @@
                             </div>
                         </div>
                     </spring:bind>
+                    <div class="form-group input-group">
+                        <label for="invoicingDistributorName">Distributor</label>
+                        <form:input id="invoicingDistributorName" class="typeahead form-control" type="text"
+                                    path="invoicingDistributorName" style="margin-bottom:  15px;"/>
+                        <form:hidden id="invoicingDistributorIdHidden" path="invoicingDistributorId"/>
+                    </div>
                     <div class="modal-footer">
                         <button class="btn btn-default" data-dismiss="modal" name="genInvoices"><spring:message
                                 code="Invoicing.Button.Cancel"/></button>
@@ -43,42 +49,29 @@
         </script>
     </c:if>
 </form:form>
-<form:form role="search" modelAttribute="transactionDTO" method="GET"
-           action="${pageContext.request.contextPath}/transactions/in-transactions.html">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <br/>
-            <!-- Pretraživanje poslovnih partnera -->
-            <div class="form-group">
-                <spring:bind path="invoicingDate">
 
-                    <div class="col-lg-4">
-                        <form:input id="invoicingDate" path="invoicingDate" type="text"
-                                    class="form-control" placeholder="dd.mm.yyyy."/>
-                            <span class="help-inline"><c:if test="${status.error}"><c:out
-                                    value="${status.errorMessage}"/></c:if></span>
-                    </div>
+<nav class="navbar navbar-default">
+    </br>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="btn btn-default"
+               href="${pageContext.request.contextPath}/transactions/in-transactions-per-pos.html?posId=${item.posId}&posName=${item.posName}&merchantId=${param['merchantId']}&merchantName=${param['merchantName']}&invoicingDate=${param['invoicingDate']}&page=0">
+                <span class="glyphicon glyphicon-backward"></span>
+                <spring:message code="Invoicing.Button.Back"/></a></div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
+            <c:out value="${param['posId']} / ${param['postName']}"/></p></div>
+        <div class="collapse navbar-collapse" id="bs-total-navbar-collapse-6"><p class="navbar-text navbar-right">
+            <spring:message code="Invoicing.Amount.Total"/><spring:eval expression="totalAmount"/></p></div>
+    </div>
+</nav>
 
-                </spring:bind>
-                <div class="col-md-4">
-                    <form:input id="merchantName" class="typeahead form-control" type="text"
-                                path="merchantName" style="margin-bottom:  15px;" placeholder="Merchant..."/>
-                    <form:hidden id="merchantIdHidden" path="merchantId"/>
-                    <form:input id="type-hidden" type="hidden" path="page" value="0"/>
-                </div>
-                <button type="submit" class="btn btn-default">Pretraga</button>
-                <!-- /.navbar-collapse -->
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-</form:form>
+
 <div class="table-responsive">
     <table class="table table-striped" data-sort-name="item.distributorName">
         <thead>
         <tr>
-            <th></th>
-            <th>Merchant</th>
+            <th>POS</th>
+            <th>Artikal</th>
             <th>Iznos</th>
             <th>Distributor</th>
         </tr>
@@ -90,13 +83,14 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="${pageContext.request.contextPath}/transactions/in-transactions-per-pos.html?merchantId=${item.merchantId}&merchantName=${item.merchantName}&invoicingDate=${param['invoicingDate']}&page=0"
+                        <a href="${pageContext.request.contextPath}/transactions/in-table-per-article.html?posId=${item.posId}&page=0"
                            class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span>
                             <spring:message code="Intable.Button.ViewPerPOS"/></a>
                     </div>
                 </td>
-                <td><c:out value="${item.merchantName}"/></td>
+                <td><c:out value="${item.posName}"/></td>
+                <td><c:out value="${item.serviceDescription}"/></td>
                 <td><spring:eval expression="item.amount"/></td>
                 <td><c:out value="${item.distributorName}"/></td>
 
@@ -116,14 +110,14 @@
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions.html?merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-pos.html?&merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
                 <span class="glyphicon glyphicon-backward"></span> Prethodna
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
 
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions.html?merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-pos.html?&merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
                 <span class="glyphicon glyphicon-forward"></span> Naredna
             </a>
         </li>
@@ -134,10 +128,8 @@
 <script type="text/javascript">
 
     $('#date').datepicker({});
-    $('#invoicingDate').datepicker({});
 
-
-    $('#merchantName').typeahead({
+    $('#distributorName').typeahead({
         hint: false,
         highlight: true,
         minLength: 1,
@@ -148,14 +140,34 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/masterdata/read-merchant/%QUERY',
+                url: '${pageContext.request.contextPath}/masterdata/read-distributor/%QUERY',
                 wildcard: '%QUERY'
             }
         })
     });
-    $('#merchantName').bind('typeahead:selected', function (obj, datum, name) {
-        $('#merchantIdHidden').val(datum['id']);
+    $('#distributorName').bind('typeahead:selected', function (obj, datum, name) {
+        $('#distributorIdHidden').val(datum['id']);
     });
 </script>
 
+<script type="text/javascript">
+    $('#invoicingDistributorName').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/masterdata/read-distributor/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#invoicingDistributorName').bind('typeahead:selected', function (obj, datum, name) {
+        $('#invoicingDistributorIdHidden').val(datum['id']);
+    });
 </script>
