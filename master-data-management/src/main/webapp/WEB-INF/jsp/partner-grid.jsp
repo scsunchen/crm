@@ -47,6 +47,8 @@
                             value="${status.errorMessage}"/></c:if></span>
                     </div>
                 </spring:bind>
+                <input:inputField label="Šifra delatnosti" name="activityCode"/>
+                <input:inputField label="Tekući račun" name="currentAccount"/>
             </div>
 
             <div class="col-lg-4">
@@ -110,8 +112,6 @@
                 <input:inputField name="EMail" label="email"/>
             </div>
             <div class="col-lg-4">
-                <input:inputField label="Šifra delatnosti" name="activityCode"/>
-                <input:inputField label="Tekući račun" name="currentAccount"/>
                 <spring:bind path="currencyDesignation">
                     <div class="form-group">
                         <label for="currencyDesignation">Valuta</label>
@@ -132,12 +132,21 @@
                     <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>
                 </div>
                 <input:inputField label="TelekomID" name="telekomId"/>
+                <spring:bind path="telekomStatus">
+                    <div class="form-group">
+                        <label for="telekomStatus">Telekom status</label>
+                        <form:select path="telekomStatus" id="telekomStatus" class="form-control" itemLabel="type">
+                            <form:option value="${item.telekomStatus}">${item.telekomStatusDescription}</form:option>
+                            <form:options items="${telekomStatuses}" itemLabel="description"/>
+                        </form:select>
+                    </div>
+                </spring:bind>
             </div>
             <form:hidden path="version"/>
         </div>
     </fieldset>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" name="save">
             <c:choose>
                 <c:when test="${action == 'create'}">
                     <c:out value="Kreiraj"/>
@@ -148,15 +157,15 @@
             </c:choose>
         </button>
         <div class="btn-group pull-right">
-            <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
+            <button class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 Telekom WS <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/masterdata/partner/register/input/${item.type}">Registracija partnera</a></li>
-                <li><a href="/masterdata/partner/register/update/${item.type}">Izmena partnera</a></li>
+                <li><button class="btn btn-default btn-block" type="submit"  name="register">Registracija partnera</button></li>
+                <li><button class="btn btn-default btn-block" type="submit"  name="update">Izmena partnera</button></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/masterdata/partner/register/deactivation/${item.type}">Deaktivacija partnera</a></li>
+                <li><button class="btn btn-default btn-block" type="submit"  name="deactivation">Deaktivacija</button></li>
             </ul>
         </div>
     </div>

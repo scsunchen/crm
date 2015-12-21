@@ -10,6 +10,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 
 import com.invado.core.dto.BusinessPartnerDTO;
+
 import com.invado.core.utils.Utils;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -415,6 +416,7 @@ public class BusinessPartner implements Serializable {
         businessPartnerDTO.setLongitude(this.getLongitude());
         if (this.getTelekomId() != null)
             businessPartnerDTO.setTelekomId(this.getTelekomId());
+        businessPartnerDTO.setTelekomStatus(this.getTelekomStatus());
 
 
         return businessPartnerDTO;

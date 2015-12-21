@@ -54,6 +54,8 @@ public class BusinessPartnerDTO {
     private String namePattern;
     private Integer telekomId;
     private BusinessPartner.TelekomStatus telekomStatus;
+    private String telekomStatusValue;
+    private String telekomStatusDescription;
 
 
     public BusinessPartnerDTO() {
@@ -410,6 +412,22 @@ public class BusinessPartnerDTO {
 
     public void setTelekomStatus(BusinessPartner.TelekomStatus telekomStatus) {
         this.telekomStatus = telekomStatus;
+    }
+
+    public String getTelekomStatusValue() {
+        return telekomStatusValue;
+    }
+
+    public void setTelekomStatusValue(String telekomStatusValue) {
+        this.telekomStatusValue = telekomStatusValue;
+    }
+
+    public String getTelekomStatusDescription() {
+        return telekomStatusDescription;
+    }
+
+    public void setTelekomStatusDescription(String telekomStatusDescription) {
+        this.telekomStatusDescription = telekomStatusDescription;
     }
 
     @Override

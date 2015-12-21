@@ -193,6 +193,7 @@ public class BPController {
 
         List<BusinessPartner> parents = service.readParentPartners();
         List<BusinessPartner.Type> types = service.getTypes();
+        List<BusinessPartner.TelekomStatus> telekomStatuses = service.getTelekomStatuses();
         List<POSTypeDTO> POSTypes = posTypeService.readAll(null, null);
         BusinessPartnerDTO item = new BusinessPartnerDTO();
         model.put("item", item);
@@ -202,7 +203,7 @@ public class BPController {
         return "partner-grid";
     }
 
-    @RequestMapping(value = "/partner/create.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/partner/create.html", method = RequestMethod.POST, params = "save")
     public String processCreationForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
                                       @RequestParam Integer page,
                                       @RequestParam(value = "masterPartnerId", required = false) Integer id,
@@ -238,6 +239,7 @@ public class BPController {
 
         List<BusinessPartner> parents = service.readParentPartners();
         List<BusinessPartner.Type> types = service.getTypes();
+        List<BusinessPartner.TelekomStatus> telekomStatuses = service.getTelekomStatuses();
         List<POSTypeDTO> POSTypes = posTypeService.readAll(null, null);
         List<CurrencyDTO> currencyDesignation = currencyService.readAll(null, null, null);
         BusinessPartnerDTO item = new BusinessPartnerDTO();
@@ -308,14 +310,14 @@ public class BPController {
     }
 
     @RequestMapping(value = "/partner/update.html",
-            method = RequestMethod.POST)
-    public String processUpdateForm(@ModelAttribute("item") BusinessPartnerDTO item,
+            method = RequestMethod.POST, params = "save")
+    public String processUpdateForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
                                     @RequestParam Integer id,
                                     @RequestParam Integer page,
-                                    BindingResult result,
                                     SessionStatus status,
                                     Map<String, Object> model)
             throws Exception {
+
         if (result.hasErrors()) {
             return "partner-grid";
         } else {
@@ -363,61 +365,73 @@ public class BPController {
         return "redirect:/partner/read-subpartners.html?posId=" + item.getId() + "&masterPartnerId=" + item.getParentBusinessPartnerId() + "&masterPartnerName=" + item.getParentBusinesspartnerName() + "&page=0";
     }
 
-    @RequestMapping(value = "partner/register/input/MERCHANT")
-    public String processTelekomMerchantRegistration(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+    @RequestMapping(value = "/partner/update.html", method = RequestMethod.POST, params = "register")
+    public String processTelekomMerchantRegistration(@ModelAttribute("item") BusinessPartnerDTO item,
+                                                     @RequestParam(value = "id", required = false) Integer id,
+                                                     @RequestParam(value = "page", required = false) Integer page) throws Exception {
         if (item.getId() == null)
             service.create(item);
 
-        item.setTelekomId(service.merchantRegistration(item));
+        service.merchantRegistration(item);
+
         service.update(item);
 
         return "partner-grid";
     }
 
-    @RequestMapping(value = "partner/register/update/MERCHANT")
-    public String processTelekomMerchantUpdate(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+    @RequestMapping(value = "/partner/update.html", method = RequestMethod.POST, params = "update")
+    public String processTelekomMerchantUpdate(@ModelAttribute("item") BusinessPartnerDTO item,
+                                               @RequestParam(value = "id", required = false) Integer id,
+                                               @RequestParam(value = "page", required = false) Integer page) throws Exception {
 
-        item.setTelekomId(service.merchantUpdate(item));
+        service.merchantUpdate(item);
         service.update(item);
 
         return "partner-grid";
     }
 
-    @RequestMapping(value = "partner/register/deactivate/MERCHANT")
-    public String processTelekomMerchantDeactivation(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+    @RequestMapping(value = "/partner/update.html", method = RequestMethod.POST, params = "deactivation")
+    public String processTelekomMerchantDeactivation(@ModelAttribute("item") BusinessPartnerDTO item,
+                                                     @RequestParam(value = "id", required = false) Integer id,
+                                                     @RequestParam(value = "page", required = false) Integer page) throws Exception {
 
-        item.setTelekomId(service.merchantDeactivation(item.getTelekomId()));
-        item.setTelekomStatus(BusinessPartner.TelekomStatus.DEACTIVATED);
+        service.merchantDeactivation(item);
         service.update(item);
 
         return "partner-grid";
     }
 
 
-    @RequestMapping(value = "partner/register/input/POINT_OF_SALE")
-    public String processTelekomPOSRegistration(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+    @RequestMapping(value = "partner/update-subpartner.html", method = RequestMethod.POST, params = "register")
+    public String processTelekomPOSRegistration(@ModelAttribute("item") BusinessPartnerDTO item,
+                                                @RequestParam Integer id,
+                                                @RequestParam Integer page) throws Exception {
 
         if (item.getId() == null)
             service.create(item);
-        item.setTelekomId(service.pointOfSaleRegistration(item));
+        service.pointOfSaleRegistration(item);
         service.update(item);
 
         return "partner-grid";
     }
 
-    @RequestMapping(value = "partner/register/update/POINT_OF_SALE")
-    public String processTelekomPOSUpdate(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+    @RequestMapping(value = "partner/update-subpartner.html", method = RequestMethod.POST, params = "update")
+    public String processTelekomPOSUpdate(@ModelAttribute("item") BusinessPartnerDTO item,
+                                          @RequestParam Integer id,
+                                          @RequestParam Integer page) throws Exception {
 
-        item.setTelekomId(service.pointOfSaleUpdate(item));
+        service.pointOfSaleUpdate(item);
         service.update(item);
 
         return "partner-grid";
     }
 
-    @RequestMapping(value = "partner/register/deactivation/POINT_OF_SALE")
-    public String processTelekomPOSDeactivation(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
+    @RequestMapping(value = "partner/update-subpartner.html", method = RequestMethod.POST, params = "deactivation")
+    public String processTelekomPOSDeactivation(@ModelAttribute("item") BusinessPartnerDTO item,
+                                                @RequestParam Integer id,
+                                                @RequestParam Integer page) throws Exception {
 
-        item.setTelekomId(service.pointOfSaleDeactivation(item));
+        service.pointOfSaleDeactivation(item);
         service.update(item);
 
         return "partner-grid";

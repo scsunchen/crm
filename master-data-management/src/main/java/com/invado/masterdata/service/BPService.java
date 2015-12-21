@@ -89,6 +89,8 @@ public class BPService {
             businessPartner.setName(a.getName());
             businessPartner.setName1(a.getName1());
             businessPartner.setAddress(new Address(a.getCountry(), a.getPlace(), a.getStreet(), a.getPostCode()));
+            businessPartner.setTelekomAddress(new TelekomAddress(a.gettPlace(), a.gettPlaceCode(), a.getPostCode(), a.getStreet(), a.gettStreetCode(), a.gettHouseNumber(), a.gettHouseNumberCode(),
+                    a.gettAddressCode()));
             businessPartner.setPhone(a.getPhone());
             businessPartner.setFax(a.getStreet());
             businessPartner.setEMail(a.getEMail());
@@ -100,6 +102,8 @@ public class BPService {
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
             businessPartner.setVAT(a.getVAT());
             businessPartner.setType(a.getType());
+            businessPartner.setTelekomStatus(a.getTelekomStatus());
+            businessPartner.setTelekomId(a.getTelekomId());
             businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId().intValue()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
             List<String> msgs = validator.validate(businessPartner).stream()
@@ -167,6 +171,8 @@ public class BPService {
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
             businessPartner.setVAT(a.getVAT());
             businessPartner.setType(a.getType());
+            businessPartner.setTelekomStatus(a.getTelekomStatus());
+            businessPartner.setTelekomId(a.getTelekomId());
             if (a.getParentBusinessPartnerId() != null)
                 businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
@@ -230,6 +236,8 @@ public class BPService {
             if (dto.getContactPersoneName() != null)
                 item.setContactPerson(new ContactPerson(dto.getContactPersoneName(), dto.getContactPersonePhone(), dto.getContactPersoneFunction(), dto.getEMail()));
             item.setCurrentAccount(dto.getCurrentAccount());
+            item.setTelekomAddress(new TelekomAddress(dto.gettPlace(), dto.gettPlaceCode(), dto.getPostCode(), dto.getStreet(), dto.gettStreetCode(),
+                    dto.gettHouseNumber(), dto.gettHouseNumberCode(), dto.gettAddressCode()));
             item.setEMail(dto.getEMail());
             item.setFax(dto.getFax());
             item.setPhone(dto.getPhone());
@@ -240,6 +248,9 @@ public class BPService {
             item.setTIN(dto.getTIN());
             item.setCompanyIdNumber(dto.getCompanyIdNumber());
             item.setCurrencyDesignation(dto.getCurrencyDesignation());
+            item.setType(dto.getType());
+            item.setTelekomStatus(dto.getTelekomStatus());
+            item.setTelekomId(dto.getTelekomId());
             if (dto.getParentBusinessPartnerId() != null)
                 item.setParentBusinessPartner(dao.find(BusinessPartner.class, dto.getParentBusinessPartnerId()));
 
@@ -579,60 +590,107 @@ public class BPService {
 
 
     /*MERCHANT*/
-    public Integer merchantRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+    public void merchantRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
         if (businessPartnerDTO.getTIN() == null || businessPartnerDTO.getCompanyIdNumber() == null || businessPartnerDTO.getName() == null) {
             throw new WSException(
                     Utils.getMessage("WSReference.MerchantRegistration.IllegalArgumentEx"));
         }
-        try {
-            return Integer.valueOf(telekomWSClient.poslovniPartnerUnos(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
-                    businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
-                    businessPartnerDTO.getEMail()));
-        } catch (WSException ex){
-            throw ex;
-        }
-    }
-
-    public Integer merchantUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
-        if (businessPartnerDTO.getTIN() == null || businessPartnerDTO.getCompanyIdNumber() == null || businessPartnerDTO.getName() == null) {
+        if (businessPartnerDTO.getType() != BusinessPartner.Type.MERCHANT) {
             throw new WSException(
-                    Utils.getMessage("WSReference.MerchantUpdate.IllegalArgumentEx"));
+                    Utils.getMessage("WSReference.MerchantRegistration.IllegalType"));
         }
         try {
-        return Integer.valueOf(telekomWSClient.poslovniPartnerIzmena(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
-                businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
-                businessPartnerDTO.getEMail()));
-        } catch (WSException ex){
+            businessPartnerDTO.setTelekomId(Integer.valueOf(telekomWSClient.poslovniPartnerUnos(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
+                    businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
+                    businessPartnerDTO.getEMail())));
+            businessPartnerDTO.setTelekomStatus(BusinessPartner.TelekomStatus.ACTIVE);
+        } catch (WSException ex) {
             throw ex;
         }
     }
 
-    public Integer merchantDeactivation(Integer telekomId) throws Exception {
-        return Integer.valueOf(telekomWSClient.poslovniPartnerDeaktivacija(telekomId.intValue()));
+    public void merchantUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        if (businessPartnerDTO.getTelekomId() == null) {
+            throw new WSException(
+                    Utils.getMessage("WSReference.MerchantUpdate.NonRegisteredMerchant"));
+        }
+        try {
+            businessPartnerDTO.setTelekomId(Integer.valueOf(telekomWSClient.poslovniPartnerIzmena(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
+                    businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
+                    businessPartnerDTO.getEMail())));
+        } catch (WSException ex) {
+            throw ex;
+        }
+    }
+
+    public void merchantDeactivation(BusinessPartnerDTO businessPartnerDTO) throws Exception {
+
+        if (businessPartnerDTO.getTelekomId() == null) {
+            throw new WSException(
+                    Utils.getMessage("WSReference.MerchantUpdate.NonRegisteredMerchant"));
+        }
+        try {
+            businessPartnerDTO.setTelekomId(telekomWSClient.poslovniPartnerDeaktivacija(businessPartnerDTO.getTelekomId().intValue()));
+            businessPartnerDTO.setTelekomStatus(BusinessPartner.TelekomStatus.DEACTIVATED);
+        } catch (WSException ex) {
+            throw ex;
+        }
+
     }
 
 
     /*POS*/
 
-    public Integer pointOfSaleRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
-
-        return Integer.valueOf(telekomWSClient.prodajnoMestoUnos(dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId(),
-                businessPartnerDTO.getName(), businessPartnerDTO.getPlace(), businessPartnerDTO.gettAddressCode(), businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getContactPersoneName(),
-                businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+    public void pointOfSaleRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        if (dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId() == null) {
+            throw new WSException(
+                    Utils.getMessage("WSReference.POSRegistration.NonRegisteredMerchant"));
+        }
+        if (businessPartnerDTO.getPOStype() != null || businessPartnerDTO.getName() == null) {
+            throw new WSException(
+                    Utils.getMessage("WSReference.POSRegistration.IllegalArgumentEx"));
+        }
+        if (businessPartnerDTO.getType() != BusinessPartner.Type.POINT_OF_SALE) {
+            throw new WSException(
+                    Utils.getMessage("WSReference.POSRegistration.IllegalType"));
+        }
+        try {
+            businessPartnerDTO.setTelekomId(Integer.valueOf(telekomWSClient.prodajnoMestoUnos(dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId(),
+                    businessPartnerDTO.getName(), businessPartnerDTO.getPlace(), businessPartnerDTO.gettAddressCode(), businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getContactPersoneName(),
+                    businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail())));
+            businessPartnerDTO.setTelekomStatus(BusinessPartner.TelekomStatus.ACTIVE);
+        } catch (WSException ex) {
+            throw ex;
+        }
 
     }
 
 
-    public Integer pointOfSaleUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+    public void pointOfSaleUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
 
+        if (businessPartnerDTO.getTelekomId() == null) {
+            throw new WSException(Utils.getMessage("WSReference.POSRegistration.NonRegisteredPOS"));
+        }
         BusinessPartner parentBusinesspartner = dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId());
-
-        return Integer.valueOf(telekomWSClient.prodajnoMestoIzmena(businessPartnerDTO.getTelekomId(), businessPartnerDTO.getName(), Integer.parseInt(parentBusinesspartner.getTIN()),
-                businessPartnerDTO.gettAddressCode(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail()));
+        try {
+            businessPartnerDTO.setTelekomId(Integer.valueOf(telekomWSClient.prodajnoMestoIzmena(businessPartnerDTO.getTelekomId(), businessPartnerDTO.getName(),
+                    Integer.parseInt(parentBusinesspartner.getTIN()), businessPartnerDTO.gettAddressCode(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPosTypeId(),
+                    businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail())));
+        } catch (WSException ex) {
+            throw ex;
+        }
     }
 
-    public Integer pointOfSaleDeactivation(BusinessPartnerDTO businessPartnerDTO) throws WSException {
-        return Integer.valueOf(telekomWSClient.prodajnoMestoDeaktivacija(businessPartnerDTO.getTelekomId()));
+    public void pointOfSaleDeactivation(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        if (businessPartnerDTO.getTelekomId() == null) {
+            throw new WSException(Utils.getMessage("WSReference.POSRegistration.NonRegisteredPOS"));
+        }
+        try {
+            businessPartnerDTO.setTelekomId(Integer.valueOf(telekomWSClient.prodajnoMestoDeaktivacija(businessPartnerDTO.getTelekomId())));
+            businessPartnerDTO.setTelekomStatus(BusinessPartner.TelekomStatus.DEACTIVATED);
+        } catch (WSException ex) {
+            throw ex;
+        }
     }
 
 
@@ -713,6 +771,9 @@ public class BPService {
         return Arrays.asList(BusinessPartner.Type.values());
     }
 
+    public List<BusinessPartner.TelekomStatus> getTelekomStatuses() {
+        return Arrays.asList(BusinessPartner.TelekomStatus.values());
+    }
 
     public BusinessPartner readById(Integer id) {
         return dao.find(BusinessPartner.class, id);
