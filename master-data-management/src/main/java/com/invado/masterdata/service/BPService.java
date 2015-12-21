@@ -579,16 +579,32 @@ public class BPService {
 
 
     /*MERCHANT*/
-    public Integer merchatnRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
-        return Integer.valueOf(telekomWSClient.poslovniPartnerUnos(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
-                businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
-                businessPartnerDTO.getEMail()));
+    public Integer merchantRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        if (businessPartnerDTO.getTIN() == null || businessPartnerDTO.getCompanyIdNumber() == null || businessPartnerDTO.getName() == null) {
+            throw new WSException(
+                    Utils.getMessage("WSReference.MerchantRegistration.IllegalArgumentEx"));
+        }
+        try {
+            return Integer.valueOf(telekomWSClient.poslovniPartnerUnos(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
+                    businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
+                    businessPartnerDTO.getEMail()));
+        } catch (WSException ex){
+            throw ex;
+        }
     }
 
     public Integer merchantUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
+        if (businessPartnerDTO.getTIN() == null || businessPartnerDTO.getCompanyIdNumber() == null || businessPartnerDTO.getName() == null) {
+            throw new WSException(
+                    Utils.getMessage("WSReference.MerchantUpdate.IllegalArgumentEx"));
+        }
+        try {
         return Integer.valueOf(telekomWSClient.poslovniPartnerIzmena(businessPartnerDTO.getName(), Integer.valueOf(businessPartnerDTO.getTIN()).intValue(), businessPartnerDTO.getCompanyIdNumber(),
                 businessPartnerDTO.getPlace(), businessPartnerDTO.getStreet(), businessPartnerDTO.getContactPersoneName(), businessPartnerDTO.getPhone(),
                 businessPartnerDTO.getEMail()));
+        } catch (WSException ex){
+            throw ex;
+        }
     }
 
     public Integer merchantDeactivation(Integer telekomId) throws Exception {

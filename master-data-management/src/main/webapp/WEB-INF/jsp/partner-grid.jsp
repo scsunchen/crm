@@ -153,10 +153,10 @@
                 Telekom WS <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/masterdata/partner/register/${item.type}">Registracija partnera</a></li>
-                <li><a href="/masterdata/partner/register/${item.type}">Izmena partnera</a></li>
+                <li><a href="/masterdata/partner/register/input/${item.type}">Registracija partnera</a></li>
+                <li><a href="/masterdata/partner/register/update/${item.type}">Izmena partnera</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/masterdata/partner/register/${item.type}">Deaktivacija partnera</a></li>
+                <li><a href="/masterdata/partner/register/deactivation/${item.type}">Deaktivacija partnera</a></li>
             </ul>
         </div>
     </div>

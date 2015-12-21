@@ -219,7 +219,7 @@ public class BPController {
             return "partner-grid";
         } else {
             item.settAddressCode(addressServiceClient.getPAK(item.gettHouseNumberCode()));
-            this.service.create(item);
+            service.create(item);
             status.setComplete();
             redirectAttributes.addFlashAttribute("alertType", "success");
             redirectAttributes.addFlashAttribute("message", Utils.getMessage("Processing.Save.Succes"));
@@ -356,7 +356,7 @@ public class BPController {
             BusinessPartnerDTO masterPartner = service.read(item.getParentBusinessPartnerId());
             item.setTIN(masterPartner.getTIN());
             item.setVAT(masterPartner.getVAT());
-            this.service.update(item);
+            service.update(item);
             status.setComplete();
         }
 
@@ -368,7 +368,7 @@ public class BPController {
         if (item.getId() == null)
             service.create(item);
 
-        item.setTelekomId(service.merchatnRegistration(item));
+        item.setTelekomId(service.merchantRegistration(item));
         service.update(item);
 
         return "partner-grid";
@@ -387,6 +387,7 @@ public class BPController {
     public String processTelekomMerchantDeactivation(@ModelAttribute("item") BusinessPartnerDTO item) throws Exception {
 
         item.setTelekomId(service.merchantDeactivation(item.getTelekomId()));
+        item.setTelekomStatus(BusinessPartner.TelekomStatus.DEACTIVATED);
         service.update(item);
 
         return "partner-grid";

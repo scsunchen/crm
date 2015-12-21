@@ -1,0 +1,507 @@
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://bg-bu-gos/WebServiceLokator/Service1" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://bg-bu-gos/WebServiceLokator/Service1">
+<wsdl:types>
+<s:schema elementFormDefault="qualified" targetNamespace="http://bg-bu-gos/WebServiceLokator/Service1">
+<s:element name="selectMesto">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="NazivMesta" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectMestoResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectMestoResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:complexType name="ProstiPodaci">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="sifnaz" type="tns:ArrayOfArrayOfString"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="ArrayOfArrayOfString">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="ArrayOfString" nillable="true" type="tns:ArrayOfString"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="ArrayOfString">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string"/>
+</s:sequence>
+</s:complexType>
+<s:element name="selectUlicuMesta">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="SifraMesta" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectUlicuMestaResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectUlicuMestaResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectUlicu">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="mesto" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="NazivUlice" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectUlicuResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectUlicuResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKbrUlice">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="mesto" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="ulica" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKbrUliceResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectKbrUliceResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKoordMesta">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="mesto" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKoordMestaResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectKoordMestaResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKoordAdrese">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="mesto" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="ulica" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="broj" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKoordAdreseResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectKoordAdreseResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKoordAdreseKorisnika">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="pozivni" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="brojtel" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKoordAdreseKorisnikaResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectKoordAdreseKorisnikaResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKoordIAdresuKorisnika">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="pozivni" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="brojtel" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectKoordIAdresuKorisnikaResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectKoordIAdresuKorisnikaResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectRbAdrese">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="mesto" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="ulica" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="broj" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectRbAdreseResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectRbAdreseResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectPAK">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="rb_adrese" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectPAKResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectPAKResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectAdrPodatke">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="rb_adrese" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:element name="selectAdrPodatkeResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="selectAdrPodatkeResult" type="tns:ProstiPodaci"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+</s:schema>
+</wsdl:types>
+<wsdl:message name="selectMestoSoapIn">
+<wsdl:part name="parameters" element="tns:selectMesto"/>
+</wsdl:message>
+<wsdl:message name="selectMestoSoapOut">
+<wsdl:part name="parameters" element="tns:selectMestoResponse"/>
+</wsdl:message>
+<wsdl:message name="selectUlicuMestaSoapIn">
+<wsdl:part name="parameters" element="tns:selectUlicuMesta"/>
+</wsdl:message>
+<wsdl:message name="selectUlicuMestaSoapOut">
+<wsdl:part name="parameters" element="tns:selectUlicuMestaResponse"/>
+</wsdl:message>
+<wsdl:message name="selectUlicuSoapIn">
+<wsdl:part name="parameters" element="tns:selectUlicu"/>
+</wsdl:message>
+<wsdl:message name="selectUlicuSoapOut">
+<wsdl:part name="parameters" element="tns:selectUlicuResponse"/>
+</wsdl:message>
+<wsdl:message name="selectKbrUliceSoapIn">
+<wsdl:part name="parameters" element="tns:selectKbrUlice"/>
+</wsdl:message>
+<wsdl:message name="selectKbrUliceSoapOut">
+<wsdl:part name="parameters" element="tns:selectKbrUliceResponse"/>
+</wsdl:message>
+<wsdl:message name="selectKoordMestaSoapIn">
+<wsdl:part name="parameters" element="tns:selectKoordMesta"/>
+</wsdl:message>
+<wsdl:message name="selectKoordMestaSoapOut">
+<wsdl:part name="parameters" element="tns:selectKoordMestaResponse"/>
+</wsdl:message>
+<wsdl:message name="selectKoordAdreseSoapIn">
+<wsdl:part name="parameters" element="tns:selectKoordAdrese"/>
+</wsdl:message>
+<wsdl:message name="selectKoordAdreseSoapOut">
+<wsdl:part name="parameters" element="tns:selectKoordAdreseResponse"/>
+</wsdl:message>
+<wsdl:message name="selectKoordAdreseKorisnikaSoapIn">
+<wsdl:part name="parameters" element="tns:selectKoordAdreseKorisnika"/>
+</wsdl:message>
+<wsdl:message name="selectKoordAdreseKorisnikaSoapOut">
+<wsdl:part name="parameters" element="tns:selectKoordAdreseKorisnikaResponse"/>
+</wsdl:message>
+<wsdl:message name="selectKoordIAdresuKorisnikaSoapIn">
+<wsdl:part name="parameters" element="tns:selectKoordIAdresuKorisnika"/>
+</wsdl:message>
+<wsdl:message name="selectKoordIAdresuKorisnikaSoapOut">
+<wsdl:part name="parameters" element="tns:selectKoordIAdresuKorisnikaResponse"/>
+</wsdl:message>
+<wsdl:message name="selectRbAdreseSoapIn">
+<wsdl:part name="parameters" element="tns:selectRbAdrese"/>
+</wsdl:message>
+<wsdl:message name="selectRbAdreseSoapOut">
+<wsdl:part name="parameters" element="tns:selectRbAdreseResponse"/>
+</wsdl:message>
+<wsdl:message name="selectPAKSoapIn">
+<wsdl:part name="parameters" element="tns:selectPAK"/>
+</wsdl:message>
+<wsdl:message name="selectPAKSoapOut">
+<wsdl:part name="parameters" element="tns:selectPAKResponse"/>
+</wsdl:message>
+<wsdl:message name="selectAdrPodatkeSoapIn">
+<wsdl:part name="parameters" element="tns:selectAdrPodatke"/>
+</wsdl:message>
+<wsdl:message name="selectAdrPodatkeSoapOut">
+<wsdl:part name="parameters" element="tns:selectAdrPodatkeResponse"/>
+</wsdl:message>
+<wsdl:portType name="Service1Soap">
+<wsdl:operation name="selectMesto">
+<wsdl:input message="tns:selectMestoSoapIn"/>
+<wsdl:output message="tns:selectMestoSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectUlicuMesta">
+<wsdl:input message="tns:selectUlicuMestaSoapIn"/>
+<wsdl:output message="tns:selectUlicuMestaSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectUlicu">
+<wsdl:input message="tns:selectUlicuSoapIn"/>
+<wsdl:output message="tns:selectUlicuSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectKbrUlice">
+<wsdl:input message="tns:selectKbrUliceSoapIn"/>
+<wsdl:output message="tns:selectKbrUliceSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectKoordMesta">
+<wsdl:input message="tns:selectKoordMestaSoapIn"/>
+<wsdl:output message="tns:selectKoordMestaSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectKoordAdrese">
+<wsdl:input message="tns:selectKoordAdreseSoapIn"/>
+<wsdl:output message="tns:selectKoordAdreseSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectKoordAdreseKorisnika">
+<wsdl:input message="tns:selectKoordAdreseKorisnikaSoapIn"/>
+<wsdl:output message="tns:selectKoordAdreseKorisnikaSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectKoordIAdresuKorisnika">
+<wsdl:input message="tns:selectKoordIAdresuKorisnikaSoapIn"/>
+<wsdl:output message="tns:selectKoordIAdresuKorisnikaSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectRbAdrese">
+<wsdl:input message="tns:selectRbAdreseSoapIn"/>
+<wsdl:output message="tns:selectRbAdreseSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectPAK">
+<wsdl:input message="tns:selectPAKSoapIn"/>
+<wsdl:output message="tns:selectPAKSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="selectAdrPodatke">
+<wsdl:input message="tns:selectAdrPodatkeSoapIn"/>
+<wsdl:output message="tns:selectAdrPodatkeSoapOut"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="Service1Soap" type="tns:Service1Soap">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="selectMesto">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectMesto" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectUlicuMesta">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectUlicuMesta" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectUlicu">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectUlicu" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKbrUlice">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKbrUlice" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKoordMesta">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKoordMesta" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKoordAdrese">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKoordAdrese" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKoordAdreseKorisnika">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKoordAdreseKorisnika" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKoordIAdresuKorisnika">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKoordIAdresuKorisnika" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectRbAdrese">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectRbAdrese" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectPAK">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectPAK" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectAdrPodatke">
+<soap:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectAdrPodatke" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="Service1Soap12" type="tns:Service1Soap">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="selectMesto">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectMesto" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectUlicuMesta">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectUlicuMesta" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectUlicu">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectUlicu" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKbrUlice">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKbrUlice" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKoordMesta">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKoordMesta" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKoordAdrese">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKoordAdrese" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKoordAdreseKorisnika">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKoordAdreseKorisnika" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectKoordIAdresuKorisnika">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectKoordIAdresuKorisnika" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectRbAdrese">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectRbAdrese" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectPAK">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectPAK" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="selectAdrPodatke">
+<soap12:operation soapAction="http://bg-bu-gos/WebServiceLokator/Service1/selectAdrPodatke" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="Service1">
+<wsdl:port name="Service1Soap" binding="tns:Service1Soap">
+<soap:address location="http://tsadreseraz.telekom.rs/Service1.asmx"/>
+</wsdl:port>
+<wsdl:port name="Service1Soap12" binding="tns:Service1Soap12">
+<soap12:address location="http://tsadreseraz.telekom.rs/Service1.asmx"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

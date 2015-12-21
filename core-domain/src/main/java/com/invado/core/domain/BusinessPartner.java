@@ -120,6 +120,8 @@ public class BusinessPartner implements Serializable {
     private POSType posType;
     @Column(name = "TELEKOM_ID")
     private Integer telekomId;
+    @Column(name = "TELEKOM_STATUS")
+    private TelekomStatus telekomStatus;
     @Embedded
     private ContactPerson contactPerson;
     @Version
@@ -354,6 +356,15 @@ public class BusinessPartner implements Serializable {
         this.type = type;
     }
 
+
+    public TelekomStatus getTelekomStatus() {
+        return telekomStatus;
+    }
+
+    public void setTelekomStatus(TelekomStatus telekomStatus) {
+        this.telekomStatus = telekomStatus;
+    }
+
     public BusinessPartner getParentBusinessPartner() {
         return parentBusinessPartner;
     }
@@ -405,6 +416,7 @@ public class BusinessPartner implements Serializable {
         if (this.getTelekomId() != null)
             businessPartnerDTO.setTelekomId(this.getTelekomId());
 
+
         return businessPartnerDTO;
     }
 
@@ -444,6 +456,26 @@ public class BusinessPartner implements Serializable {
             throw new IllegalArgumentException("No Enum specified for this string");
         }
     }
+
+
+    public enum TelekomStatus {
+
+        ACTIVE,//Partner je registrovan i aktivan
+        DEACTIVATED; //Partner je deaktiviran
+
+
+        public String getDescription() {
+            switch (this) {
+                case ACTIVE:
+                    return Utils.getMessage("Businesspartner.TelekomStatus.Active");
+                case DEACTIVATED:
+                    return Utils.getMessage("Businesspartner.TelekomStatus.Deactivated");
+            }
+            return "";
+        }
+
+    }
+
     //************************************************************************//
     // OVERRIDEN OBJECT METHODS  //
     //************************************************************************//

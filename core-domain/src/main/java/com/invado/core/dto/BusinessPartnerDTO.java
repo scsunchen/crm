@@ -53,6 +53,7 @@ public class BusinessPartnerDTO {
     private Integer latitude;
     private String namePattern;
     private Integer telekomId;
+    private BusinessPartner.TelekomStatus telekomStatus;
 
 
     public BusinessPartnerDTO() {
@@ -401,6 +402,14 @@ public class BusinessPartnerDTO {
 
     public void setTelekomId(Integer telekomId) {
         this.telekomId = telekomId;
+    }
+
+    public BusinessPartner.TelekomStatus getTelekomStatus() {
+        return telekomStatus;
+    }
+
+    public void setTelekomStatus(BusinessPartner.TelekomStatus telekomStatus) {
+        this.telekomStatus = telekomStatus;
     }
 
     @Override
