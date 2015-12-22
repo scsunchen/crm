@@ -19,19 +19,11 @@
 
                 <input:inputField label="Šifra detail *" name="id" disabled="true"/>
 
-                <spring:bind path="type">
-                    <div class="form-group">
-                        <label for="type">Tip partnera</label>
-                        <form:select path="type" id="type" class="form-control" itemLabel="type">
-                            <form:option value="${item.type}">${item.typeDescription}</form:option>
-                            <form:options items="${types}" itemLabel="description"/>
-                        </form:select>
-                    </div>
-                </spring:bind>
+
 
                 <spring:bind path="name">
                     <div>
-                        <input:inputField label="Naziv *" name="name"/>
+                        <input:inputField label="Naziv *****" name="name"/>
                     <span class="help-inline"><c:if test="${status.error}"><c:out
                             value="${status.errorMessage}"/></c:if></span>
                     </div>
@@ -52,10 +44,10 @@
                     <div class="col-lg-9">
                         <spring:bind path="place">
                             <div class="form-group">
-                                <label for="place"><spring:message code="BusinessPartnerContacts.Table.Place"/></label>
-                                <form:input id="place" path="place" class="form-control"/>
-                                <span class="help-inline"><c:if test="${status.error}"><c:out
-                                        value="${status.errorMessage}"/></c:if></span>
+                                <label for="tPlace"><spring:message code="BusinessPartnerContacts.Table.Place"/></label>
+                                <form:input id="tPlace" class="typeahead form-control" type="text"
+                                            path="tPlace" style="margin-bottom:  15px;"/>
+                                <form:hidden id="placeCodeHidden" path="tPlaceCode"/>
                             </div>
                         </spring:bind>
                     </div>
@@ -70,21 +62,21 @@
                             </div>
                         </spring:bind>
                     </div>
-                    <spring:bind path="street">
-                        <div class="form-group col-lg-10">
-                            <label for="street"><spring:message code="BusinessPartnerContacts.Table.Street"/></label>
-                            <form:input id="street" path="street" class="form-control"/>
-                                <span class="help-inline"><c:if test="${status.error}"><c:out
-                                        value="${status.errorMessage}"/></c:if></span>
+                    <spring:bind path="tStreet">
+                        <div class="form-group">
+                            <label for="tStreet"><spring:message
+                                    code="BusinessPartnerContacts.Table.Street"/></label>
+                            <form:input id="tStreet" class="typeahead form-control" type="text"
+                                        path="tStreet" style="margin-bottom:  15px;"/>
+                            <form:hidden id="streetCodeHidden" path="tStreetCode"/>
                         </div>
                     </spring:bind>
-                    <spring:bind path="houseNumber">
-                        <div class="form-group col-lg-2">
-                            <label for="houseNumber"><spring:message
+                    <spring:bind path="tHouseNumber">
+                        <div class="form-group">
+                            <label for="tHouseNumber"><spring:message
                                     code="BusinessPartnerContacts.Table.HouseNumber"/></label>
-                            <form:input id="houseNumber" path="houseNumber" class="form-control"/>
-                                <span class="help-inline"><c:if test="${status.error}"><c:out
-                                        value="${status.errorMessage}"/></c:if></span>
+                            <form:input id="tHouseNumber" path="tHouseNumber" class="form-control"/>
+                            <form:hidden id="houseNumberCodeHidden" path="tHouseNumberCode"/>
                         </div>
                     </spring:bind>
                 </nav>
@@ -110,12 +102,23 @@
                     </spring:bind>
                 </div>
                 <input:inputField label="TelekomID" name="telekomId"/>
+                <spring:bind path="type">
+                    <div class="form-group">
+                        <label for="type">Tip partnera</label>
+                        <form:select path="type" id="type" class="form-control" itemLabel="type">
+                            <form:option value="${item.type}">${item.typeDescription}</form:option>
+                            <form:options items="${types}" itemLabel="description"/>
+                        </form:select>
+                    </div>
+                </spring:bind>
             </div>
             <form:hidden path="companyIdNumber"/>
             <form:hidden path="version"/>
         </div>
     </fieldset>
+
     <div class="form-group">
+        </br>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -159,5 +162,84 @@
     });
     $('#partnerName').bind('typeahead:selected', function (obj, datum, name) {
         $('#partnerNameHidden').val(datum['id']);
+    });
+
+    $('#tPlace').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'place',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/address/read-mesto/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#tPlace').bind('typeahead:selected', function (obj, datum, name) {
+        $('#placeCodeHidden').val(datum['adrKod']);
+    });
+
+    $('#tStreet').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'street',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/address/read-streets/%QUERY',
+                replace: function () {
+                    var q = '${pageContext.request.contextPath}/partner/address/read-streets/' + encodeURIComponent($('#tStreet').val());
+                    if ($('#placeCodeHidden').val()) {
+                        q += "?place=" + encodeURIComponent($('#placeCodeHidden').val());
+                    }
+                    return q;
+                },
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#tStreet').bind('typeahead:selected', function (obj, datum, name) {
+        $('#streetCodeHidden').val(datum['adrKod']);
+    });
+
+
+    $('#tHouseNumber').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'houseNumber',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/address/read-housenumbers/%QUERY',
+                replace: function () {
+                    var q = '${pageContext.request.contextPath}/partner/address/read-housenumbers/' + encodeURIComponent($('#tStreet').val());
+                    if ($('#placeCodeHidden').val()) {
+                        q += "?place=" + encodeURIComponent($('#placeCodeHidden').val());
+                    }
+                    if ($('#streetCodeHidden').val()) {
+                        q += "&street=" + encodeURIComponent($('#streetCodeHidden').val());
+                    }
+                    console.log(q);
+                    return q;
+                },
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#tHouseNumber').bind('typeahead:selected', function (obj, datum, name) {
+        $('#houseNumberCodeHidden').val(datum['adrKod']);
     });
 </script>
