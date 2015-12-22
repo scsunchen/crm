@@ -18,7 +18,15 @@
             <div class="col-lg-6">
 
                 <input:inputField label="Šifra detail *" name="id" disabled="true"/>
-
+                <spring:bind path="typeT">
+                    <div class="form-group">
+                        <label for="typeT">Tip partnera</label>
+                        <form:select path="typeT" id="typeT" class="form-control" itemLabel="typeT">
+                            <form:option value="${item.type}">${item.typeDescription}</form:option>
+                            <form:options items="${types}" itemLabel="description"/>
+                        </form:select>
+                    </div>
+                </spring:bind>
 
 
                 <spring:bind path="name">
@@ -102,15 +110,7 @@
                     </spring:bind>
                 </div>
                 <input:inputField label="TelekomID" name="telekomId"/>
-                <spring:bind path="type">
-                    <div class="form-group">
-                        <label for="type">Tip partnera</label>
-                        <form:select path="type" id="type" class="form-control" itemLabel="type">
-                            <form:option value="${item.type}">${item.typeDescription}</form:option>
-                            <form:options items="${types}" itemLabel="description"/>
-                        </form:select>
-                    </div>
-                </spring:bind>
+
             </div>
             <form:hidden path="companyIdNumber"/>
             <form:hidden path="version"/>
@@ -243,3 +243,4 @@
         $('#houseNumberCodeHidden').val(datum['adrKod']);
     });
 </script>
+

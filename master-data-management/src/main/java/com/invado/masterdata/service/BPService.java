@@ -101,7 +101,7 @@ public class BPService {
             businessPartner.setRebate(a.getRebate());
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
             businessPartner.setVAT(a.getVAT());
-            businessPartner.setType(a.getType());
+            businessPartner.setType(a.getType() == null ? a.getTypeT() : a.getType());
             businessPartner.setTelekomStatus(a.getTelekomStatus());
             businessPartner.setTelekomId(a.getTelekomId());
             businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId().intValue()));

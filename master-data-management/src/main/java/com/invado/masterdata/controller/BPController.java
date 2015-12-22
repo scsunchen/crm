@@ -243,6 +243,7 @@ public class BPController {
         List<POSTypeDTO> POSTypes = posTypeService.readAll(null, null);
         List<CurrencyDTO> currencyDesignation = currencyService.readAll(null, null, null);
         BusinessPartnerDTO item = new BusinessPartnerDTO();
+
         if (id != null)
             item.setParentBusinessPartnerId(id);
         if (name != null)
@@ -261,7 +262,7 @@ public class BPController {
                                             @RequestParam Integer page,
                                             @RequestParam(value = "masterPartnerId", required = false) Integer id,
                                             @RequestParam(value = "masterPartnerName", required = false) String name,
-                                            /*@RequestParam(value = "type", required = false) String type,*/
+                                            @RequestParam(value = "type", required = false) String type,
                                             SessionStatus status,
                                             Map<String, Object> model,
                                             final RedirectAttributes redirectAttributes)

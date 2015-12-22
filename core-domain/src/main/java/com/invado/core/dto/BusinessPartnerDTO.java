@@ -47,6 +47,7 @@ public class BusinessPartnerDTO {
     private Integer parentBusinessPartnerId;
     private String parentBusinesspartnerName;
     private BusinessPartner.Type type;
+    private BusinessPartner.Type typeT;
     private String typeValue;
     private String typeDescription;
     private Integer longitude;
@@ -59,6 +60,14 @@ public class BusinessPartnerDTO {
 
 
     public BusinessPartnerDTO() {
+    }
+
+    public BusinessPartner.Type getTypeT() {
+        return typeT;
+    }
+
+    public void setTypeT(BusinessPartner.Type typeT) {
+        this.typeT = typeT;
     }
 
     public Integer getId() {
