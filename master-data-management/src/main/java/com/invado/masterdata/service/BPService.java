@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import telekomWS.client.AddressServiceClient;
 import telekomWS.client.ServiceClient;
 import telekomWS.client.exceptions.WSException;
 
@@ -52,6 +53,8 @@ public class BPService {
 
     private ServiceClient telekomWSClient = new ServiceClient();
 
+    private AddressServiceClient addressWSClient = new AddressServiceClient();
+
 
     @Transactional(rollbackFor = Exception.class)
     public BusinessPartner createDetail(BusinessPartnerDTO a) throws IllegalArgumentException,
@@ -89,6 +92,7 @@ public class BPService {
             businessPartner.setName(a.getName());
             businessPartner.setName1(a.getName1());
             businessPartner.setAddress(new Address(a.getCountry(), a.getPlace(), a.getStreet(), a.getPostCode()));
+            a.settAddressCode(addressWSClient.getPAK(a.gettHouseNumberCode()));
             businessPartner.setTelekomAddress(new TelekomAddress(a.gettPlace(), a.gettPlaceCode(), a.getPostCode(), a.getStreet(), a.gettStreetCode(), a.gettHouseNumber(), a.gettHouseNumberCode(),
                     a.gettAddressCode()));
             businessPartner.setPhone(a.getPhone());
@@ -101,9 +105,13 @@ public class BPService {
             businessPartner.setRebate(a.getRebate());
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
             businessPartner.setVAT(a.getVAT());
-            businessPartner.setType(a.getType() == null ? a.getTypeT() : a.getType());
+            if (a.getTypeT() != null)
+                a.setType(a.getTypeT());
+            businessPartner.setType(a.getType());
             businessPartner.setTelekomStatus(a.getTelekomStatus());
             businessPartner.setTelekomId(a.getTelekomId());
+            if (a.getPosTypeId() != null)
+                businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId()));
             businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId().intValue()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
             List<String> msgs = validator.validate(businessPartner).stream()
@@ -158,6 +166,7 @@ public class BPService {
             businessPartner.setName1(a.getName1());
             businessPartner.setAddress(new Address(a.getCountry(), a.getPlace() == null ? a.gettPlace() : a.gettPlace(),
                     a.getStreet() == null ? a.gettStreet() : a.getStreet(), a.getPostCode(), a.gettHouseNumber() == null ? a.gettHouseNumber() : a.gettHouseNumber()));
+            a.settAddressCode(addressWSClient.getPAK(a.gettHouseNumberCode()));
             businessPartner.setTelekomAddress(new TelekomAddress(a.gettPlace(), a.gettPlaceCode(), a.getPostCode(), a.getStreet(), a.gettStreetCode(), a.gettHouseNumber(), a.gettHouseNumberCode(),
                     a.gettAddressCode()));
             businessPartner.setPhone(a.getPhone());
@@ -170,9 +179,13 @@ public class BPService {
             businessPartner.setRebate(a.getRebate());
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
             businessPartner.setVAT(a.getVAT());
+            if (a.getTypeT() != null)
+                a.setType(a.getTypeT());
             businessPartner.setType(a.getType());
             businessPartner.setTelekomStatus(a.getTelekomStatus());
             businessPartner.setTelekomId(a.getTelekomId());
+            if (a.getPosTypeId() != null)
+                businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId()));
             if (a.getParentBusinessPartnerId() != null)
                 businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
@@ -236,7 +249,8 @@ public class BPService {
             if (dto.getContactPersoneName() != null)
                 item.setContactPerson(new ContactPerson(dto.getContactPersoneName(), dto.getContactPersonePhone(), dto.getContactPersoneFunction(), dto.getEMail()));
             item.setCurrentAccount(dto.getCurrentAccount());
-            item.setTelekomAddress(new TelekomAddress(dto.gettPlace(), dto.gettPlaceCode(), dto.getPostCode(), dto.getStreet(), dto.gettStreetCode(),
+            dto.settAddressCode(addressWSClient.getPAK(dto.gettHouseNumberCode()));
+            item.setTelekomAddress(new TelekomAddress(dto.gettPlace(), dto.gettPlaceCode(), dto.getPostCode(), dto.gettStreet(), dto.gettStreetCode(),
                     dto.gettHouseNumber(), dto.gettHouseNumberCode(), dto.gettAddressCode()));
             item.setEMail(dto.getEMail());
             item.setFax(dto.getFax());
@@ -248,9 +262,14 @@ public class BPService {
             item.setTIN(dto.getTIN());
             item.setCompanyIdNumber(dto.getCompanyIdNumber());
             item.setCurrencyDesignation(dto.getCurrencyDesignation());
+            if (dto.getPosTypeId() != null)
+                item.setPosType(dao.find(POSType.class, dto.getPosTypeId()));
+            if (dto.getTypeT() != null)
+                dto.setType(dto.getTypeT());
             item.setType(dto.getType());
             item.setTelekomStatus(dto.getTelekomStatus());
             item.setTelekomId(dto.getTelekomId());
+
             if (dto.getParentBusinessPartnerId() != null)
                 item.setParentBusinessPartner(dao.find(BusinessPartner.class, dto.getParentBusinessPartnerId()));
 
@@ -590,6 +609,7 @@ public class BPService {
 
 
     /*MERCHANT*/
+    @Transactional(rollbackFor = Exception.class)
     public void merchantRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
         if (businessPartnerDTO.getTIN() == null || businessPartnerDTO.getCompanyIdNumber() == null || businessPartnerDTO.getName() == null) {
             throw new WSException(
@@ -609,6 +629,7 @@ public class BPService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void merchantUpdate(BusinessPartnerDTO businessPartnerDTO) throws WSException {
         if (businessPartnerDTO.getTelekomId() == null) {
             throw new WSException(
@@ -640,9 +661,11 @@ public class BPService {
 
 
     /*POS*/
-
+    @Transactional(rollbackFor = Exception.class)
     public void pointOfSaleRegistration(BusinessPartnerDTO businessPartnerDTO) throws WSException {
-        if (dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId() == null) {
+
+        Integer parentPartnerTelekomId = dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId();
+        if (parentPartnerTelekomId == null) {
             throw new WSException(
                     Utils.getMessage("WSReference.POSRegistration.NonRegisteredMerchant"));
         }
@@ -655,12 +678,23 @@ public class BPService {
                     Utils.getMessage("WSReference.POSRegistration.IllegalType"));
         }
         try {
-            businessPartnerDTO.setTelekomId(Integer.valueOf(telekomWSClient.prodajnoMestoUnos(dao.find(BusinessPartner.class, businessPartnerDTO.getParentBusinessPartnerId()).getTelekomId(),
-                    businessPartnerDTO.getName(), businessPartnerDTO.getPlace(), businessPartnerDTO.gettAddressCode(), businessPartnerDTO.getPosTypeId(), businessPartnerDTO.getContactPersoneName(),
-                    businessPartnerDTO.getPhone(), businessPartnerDTO.getEMail())));
+
+            /*ulica, broj, grad, kontaktOsoba, telefon i eMail*/
+
+            businessPartnerDTO.setTelekomId(Integer.valueOf(telekomWSClient.prodajnoMestoUnos(parentPartnerTelekomId,
+                    businessPartnerDTO.getName(),
+                    businessPartnerDTO.gettPlace(),
+                    businessPartnerDTO.gettHouseNumberCode(),
+                    businessPartnerDTO.getPosTypeId(),
+                    businessPartnerDTO.getContactPersoneName(),
+                    businessPartnerDTO.getPhone(),
+                    businessPartnerDTO.getEMail())));
             businessPartnerDTO.setTelekomStatus(BusinessPartner.TelekomStatus.ACTIVE);
         } catch (WSException ex) {
             throw ex;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
 
     }

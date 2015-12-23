@@ -395,6 +395,16 @@ public class BusinessPartner implements Serializable {
             businessPartnerDTO.setPostCode(this.getPostCode());
             businessPartnerDTO.setHouseNumber(this.getAddress().getHouseNumber());
         }
+        if (this.getTelekomAddress() != null) {
+            businessPartnerDTO.settPlace(this.getTelekomAddress().getPlace());
+            businessPartnerDTO.settPlaceCode(this.getTelekomAddress().getPlaceCode());
+            businessPartnerDTO.settPostCode(this.getTelekomAddress().getPostCode());
+            businessPartnerDTO.settStreet(this.getTelekomAddress().getStreet());
+            businessPartnerDTO.settStreetCode(this.getTelekomAddress().getStreetCode());
+            businessPartnerDTO.settHouseNumber(this.getTelekomAddress().getHouseNumber());
+            businessPartnerDTO.settHouseNumberCode(this.getTelekomAddress().getHouseNumberCode());
+            businessPartnerDTO.settAddressCode(this.getTelekomAddress().getAddressCode());
+        }
         businessPartnerDTO.setCurrentAccount(this.getCurrentAccount());
         businessPartnerDTO.setName(this.getName());
         businessPartnerDTO.setRebate(this.getRebate());
@@ -414,6 +424,12 @@ public class BusinessPartner implements Serializable {
         businessPartnerDTO.setTypeDescription(this.getType().getDescription());
         businessPartnerDTO.setLatitude(this.getLatitude());
         businessPartnerDTO.setLongitude(this.getLongitude());
+        businessPartnerDTO.setPOStype(this.getPosType());
+        if (businessPartnerDTO.getPOStype() != null){
+            businessPartnerDTO.setPosTypeId(this.getPosType().getId());
+            businessPartnerDTO.setPostTypeName(this.getPosType().getDescription());
+        }
+
         if (this.getTelekomId() != null)
             businessPartnerDTO.setTelekomId(this.getTelekomId());
         businessPartnerDTO.setTelekomStatus(this.getTelekomStatus());

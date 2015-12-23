@@ -14,9 +14,12 @@
 <form:form modelAttribute="item" method="post">
     <input:alert message="${message}" alertType="${alertType}"/>
     <fieldset class="col-lg-12">
+        <form:hidden path="companyIdNumber"/>
+        <form:hidden path="type"/>
+        <form:hidden path="TIN"/>
+        <form:hidden path="version"/>
         <div class="form-group">
             <div class="col-lg-6">
-
                 <input:inputField label="Šifra detail *" name="id" disabled="true"/>
                 <spring:bind path="typeT">
                     <div class="form-group">
@@ -27,8 +30,6 @@
                         </form:select>
                     </div>
                 </spring:bind>
-
-
                 <spring:bind path="name">
                     <div>
                         <input:inputField label="Naziv *****" name="name"/>
@@ -88,7 +89,7 @@
                         </div>
                     </spring:bind>
                 </nav>
-
+                <form:hidden path="tAddressCode"/>
             </div>
             <div class="col-lg-6">
                 <input:inputField name="phone" label="Telefon"/>
@@ -110,10 +111,18 @@
                     </spring:bind>
                 </div>
                 <input:inputField label="TelekomID" name="telekomId"/>
+                <spring:bind path="telekomStatus">
+                    <div class="form-group">
+                        <label for="telekomStatus">Telekom status</label>
+                        <form:select path="telekomStatus" id="telekomStatus" class="form-control" itemLabel="type">
+                            <form:option value="${item.telekomStatus}">${item.telekomStatusDescription}</form:option>
+                            <form:options items="${telekomStatuses}" itemLabel="description"/>
+                        </form:select>
+                    </div>
+                </spring:bind>
 
             </div>
-            <form:hidden path="companyIdNumber"/>
-            <form:hidden path="version"/>
+
         </div>
     </fieldset>
 
@@ -135,10 +144,19 @@
                 Telekom WS <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/masterdata/partner/registerMerchant">Registracija partnera</a></li>
-                <li><a href="/masterdata/partner/updateMerchant">Izmena partnera</a></li>
+
+                <li>
+                    <button class="btn btn-success btn-block" type="submit" name="register">Registracija POS</button>
+                </li>
+                <li>
+                    <button class="btn btn-primary btn-block" type="submit" name="update">Izmena POS</button>
+                </li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/masterdata/partner/deactivateMerchant">Deaktivacija partnera</a></li>
+                <li>
+                    <button class="btn btn-warning btn-block" type="submit" name="deactivation">Deaktivacija POS
+                    </button>
+                </li>
+
             </ul>
         </div>
     </div>

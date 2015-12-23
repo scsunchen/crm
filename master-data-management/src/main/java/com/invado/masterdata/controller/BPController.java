@@ -336,10 +336,21 @@ public class BPController {
                                            @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
                                            Map<String, Object> model)
             throws Exception {
+
+        List<BusinessPartner> parents = service.readParentPartners();
+        List<BusinessPartner.Type> types = service.getTypes();
+        List<BusinessPartner.TelekomStatus> telekomStatuses = service.getTelekomStatuses();
+        List<POSTypeDTO> POSTypes = posTypeService.readAll(null, null);
+        List<CurrencyDTO> currencyDesignation = currencyService.readAll(null, null, null);
+
         BusinessPartnerDTO item = service.read(id);
         BusinessPartnerDTO masterPartner = service.read(masterpartnerId);
         item.setTIN(masterPartner.getTIN());
         item.setVAT(masterPartner.getVAT());
+
+        model.put("types", types);
+        model.put("currencyDesignation", currencyDesignation);
+        model.put("POSTypes", POSTypes);
         model.put("item", item);
         return "partner-details-grid";
     }
@@ -412,8 +423,8 @@ public class BPController {
             service.create(item);
         service.pointOfSaleRegistration(item);
         service.update(item);
+        return "redirect:/partner/read-subpartners.html?posId=" + item.getId() + "&masterPartnerId=" + item.getParentBusinessPartnerId() + "&masterPartnerName=" + item.getParentBusinesspartnerName() + "&page=0";
 
-        return "partner-grid";
     }
 
     @RequestMapping(value = "partner/update-subpartner.html", method = RequestMethod.POST, params = "update")
