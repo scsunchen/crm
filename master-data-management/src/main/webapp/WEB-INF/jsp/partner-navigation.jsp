@@ -23,6 +23,10 @@
    href="${pageContext.request.contextPath}/partner/read-contactsdetals-page.html?masterPartnerId=${item.id}&masterPartnerName=${item.name}&page=${param['page']}"
    <c:if test="${(action == 'create')}">disabled</c:if>>
     <spring:message code="BusinessPartnerDetails.Button.Contacts"/></a>
+<a class="btn btn-default"
+   href="${pageContext.request.contextPath}/partner/read-accounts-page.html?masterPartnerId=${item.id}&masterPartnerName=${item.name}&page=${param['page']}"
+   <c:if test="${(action == 'create')}">disabled</c:if>>
+    <spring:message code="BusinessPartnerDetails.Button.Accounts"/></a>
 <%--
 <a class="btn btn-default" href="${pageContext.request.contextPath}/invoice/details.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&page=${page}&itemsPage=0"><spring:message code="Invoice.Button.Detals"/></a>
 <a class="btn btn-default" href="${pageContext.request.contextPath}/invoice/record.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&pageNumber=${page}" <c:if test="${invoice.recorded == true}">disabled</c:if> >

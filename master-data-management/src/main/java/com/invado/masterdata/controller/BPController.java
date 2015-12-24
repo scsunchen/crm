@@ -46,6 +46,8 @@ public class BPController {
     private DeviceHolderPartnerService deviceHolderPartnerService;
     @Inject
     private AddressServiceClient addressServiceClient;
+    @Inject
+    private BusinessPartnerAccountService accountService;
 
 
     @RequestMapping(value = "/partner/read-page.html", method = RequestMethod.GET)
@@ -163,6 +165,38 @@ public class BPController {
 
         return "business-partner-contact-view";
     }
+
+    /*ACCOUNTS*/
+    @RequestMapping(value = "/partner/read-accounts-page.html", method = RequestMethod.GET)
+    public String showDetailAccounts(@RequestParam Integer page,
+                                     @RequestParam(value = "type", required = false) String type,
+                                     @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                     @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                     @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                     @RequestParam(value = "contactName", required = false) String account,
+                                     @ModelAttribute("businessPartnerDTO") BusinessPartnerDTO businessPartnerDTO, BindingResult partnerResult,
+                                     Map<String, Object> model) throws Exception {
+
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("accountOwnerId", masterPartnerId));
+
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("account", account));
+
+        ReadRangeDTO<BusinessPartnerAccountDTO> items = accountService.readPage(request);
+
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        model.put("businessPartnerDTO", businessPartnerDTO);
+        model.put("masterPartnerDTO", new MasterPartnerDTO());
+        model.put("selectedName", new String());
+        model.put("numberOfPages", items.getNumberOfPages());
+
+        return "business-partner-account-view";
+    }
+
+
 
     /* TERMINALI */
     @RequestMapping(value = "/partner/read-deviceholderdetails-page.html", method = RequestMethod.GET)

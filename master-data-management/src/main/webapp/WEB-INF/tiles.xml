@@ -55,7 +55,7 @@
         </put-attribute>
     </definition>
     <definition name="business-partner-contact-grid" extends="main-menu-form">
-        <put-attribute name="title" value="POS"/>
+        <put-attribute name="title" value="Kontakti"/>
         <put-attribute name="panel-title" value="Unosi i ažuriranje kontakta"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-contact-grid.jsp"/>
     </definition>
@@ -63,6 +63,18 @@
         <put-attribute name="title" value="Kontakti"/>
         <put-attribute name="panel-title" value="Kontakti"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-contact-table.jsp"/>
+    </definition>
+
+
+    <definition name="business-partner-account-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Računi"/>
+        <put-attribute name="panel-title" value="Unosi i ažuriranje računa"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-account-grid.jsp"/>
+    </definition>
+    <definition name="business-partner-account-view" extends="main-menu-form">
+        <put-attribute name="title" value="Računi"/>
+        <put-attribute name="panel-title" value="Računi"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-account-table.jsp"/>
     </definition>
 
 
@@ -156,6 +168,16 @@
         <put-attribute name="body" value="/WEB-INF/jsp/township-grid.jsp"/>
     </definition>
 
+    <definition name="documenttype-view" extends="main-menu-form">
+        <put-attribute name="title" value="Tip dokumenta"/>
+        <put-attribute name="panel-title" value="Tyip Dokumenta"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/documenttype-table.jsp"/>
+    </definition>
+    <definition name="documenttype-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Tip dokumenta"/>
+        <put-attribute name="panel-title" value="Ažuriranje podataka o tipu dokkumenta"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/documenttype-grid.jsp"/>
+    </definition>
     <definition name="currency-view" extends="main-menu-form">
         <put-attribute name="title" value="Valuta"/>
         <put-attribute name="panel-title" value="Valuta"/>
