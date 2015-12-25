@@ -114,7 +114,7 @@
         <td><c:out value="${item.account}"/></td>
         <td><c:out value="${item.accountOwnerName}"/></td>
         <td><c:out value="${item.bankName}"/></td>
-        <td><c:out value="${item.ISOCode}"/></td>
+        <td><c:out value="${item.currencyISOCode}"/></td>
       </tr>
       <c:set var="count" value="${count + 1}" scope="page"/>
     </c:forEach>

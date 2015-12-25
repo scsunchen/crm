@@ -1,3 +1,3 @@
 <div>
-<img src="resources/images/dtm-logo.jpg"/>
+<img src="resources/images/L_CRM.jpg"/>
 </div>

@@ -3,6 +3,7 @@ package com.invado.core.dto;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.BusinessPartnerDocument;
 import com.invado.core.domain.DocumentType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -12,15 +13,20 @@ import java.time.LocalDate;
 public class BusinessPartnerDocumentDTO {
 
     private Integer id;
+    private String description;
     private DocumentType type;
     private Integer typeId;
     private String typeDescription;
     private BusinessPartner businessPartnerOwner;
     private Integer businessPartnerOwnerId;
     private String businessPartnerOwnerName;
+    @DateTimeFormat(style = "M-")
     private LocalDate inputDate;
+    @DateTimeFormat(style = "M-")
     private LocalDate validUntil;
     private BusinessPartnerDocument.DocumentStatus status;
+    private String statusValue;
+    private String statusDescription;
     private Long version;
 
 
@@ -30,6 +36,14 @@ public class BusinessPartnerDocumentDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public DocumentType getType() {
@@ -110,5 +124,21 @@ public class BusinessPartnerDocumentDTO {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public String getStatusValue() {
+        return statusValue;
+    }
+
+    public void setStatusValue(String statusValue) {
+        this.statusValue = statusValue;
+    }
+
+    public String getStatusDescription() {
+        return statusDescription;
+    }
+
+    public void setStatusDescription(String statusDescription) {
+        this.statusDescription = statusDescription;
     }
 }

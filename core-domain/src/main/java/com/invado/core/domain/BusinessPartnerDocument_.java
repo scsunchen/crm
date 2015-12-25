@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class BusinessPartnerDocument_ {
 
     public static volatile SingularAttribute<BusinessPartnerDocument, Integer> id;
+    public static volatile SingularAttribute<BusinessPartnerDocument, String> description;
     public static volatile SingularAttribute<BusinessPartnerDocument, DocumentType> type;
     public static volatile SingularAttribute<BusinessPartnerDocument, BusinessPartner> businessPartnerOwner;
     public static volatile SingularAttribute<BusinessPartnerDocument, LocalDate> inputDate;

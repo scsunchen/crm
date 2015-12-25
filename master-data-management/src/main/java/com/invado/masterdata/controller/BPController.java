@@ -48,6 +48,8 @@ public class BPController {
     private AddressServiceClient addressServiceClient;
     @Inject
     private BusinessPartnerAccountService accountService;
+    @Inject
+    private BusinessPartnerDocumentService documentService;
 
 
     @RequestMapping(value = "/partner/read-page.html", method = RequestMethod.GET)
@@ -197,8 +199,38 @@ public class BPController {
     }
 
 
+    /*DOCUMENTS*/
+    @RequestMapping(value = "/partner/read-documents-page.html", method = RequestMethod.GET)
+    public String showDetailDocumentss(@RequestParam Integer page,
+                                     @RequestParam(value = "type", required = false) String type,
+                                     @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                     @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                     @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                     @RequestParam(value = "contactName", required = false) String account,
+                                     @ModelAttribute("businessPartnerDTO") BusinessPartnerDTO businessPartnerDTO, BindingResult partnerResult,
+                                     Map<String, Object> model) throws Exception {
 
-    /* TERMINALI */
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(page);
+
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("businesspartnerOwnerId", masterPartnerId));
+
+
+
+        ReadRangeDTO<BusinessPartnerDocumentDTO> items = documentService.readPage(request);
+
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        model.put("businessPartnerDTO", businessPartnerDTO);
+        model.put("masterPartnerDTO", new MasterPartnerDTO());
+        model.put("selectedName", new String());
+        model.put("numberOfPages", items.getNumberOfPages());
+
+        return "business-partner-document-view";
+    }
+
+
+    /* TERMINALS */
     @RequestMapping(value = "/partner/read-deviceholderdetails-page.html", method = RequestMethod.GET)
     public String showDetailDeviceHolder(@RequestParam Integer page,
                                          @RequestParam(value = "type", required = false) String type,

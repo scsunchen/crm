@@ -348,7 +348,7 @@ public class BPService {
         //TODO : check ReadBusinessPartnerPermission
         if (id == null) {
             throw new EntityNotFoundException(
-                    Utils.getMessage("BusinessPartner.IllegalArgumentEx.Code")
+                    Utils.getMessage("BusinessPartner.IllegalArgumentEx.Id")
             );
         }
         try {

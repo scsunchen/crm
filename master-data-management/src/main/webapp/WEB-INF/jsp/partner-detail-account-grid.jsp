@@ -67,7 +67,7 @@
                     <form:hidden id="bankHidden" path="bankId"/>
                 </div>
                 <div class="form-group">
-                    <spring:bind path="middle">
+                    <spring:bind path="currency">
                         <div>
                             <label for="currency">Valuta *</label>
                             <form:input id="currency" class="typeahead form-control" type="text"

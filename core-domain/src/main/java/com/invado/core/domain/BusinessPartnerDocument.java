@@ -31,6 +31,8 @@ public class BusinessPartnerDocument {
     @Id
     @Column(name = "id")
     private Integer id;
+    @Column(name = "DESCRIPTION")
+    private String description;
     @ManyToOne
     @JoinColumn(name = "TYPE_ID")
     private DocumentType type;
@@ -54,6 +56,14 @@ public class BusinessPartnerDocument {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public DocumentType getType() {

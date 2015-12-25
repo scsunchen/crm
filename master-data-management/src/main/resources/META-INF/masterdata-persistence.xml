@@ -28,6 +28,9 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.core.domain.ConnectionType</class>
         <class>com.invado.core.domain.POSType</class>
         <class>com.invado.core.domain.PrepaidRefillType</class>
+        <class>com.invado.core.domain.BusinessPartnerAccount</class>
+        <class>com.invado.core.domain.BusinessPartnerDocument</class>
+        <class>com.invado.core.domain.DocumentType</class>
         <class>com.invado.finance.domain.Invoice</class>
         <class>com.invado.finance.domain.InvoiceItem</class>
 

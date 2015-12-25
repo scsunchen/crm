@@ -78,6 +78,17 @@
     </definition>
 
 
+    <definition name="business-partner-document-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Dokumenta"/>
+        <put-attribute name="panel-title" value="Unosi i ažuriranje dokumenata"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-document-grid.jsp"/>
+    </definition>
+    <definition name="business-partner-document-view" extends="main-menu-form">
+        <put-attribute name="title" value="Dokumenta"/>
+        <put-attribute name="panel-title" value="Dokumenta"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-document-table.jsp"/>
+    </definition>
+
     <definition name="business-partner-device-grid" extends="main-menu-form">
         <put-attribute name="title" value="Terminal"/>
         <put-attribute name="panel-title" value="Unosi i ažuriranje terminala"/>

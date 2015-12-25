@@ -101,7 +101,7 @@ public class BusinessPartnerAccount {
         dto.setBankName(this.getBank().getName());
         dto.setCurrency(this.getCurrency());
         if (this.getCurrency() != null)
-            dto.setISOCode(this.getCurrency().getISOCode());
+            dto.setCurrencyISOCode(this.getCurrency().getISOCode());
 
         return dto;
     }

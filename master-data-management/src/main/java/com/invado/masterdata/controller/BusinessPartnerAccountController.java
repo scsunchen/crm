@@ -87,7 +87,7 @@ public class BusinessPartnerAccountController {
             throws Exception {
         if (result.hasErrors()) {
             model.put("action", "create");
-            return "business-partner-contact-grid";
+            return "business-partner-account-grid";
         } else {
             service.create(item);
             model.put("message", item.getId() + " " + item.getAccount());
@@ -103,7 +103,7 @@ public class BusinessPartnerAccountController {
                          @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName) throws Exception {
         service.delete(id);
         //return "redirect:/contact/{page}";
-        return "redirect:/account/read-contactsdetals-page.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&page=" + 0;
+        return "redirect:/partner/read-accounts-page.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&page=" + 0;
     }
 
     @RequestMapping(value = "/account/update.html",
@@ -117,7 +117,7 @@ public class BusinessPartnerAccountController {
             throws Exception {
         BusinessPartnerAccountDTO item = service.read(id).getDTO();
         model.put("item", item);
-        return "business-account-contact-grid";
+        return "business-partner-account-grid";
     }
 
     @RequestMapping(value = "/account/update.html",
@@ -128,7 +128,7 @@ public class BusinessPartnerAccountController {
                                       Map<String, Object> model)
             throws Exception {
         if (result.hasErrors()) {
-            return "business-account-contact-grid";
+            return "business-account-account-grid";
         } else {
             this.service.update(item);
             status.setComplete();

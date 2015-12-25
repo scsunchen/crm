@@ -27,6 +27,7 @@ import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,7 +74,8 @@ public class BusinessPartnerDocumentService {
 
             businessPartnerDocument.setStatus(a.getStatus());
             businessPartnerDocument.setBusinessPartnerOwner(dao.find(BusinessPartner.class, a.getBusinessPartnerOwnerId()));
-            businessPartnerDocument.setType(a.getType());
+            if (a.getTypeId() != null)
+                businessPartnerDocument.setType(dao.find(DocumentType.class, a.getTypeId()));
             businessPartnerDocument.setInputDate(a.getInputDate());
             businessPartnerDocument.setValidUntil(a.getValidUntil());
 
@@ -402,4 +404,9 @@ public class BusinessPartnerDocumentService {
                     Utils.getMessage("BusinessPartnerDocument.PersistenceEx.ReadAll"), ex);
         }
     }
+
+    public List<BusinessPartnerDocument.DocumentStatus> getDocumentStatuses() {
+        return Arrays.asList(BusinessPartnerDocument.DocumentStatus.values());
+    }
+
 }

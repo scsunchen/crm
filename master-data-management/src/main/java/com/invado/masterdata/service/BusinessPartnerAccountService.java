@@ -76,7 +76,7 @@ public class BusinessPartnerAccountService {
             businessPartnerAccount.setAccountOwner(dao.find(BusinessPartner.class, a.getAccountOwnerId()));
             businessPartnerAccount.setBank(dao.find(BusinessPartner.class, a.getBankId()));
             if (a.getCurrency() != null)
-                businessPartnerAccount.setCurrency(dao.find(Currency.class, a.getISOCode()));
+                businessPartnerAccount.setCurrency(dao.find(Currency.class, a.getCurrencyISOCode()));
 
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
@@ -136,7 +136,7 @@ public class BusinessPartnerAccountService {
             item.setAccountOwner(dao.find(BusinessPartner.class, dto.getAccountOwnerId()));
             item.setBank(dao.find(BusinessPartner.class, dto.getBankId()));
             if (dto.getCurrency() != null)
-                item.setCurrency(dao.find(Currency.class, dto.getISOCode()));
+                item.setCurrency(dao.find(Currency.class, dto.getCurrencyISOCode()));
 
             dao.lock(item, LockModeType.OPTIMISTIC);
             item.setVersion(dto.getVersion());
@@ -177,9 +177,9 @@ public class BusinessPartnerAccountService {
             );
         }
         try {
-            BusinessPartnerAccount BusinessPartnerAccount = dao.find(BusinessPartnerAccount.class, id);
-            if (BusinessPartnerAccount != null) {
-                dao.remove(id);
+            BusinessPartnerAccount businessPartnerAccount = dao.find(BusinessPartnerAccount.class, id);
+            if (businessPartnerAccount != null) {
+                dao.remove(businessPartnerAccount);
                 dao.flush();
             }
         }  catch (Exception ex) {
