@@ -26,23 +26,18 @@
             <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
     </div>
 </nav>
-<form:form modelAttribute="item" method="post">
+<form:form modelAttribute="item" enctype="multipart/form-data" method="post">
     <fieldset>
         <div class="form-group">
             <div class="col-lg-6">
                 <div class="form-group">
-                    <c:choose>
-                        <c:when test="${action == 'create'}">
-                            <spring:bind path="id">
-                                <label for="id"><spring:message code="BusinessPartnerAccount.Table.Id"/></label>
-                                <form:input id="id" path="id" class="form-control" disabled="true"/>
-                                <span class="help-inline"><c:if test="${status.error}"><c:out
-                                        value="${status.errorMessage}"/></c:if></span>
-                            </spring:bind>
-                        </c:when>
-                    </c:choose>
+                    <spring:bind path="id">
+                        <label for="id"><spring:message code="BusinessPartnerAccount.Table.Id"/></label>
+                        <form:input id="id" path="id" class="form-control" disabled="true"/>
+                                <span class="help-inline"><c:if test="${status.error}">
+                                    <c:out value="${status.errorMessage}"/></c:if></span>
+                    </spring:bind>
                 </div>
-
                 <spring:bind path="description">
                     <div class="form-group">
                         <label for="description"><spring:message
@@ -89,7 +84,7 @@
                 </spring:bind>
                 <spring:bind path="typeId">
                     <div class="form-group">
-                        <label for="type"><spring:message
+                        <label for="typeId"><spring:message
                                 code="BusinessPartnerDocument.Table.Type"/></label>
                         <form:select path="typeId" id="typeId" class="form-control" itemLabel="type">
                             <form:option value="${item.type.id}">${item.typeDescription}</form:option>
@@ -99,8 +94,18 @@
                                 value="${status.errorMessage}"/></c:if></span>
                     </div>
                 </spring:bind>
+                <a href="download-document.html?id=${item.id}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=0"
+                   class="custom-width">${item.fileName}</a>
+
             </div>
+
             <form:hidden path="version"/>
+            <div>
+                <a href="#" onclick="document.getElementById('fileID').click(); return false;"><spring:message
+                        code="BusinessPartnerDocument.Table.FileUpload"/></a>
+                <input type="file" id="fileID" name="fileUpload" style="visibility: hidden;"/>
+
+            </div>
         </div>
     </fieldset>
     <div class="form-group">

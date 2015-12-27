@@ -13,7 +13,7 @@
 <br/>
 <br/>
 
-<div class="table-responsive">
+<div class="table-responsive generic-container">
   <table class="table table-striped">
     <thead>
     <tr>

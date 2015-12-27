@@ -30,7 +30,7 @@
         <put-attribute name="body" value="/WEB-INF/jsp/partner-table.jsp"/>
     </definition>
     <definition name="partner-grid" extends="main-menu-form">
-        <put-attribute name="title" value="Polsovni Partner"/>
+        <put-attribute name="title" value="Poslovni partner"/>
         <put-attribute name="panel-title" value="Unos i ažuriranje partnera"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/layouts/master-details-form.jsp">
@@ -104,6 +104,7 @@
 
     <definition name="devicestatus-view" extends="main-menu-form">
         <put-attribute name="title" value="Status terminala"/>
+        <put-attribute name="panel-title" value="Status terminala"/>
         <put-attribute name="body" value="/WEB-INF/jsp/devicestatus-table.jsp"/>
     </definition>
     <definition name="devicestatus-grid" extends="main-menu-form">

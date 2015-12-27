@@ -17,4 +17,9 @@ public class BusinessPartnerDocument_ {
     public static volatile SingularAttribute<BusinessPartnerDocument, LocalDate> inputDate;
     public static volatile SingularAttribute<BusinessPartnerDocument, LocalDate> validUntil;
     public static volatile SingularAttribute<BusinessPartnerDocument, BusinessPartnerDocument.DocumentStatus> status;
+    public static volatile SingularAttribute<BusinessPartnerDocument, String> fileName;
+    public static volatile SingularAttribute<BusinessPartnerDocument, String> fileContentType;
+    public static volatile SingularAttribute<BusinessPartnerDocument, byte[]> file;
+
+
 }

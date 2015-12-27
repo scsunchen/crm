@@ -53,7 +53,7 @@
 </nav>
 
 
-<div class="table-responsive">
+<div class="table-responsive generic-container">
 
     <table class="table table-striped">
         <thead>
@@ -70,6 +70,7 @@
             <th><spring:message code="BusinessPartnerDocument.Table.InputDate"/></th>
             <th><spring:message code="BusinessPartnerDocument.Table.ValidUntil"/></th>
             <th><spring:message code="BusinessPartnerDocument.Table.DocumentStatus"/></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -84,7 +85,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalContactLabel">Da li ste sigurni da želite da
-                                obrišete ${item.document}?</h4>
+                                obrišete ${item.id}?</h4>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
@@ -109,9 +110,11 @@
                 <td><c:out value="${item.businessPartnerOwnerName}"/></td>
                 <td><c:out value="${item.description}"/></td>
                 <td><c:out value="${item.typeDescription}"/></td>
-                <td><c:out value="${item.inputDate}"/></td>
-                <td><c:out value="${item.validUntil}"/></td>
+                <td><spring:eval expression="item.inputDate"/></td>
+                <td><spring:eval expression="item.validUntil"/></td>
                 <td><c:out value="${item.status}"/></td>
+                <td><a href="/masterdata/document/download-document.html?id=${item.id}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=0"
+                       class="custom-width">${item.fileName}</a></td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>

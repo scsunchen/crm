@@ -29,8 +29,8 @@
 </form:form>
 
 
-<div class="table-responsive">
-    <table id="example" class="table table-striped display">
+<div class="table-responsive generic-container">
+    <table class="table table-striped display">
         <thead>
         <tr>
             <th><a class="btn btn-primary" href="/masterdata/exchange-rate/${page}/create"><span

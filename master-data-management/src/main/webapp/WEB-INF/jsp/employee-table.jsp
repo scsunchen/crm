@@ -9,7 +9,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="table-responsive">
-  <table class="table table-striped">
+  <table class="table table-striped generic-container">
     <thead>
     <tr>
       <th><a class="btn btn-primary" href="/masterdata/employee/${page}/create"><span class="glyphicon glyphicon-plus"></span>

@@ -73,7 +73,6 @@
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-            id=34&=&=&page=0
             <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-period.html?id=${param['id']}&partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&page=${page - 1}"/></c:if>">
                 <span class="glyphicon glyphicon-backward"></span> Prethodna
             </a>

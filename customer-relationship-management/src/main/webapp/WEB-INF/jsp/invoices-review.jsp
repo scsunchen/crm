@@ -35,7 +35,6 @@
                 <td>
                     <div class="btn-group btn-group-sm" role="group" >
                         <a href="${page}/${invoice.value.clientId}/${invoice.value.orgUnitId}/${invoice.value.document}/update.html" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> pregled</a>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span class="glyphicon glyphicon-trash"></span> brisanje</button>
                     </div>
                 </td>
                 <td><c:out value="${invoice.value.clientDesc}"/></td>

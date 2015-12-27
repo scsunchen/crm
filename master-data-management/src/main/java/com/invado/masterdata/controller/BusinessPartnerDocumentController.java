@@ -1,5 +1,6 @@
 package com.invado.masterdata.controller;
 
+import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.BusinessPartnerDocument;
 import com.invado.core.domain.DocumentType;
 import com.invado.core.dto.BusinessPartnerDTO;
@@ -13,11 +14,14 @@ import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +97,7 @@ public class BusinessPartnerDocumentController {
                                       @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
                                       @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
                                       @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                      @RequestParam (required = false) CommonsMultipartFile[] fileUpload,
                                       @ModelAttribute("item") BusinessPartnerDocumentDTO item,
                                       BindingResult result,
                                       SessionStatus status,
@@ -102,6 +107,15 @@ public class BusinessPartnerDocumentController {
             model.put("action", "create");
             return "business-partner-document-grid";
         } else {
+            if (fileUpload != null && fileUpload.length > 0) {
+                for (CommonsMultipartFile aFile : fileUpload){
+                    System.out.println("Saving file: " + aFile.getOriginalFilename());
+
+                    item.setFileName(aFile.getOriginalFilename());
+                    item.setFile(aFile.getBytes());
+                    item.setFileContentType(aFile.getContentType());
+                }
+            }
             service.create(item);
             model.put("message", item.getId() + " " + item.getDescription());
             status.setComplete();
@@ -137,16 +151,47 @@ public class BusinessPartnerDocumentController {
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") BusinessPartnerDocumentDTO item,
                                       BindingResult result,
+                                      @RequestParam String page,
+                                      @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                      @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                      @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                      @RequestParam(value = "id") Integer id,
+                                      @RequestParam (required = false) CommonsMultipartFile[] fileUpload,
                                       SessionStatus status,
                                       Map<String, Object> model)
             throws Exception {
         if (result.hasErrors()) {
-            return "business-document-document-grid";
+            return "business-partner-document-grid";
         } else {
+            if (fileUpload != null && fileUpload.length > 0) {
+                for (CommonsMultipartFile aFile : fileUpload){
+                    System.out.println("Saving file: " + aFile.getOriginalFilename());
+
+                    item.setFileName(aFile.getOriginalFilename());
+                    item.setFile(aFile.getBytes());
+                    item.setFileContentType(aFile.getContentType());
+                }
+            }
             this.service.update(item);
             status.setComplete();
         }
-        return "redirect:/document/update.html";
+        return "redirect:/partner/read-documents-page.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&page=" + 0;
+    }
+
+    @RequestMapping(value = { "/document/download-document.html" }, method = RequestMethod.GET)
+    public String downloadDocument(@RequestParam int id,
+                                   @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                   @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                   @RequestParam(value = "page", required = false) Integer page,
+                                   HttpServletResponse response) throws Exception {
+        BusinessPartnerDocument document = service.read(id);
+        response.setContentType(document.getFileContentType());
+        response.setContentLength(document.getFile().length);
+        response.setHeader("Content-Disposition","attachment; filename=\"" + document.getFileName() +"\"");
+
+        FileCopyUtils.copy(document.getFile(), response.getOutputStream());
+
+        return "redirect:/partner/read-documents-page.html?masterPartnerId=" + masterPartnerId + "&masterPartnerName=" + masterPartnerName + "&page=" + 0;
     }
 
 }

@@ -39,8 +39,8 @@
     </nav>
 </form:form>
 
-<div class="table-responsive">
-    <table id="example" class="table table-striped">
+<div class="table-responsive generic-container">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th><a class="btn btn-primary"

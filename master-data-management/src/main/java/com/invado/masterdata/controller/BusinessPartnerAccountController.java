@@ -124,6 +124,11 @@ public class BusinessPartnerAccountController {
             method = RequestMethod.POST)
     public String processUpdationForm(@ModelAttribute("item") BusinessPartnerAccountDTO item,
                                       BindingResult result,
+                                      @RequestParam String page,
+                                      @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                      @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                      @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                      @RequestParam(value = "id") Integer id,
                                       SessionStatus status,
                                       Map<String, Object> model)
             throws Exception {

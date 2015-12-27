@@ -27,6 +27,10 @@ public class BusinessPartnerDocumentDTO {
     private BusinessPartnerDocument.DocumentStatus status;
     private String statusValue;
     private String statusDescription;
+    private String filePath;
+    private String fileName;
+    private byte[] file;
+    private String fileContentType;
     private Long version;
 
 
@@ -140,5 +144,37 @@ public class BusinessPartnerDocumentDTO {
 
     public void setStatusDescription(String statusDescription) {
         this.statusDescription = statusDescription;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileContentType() {
+        return fileContentType;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
     }
 }

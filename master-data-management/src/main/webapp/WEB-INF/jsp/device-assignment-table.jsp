@@ -32,7 +32,7 @@
     </form:form>
 </nav>
 
-<div class="table-responsive">
+<div class="table-responsive generic-container">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -82,7 +82,7 @@
                     </div>
                 </td>
                 <td><c:out value="${item.deviceCustomCode}"/></td>
-                <td><a href="${pageContext.request.contextPath}/deviceholder/update.html?id=${item.deviceId}&page=${page}"
+                <td><a href="${pageContext.request.contextPath}/device/update.html?id=${item.deviceId}&page=0"
                        class="btn btn-primary"><span
                         class="glyphicon glyphicon-search"></span> terminal</a></td>
                 <td><c:out value="${item.deviceSerialNumber}"/></td>

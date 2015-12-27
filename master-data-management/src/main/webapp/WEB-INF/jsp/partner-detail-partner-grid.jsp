@@ -146,14 +146,14 @@
             <ul class="dropdown-menu">
 
                 <li>
-                    <button class="btn btn-success btn-block" type="submit" name="register">Registracija POS</button>
+                    <button class="btn btn-default btn-block" type="submit" name="register">Registracija POS</button>
                 </li>
                 <li>
-                    <button class="btn btn-primary btn-block" type="submit" name="update">Izmena POS</button>
+                    <button class="btn btn-default btn-block" type="submit" name="update">Izmena POS</button>
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                    <button class="btn btn-warning btn-block" type="submit" name="deactivation">Deaktivacija POS
+                    <button class="btn btn-default btn-block" type="submit" name="deactivation">Deaktivacija POS
                     </button>
                 </li>
 

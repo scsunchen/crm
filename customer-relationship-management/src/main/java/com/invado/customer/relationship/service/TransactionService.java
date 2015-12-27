@@ -1373,7 +1373,7 @@ public class TransactionService {
             }
             InvoiceItemDTO invoiceItemDTO = null;
             try {
-                System.out.println("podaci " + invoice.getDocument() + " " + invoice.getOrgUnitId() + " " + invoice.getClientId());
+
                 invoiceItemDTO = invoiceItemsPerMerchantMap.get(invoice).get(transactionSetDTO.getArticleCode());
             } catch (NullPointerException ex) {
                 invoiceItemDTO = null;
@@ -1386,6 +1386,7 @@ public class TransactionService {
                 invoiceItemDTO.setUnitId(invoice.getOrgUnitId());
                 invoiceItemDTO.setArticleCode(transactionSetDTO.getArticleCode());
                 Map<String, InvoiceItemDTO> invoiceItemPerArticle = new HashMap<String, InvoiceItemDTO>();
+                invoiceItemPerArticle.put(invoiceItemDTO.getArticleCode(), invoiceItemDTO);
                 invoiceItemsPerMerchantMap.put(invoice, invoiceItemPerArticle);
                 Article article = dao.find(Article.class, transactionSetDTO.getArticleCode());
                 BigDecimal vatPercent = null;
@@ -1400,15 +1401,19 @@ public class TransactionService {
                         break;
                 }
                 invoiceItemDTO.setVATPercent(vatPercent);
-                invoiceItemDTO.setNetPrice(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent().add(new BigDecimal(1)), 2, RoundingMode.HALF_UP));
+                invoiceItemDTO.setNetPrice(transactionSetDTO.getAmount().divide(BigDecimal.ONE.add(invoiceItemDTO.getVATPercent()), 2, RoundingMode.HALF_UP));
+                System.out.println("net price " + invoice.getPartnerID() + " " + invoiceItemDTO.getNetPrice());
                 BusinessPartnerTermsItem it = dao.createNamedQuery(BusinessPartnerTermsItem.READ_TERMS_PER_PARTNER_AND_ARTICLE, BusinessPartnerTermsItem.class)
                         .setParameter("partner", transactionSetDTO.getMerchantId())
                         .setParameter("serviceId", transactionSetDTO.getArticleCode())
                         .getSingleResult();
                 invoiceItemDTO.setRabatPercent(it.getRebate());
                 invoiceItemDTO.setQuantity(new BigDecimal(1));
-                invoiceItemDTO.setTotalCost(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent().add(new BigDecimal(1)))
-                        .multiply(invoiceItemDTO.getVATPercent()).setScale(2, RoundingMode.HALF_UP));
+
+                invoiceItemDTO.setTotalCost(invoiceItemDTO.getNetPrice().subtract(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent()))
+                        .multiply(BigDecimal.ONE.add(invoiceItemDTO.getVATPercent()).setScale(2, RoundingMode.HALF_UP)).setScale(2, RoundingMode.HALF_UP));
+
+                System.out.println("total cost 1 " + invoice.getPartnerID() + " " + invoiceItemDTO.getTotalCost());
                 invoiceItemDTO.setArticleDesc(article.getDescription());
                 invoiceItemDTO.setOrdinal(invoice.getMaxItemOrdinal() == null ? 1 : invoice.getMaxItemOrdinal() + 1);
                 invoiceItemDTO.setUsername("nikola");
@@ -1418,13 +1423,16 @@ public class TransactionService {
                 invoicePerMerchantMap.put(transactionSetDTO.getMerchantId(), invoice);
                 //addItem(invoiceItemDTO);
             } else {
-                invoiceItemDTO.setNetPrice(invoiceItemDTO.getNetPrice().add(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent().add(new BigDecimal(1)), 2, RoundingMode.HALF_UP)));
-                invoiceItemDTO.setTotalCost(invoiceItemDTO.getTotalCost().add(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent().add(new BigDecimal(1)))
-                        .multiply(invoiceItemDTO.getVATPercent())).setScale(2, RoundingMode.HALF_UP));
-                invoice.setTotalAmount(invoice.getTotalAmount() == null ? invoiceItemDTO.getTotalCost() : invoice.getTotalAmount().add(invoiceItemDTO.getTotalCost()));
+                invoiceItemDTO.setNetPrice(invoiceItemDTO.getNetPrice().add(transactionSetDTO.getAmount().divide(BigDecimal.ONE.add(invoiceItemDTO.getVATPercent()), 2, RoundingMode.HALF_UP)));
+                System.out.println("net price drugi  "+ invoice.getPartnerID()+" " + invoiceItemDTO.getNetPrice());
+                invoiceItemDTO.setTotalCost(invoiceItemDTO.getNetPrice().subtract(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent()))
+                        .multiply(BigDecimal.ONE.add(invoiceItemDTO.getVATPercent()).setScale(2, RoundingMode.HALF_UP)).setScale(2, RoundingMode.HALF_UP));
+                System.out.println("totl cost drugi "+ invoice.getPartnerID()+" " + invoiceItemDTO.getTotalCost());
+                invoice.setTotalAmount(invoice.getTotalAmount().add((transactionSetDTO.getAmount().divide(BigDecimal.ONE.add(invoiceItemDTO.getVATPercent()), 2, RoundingMode.HALF_UP))
+                        .multiply(BigDecimal.ONE.add(invoiceItemDTO.getRabatPercent()))).multiply(BigDecimal.ONE.add(invoiceItemDTO.getRabatPercent())));
+                System.out.println("total amount "+ invoice.getPartnerID()+" " + invoice.getTotalAmount());
                 invoiceItemDTO.setUsername(invoice.getUsername());
                 invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
-                updateItem(invoiceItemDTO);
             }
 
             Transaction transaction = dao.find(Transaction.class, transactionSetDTO.getTransactionId());
@@ -1444,8 +1452,9 @@ public class TransactionService {
             Iterator itItem = invoiceItemsPerMerchantMap.get(persistingInvoiceDTO).entrySet().iterator();
             while (itItem.hasNext()) {
                 Map.Entry itemPairs = (Map.Entry) itItem.next();
-                ((InvoiceItemDTO) itemPairs.getValue()).setOrdinal(i++);
-                addItem((InvoiceItemDTO) itemPairs.getValue());
+                InvoiceItemDTO persistentInvoiceItemDTO = (InvoiceItemDTO) itemPairs.getValue();
+                persistentInvoiceItemDTO.setOrdinal(i++);
+                addItem(persistentInvoiceItemDTO);
             }
         }
 
@@ -1554,14 +1563,15 @@ public class TransactionService {
                 }
                 invoiceItemDTO.setVATPercent(vatPercent);
                 invoiceItemDTO.setNetPrice(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent().add(new BigDecimal(1)), 2, RoundingMode.HALF_UP));
-                System.out.println("evo podaci " + transactionSetDTO.getMerchantId() + "  " + transactionSetDTO.getArticleCode());
                 BusinessPartnerTermsItem it = dao.createNamedQuery(BusinessPartnerTermsItem.READ_TERMS_PER_PARTNER_AND_ARTICLE, BusinessPartnerTermsItem.class)
                         .setParameter("partner", transactionSetDTO.getMerchantId())
                         .setParameter("serviceId", transactionSetDTO.getArticleCode())
                         .getSingleResult();
                 rabat = it.getRebate();
                 invoiceItemDTO.setRabatPercent(new BigDecimal(0));
-                invoiceItemDTO.setReturnValue(invoiceItemDTO.getNetPrice().multiply(rabat).setScale(2, RoundingMode.HALF_UP));
+                invoiceItemDTO.setReturnValue(new BigDecimal(0));
+
+/*                invoiceItemDTO.setReturnValue(invoiceItemDTO.getNetPrice().multiply(rabat).setScale(2, RoundingMode.HALF_UP));*/
                 invoiceItemDTO.setQuantity(new BigDecimal(1));
                 invoiceItemDTO.setTotalCost(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getVATPercent()));
                 invoiceItemDTO.setArticleDesc(article.getDescription());
@@ -1569,19 +1579,21 @@ public class TransactionService {
                 invoiceItemDTO.setUsername("nikola");
                 invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
                 invoice.setMaxItemOrdinal(invoiceItemDTO.getOrdinal());
-                invoice.setTotalAmount(invoiceItemDTO.getTotalCost());
-                invoice.setReturnValue(invoiceItemDTO.getReturnValue());
+                invoice.setTotalAmount(transactionSetDTO.getAmount());
                 //addItem(invoiceItemDTO);
             } else {
                 invoiceItemDTO.setNetPrice(invoiceItemDTO.getNetPrice().add(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent().add(new BigDecimal(1)), 2, RoundingMode.HALF_UP)));
-                invoiceItemDTO.setReturnValue(invoiceItemDTO.getReturnValue().add(transactionSetDTO.getAmount().multiply(rabat)).setScale(2, RoundingMode.HALF_UP));
+/*                invoiceItemDTO.setReturnValue(invoiceItemDTO.getReturnValue().add(transactionSetDTO.().multiply(rabat).setScale(2, RoundingMode.HALF_UP)));*/
                 invoiceItemDTO.setTotalCost(invoiceItemDTO.getTotalCost().add(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getVATPercent())).setScale(2, RoundingMode.HALF_UP));
-                invoice.setTotalAmount(invoice.getTotalAmount() == null ? invoiceItemDTO.getTotalCost() : invoice.getTotalAmount().add(invoiceItemDTO.getTotalCost()));
-                invoice.setReturnValue(invoice.getReturnValue() == null ? invoiceItemDTO.getReturnValue() : invoice.getReturnValue().add(invoiceItemDTO.getReturnValue()));
+                invoice.setTotalAmount(invoice.getTotalAmount() == null ? transactionSetDTO.getAmount() : invoice.getTotalAmount().add(transactionSetDTO.getAmount()));
                 invoiceItemDTO.setUsername(invoice.getUsername());
                 invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
                 //updateItem(invoiceItemDTO);
             }
+            invoiceItemDTO.setReturnValue(invoiceItemDTO.getNetPrice().multiply(rabat).setScale(2, RoundingMode.HALF_UP));
+            System.out.println("pre " + invoice.getPartnerID() + " " + invoice.getReturnValue() + " " + transactionSetDTO.getAmount() + " " + invoiceItemDTO.getVATPercent() + "" + rabat);
+            invoice.setReturnValue(invoice.getReturnValue().add(transactionSetDTO.getAmount().divide(invoiceItemDTO.getVATPercent().add(new BigDecimal(1)), 2, RoundingMode.HALF_UP).multiply(rabat).setScale(2, RoundingMode.HALF_UP)));
+            System.out.print("posle " + invoice.getPartnerID() + " " + invoice.getReturnValue() + " " + transactionSetDTO.getAmount() + " " + invoiceItemDTO.getVATPercent() + "" + rabat);
             Transaction transaction = dao.find(Transaction.class, transactionSetDTO.getTransactionId());
             transaction.setInvoicingStatus(true);
             dao.persist(transaction);
@@ -1597,8 +1609,9 @@ public class TransactionService {
             Iterator itItem = invoiceItemsPerMerchantMap.get(persistingInvoiceDTO).entrySet().iterator();
             while (itItem.hasNext()) {
                 Map.Entry itemPairs = (Map.Entry) itItem.next();
-                ((InvoiceItemDTO) itemPairs.getValue()).setOrdinal(i++);
-                addItem((InvoiceItemDTO) itemPairs.getValue());
+                InvoiceItemDTO persistentInvoiceItemDTO = (InvoiceItemDTO) itemPairs.getValue();
+                persistentInvoiceItemDTO.setOrdinal(i++);
+                addItem(persistentInvoiceItemDTO);
             }
         }
         return invoicePerMerchantMap;

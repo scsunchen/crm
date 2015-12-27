@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "c_business_partner_document")
 @NamedQueries({
-        @NamedQuery(name=BusinessPartnerDocument.READ_BY_TYPE, query = "SELECT x FROM BusinessPartnerDocument x where x.type = :type")
+        @NamedQuery(name = BusinessPartnerDocument.READ_BY_TYPE, query = "SELECT x FROM BusinessPartnerDocument x where x.type = :type")
 })
 public class BusinessPartnerDocument {
 
@@ -47,6 +47,12 @@ public class BusinessPartnerDocument {
     private LocalDate validUntil;
     @Column(name = "STATUS_ID")
     private DocumentStatus status;
+    @Column(name = "FILE_DATA")
+    private byte[] file;
+    @Column(name = "FILE_NAME")
+    private String fileName;
+    @Column(name = "FILE_CONTENT_TYPE")
+    private String fileContentType;
     @Version
     private Long version;
 
@@ -106,6 +112,30 @@ public class BusinessPartnerDocument {
         this.status = status;
     }
 
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileContentType() {
+        return fileContentType;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+    }
+
     public Long getVersion() {
         return version;
     }
@@ -114,7 +144,7 @@ public class BusinessPartnerDocument {
         this.version = version;
     }
 
-    public BusinessPartnerDocumentDTO getDTO(){
+    public BusinessPartnerDocumentDTO getDTO() {
 
         BusinessPartnerDocumentDTO dto = new BusinessPartnerDocumentDTO();
 
@@ -123,11 +153,16 @@ public class BusinessPartnerDocument {
         dto.setBusinessPartnerOwnerId(this.getBusinessPartnerOwner().getId());
         dto.setBusinessPartnerOwnerName(this.getBusinessPartnerOwner().getName());
         dto.setType(this.getType());
-        dto.setTypeId(this.getType().getId());
-        dto.setTypeDescription(this.getType().getDescription());
+        if (this.getType() != null) {
+            dto.setTypeId(this.getType().getId());
+            dto.setTypeDescription(this.getType().getDescription());
+        }
+        dto.setDescription(this.getDescription());
         dto.setInputDate(this.getInputDate());
         dto.setValidUntil(this.getValidUntil());
         dto.setStatus(this.getStatus());
+        dto.setFile(this.getFile());
+        dto.setFileName(this.fileName);
         dto.setVersion(this.getVersion());
 
         return dto;

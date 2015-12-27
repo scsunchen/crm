@@ -104,6 +104,13 @@ public class MenuFormPreparer implements ViewPreparer {
         Module masterdata = new Module();
         masterdata.setPath("masterdata");
         masterdata.setName("Maticni Podaci");
+
+        masterdata.put("Terminali", "Status terminala", "/masterdata/devicestatus/read-page.html?page=0");
+        masterdata.put("Terminali", "Terminal", "/masterdata/device/read-page.html?page=0");
+        masterdata.put("Terminali", "Zaduenje Terminala", "/masterdata/deviceholder/device-assignment.html?businessPartnerId=&deviceCustomCode=&page=0");
+
+        masterdata.put("Partneri", "Poslovni partner", "/masterdata/partner/read-page.html?id=&name=&page=0");
+
         masterdata.put("Opšti sifarnici", "Kompanija Korisnik", "/masterdata/client/0");
         masterdata.put("Opšti sifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
         masterdata.put("Opšti sifarnici", "Opstina", "/masterdata/township/0");
@@ -112,12 +119,6 @@ public class MenuFormPreparer implements ViewPreparer {
         masterdata.put("Opšti sifarnici", "Valuta", "/masterdata/currency/0");
         masterdata.put("Opšti sifarnici", "Kursna Lista", "/masterdata/exchange-rate/0");
         masterdata.put("Opšti sifarnici", "Tip Dokumenta", "/masterdata/documenttype/0");
-
-        masterdata.put("Partneri", "Poslovni partner", "/masterdata/partner/read-page.html?id=&name=&page=0");
-
-        masterdata.put("Terminali", "Status terminala", "/masterdata/devicestatus/read-page.html?page=0");
-        masterdata.put("Terminali", "Terminal", "/masterdata/device/read-page.html?page=0");
-        masterdata.put("Terminali", "Zaduenje Terminala", "/masterdata/deviceholder/device-assignment.html?businessPartnerId=&deviceCustomCode=&page=0");
 
         modules.add(masterdata);
         Module service = new Module();

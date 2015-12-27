@@ -42,12 +42,13 @@
       <!-- Modal -->
       <tr>
         <td>
+          <!--
           <div class="btn-group btn-group-sm" role="group">
             <a href="${pageContext.request.contextPath}/transactions/in-transactions-per-article.html?posId=${item.posId}&posName=${item.posName}&merchantId=${param['merchantId']}&merchantName=${param['merchantName']}&invoicingDate=${param['invoicingDate']}&page=0"
                class="btn btn-primary"><span
-                    class="glyphicon glyphicon-search"></span>
-              <spring:message code="Intable.Button.ViewPerArticle"/></a>
+                    class="glyphicon glyphicon-search"></span><spring:message code="Intable.Button.ViewPerArticle"/></a>
           </div>
+          -->
         </td>
         <td><c:out value="${item.merchantName}"/></td>
         <td><c:out value="${item.posName}"/></td>

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.persistence.*;
 
@@ -26,6 +27,11 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -73,12 +79,15 @@ public class BusinessPartnerDocumentService {
             BusinessPartnerDocument businessPartnerDocument = new BusinessPartnerDocument();
 
             businessPartnerDocument.setStatus(a.getStatus());
+            businessPartnerDocument.setDescription(a.getDescription());
             businessPartnerDocument.setBusinessPartnerOwner(dao.find(BusinessPartner.class, a.getBusinessPartnerOwnerId()));
             if (a.getTypeId() != null)
                 businessPartnerDocument.setType(dao.find(DocumentType.class, a.getTypeId()));
             businessPartnerDocument.setInputDate(a.getInputDate());
             businessPartnerDocument.setValidUntil(a.getValidUntil());
-
+            businessPartnerDocument.setFile(a.getFile());
+            businessPartnerDocument.setFileName(a.getFileName());
+            businessPartnerDocument.setFileContentType(a.getFileContentType());
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -99,8 +108,7 @@ public class BusinessPartnerDocumentService {
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public BusinessPartnerDocument update(BusinessPartnerDocumentDTO dto) throws ConstraintViolationException,
-            EntityNotFoundException,
-            com.invado.masterdata.service.exception.ReferentialIntegrityException {
+            EntityNotFoundException, ReferentialIntegrityException {
         //check UpdateBusinessPartnerDocumentPermission
         if (dto == null) {
             throw new ConstraintViolationException(
@@ -130,10 +138,15 @@ public class BusinessPartnerDocumentService {
             }
 
             item.setStatus(dto.getStatus());
+            item.setDescription(dto.getDescription());
             item.setBusinessPartnerOwner(dao.find(BusinessPartner.class, dto.getBusinessPartnerOwnerId()));
-            item.setType(dto.getType());
+            if (dto.getTypeId() != null)
+                item.setType(dao.find(DocumentType.class, dto.getTypeId()));
             item.setInputDate(dto.getInputDate());
             item.setValidUntil(dto.getValidUntil());
+            item.setFile(dto.getFile());
+            item.setFileName(dto.getFileName());
+            item.setFileContentType(dto.getFileContentType());
             dao.lock(item, LockModeType.OPTIMISTIC);
             item.setVersion(dto.getVersion());
             List<String> msgs = validator.validate(item).stream()
@@ -173,9 +186,9 @@ public class BusinessPartnerDocumentService {
             );
         }
         try {
-            BusinessPartnerDocument BusinessPartnerDocument = dao.find(BusinessPartnerDocument.class, id);
-            if (BusinessPartnerDocument != null) {
-                dao.remove(id);
+            BusinessPartnerDocument businessPartnerDocument = dao.find(BusinessPartnerDocument.class, id);
+            if (businessPartnerDocument != null) {
+                dao.remove(businessPartnerDocument);
                 dao.flush();
             }
         } catch (Exception ex) {
@@ -403,6 +416,29 @@ public class BusinessPartnerDocumentService {
             throw new com.invado.masterdata.service.exception.SystemException(
                     Utils.getMessage("BusinessPartnerDocument.PersistenceEx.ReadAll"), ex);
         }
+    }
+
+    private void readFile() {
+        /*
+        File file = fc.getSelectedFile();
+        path = file.toPath();
+        InputStream pathInputStream = Files.newInputStream(path);
+        BufferedImage image = ImageIO.read(pathInputStream);
+        if (image == null) {
+            Dialogs.showError(getWindowAncestor(ClientPanel.this),
+                    ClientBundle.getFormattedString(
+                            "ImageIOException",
+                            path.toAbsolutePath()));
+            return;
+        }
+        ByteArrayOutputStream bas = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", bas);
+        byte[] data = bas.toByteArray();
+        UpdateLogoImageResultDTO result = Services
+                .get(ClientServices.class)
+                .updateClientLogo(getID(), data);
+                */
+
     }
 
     public List<BusinessPartnerDocument.DocumentStatus> getDocumentStatuses() {

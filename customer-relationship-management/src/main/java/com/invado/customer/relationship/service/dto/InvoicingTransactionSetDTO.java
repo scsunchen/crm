@@ -173,6 +173,14 @@ public class InvoicingTransactionSetDTO {
         this.responseTime = responseTime;
     }
 
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
     public String toString(){
         return getDistributorId()+" / "+getDistributorName()+" / "+getMerchantId()+" / "+getMerchantName()+" / "+ getTerminalName();
     }
