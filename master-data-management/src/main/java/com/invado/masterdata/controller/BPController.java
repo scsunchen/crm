@@ -52,7 +52,7 @@ public class BPController {
     private BusinessPartnerDocumentService documentService;
 
 
-    @RequestMapping(value = "/partner/read-merchant-page.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/partner/read-page.html", method = RequestMethod.GET)
     public String showItems(@ModelAttribute("businessPartnerDTO") RequestPartnerDTO requestPartner,
                             BindingResult partnerResult,
                             SessionStatus status,
@@ -77,6 +77,33 @@ public class BPController {
 
         //return "item-table";
         return "partner-view";
+    }
+
+    @RequestMapping(value = "/partner/read-merchant-page.html", method = RequestMethod.GET)
+    public String showMerchantItems(@ModelAttribute("businessPartnerDTO") RequestPartnerDTO requestPartner,
+                                    BindingResult partnerResult,
+                                    SessionStatus status,
+                                    Map<String, Object> model)
+            throws Exception {
+
+
+        List<BusinessPartner.Type> types = service.getTypes();
+
+        PageRequestDTO request = new PageRequestDTO();
+        request.setPage(requestPartner.getPage());
+
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("id", requestPartner.getId()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("name", requestPartner.getName()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("type", requestPartner.getType()));
+        ReadRangeDTO<BusinessPartnerDTO> items = service.readPage(request);
+        model.put("data", items.getData());
+        model.put("page", items.getPage());
+        model.put("types", types);
+        model.put("requestPartner", requestPartner);
+        model.put("numberOfPages", items.getNumberOfPages());
+
+        //return "item-table";
+        return "partner-merchant-view";
     }
 
 
@@ -156,7 +183,7 @@ public class BPController {
 
         if (pointOfSaleId == null)
             System.out.println("nije neiakakva problem sa ovim");
-        System.out.println("a mozda i jeste "+pointOfSaleId);
+        System.out.println("a mozda i jeste " + pointOfSaleId);
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("contactName", contactName));
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("type", type));
         businessPartnerDTO.setTypeValue(type);
@@ -186,7 +213,7 @@ public class BPController {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
 
-            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("accountOwnerId", masterPartnerId));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("accountOwnerId", masterPartnerId));
 
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("account", account));
 
@@ -206,19 +233,18 @@ public class BPController {
     /*DOCUMENTS*/
     @RequestMapping(value = "/partner/read-documents-page.html", method = RequestMethod.GET)
     public String showDetailDocumentss(@RequestParam Integer page,
-                                     @RequestParam(value = "type", required = false) String type,
-                                     @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
-                                     @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
-                                     @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
-                                     @RequestParam(value = "contactName", required = false) String account,
-                                     @ModelAttribute("businessPartnerDTO") BusinessPartnerDTO businessPartnerDTO, BindingResult partnerResult,
-                                     Map<String, Object> model) throws Exception {
+                                       @RequestParam(value = "type", required = false) String type,
+                                       @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                       @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
+                                       @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                       @RequestParam(value = "contactName", required = false) String account,
+                                       @ModelAttribute("businessPartnerDTO") BusinessPartnerDTO businessPartnerDTO, BindingResult partnerResult,
+                                       Map<String, Object> model) throws Exception {
 
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
 
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("businesspartnerOwnerId", masterPartnerId));
-
 
 
         ReadRangeDTO<BusinessPartnerDocumentDTO> items = documentService.readPage(request);
@@ -371,22 +397,47 @@ public class BPController {
         return "redirect:/partner/{page}";
     }
 
-    @RequestMapping(value = "/partner/update-merchant.html", method = RequestMethod.GET)
-    public String initUpdateMerchantForm(@RequestParam Integer id, @RequestParam Integer page,
+    @RequestMapping(value = "/partner/update.html", method = RequestMethod.GET)
+    public String initUpdateForm(@RequestParam Integer id, @RequestParam Integer page,
                                  Map<String, Object> model)
             throws Exception {
         BusinessPartnerDTO item = service.read(id);
         model.put("item", item);
-        return "partner-merchant-grid";
+        return "partner-grid";
+    }
+
+    @RequestMapping(value = "/partner/update.html", method = RequestMethod.POST)
+    public String processUpdateForm(@RequestParam Integer id, @RequestParam Integer page,
+                                    Map<String, Object> model)
+            throws Exception {
+        BusinessPartnerDTO item = service.read(id);
+        model.put("item", item);
+        return "partner-grid";
+    }
+
+    @RequestMapping(value = "/partner/update-merchant.html", method = RequestMethod.GET)
+    public String initUpdateMerchantForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
+                                         @RequestParam Integer id, @RequestParam Integer page,
+                                         SessionStatus status,
+                                         Map<String, Object> model)
+            throws Exception {
+        if (result.hasErrors()) {
+            return "partner-grid";
+        } else {
+            this.service.update(item);
+            status.setComplete();
+        }
+
+        return "redirect:/partner/read-page.html?id=&name=" + "&page=0";
     }
 
     @RequestMapping(value = "/partner/update-merchant.html",
             method = RequestMethod.POST, params = "save")
     public String processUpdateMerchantForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
-                                    @RequestParam Integer id,
-                                    @RequestParam Integer page,
-                                    SessionStatus status,
-                                    Map<String, Object> model)
+                                            @RequestParam Integer id,
+                                            @RequestParam Integer page,
+                                            SessionStatus status,
+                                            Map<String, Object> model)
             throws Exception {
 
         if (result.hasErrors()) {
@@ -446,6 +497,7 @@ public class BPController {
 
         return "redirect:/partner/read-subpartners.html?posId=" + item.getId() + "&masterPartnerId=" + item.getParentBusinessPartnerId() + "&masterPartnerName=" + item.getParentBusinesspartnerName() + "&page=0";
     }
+
 
     @RequestMapping(value = "/partner/update.html", method = RequestMethod.POST, params = "register")
     public String processTelekomMerchantRegistration(@ModelAttribute("item") BusinessPartnerDTO item,

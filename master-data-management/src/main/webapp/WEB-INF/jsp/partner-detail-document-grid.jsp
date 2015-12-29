@@ -26,7 +26,7 @@
             <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
     </div>
 </nav>
-<form:form modelAttribute="item" enctype="multipart/form-data" method="post">
+<form:form modelAttribute="item" enctype="multipart/form-data" method="post" cssClass="generic-container">
     <fieldset>
         <div class="form-group">
             <div class="col-lg-6">

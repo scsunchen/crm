@@ -24,7 +24,19 @@
         <put-attribute name="body" value="/WEB-INF/jsp/result-exception.jsp"/>
     </definition>
 
+
     <definition name="partner-view" extends="main-menu-form">
+        <put-attribute name="title" value="Poslovni partner"/>
+        <put-attribute name="panel-title" value="Poslovni partner"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-table.jsp"/>
+    </definition>
+    <definition name="partner-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Poslovni partner"/>
+        <put-attribute name="panel-title" value="Unos i ažuriranje poslovnog partnera"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-grid.jsp"/>
+    </definition>
+
+    <definition name="partner-merchant-view" extends="main-menu-form">
         <put-attribute name="title" value="Prodavac"/>
         <put-attribute name="panel-title" value="Prodavac"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-merchant-table.jsp"/>

@@ -14,7 +14,7 @@
             ${exception.message}
     </div>
 </c:if>
-<form:form modelAttribute="item" method="post">
+<form:form modelAttribute="item" method="post" cssClass="generic-container">
     <fieldset>
         <div class="col-lg-4">
             <spring:bind path="middle">
@@ -66,7 +66,7 @@
         <div class="form-group col-lg-4">
             <spring:bind path="middle">
                 <div>
-                    <label for="middle"><spring:message code="ExchangeRate.Label.middle"/></label>
+                    <label for="middle"><spring:message code="ExchangeRate.Label.Middle"/></label>
                     <form:input id="middle" path="middle"
                                 class="form-control"/>
                         <span class="help-inline"><c:if test="${status.error}"><c:out
@@ -79,7 +79,7 @@
         <div class="form-group col-lg-4">
             <spring:bind path="selling">
                 <div>
-                    <label for="selling"><spring:message code="ExchangeRate.Label.selling"/></label>
+                    <label for="selling"><spring:message code="ExchangeRate.Label.Selling"/></label>
                     <form:input id="selling" path="selling"
                                 class="form-control"/>
                         <span class="help-inline"><c:if test="${status.error}"><c:out

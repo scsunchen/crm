@@ -10,7 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <form:form role="search" modelAttribute="businessPartnerDTO" method="GET"
-           action="${pageContext.request.contextPath}/partner/read-page.html">
+           action="${pageContext.request.contextPath}/partner/read-page.html" cssClass="generic-container">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <br/>

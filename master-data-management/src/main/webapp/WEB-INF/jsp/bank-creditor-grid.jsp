@@ -11,7 +11,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-<form:form modelAttribute="item" method="post">
+<form:form modelAttribute="item" method="post" cssclass="generic-container">
   <fieldset class="col-lg-12">
     <div class="form-group">
       <div class="col-lg-6">

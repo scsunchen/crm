@@ -31,19 +31,7 @@
             </c:choose>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
-            <c:if test="${param['pointOfSaleId'] == null}">
-                Nuul j e:<c:out value="${param['pointOfSaleId']}"></c:out>
-            </c:if>
-            <c:if test="${param['pointOfSaleId'] != null}">
-                E nije Null :<c:out value="${param['pointOfSaleId']}"></c:out>
-            </c:if>
-            <c:if test="${param['pointOfSaleId'] == ''}">
-                E nije Null i prvi je :<c:out value="${param['pointOfSaleId']}"></c:out>
-            </c:if>
-            <c:if test="${param['pointOfSaleId'] == ' '}">
-                E nije Null i drugi je :<c:out value="${param['pointOfSaleId']}"></c:out>
-            </c:if>
-            <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
+           <strong> <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></strong></p></div>
     </div>
 </nav>
 <nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] != null}">hidden</c:if>>

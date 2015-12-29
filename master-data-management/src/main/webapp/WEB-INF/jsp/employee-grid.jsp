@@ -11,7 +11,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-<form:form modelAttribute="item" method="post">
+<form:form modelAttribute="item" method="post" cssClass="generic-container">
     <div class="form-group">
         <c:choose>
             <c:when test="${action == 'create'}">

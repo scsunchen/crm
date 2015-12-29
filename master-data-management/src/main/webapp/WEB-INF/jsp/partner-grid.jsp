@@ -11,7 +11,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-<form:form modelAttribute="item" method="post" cssClass=" generic-container">
+<form:form modelAttribute="item" method="post" cssClass="generic-container">
   <input:alert message="${message}" alertType="${alertType}"/>
   <fieldset class="col-lg-12">
     <div class="form-group">
