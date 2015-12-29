@@ -25,28 +25,28 @@
     </definition>
 
     <definition name="partner-view" extends="main-menu-form">
-        <put-attribute name="title" value="Poslovni Partner"/>
-        <put-attribute name="panel-title" value="Poslovni partner"/>
-        <put-attribute name="body" value="/WEB-INF/jsp/partner-table.jsp"/>
+        <put-attribute name="title" value="Prodavac"/>
+        <put-attribute name="panel-title" value="Prodavac"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/partner-merchant-table.jsp"/>
     </definition>
-    <definition name="partner-grid" extends="main-menu-form">
-        <put-attribute name="title" value="Poslovni partner"/>
-        <put-attribute name="panel-title" value="Unos i ažuriranje partnera"/>
+    <definition name="partner-merchant-grid" extends="main-menu-form">
+        <put-attribute name="title" value="Prodavac"/>
+        <put-attribute name="panel-title" value="Unos i ažuriranje prodavca"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/layouts/master-details-form.jsp">
                 <put-attribute name="navigation" value="/WEB-INF/jsp/partner-navigation.jsp"/>
-                <put-attribute name="content" value="/WEB-INF/jsp/partner-grid.jsp"/>
+                <put-attribute name="content" value="/WEB-INF/jsp/partner-merchant-grid.jsp"/>
             </definition>
         </put-attribute>
     </definition>
     <definition name="partner-details-view" extends="main-menu-form">
-        <put-attribute name="title" value="Podređeni partner"/>
-        <put-attribute name="panel-title" value="Poslovni partner - podređeni"/>
+        <put-attribute name="title" value="Prodajno mesto"/>
+        <put-attribute name="panel-title" value="Prodajno mesto"/>
         <put-attribute name="body" value="/WEB-INF/jsp/partner-detail-partner-table.jsp"/>
     </definition>
     <definition name="partner-details-grid" extends="main-menu-form">
-        <put-attribute name="title" value="Podređeni partner"/>
-        <put-attribute name="panel-title" value="Poslovni partner - podređeni"/>
+        <put-attribute name="title" value="Prodajno mesto"/>
+        <put-attribute name="panel-title" value="Prodajno mesto"/>
         <put-attribute name="body">
             <definition template="/WEB-INF/layouts/master-details-form.jsp">
                 <put-attribute name="navigation" value="/WEB-INF/jsp/partner-detail-navigation.jsp"/>

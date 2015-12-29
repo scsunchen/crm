@@ -16,12 +16,12 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="btn btn-default"
-               href="${pageContext.request.contextPath}/partner/update.html?id=${param['masterPartnerId']}&name=${param['masterPartnerName']}&page=${param['page']}">
+               href="${pageContext.request.contextPath}/partner/update-merchant.html?id=${param['masterPartnerId']}&name=${param['masterPartnerName']}&page=${param['page']}">
                 <span class="glyphicon glyphicon-backward"></span>
                 <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
-            <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
+            <strong><c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></strong></p></div>
     </div>
 </nav>
 <nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] != null}">hidden</c:if>>

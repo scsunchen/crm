@@ -16,9 +16,9 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <c:choose>
-                <c:when test="${param['pointOfSaleId'] == null}">
+                <c:when test="${param['pointOfSaleId'] == null || param['pointOfSaleId'] == ''}">
                     <a class="btn btn-default"
-                       href="${pageContext.request.contextPath}/partner/update.html?id=${param['masterPartnerId']}&name=${param['masterPartnerName']}&page=${param['page']}">
+                       href="${pageContext.request.contextPath}/partner/update-merchant.html?id=${param['masterPartnerId']}&name=${param['masterPartnerName']}&page=${param['page']}">
                         <span class="glyphicon glyphicon-backward"></span>
                         <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
                 </c:when>
@@ -31,6 +31,18 @@
             </c:choose>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
+            <c:if test="${param['pointOfSaleId'] == null}">
+                Nuul j e:<c:out value="${param['pointOfSaleId']}"></c:out>
+            </c:if>
+            <c:if test="${param['pointOfSaleId'] != null}">
+                E nije Null :<c:out value="${param['pointOfSaleId']}"></c:out>
+            </c:if>
+            <c:if test="${param['pointOfSaleId'] == ''}">
+                E nije Null i prvi je :<c:out value="${param['pointOfSaleId']}"></c:out>
+            </c:if>
+            <c:if test="${param['pointOfSaleId'] == ' '}">
+                E nije Null i drugi je :<c:out value="${param['pointOfSaleId']}"></c:out>
+            </c:if>
             <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
     </div>
 </nav>

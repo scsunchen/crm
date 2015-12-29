@@ -15,6 +15,10 @@
       ${exception.message}
   </div>
 </c:if>
+<a href="${pageContext.request.contextPath}/partner/read-subpartners.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}"
+   class="btn btn-default">
+    <span class="glyphicon glyphicon-backward"></span>
+    <spring:message code="BusinessPartnerDetails.Button.Back"/>
 <a class="btn btn-default"
    href="${pageContext.request.contextPath}/partner/read-contactsdetals-page.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${item.id}&page=${param['page']}"
    <c:if test="${(action == 'create')}">disabled</c:if>>
@@ -29,8 +33,5 @@
 <a class="btn btn-default" href="${pageContext.request.contextPath}/invoice/record.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&pageNumber=${page}" <c:if test="${invoice.recorded == true}">disabled</c:if> >
     <spring:message code="Invoice.Button.Record" /></a>
 --%>
-<a href="${pageContext.request.contextPath}/partner/read-subpartners.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}"
-   class="btn btn-default">
-  <span class="glyphicon glyphicon-backward"></span>
-  <spring:message code="BusinessPartnerDetails.Button.Back"/>
+
 </a>

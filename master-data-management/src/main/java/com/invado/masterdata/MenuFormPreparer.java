@@ -99,8 +99,8 @@ public class MenuFormPreparer implements ViewPreparer {
         finance.setName("Finansije");
         finance.put("Fakturisanje", "Artikal", "/finance/item/0");
         finance.put("Fakturisanje", "Faktura", "/finance/invoice/0");
-
         modules.add(finance);
+
         Module masterdata = new Module();
         masterdata.setPath("masterdata");
         masterdata.setName("Maticni Podaci");
@@ -110,6 +110,7 @@ public class MenuFormPreparer implements ViewPreparer {
         masterdata.put("Terminali", "Zaduženje Terminala", "/masterdata/deviceholder/device-assignment.html?businessPartnerId=&deviceCustomCode=&page=0");
 
         masterdata.put("Partneri", "Poslovni partner", "/masterdata/partner/read-page.html?id=&name=&page=0");
+        masterdata.put("Partneri", "Prodavac - prodajno mesto", "/masterdata/partner/read-merchant-page.html?id=&name=&type=MERCHANT&page=0");
 
         masterdata.put("Opšti sifarnici", "Kompanija Korisnik", "/masterdata/client/0");
         masterdata.put("Opšti sifarnici", "Organizaciona jedinica", "/masterdata/org-unit/0");
@@ -121,12 +122,24 @@ public class MenuFormPreparer implements ViewPreparer {
         masterdata.put("Opšti sifarnici", "Tip Dokumenta", "/masterdata/documenttype/0");
 
         modules.add(masterdata);
+
+
+        Module crm = new Module();
+        crm.setPath("crm");
+        crm.setName("CRM");
+        modules.add(crm);
+
+
         Module service = new Module();
         service.setPath("service");
         service.setName("Servis aparata");
         service.put("Proba", "Proba", "/service/proba/0");
-
         modules.add(service);
+
+
+
+
+
         Module hr = new Module();
         hr.setPath("HR");
         hr.setName("Human Resource");

@@ -52,7 +52,7 @@ public class BPController {
     private BusinessPartnerDocumentService documentService;
 
 
-    @RequestMapping(value = "/partner/read-page.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/partner/read-merchant-page.html", method = RequestMethod.GET)
     public String showItems(@ModelAttribute("businessPartnerDTO") RequestPartnerDTO requestPartner,
                             BindingResult partnerResult,
                             SessionStatus status,
@@ -153,6 +153,10 @@ public class BPController {
         } else {
             request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerId", pointOfSaleId));
         }
+
+        if (pointOfSaleId == null)
+            System.out.println("nije neiakakva problem sa ovim");
+        System.out.println("a mozda i jeste "+pointOfSaleId);
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("contactName", contactName));
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("type", type));
         businessPartnerDTO.setTypeValue(type);
@@ -367,18 +371,18 @@ public class BPController {
         return "redirect:/partner/{page}";
     }
 
-    @RequestMapping(value = "/partner/update.html", method = RequestMethod.GET)
-    public String initUpdateForm(@RequestParam Integer id, @RequestParam Integer page,
+    @RequestMapping(value = "/partner/update-merchant.html", method = RequestMethod.GET)
+    public String initUpdateMerchantForm(@RequestParam Integer id, @RequestParam Integer page,
                                  Map<String, Object> model)
             throws Exception {
         BusinessPartnerDTO item = service.read(id);
         model.put("item", item);
-        return "partner-grid";
+        return "partner-merchant-grid";
     }
 
-    @RequestMapping(value = "/partner/update.html",
+    @RequestMapping(value = "/partner/update-merchant.html",
             method = RequestMethod.POST, params = "save")
-    public String processUpdateForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
+    public String processUpdateMerchantForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
                                     @RequestParam Integer id,
                                     @RequestParam Integer page,
                                     SessionStatus status,
@@ -386,13 +390,13 @@ public class BPController {
             throws Exception {
 
         if (result.hasErrors()) {
-            return "partner-grid";
+            return "partner-merchant-grid";
         } else {
             this.service.update(item);
             status.setComplete();
         }
 
-        return "redirect:/partner/read-page.html?id=&name=" + "&page=0";
+        return "redirect:/partner/read-merchant-page.html?id=&name=" + "&page=0";
     }
 
 

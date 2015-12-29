@@ -102,7 +102,7 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-10 main">
             <div class="panel panel-default">
-                <div class="panel-heading"><tiles:getAsString name="panel-title"/></div>
+                <div class="panel-heading"><h2><small><tiles:getAsString name="panel-title"/></small></h2></div>
                 <div class="panel-body">
                     <div class="row">
                         <p class="pull-left visible-xs visible-sm">
