@@ -16,21 +16,21 @@
 
     <c:choose>
         <c:when test="${action == 'update'}">
-            <input:inputField label="Šifra *" name="id" disabled="true"/>
+            <input:inputField label="Device.Table.Id" name="id" disabled="true"/>
         </c:when>
     </c:choose>
-    <input:inputField name="customCode" label="Korisnička šifra"/>
+    <input:inputField name="customCode" label="Device.Table.CustomCode"/>
     <div class="form-group">
-        <label for="itemDesc">Tip terminala</label>
+        <label for="itemDesc"><spring:message code="Device.Table.Type"></spring:message> </label>
         <form:input id="itemDesc" class="typeahead form-control" type="text"
                     path="articleDescription" style="margin-bottom:  15px;"/>
         <form:hidden id="itemDescHidden" path="articleCode"/>
     </div>
 
-    <input:inputField name="serialNumber" label="Serijski Broj"/>
+    <input:inputField name="serialNumber" label="Device.Table.SerialNo"/>
     <spring:bind path="deviceStatusId">
         <div class="form-group">
-            <label for="status">Status</label>
+            <label for="status"><spring:message code="Device.Table.Status"></spring:message> </label>
             <form:select path="deviceStatusId" id="status" class="form-control" itemLabel="status">
                 <form:option value="${deviceStatusId}">${deviceStatusName}</form:option>
                 <form:options items="${deviceStatuses}" itemLabel="name" itemValue="id"/>
@@ -49,10 +49,12 @@
             </div>
         </div>
     </spring:bind>
-    <input:inputField name="installedSoftwareVersion" label="Firmware verzija"/>
+    <input:inputField name="installedSoftwareVersion" label="Device.Table.Firmware"/>
     <form:hidden path="version"/>
     <div class="form-group">
-        <a class="btn btn-primary" href="/masterdata/deviceholder/device-assignment.html?page=0">Povratak</a>
+        <a class="btn btn-default" href="/masterdata/device/read-page.html?page=0">
+            <span class="glyphicon glyphicon-backward"></span>
+            <spring:message code="Common.Button.Back"></spring:message> </a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -66,14 +68,19 @@
         <div class="btn-group pull-right">
             <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                Telekom WS <span class="caret"></span>
+                <spring:message code="Device.Table.TelekomWS"></spring:message><span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/masterdata/deviceholder/terminal/register">Registracija Terminala</a></li>
-                <li><a href="/masterdata/deviceholder/terminal/update">Izmena Terminala</a></li>
-                <li><a href="/masterdata/deviceholder/terminal/update-status">Izmena Status Terminala</a></li>
-                <li><a href="/masterdata/partner/cancelActivateTerminal">Otkazi/Akirajtiv</a></li>
-                <li><a href="/masterdata/partner/checkTerminalStatus">Provera Status Terminala</a></li>
+                <li><a href="/masterdata/deviceholder/terminal/register"><spring:message
+                        code="Device.Table.Register"></spring:message></a></li>
+                <li><a href="/masterdata/deviceholder/terminal/update"><spring:message code="Device.Table.Update"/></a>
+                </li>
+                <li><a href="/masterdata/deviceholder/terminal/update-status"><spring:message
+                        code="Device.Table.StatusUpdate"></spring:message> </a></li>
+                <li><a href="/masterdata/partner/cancelActivateTerminal"><spring:message
+                        code="Device.table.CancelActivate"></spring:message></a></li>
+                <li><a href="/masterdata/partner/checkTerminalStatus"><spring:message
+                        code="Device.Table.StatusCheck"></spring:message></a></li>
             </ul>
         </div>
     </div>

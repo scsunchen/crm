@@ -45,13 +45,13 @@
         <thead>
         <tr>
             <th></th>
-            <th>Šifra</th>
-            <th>Korisnička šifra</th>
-            <th>Tip terminala</th>
-            <th>Serijski Broj</th>
-            <th>Status</th>
-            <th>Datum kreiranja</th>
-            <th>Firmware verzija</th>
+            <th><spring:message code="Device.Table.Id"></spring:message> </th>
+            <th><spring:message code="Device.Table.CustomCode"></spring:message> </th>
+            <th><spring:message code="Device.Table.Type"></spring:message></th>
+            <th><spring:message code="Device.Table.SerialNo"></spring:message> </th>
+            <th><spring:message code="Device.Table.Status"></spring:message></th>
+            <th><spring:message code="Device.label.CreationDate"></spring:message> </th>
+            <th><spring:message code="Device.Table.Firmware"></spring:message></th>
         </tr>
         </thead>
         <tbody>
@@ -104,13 +104,13 @@
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="?customCode=${param['customCode']}&serialNumber=${param['serialNumber']}&page=${param['page'] - 1}" /></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
+                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}"><c:out value="?customCode=${param['customCode']}&serialNumber=${param['serialNumber']}&page=${param['page'] + 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
+                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
             </a>
         </li>
     </ul>

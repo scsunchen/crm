@@ -19,7 +19,7 @@
         <div class="col-lg-4">
             <spring:bind path="middle">
                 <div>
-                    <input:inputDate name="applicationDate" label="Datum Kursne Liste *" />
+                    <input:inputDate name="applicationDate" label="ExchangeRate.Table.Date" />
                     <span class="help-inline"><c:if test="${status.error}"><c:out
                             value="${status.errorMessage}"/></c:if></span>
                 </div>
@@ -28,7 +28,7 @@
         <div class="form-group col-lg-4">
             <spring:bind path="middle">
                 <div>
-                    <label for="middle"><spring:message code="ExchangeRate.Label.ListNo"/></label>
+                    <label for="middle"><spring:message code="ExchangeRate.Table.ListNo"/></label>
                     <form:input id="middle" path="listNumber"
                                 class="form-control"/>
                         <span class="help-inline"><c:if test="${status.error}"><c:out
@@ -40,7 +40,7 @@
         <div class="form-group col-lg-4">
             <spring:bind path="middle">
                 <div>
-                    <label for="currency">Valuta *</label>
+                    <label for="currency"><spring:message code="ExchangeRate.Table.Currency"></spring:message> </label>
                     <form:input id="currency" class="typeahead form-control" type="text"
                                 path="currency" style="margin-bottom:  15px;"/>
                     <form:hidden id="currencyISOHidden" path="currencyISOCode"/>
@@ -53,7 +53,7 @@
         <div class="form-group col-lg-4">
             <spring:bind path="buying">
                 <div>
-                    <label for="buying"><spring:message code="ExchangeRate.Label.Buying"/></label>
+                    <label for="buying"><spring:message code="ExchangeRate.Table.Buying"/></label>
                     <form:input id="buying" path="buying"
                                 class="form-control"/>
                         <span class="help-inline"><c:if test="${status.error}"><c:out
@@ -66,7 +66,7 @@
         <div class="form-group col-lg-4">
             <spring:bind path="middle">
                 <div>
-                    <label for="middle"><spring:message code="ExchangeRate.Label.Middle"/></label>
+                    <label for="middle"><spring:message code="ExchangeRate.Table.Middle"/></label>
                     <form:input id="middle" path="middle"
                                 class="form-control"/>
                         <span class="help-inline"><c:if test="${status.error}"><c:out
@@ -79,7 +79,7 @@
         <div class="form-group col-lg-4">
             <spring:bind path="selling">
                 <div>
-                    <label for="selling"><spring:message code="ExchangeRate.Label.Selling"/></label>
+                    <label for="selling"><spring:message code="ExchangeRate.Table.Selling"/></label>
                     <form:input id="selling" path="selling"
                                 class="form-control"/>
                         <span class="help-inline"><c:if test="${status.error}"><c:out
@@ -93,6 +93,8 @@
     </fieldset>
 
     <div class="form-group">
+        <a href="${pageContext.request.contextPath}/exchange-rate/${page}" class="btn btn-default" >
+            <span class="glyphicon glyphicon-backward"></span> <spring:message code="ExchangeRate.Button.Back" /></a>
         <button type="submit" class="btn btn-primary" >
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -103,8 +105,7 @@
                 </c:otherwise>
             </c:choose>
         </button>
-        <a href="${pageContext.request.contextPath}/exchange-rate/${page}" class="btn btn-default" >
-            <span class="glyphicon glyphicon-backward"></span> <spring:message code="ExchangeRate.Button.Back" /></a>
+
     </div>
 
 </form:form>

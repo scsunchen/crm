@@ -194,7 +194,7 @@
 
     <definition name="documenttype-view" extends="main-menu-form">
         <put-attribute name="title" value="Tip dokumenta"/>
-        <put-attribute name="panel-title" value="Tyip Dokumenta"/>
+        <put-attribute name="panel-title" value="Tip Dokumenta"/>
         <put-attribute name="body" value="/WEB-INF/jsp/documenttype-table.jsp"/>
     </definition>
     <definition name="documenttype-grid" extends="main-menu-form">

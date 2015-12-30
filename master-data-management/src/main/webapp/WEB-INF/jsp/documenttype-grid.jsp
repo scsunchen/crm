@@ -14,33 +14,35 @@
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
 <form:form modelAttribute="item" method="post" cssClass="generic-container">
-  <div class="form-group">
-    <c:choose>
-      <c:when test="${action == 'create'}">
-        <input:inputField label="Šifra *" name="id" autofocus="true"/>
-      </c:when>
-      <c:otherwise>
-        <input:inputField label="Šifra *" name="id" disabled="true"/>
-      </c:otherwise>
-    </c:choose>
-  </div>
-  <input:inputField label="Naziv *" name="description"/>
-  <form:hidden path="version"/>
+    <div class="form-group">
+        <c:choose>
+            <c:when test="${action == 'create'}">
+                <input:inputField label="DocumentType.Table.Id" name="id" autofocus="true"/>
+            </c:when>
+            <c:otherwise>
+                <input:inputField label="DocumentType.Table.Id" name="id" disabled="true"/>
+            </c:otherwise>
+        </c:choose>
+    </div>
+    <input:inputField label="DocumentType.Table.Name" name="description"/>
+    <form:hidden path="version"/>
 
-  <div class="form-group btn-group-sm">
-    <a class="btn btn-primary" href="/masterdata/documenttype/0">Povratak</a>
-    <button type="submit" class="btn btn-primary">
-      <c:choose>
-        <c:when test="${action == 'create'}">
-          <c:out value="Kreiraj"/>
-        </c:when>
-        <c:otherwise>
-          <c:out value="Promeni"/>
-        </c:otherwise>
-      </c:choose>
-    </button>
-  </div>
+    <div class="form-group btn-group-sm">
 
+        <a class="btn btn-default" href="/masterdata/documenttype/0">
+            <span class="glyphicon glyphicon-backward"></span>
+            <spring:message code="Common.Button.Back"></spring:message></a>
+        <button type="submit" class="btn btn-primary">
+            <c:choose>
+                <c:when test="${action == 'create'}">
+                    <c:out value="Kreiraj"/>
+                </c:when>
+                <c:otherwise>
+                    <c:out value="Promeni"/>
+                </c:otherwise>
+            </c:choose>
+        </button>
+    </div>
 </form:form>
 
 

@@ -18,37 +18,37 @@
       <div class="col-lg-4">
         <spring:bind path="type">
           <div class="form-group">
-            <label for="type">Tip partnera</label>
+            <label for="type"><spring:message code="BusinessPartner.Table.Type"></spring:message> </label>
             <form:select path="type" id="type" class="form-control" itemLabel="type">
               <form:option value="${item.type}">${item.typeDescription}</form:option>
               <form:options items="${types}" itemLabel="description"/>
             </form:select>
           </div>
         </spring:bind>
-        <input:inputField label="Šifra *" name="id" disabled="true"/>
+        <input:inputField label="BusinessPartner.Table.Id" name="id" disabled="true"/>
         <spring:bind path="name">
           <div>
-            <input:inputField label="Naziv *" name="name"/>
+            <input:inputField label="BusinessPartner.Table.Name" name="name"/>
                     <span class="help-inline"><c:if test="${status.error}"><c:out
                             value="${status.errorMessage}"/></c:if></span>
           </div>
         </spring:bind>
         <spring:bind path="companyIdNumber">
           <div>
-            <input:inputField label="Matični broj *" name="companyIdNumber"/>
+            <input:inputField label="BusinessPartner.Table.CompaniIDNumber" name="companyIdNumber"/>
                     <span class="help-inline"><c:if test="${status.error}"><c:out
                             value="${status.errorMessage}"/></c:if></span>
           </div>
         </spring:bind>
         <spring:bind path="TIN">
           <div>
-            <input:inputField label="PIB *" name="TIN"/>
+            <input:inputField label="BusinessPartner.Table.TIN" name="TIN"/>
                     <span class="help-inline"><c:if test="${status.error}"><c:out
                             value="${status.errorMessage}"/></c:if></span>
           </div>
         </spring:bind>
-        <input:inputField label="Šifra delatnosti" name="activityCode"/>
-        <input:inputField label="Tekući račun" name="currentAccount"/>
+        <input:inputField label="BusinessPartner.Table.ActivityCode" name="activityCode"/>
+        <input:inputField label="BusinessPartner.Table.BankAccount" name="currentAccount"/>
       </div>
 
       <div class="col-lg-4">
@@ -107,34 +107,34 @@
           </div>
         </nav>
 
-        <input:inputField name="phone" label="Telefon"/>
-        <input:inputField name="fax" label="Fax"/>
-        <input:inputField name="EMail" label="email"/>
+        <input:inputField name="phone" label="BusinessPartner.Table.Phone"/>
+        <input:inputField name="fax" label="BusinessPartner.Table.Fax"/>
+        <input:inputField name="EMail" label="BusinessPartner.Table.eMail"/>
       </div>
       <div class="col-lg-4">
         <spring:bind path="currencyDesignation">
           <div class="form-group">
-            <label for="currencyDesignation">Valuta</label>
+            <label for="currencyDesignation"><spring:message code="BusinessPartnerAccount.Table.Currency"></spring:message> </label>
             <form:select path="currencyDesignation" id="currencyDesignation" class="form-control"
                          items="${currencyDesignation}"
                          itemLabel="description"/>
           </div>
         </spring:bind>
-        <input:inputField label="Rabat" name="rebate"/>
-        <input:inputField label="Beskamatni period" name="interestFreeDays"/>
+        <input:inputField label="BusinessPartner.Table.Rebate" name="rebate"/>
+        <input:inputField label="BusinessPartner.Table.InterestFreePeriod" name="interestFreeDays"/>
         <div class="form-group">
-          <label for="partnerName">Nadređeni partner</label>
+          <label for="partnerName"><spring:message code="BusinessPartner.Table.ParentPartner"></spring:message></label>
           <form:input id="partnerName" class="typeahead form-control" type="text"
                       path="parentBusinesspartnerName" style="margin-bottom:  15px;"/>
           <form:hidden id="partnerNameHidden" path="parentBusinessPartnerId"/>
         </div>
         <div class="checkbox">
-          <label><form:checkbox path="VAT" id="VAT" class="checkbox"/>PDV</label>
+          <label><form:checkbox path="VAT" id="VAT" class="checkbox"/><spring:message code="BusinessPartner.Table.VAT"></spring:message> </label>
         </div>
-        <input:inputField label="TelekomID" name="telekomId"/>
+        <input:inputField label="BusinessPartner.Table.TelekomId" name="telekomId"/>
         <spring:bind path="telekomStatus">
           <div class="form-group">
-            <label for="telekomStatus">Telekom status</label>
+            <label for="telekomStatus"><spring:message code="BusinessPartner.Table.TelekomStatus"></spring:message></label>
             <form:select path="telekomStatus" id="telekomStatus" class="form-control" itemLabel="type">
               <form:option value="${item.telekomStatus}">${item.telekomStatusDescription}</form:option>
               <form:options items="${telekomStatuses}" itemLabel="description"/>
@@ -146,6 +146,9 @@
     </div>
   </fieldset>
   <div class="form-group">
+    <a class="btn btn-default" href="/masterdata/partner/read-page.html?type=${item.type}&page=0">
+      <span class="glyphicon glyphicon-backward"></span>
+      <spring:message code="OrgUnit.Table.BackButton"></spring:message> </a>
     <button type="submit" class="btn btn-primary" name="save">
       <c:choose>
         <c:when test="${action == 'create'}">
@@ -159,13 +162,13 @@
     <div class="btn-group pull-right">
       <button class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-        Telekom WS <span class="caret"></span>
+        <spring:message code="BusinessPartnerTable.TelekomWS"></spring:message><span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-        <li><button class="btn btn-default btn-block" type="submit"  name="register">Registracija partnera</button></li>
-        <li><button class="btn btn-default btn-block" type="submit"  name="update">Izmena partnera</button></li>
+        <li><button class="btn btn-default btn-block" type="submit"  name="register"><spring:message code="BusinessPartner.Table.TelekomRegistration"></spring:message></button></li>
+        <li><button class="btn btn-default btn-block" type="submit"  name="update"><spring:message code="BusinessPartner.Table.TelekomUpdate"></spring:message></button></li>
         <li role="separator" class="divider"></li>
-        <li><button class="btn btn-default btn-block" type="submit"  name="deactivation">Deaktivacija</button></li>
+        <li><button class="btn btn-default btn-block" type="submit"  name="deactivation"><spring:message code="BusinessPartner.Table.TelekomDeactivation"></spring:message></button></li>
       </ul>
     </div>
   </div>

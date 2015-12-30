@@ -36,9 +36,9 @@
         <thead>
         <tr>
             <th><a class="btn btn-primary"
-                   href="/masterdata/partner/create.html?page=${param['page']}"><span
+                   href="/masterdata/partner/create-merchant.html?type=${param['type']}&page=${param['page']}"><span
                     class="glyphicon glyphicon-plus"></span>
-                Kreiraj</a></th>
+                <spring:message code="Common.Button.Create"></spring:message> </a></th>
             <th><spring:message code="BusinessPartner.Table.CompaniIDNumber"/></th>
             <th><spring:message code="BusinessPartner.Table.Name"/></th>
             <th><spring:message code="BusinessPartner.Table.Address"/></th>
@@ -102,13 +102,13 @@
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="?type=${param['type']}&id=${param['id']}&name=${param['name']}&page=${page - 1}" /></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
+                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}"><c:out value="?type=${param['type']}&id=${param['id']}&name=${param['name']}&page=${page + 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
+                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
             </a>
         </li>
     </ul>

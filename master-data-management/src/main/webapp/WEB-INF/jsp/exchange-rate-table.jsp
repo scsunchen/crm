@@ -35,13 +35,13 @@
         <tr>
             <th><a class="btn btn-primary" href="/masterdata/exchange-rate/${page}/create"><span
                     class="glyphicon glyphicon-plus"></span>
-                Kreiraj</a></th>
-            <th>Datum</th>
-            <th>Broj Liste</th>
-            <th>Valuta</th>
-            <th>Kupovni</th>
-            <th>Srednji</th>
-            <th>Prodajni</th>
+                <spring:message code="Common.Button.Create"></spring:message> </a></th>
+            <th><spring:message code="ExchangeRate.Table.Date"></spring:message> </th>
+            <th><spring:message code="ExchangeRate.Table.ListNo"></spring:message> </th>
+            <th><spring:message code="ExchangeRate.Table.Currency"></spring:message> </th>
+            <th><spring:message code="ExchangeRate.Table.Buying"></spring:message></th>
+            <th><spring:message code="ExchangeRate.Table.Middle"></spring:message></th>
+            <th><spring:message code="ExchangeRate.Table.Selling"></spring:message></th>
         </tr>
         </thead>
         <tbody>
@@ -95,13 +95,14 @@
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
+                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
+                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
+
             </a>
         </li>
     </ul>

@@ -281,6 +281,48 @@ public class BPController {
         return "business-partner-device-view";
     }
 
+    @RequestMapping(value = "/partner/create-merchant.html", method = RequestMethod.GET)
+    public String initCreateMerchantForm(@RequestParam Integer page,
+                                 @RequestParam(value = "type", required = false) String type,
+                                 Map<String, Object> model) {
+
+        List<BusinessPartner> parents = service.readParentPartners();
+        List<BusinessPartner.Type> types = service.getTypes();
+        List<BusinessPartner.TelekomStatus> telekomStatuses = service.getTelekomStatuses();
+        List<POSTypeDTO> POSTypes = posTypeService.readAll(null, null);
+        BusinessPartnerDTO item = new BusinessPartnerDTO();
+        item.setType(BusinessPartner.Type.getEnum(type));
+        model.put("item", item);
+        model.put("types", types);
+        model.put("action", "create");
+
+        return "partner-merchant-grid";
+    }
+
+    @RequestMapping(value = "/partner/create-merchant.html", method = RequestMethod.POST, params = "save")
+    public String processCreationMerchantForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
+                                      @RequestParam Integer page,
+                                      @RequestParam(value = "type", required = false) String type,
+                                      SessionStatus status,
+                                      Map<String, Object> model,
+                                      final RedirectAttributes redirectAttributes)
+            throws Exception {
+
+        if (result.hasErrors()) {
+            model.put("action", "create");
+            model.put("message", Utils.getMessage("Processing.Save.Failure"));
+            return "partner-grid";
+        } else {
+            item.settAddressCode(addressServiceClient.getPAK(item.gettHouseNumberCode()));
+            service.create(item);
+            status.setComplete();
+            redirectAttributes.addFlashAttribute("alertType", "success");
+            redirectAttributes.addFlashAttribute("message", Utils.getMessage("Processing.Save.Succes"));
+            redirectAttributes.addFlashAttribute("partner", item);
+
+        }
+        return "redirect:/partner/create-merchant.html?type=" + type + "&masterPartnerId=&masterPartnerName=&page=" + page;
+    }
 
     @RequestMapping(value = "/partner/create.html", method = RequestMethod.GET)
     public String initCreateForm(@RequestParam Integer page,
@@ -416,19 +458,13 @@ public class BPController {
     }
 
     @RequestMapping(value = "/partner/update-merchant.html", method = RequestMethod.GET)
-    public String initUpdateMerchantForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
-                                         @RequestParam Integer id, @RequestParam Integer page,
+    public String initUpdateMerchantForm(@RequestParam Integer id, @RequestParam Integer page,
                                          SessionStatus status,
                                          Map<String, Object> model)
             throws Exception {
-        if (result.hasErrors()) {
-            return "partner-grid";
-        } else {
-            this.service.update(item);
-            status.setComplete();
-        }
-
-        return "redirect:/partner/read-page.html?id=&name=" + "&page=0";
+        BusinessPartnerDTO item = service.read(id);
+        model.put("item", item);
+        return "partner-merchant-grid";
     }
 
     @RequestMapping(value = "/partner/update-merchant.html",

@@ -17,19 +17,21 @@
   <div class="form-group">
     <c:choose>
       <c:when test="${action == 'create'}">
-        <input:inputField label="Šifra *" name="code" autofocus="true"/>
+        <input:inputField label="Township.Table.Code" name="code" autofocus="true"/>
       </c:when>
       <c:otherwise>
-        <input:inputField label="Šifra *" name="code" disabled="true"/>
+        <input:inputField label="Township.Table.Code" name="code" disabled="true"/>
       </c:otherwise>
     </c:choose>
   </div>
-  <input:inputField label="Naziv *" name="name"/>
-  <input:inputField label="Poštanski broj *" name="postCode"/>
+  <input:inputField label="Township.Table.Name" name="name"/>
+  <input:inputField label="Township.Table.Zip" name="postCode"/>
   <form:hidden path="version"/>
 
   <div class="form-group btn-group-sm">
-    <a class="btn btn-primary" href="/masterdata/township/0">Povratak</a>
+    <a class="btn btn-primary" href="/masterdata/township/0">
+      <span class="glyphicon glyphicon-backward"></span>
+      <spring:message code="Common.Button.Back"></spring:message> </a>
     <button type="submit" class="btn btn-primary">
       <c:choose>
         <c:when test="${action == 'create'}">
