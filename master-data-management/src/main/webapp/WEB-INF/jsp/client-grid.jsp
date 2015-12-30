@@ -14,74 +14,72 @@
 <form:form modelAttribute="item" method="post" cssClass="generic-container">
     <div class="form-group">
         <div class="col-lg-6">
+            <input:inputField label="Client.Table.Id" name="id" disabled="true"/>
             <c:choose>
                 <c:when test="${action == 'create'}">
-                    <input:inputField label="Šifra *" name="id" disabled="true"/>
-                </c:when>
-            </c:choose>
-            <c:choose>
-                <c:when test="${action == 'create'}">
-                    <input:inputField label="Matični broj *" name="companyIDNumber" autofocus="true"/>
+                    <input:inputField label="Client.Table.CompanyIDNumber" name="companyIDNumber" autofocus="true"/>
                 </c:when>
                 <c:otherwise>
-                    <input:inputField label="Matični broj *" name="companyIDNumber" disabled="true"/>
+                    <input:inputField label="Client.Table.CompanyIDNumber" name="companyIDNumber" disabled="true"/>
                 </c:otherwise>
             </c:choose>
-            <input:inputField label="Naziv *" name="name"/>
+            <input:inputField label="Client.Table.Name" name="name"/>
         </div>
         <div class="col-lg-3">
-            <input:inputField name="country" label="Država"/>
-            <input:inputField name="place" label="Mesto"/>
+            <input:inputField name="country" label="Client.Table.State"/>
+            <input:inputField name="place" label="Client.Table.Place"/>
             <spring:bind path="townshipCode">
                 <div class="form-group">
-                    <label for="township">Opština</label>
-                    <form:select path="townshipCode" id="township" class="form-control" itemLabel="township" >
+                    <label for="township"><spring:message code="Client.Table.Township"/></label>
+                    <form:select path="townshipCode" id="township" class="form-control" itemLabel="township">
                         <form:option value="${townshipCode}">${townshipName}</form:option>
                         <form:options items="${townships}" itemLabel="name" itemValue="code"/>
                     </form:select>
                 </div>
             </spring:bind>
-            <input:inputField name="street" label="Ulica i broj"/>
-            <input:inputField name="postCode" label="Poštanski Broj"/>
-            <input:inputField label="Telefon" name="phone"/>
-            <input:inputField label="Fax" name="fax"/>
-            <input:inputField label="email" name="EMail"/>
+            <input:inputField name="street" label="Client.Table.Street"/>
+            <input:inputField name="postCode" label="Client.Table.Zip"/>
+            <input:inputField name="phone" label="Client.Table.Phone"/>
+            <input:inputField name="fax" label="Client.Table.Fax"/>
+            <input:inputField name="EMail" label="Client.Table.Email"/>
         </div>
         <div class="col-lg-3">
-            <input:inputField label="PIB" name="TIN"/>
-            <input:inputField label="Šifra delatnosti" name="businessActivityCode"/>
+            <input:inputField label="Client.Table.TIN" name="TIN"/>
+            <input:inputField label="Client.Table.ActivityCode" name="businessActivityCode"/>
             <spring:bind path="bankId">
                 <div class="form-group">
-                    <label for="bank">Banka</label>
+                    <label for="bank"><spring:message code="Client.Table.Bank"></spring:message> </label>
                     <form:select path="bankId" id="bank" class="form-control" itemLabel="bank">
                         <form:option value="${bankId}">${bankName}</form:option>
                         <form:options items="${banks}" itemLabel="name" itemValue="id"/>
                     </form:select>
                 </div>
             </spring:bind>
-            <input:inputField label="Tekući račun" name="bankAccount"/>
-            <input:inputField label="Osnovni kapital" name="initialCapital"/>
+            <input:inputField label="Client.Table.Account" name="bankAccount"/>
+            <input:inputField label="Client.Table.InitialCapital" name="initialCapital"/>
             <div class="form-group">
-                <label for="status">Status</label>
+                <label for="status"><spring:message code="Client.Table.Status"></spring:message> </label>
                 <form:select path="status" id="status" class="form-control" itemLabel="status">
                     <form:option value="${status}">${statusDescription}</form:option>
                     <form:options items="${statuses}" itemLabel="description"/>
                 </form:select>
             </div>
             <div class="form-group">
-                <label for="invoicingType">Način fakturisanja</label>
+                <label for="invoicingType"><spring:message code="Client.Table.InvoicingType"/> </label>
                 <form:select path="invoicingType" id="invoicingType" class="form-control" itemLabel="status">
                     <form:option value="${invoicingType}">${inovicingTypeDescription}</form:option>
                     <form:options items="${invoicingTypes}" itemLabel="description"/>
                 </form:select>
             </div>
-            <input:inputField name="registrationNumber" label="Registracioni broj"/>
-            <input:inputField name="logo" label="Logo"/>
+            <input:inputField name="registrationNumber" label="Client.Table.RegNo"/>
+            <input:inputField name="logo" label="Client.Table.Logo"/>
         </div>
         <form:hidden path="version"/>
     </div>
     <div class="form-group">
-        <a class="btn btn-primary" href="/masterdata/client/0">Povratak</a>
+        <a class="btn btn-default" href="/masterdata/client/0">
+            <span class="glyphicon glyphicon-backward"></span>
+            <spring:message code="Client.Table.BackButton"></spring:message> </a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">

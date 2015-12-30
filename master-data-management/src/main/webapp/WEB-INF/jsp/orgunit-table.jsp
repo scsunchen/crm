@@ -16,12 +16,12 @@
         <thead>
         <tr>
             <th><a class="btn btn-primary" href="/masterdata/org-unit/${page}/create"><span class="glyphicon glyphicon-plus"></span>
-                Kreiraj</a></th>
-            <th>Šifra</th>
-            <th>Korisnička Šifra</th>
-            <th>Naziv</th>
-            <th>Adresa</th>
-            <th>Nadređena</th>
+                <spring:message code="OrgUnit.Table.CreateButton"></spring:message> </a></th>
+            <th><spring:message code="OrgUnit.Table.Id"></spring:message> </th>
+            <th><spring:message code="OrgUnit.Table.CustomId"></spring:message> </th>
+            <th><spring:message code="OrgUnit.Table.Name"></spring:message> </th>
+            <th><spring:message code="OrgUnit.Table.Address"></spring:message> </th>
+            <th><spring:message code="OrgUnit.Table.ParentOU"></spring:message> </th>
         </tr>
         </thead>
         <tbody>
@@ -59,8 +59,8 @@
                 <td><c:out value="${item.customId}"/></td>
                 <td><c:out value="${item.name}"/></td>
                 <td class="form-inline">
-                    <c:out value="${item.place}"/>
-                    <c:out value="${item.street}"/>
+                    <c:out value="${item.place}"/>,
+                    <c:out value=" ${item.street}"/>
                 </td>
                 <td><c:out value="${item.parentOrgUnitName}"/></td>
             </tr>

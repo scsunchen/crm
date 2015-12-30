@@ -14,15 +14,15 @@
         <thead>
         <tr>
             <th><a class="btn btn-primary" href="/masterdata/client/${page}/create"><span class="glyphicon glyphicon-plus"></span>
-                Kreiraj</a></th>
-            <th>Matični broj</th>
-            <th>Naziv</th>
-            <th>Država</th>
-            <th>Mesto</th>
-            <th>Opština</th>
-            <th>Ulica</th>
-            <th>Telefon</th>
-            <th>email</th>
+                <spring:message code="Common.Button.Create"></spring:message> </a></th>
+            <th><spring:message code="Client.Table.CompanyIDNumber"></spring:message></th>
+            <th><spring:message code="Client.Table.Name"></spring:message></th>
+            <th><spring:message code="Client.Table.State"></spring:message></th>
+            <th><spring:message code="Client.Table.Place"></spring:message></th>
+            <th><spring:message code="Client.Table.Township"></spring:message></th>
+            <th><spring:message code="Client.Table.Street"></spring:message></th>
+            <th><spring:message code="Client.Table.Phone"></spring:message></th>
+            <th><spring:message code="Client.Table.Email"></spring:message></th>
         </tr>
         </thead>
         <tbody>
@@ -75,13 +75,13 @@
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
+                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
+                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
             </a>
         </li>
     </ul>

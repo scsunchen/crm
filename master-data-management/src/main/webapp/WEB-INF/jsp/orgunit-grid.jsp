@@ -7,23 +7,19 @@
 
     <div class="form-group">
         <div class="col-md-6">
-            <c:choose>
-                <c:when test="${action == 'update'}">
-                    <input:inputField label="Šifra *" name="id" autofocus="true" disabled="true"/>
-                </c:when>
-            </c:choose>
-            <input:inputField label="Korisnička Šifra *" name="customId"/>
-            <input:inputField label="Naziv *" name="name"/>
+            <input:inputField label="OrgUnit.Table.Id" name="id" disabled="true"/>
+            <input:inputField label="OrgUnit.Table.CustomId" autofocus="true" name="customId"/>
+            <input:inputField label="OrgUnit.Table.Name" name="name"/>
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            <input:inputField name="place" label="Mesto"/>
-            <input:inputField name="street" label="Ulica i broj"/>
+            <input:inputField name="place" label="OrgUnit.Table.Place"/>
+            <input:inputField name="street" label="OrgUnit.Table.Street"/>
             <spring:bind path="clientId">
                 <div class="form-group">
-                    <label for="clientId">Kompanija korisnik *</label>
+                    <label for="clientId"><spring:message code="OrgUnit.Table.Client"></spring:message> </label>
                     <form:select path="clientId" id="clientId" class="form-control" itemLabel="clientId">
                         <form:option value="${clientId}">${clientName}</form:option>
                         <form:options items="${clients}" itemLabel="name" itemValue="id"/>
@@ -32,7 +28,7 @@
             </spring:bind>
         </div>
         <div class="form-group">
-            <label for="parentOrgUnitName">Nadređena OJ</label>
+            <label for="parentOrgUnitName"><spring:message code="OrgUnit.Table.ParentOU"></spring:message> </label>
             <form:input id="parentOrgUnitName" class="typeahead form-control" type="text"
                         path="parentOrgUnitName" style="margin-bottom:  15px;"/>
             <form:hidden id="itemDescHidden" path="parentOrgUnitId"/>
@@ -42,7 +38,9 @@
     <form:hidden path="version"/>
 
     <div class="form-group">
-        <a class="btn btn-primary" href="/masterdata/org-unit/0">Povratak</a>
+        <a class="btn btn-default" href="/masterdata/org-unit/0">
+            <span class="glyphicon glyphicon-backward"></span>
+            <spring:message code="OrgUnit.Table.BackButton"></spring:message> </a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -73,9 +71,9 @@
         })
     });
     $('#parentOrgUnitName').bind('typeahead:selected', function (obj, datum, name) {
-        console.log('id je '+datum['id']);
-        console.log('customId je '+datum['customId']);
-        console.log('name je '+datum['name']);
+        console.log('id je ' + datum['id']);
+        console.log('customId je ' + datum['customId']);
+        console.log('name je ' + datum['name']);
 
         $('#itemDescHidden').val(datum['id']);
     });

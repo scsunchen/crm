@@ -180,7 +180,7 @@ public class BankCreditor implements Serializable {
         bankCreditorDTO.setContactPhone(this.getContactPhone());
         bankCreditorDTO.setId(this.getId());
         bankCreditorDTO.setPlace(this.getPlace());
-        bankCreditorDTO.setStreet(this.getName());
+        bankCreditorDTO.setStreet(this.getStreet());
 
         return bankCreditorDTO;
 
