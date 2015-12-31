@@ -5,6 +5,7 @@ import com.invado.core.domain.Currency;
 import com.invado.core.domain.Properties;
 import com.invado.core.dto.InvoiceDTO;
 import com.invado.core.dto.InvoiceItemDTO;
+import com.invado.core.dto.InvoiceReportDTO;
 import com.invado.core.utils.NativeQueryResultsMapper;
 import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.*;
@@ -1685,6 +1686,7 @@ public class TransactionService {
             );
         }
     }
+
 
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)

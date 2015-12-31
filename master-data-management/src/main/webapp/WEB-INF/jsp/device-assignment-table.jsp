@@ -39,15 +39,15 @@
             <th><a class="btn btn-primary"
                    href="/masterdata/deviceholder/create.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"><span
                     class="glyphicon glyphicon-plus"></span>
-                Kreiraj</a></th>
-            <th>Korisnička oznaka</th>
+                <spring:message code="Common.Button.Create"></spring:message> </a></th>
+            <th><spring:message code="Device.Table.CustomCode"></spring:message> </th>
             <th></th>
-            <th>Serijski Broj</th>
-            <th>POS</th>
-            <th>Tip Dopune</th>
-            <th>Tip Konekcije</th>
-            <th>Od Datuma</th>
-            <th>Do Datuma</th>
+            <th><spring:message code="Device.Table.SerialNo"></spring:message> </th>
+            <th><spring:message code="BusinessPartnerDevice.Table.POS"></spring:message> </th>
+            <th><spring:message code="BusinessPartnerDevice.Table.RefillType"></spring:message> </th>
+            <th><spring:message code="BusinessPartnerDevice.Table.ConnectionType"></spring:message></th>
+            <th><spring:message code="BusinessPartnerDevice.Table.FromDate"></spring:message></th>
+            <th><spring:message code="BusinessPartnerDevice.Table.ToDate"></spring:message></th>
         </tr>
         </thead>
         <tbody>
@@ -102,13 +102,13 @@
          Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="?businessPartnerId=${param['businessPartnerId']}&deviceCustomCode=${param['deviceCustomCode']}&page=${page - 1}"/></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
+                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page < numberOfPages}"><c:out value="?businessPartnerId=${param['businessPartnerId']}&deviceCustomCode=${param['deviceCustomCode']}&page=${page + 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
+                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
             </a>
         </li>
     </ul>

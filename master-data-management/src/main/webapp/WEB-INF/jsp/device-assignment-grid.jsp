@@ -57,7 +57,7 @@
                 </div>
                 <spring:bind path="connectionTypeId">
                     <div class="form-group">
-                        <label for="connectionType">Tip Konekcije</label>
+                        <label for="connectionType"><spring:message code="BusinessPartnerDevice.Table.ConnectionType"></spring:message></label>
                         <form:select path="connectionTypeId" id="connectionType" class="form-control"
                                      itemLabel="connectionType">
                             <form:option value="${connectionTypeId}">${connectionTypeDescription}</form:option>
@@ -67,7 +67,7 @@
                 </spring:bind>
                 <spring:bind path="refillTypeId">
                     <div class="form-group">
-                        <label for="refillType">Tip Dopune</label>
+                        <label for="refillType"><spring:message code="BusinessPartnerDevice.Table.RefillType"></spring:message></label>
                         <form:select path="refillTypeId" id="refillType" class="form-control" itemLabel="refillType">
                             <form:option value="${refillTypeId}">${refillTypeDescription}</form:option>
                             <form:options items="${refillTypes}" itemLabel="description" itemValue="id"/>
@@ -100,11 +100,11 @@
 
             </div>
             <div class="col-lg-6">
-                <input:inputField name="MSISDN" label="MSISDN"/>
-                <input:inputField name="ICCID" label="ICCID"/>
-                <input:inputField name="transactionLimit" label="Limit transakcija"/>
-                <input:inputField name="limitPerDay" label="Dnevni limit"/>
-                <input:inputField name="limitPerMonth" label="Mesecni limit"/>
+                <input:inputField name="MSISDN" label="BusinessPartnerDevice.Table.MSISDN"/>
+                <input:inputField name="ICCID" label="BusinessPartnerDevice.Table.ICCID"/>
+                <input:inputField name="transactionLimit" label="BusinessPartnerDevice.Table.TransactionLimit"/>
+                <input:inputField name="limitPerDay" label="BusinessPartnerDevice.Table.LimitPerDay"/>
+                <input:inputField name="limitPerMonth" label="BusinessPartnerDevice.Table.LimitPerMonth"/>
 
                 <spring:bind path="activationDate">
                     <div class="form-group row">
@@ -119,7 +119,7 @@
                     </div>
                 </spring:bind>
 
-                <input:inputField name="telekomId" label="Telekom ID"/>
+                <input:inputField name="telekomId" label="BusinessPartnerDevice.Table.TelekomId"/>
             </div>
             <form:hidden path="version"/>
         </div>
@@ -138,10 +138,19 @@
         <div class="btn-group pull-right">
             <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                Telekom WS <span class="caret"></span>
+                <spring:message code="Device.Table.TelekomWS"></spring:message><span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/masterdata/device/registerTerminal">Registracija Terminala</a></li>
+                <li><a href="/masterdata/deviceholder/terminal/register"><spring:message
+                        code="Device.Table.Register"></spring:message></a></li>
+                <li><a href="/masterdata/deviceholder/terminal/update"><spring:message code="Device.Table.Update"/></a>
+                </li>
+                <li><a href="/masterdata/deviceholder/terminal/update-status"><spring:message
+                        code="Device.Table.StatusUpdate"></spring:message> </a></li>
+                <li><a href="/masterdata/partner/cancelActivateTerminal"><spring:message
+                        code="Device.table.CancelActivate"></spring:message></a></li>
+                <li><a href="/masterdata/partner/checkTerminalStatus"><spring:message
+                        code="Device.Table.StatusCheck"></spring:message></a></li>
             </ul>
         </div>
     </div>

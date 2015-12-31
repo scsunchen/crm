@@ -127,13 +127,13 @@
     Strana
     <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
       <a href="<c:if test="${page > 0}"><c:out value="${page - 1}??masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page - 1}"/></c:if>">
-        <span class="glyphicon glyphicon-backward"></span> Prethodna
+        <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
       </a>
     </li>
     <c:out value="${page+1} od ${numberOfPages+1}"/>
     <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
       <a href="<c:if test="${page < numberOfPages}"><c:out value="${page - 1}??masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page + 1}"/></c:if>">
-        <span class="glyphicon glyphicon-forward"></span> Naredna
+        <span class="glyphicon glyphicon-forward"></span><spring:message code="Common.Button.NextPage"></spring:message>
       </a>
     </li>
   </ul>

@@ -41,9 +41,9 @@
         <thead>
         <tr>
             <th></th>
-            <th>Merchant</th>
-            <th>Iznos</th>
-            <th>Distributor</th>
+            <th><spring:message code="Invoice.Table.Partner"></spring:message> </th>
+            <th><spring:message code="Invoice.Table.Ammount"></spring:message> </th>
+            <th><spring:message code="Invoice.Table.Distributor"></spring:message> </th>
         </tr>
         </thead>
         <tbody>
@@ -74,14 +74,14 @@
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-period.html?id=${param['id']}&partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&page=${page - 1}"/></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
+                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
 
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-period.html?id=${param['id']}&partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&page=${page - 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
+                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
             </a>
         </li>
     </ul>

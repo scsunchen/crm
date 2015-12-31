@@ -66,9 +66,9 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-
-                        <a href="${pageContext.request.contextPath}/invoice/update.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&page=${page}"
-                           class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> pregled</a>
+                        <a href="${pageContext.request.contextPath}/transactions/print-preview.html?clientId=${invoice.clientId}&unitId=${invoice.orgUnitId}&document=${invoice.document}&page=${page}"
+                           class="btn btn-primary"><span class="glyphicon glyphicon-print"></span>
+                            <spring:message code="Common.Button.Print"></spring:message> </a>
                     </div>
                 </td>
                 <td><c:out value="${invoice.clientDesc}"/></td>

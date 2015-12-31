@@ -2,7 +2,9 @@ package com.invado.customer.relationship.controller;
 
 import com.invado.core.domain.*;
 import com.invado.core.dto.InvoiceDTO;
+import com.invado.core.dto.InvoiceReportDTO;
 import com.invado.core.dto.InvoicingTransactionDTO;
+import com.invado.core.report.InvoiceReport;
 import com.invado.customer.relationship.service.InvoicingTransactionService;
 import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.TransactionService;
@@ -11,15 +13,36 @@ import com.invado.customer.relationship.service.dto.PageRequestDTO;
 import com.invado.customer.relationship.service.dto.ReadRangeDTO;
 import com.invado.customer.relationship.service.dto.TransactionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Pageable;
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+
+import com.itextpdf.awt.DefaultFontMapper;
+import com.itextpdf.awt.PdfGraphics2D;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Pageable;
 
 /**
  * Created by Nikola on 26/08/2015.
@@ -346,6 +369,74 @@ public class TransactionController {
         return "invoiced-candidates-per-period-per-pos-view";
     }
 
+
+    @RequestMapping(value = "/transactions/print-preview.html",
+            method = RequestMethod.GET)
+    public ResponseEntity<byte[]> showPDF(
+            @RequestParam Integer clientId,
+            @RequestParam Integer unitId,
+            @RequestParam String document)
+            throws Exception {
+        try {
+            InvoiceReportDTO dto = invoicingTransactionService. readInvoiceReport(clientId,
+                    unitId,
+                    document);
+            Locale locale = LocaleContextHolder.getLocale();
+            InvoiceReport report = new InvoiceReport(dto, locale);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("application/pdf"));
+            String filename = String.format("%s%d%d", document, clientId, unitId);
+            headers.add("content-disposition", "inline;filename=" + filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            ResponseEntity<byte[]> response = new ResponseEntity<>(
+                    getPDFFile(report), headers, HttpStatus.OK);
+            return response;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private byte[] getPDFFile(Pageable pageable) throws Exception {
+        //embed FreeSans(http://www.gnu.org/software/freefont/)
+        //font into PDF document
+        try {
+            DefaultFontMapper mapper = new DefaultFontMapper();
+            DefaultFontMapper.BaseFontParameters PDFFontParameters
+                    = new DefaultFontMapper.BaseFontParameters(
+                    "/com/invado/customer/relationship/font/FreeSans.otf");
+            PDFFontParameters.encoding = BaseFont.CP1250;
+            PDFFontParameters.embedded = Boolean.TRUE;
+            //Map AWT font Lucida Sans Regular to FreeSans. Lucida Sans
+            //Regular font cannot be embedded due to license restrictions.
+            mapper.putName("Lucida Sans Regular", PDFFontParameters);
+            try (ByteArrayOutputStream byteStream = new ByteArrayOutputStream()) {
+                Document doc = new Document();
+                PdfWriter writer = PdfWriter.getInstance(doc, byteStream);
+                doc.open();
+                if (pageable.getNumberOfPages() > 0) {
+                    float width = (float) pageable.getPageFormat(0).getWidth();
+                    float height = (float) pageable.getPageFormat(0).getHeight();
+                    doc.setPageSize(new Rectangle(0, 0, width, height));
+                }
+                for (int i = 0, n = pageable.getNumberOfPages(); i < n; i++) {
+                    doc.newPage();
+                    PageFormat format = pageable.getPageFormat(i);
+                    Graphics2D content = new PdfGraphics2D(
+                            writer.getDirectContent(),
+                            (float) format.getWidth(),
+                            (float) format.getHeight(),
+                            mapper);
+                    pageable.getPrintable(i).print(content, format, i);
+                    content.dispose();
+                }
+                doc.close();
+                return byteStream.toByteArray();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @RequestMapping(value = "/crm/read-distributor/{name}")
     public

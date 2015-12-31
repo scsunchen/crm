@@ -33,7 +33,7 @@
                     <c:choose>
                         <c:when test="${action == 'create'}">
                             <spring:bind path="id">
-                                <label for="id"><spring:message code="BusinessPartnerContacts.Table.Id"/></label>
+                                <label for="id"><spring:message code="BusinessPartnerDevice.Table.Id"/></label>
                                 <form:input id="id" path="id" class="form-control" disabled="true"/>
                                 <span class="help-inline"><c:if test="${status.error}"><c:out
                                         value="${status.errorMessage}"/></c:if></span>
@@ -72,15 +72,15 @@
                         </form:select>
                     </div>
                 </spring:bind>
-                <input:inputTime name="workingStartTime" label="Početak rada" placeholder="hh:mi"/>
-                <input:inputTime name="workingEndTime" label="Kraj rada" placeholder="hh:mi"/>
-                <input:inputField name="MSISDN" label="MSISDN"/>
-                <input:inputField name="MSISDN" label="ICCID"/>
-                <input:inputField name="transactionLimit" label="Limit transakcija"/>
-                <input:inputField name="limitPerDay" label="Dnevni limit"/>
-                <input:inputField name="limitPerMonth" label="Mesecni limit"/>
-                <input:inputField name="activationDate" label="Datum Aktivacije"/>
-                <input:inputField name="telekomId" label="Telekom ID"/>
+                <input:inputTime name="workingStartTime" label="BusinessPartnerDevice.Table.WorkingStartTime" placeholder="hh:mi"/>
+                <input:inputTime name="workingEndTime" label="BusinessPartnerDevice.Table.WorkingEndTime" placeholder="hh:mi"/>
+                <input:inputField name="MSISDN" label="BusinessPartnerDevice.Table.MSISDN"/>
+                <input:inputField name="MSISDN" label="BusinessPartnerDevice.Table.ICCID"/>
+                <input:inputField name="transactionLimit" label="BusinessPartnerDevice.Table.TransactionLimit"/>
+                <input:inputField name="limitPerDay" label="BusinessPartnerDevice.Table.LimitPerDay"/>
+                <input:inputField name="limitPerMonth" label="BusinessPartnerDevice.Table.LimitPerMOnth"/>
+                <input:inputField name="activationDate" label="BusinessPartnerDevice.Table.ActivationDate"/>
+                <input:inputField name="telekomId" label="BusinessPartnerDevice.Table."/>
 
 
             </div>
@@ -101,10 +101,19 @@
         <div class="btn-group pull-right">
             <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                Telekom WS <span class="caret"></span>
+                <spring:message code="Device.Table.TelekomWS"></spring:message><span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/masterdata/device/registerTerminal">Registracija Terminala</a></li>
+                <li><a href="/masterdata/deviceholder/terminal/register"><spring:message
+                        code="Device.Table.Register"></spring:message></a></li>
+                <li><a href="/masterdata/deviceholder/terminal/update"><spring:message code="Device.Table.Update"/></a>
+                </li>
+                <li><a href="/masterdata/deviceholder/terminal/update-status"><spring:message
+                        code="Device.Table.StatusUpdate"></spring:message> </a></li>
+                <li><a href="/masterdata/partner/cancelActivateTerminal"><spring:message
+                        code="Device.table.CancelActivate"></spring:message></a></li>
+                <li><a href="/masterdata/partner/checkTerminalStatus"><spring:message
+                        code="Device.Table.StatusCheck"></spring:message></a></li>
             </ul>
         </div>
     </div>

@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <spring:bind path="currency">
                         <div>
-                            <label for="currency">Valuta *</label>
+                            <label for="currency"><spring:message code="BusinessPartnerAccount.Table.Currency"></spring:message> </label>
                             <form:input id="currency" class="typeahead form-control" type="text"
                                         path="currency" style="margin-bottom:  15px;"/>
                             <form:hidden id="currencyISOHidden" path="currencyISOCode"/>
