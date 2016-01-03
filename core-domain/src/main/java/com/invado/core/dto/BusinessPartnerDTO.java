@@ -57,6 +57,7 @@ public class BusinessPartnerDTO {
     private BusinessPartner.TelekomStatus telekomStatus;
     private String telekomStatusValue;
     private String telekomStatusDescription;
+    private String remark;
 
 
     public BusinessPartnerDTO() {
@@ -437,6 +438,14 @@ public class BusinessPartnerDTO {
 
     public void setTelekomStatusDescription(String telekomStatusDescription) {
         this.telekomStatusDescription = telekomStatusDescription;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     @Override

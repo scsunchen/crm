@@ -74,7 +74,7 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="update-merchant.html?id=${item.id}&page=${page}"
+                        <a href="update-merchant.html?type=${param['type']}&id=${item.id}&page=${page}"
                            class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span

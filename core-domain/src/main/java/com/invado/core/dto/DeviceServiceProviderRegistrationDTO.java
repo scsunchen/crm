@@ -7,22 +7,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by Nikola on 06/12/2015.
+ * Created by Nikola on 01/01/2016.
  */
-public class DeviceHolderPartnerDTO {
-
-
+public class DeviceServiceProviderRegistrationDTO {
 
     private Integer id;
     private Integer deviceId;
     private String deviceCustomCode;
     private String deviceSerialNumber;
-    private Integer businessPartnerId;
-    private String businessPartnerName;
-    @DateTimeFormat(style = "M-")
-    private LocalDate startDate;
-    @DateTimeFormat(style = "M-")
-    private LocalDate endDate;
+    private Integer serviceProviderId;
+    private String serviceProviderName;
     private Integer refillTypeId;
     private String refillDescription;
     private Integer connectionTypeId;
@@ -36,10 +30,11 @@ public class DeviceHolderPartnerDTO {
     private Long limitPerDay;
     private Integer limitPerMonth;
     private String ICCID;
-    private Integer telekomId;
-    private Integer page;
+    private Integer deviceStatusId;
+    private String deviceStatusName;
+    private String registrationId;
     private Long version;
-    private List<DeviceServiceProviderRegistration> registration;
+    private Integer page;
 
     public Integer getId() {
         return id;
@@ -73,45 +68,22 @@ public class DeviceHolderPartnerDTO {
         this.deviceSerialNumber = deviceSerialNumber;
     }
 
-    public Integer getBusinessPartnerId() {
-        return businessPartnerId;
+    public Integer getServiceProviderId() {
+        return serviceProviderId;
     }
 
-    public void setBusinessPartnerId(Integer businessPartnerId) {
-        this.businessPartnerId = businessPartnerId;
+    public void setServiceProviderId(Integer serviceProviderId) {
+        this.serviceProviderId = serviceProviderId;
     }
 
-    public String getBusinessPartnerName() {
-        return businessPartnerName;
+    public String getServiceProviderName() {
+        return serviceProviderName;
     }
 
-    public void setBusinessPartnerName(String businessPartnerName) {
-        this.businessPartnerName = businessPartnerName;
+    public void setServiceProviderName(String serviceProviderName) {
+        this.serviceProviderName = serviceProviderName;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
 
     public Integer getRefillTypeId() {
         return refillTypeId;
@@ -209,13 +181,6 @@ public class DeviceHolderPartnerDTO {
         this.ICCID = ICCID;
     }
 
-    public Integer getTelekomId() {
-        return telekomId;
-    }
-
-    public void setTelekomId(Integer telekomId) {
-        this.telekomId = telekomId;
-    }
 
     public Integer getPage() {
         return page;
@@ -225,11 +190,37 @@ public class DeviceHolderPartnerDTO {
         this.page = page;
     }
 
-    public List<DeviceServiceProviderRegistration> getRegistration() {
-        return registration;
+    public Integer getDeviceStatusId() {
+        return deviceStatusId;
     }
 
-    public void setRegistration(List<DeviceServiceProviderRegistration> registration) {
-        this.registration = registration;
+    public void setDeviceStatusId(Integer deviceStatusId) {
+        this.deviceStatusId = deviceStatusId;
     }
+
+    public String getDeviceStatusName() {
+        return deviceStatusName;
+    }
+
+    public void setDeviceStatusName(String deviceStatusName) {
+        this.deviceStatusName = deviceStatusName;
+    }
+
+    public String getRegistrationId() {
+        return registrationId;
+    }
+
+    public void setRegistrationId(String registrationId) {
+        this.registrationId = registrationId;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+
 }

@@ -71,7 +71,7 @@
             <th><a class="btn btn-primary"
                    href="/masterdata/contact/create.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"><span
                     class="glyphicon glyphicon-plus"></span>
-                Kreiraj</a></th>
+                <spring:message code="Common.Button.Create"></spring:message> </a></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Name"/></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Phone"/></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Email"/></th>

@@ -1,13 +1,12 @@
 package com.invado.masterdata.test;
 
-import com.invado.core.domain.ConnectionType;
-import com.invado.core.domain.DeviceHolderPartner;
-import com.invado.core.domain.PrepaidRefillType;
+import com.invado.core.domain.*;
+import com.invado.core.dto.DeviceStatusDTO;
 import com.invado.core.exception.ConstraintViolationException;
 import com.invado.masterdata.service.DeviceHolderPartnerService;
+import com.invado.masterdata.service.DeviceStatusService;
 import com.invado.masterdata.service.exception.ContactPartnersOwnersException;
 import telekomWS.client.ServiceClient;
-import com.invado.core.domain.Currency;
 import com.invado.core.dto.BusinessPartnerContactDetailsDTO;
 import com.invado.masterdata.service.BusinessPartnerContactDetailsService;
 import com.invado.masterdata.service.dto.ExchangeRateDTO;
@@ -47,6 +46,8 @@ public class TestQ{
     private ExchangeRateService exchangeRateService;
     @Autowired
     private BusinessPartnerContactDetailsService contactDetailsService;
+    @Inject
+    private DeviceStatusService deviceStatusService;
 
     @Inject
     private DeviceHolderPartnerService deviceHolderPartnerService;
@@ -119,6 +120,15 @@ public class TestQ{
 
         List<ConnectionType> listaC =  deviceHolderPartnerService.getConnectionTypes();
         System.out.println("liste "+listaC.size());
+
+    }
+
+    @Test
+    public void testStatusQ(){
+
+        List<DeviceStatusDTO> statuses = deviceStatusService.readAll(null, null);
+        for(DeviceStatusDTO ds : statuses)
+            System.out.println(ds.getName());
 
     }
 }

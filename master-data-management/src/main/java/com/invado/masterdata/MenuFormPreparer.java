@@ -108,6 +108,8 @@ public class MenuFormPreparer implements ViewPreparer {
         masterdata.put("Terminali", "Status terminala", "/masterdata/devicestatus/read-page.html?page=0");
         masterdata.put("Terminali", "Terminal", "/masterdata/device/read-page.html?page=0");
         masterdata.put("Terminali", "Zaduženje Terminala", "/masterdata/deviceholder/device-assignment.html?businessPartnerId=&deviceCustomCode=&page=0");
+        masterdata.put("Terminali", "Terminal - Service provider", "/masterdata/deviceservprovider/device-serv-provider.html?page=0");
+
 
         masterdata.put("Partneri", "Poslovni partner", "/masterdata/partner/read-page.html?id=&name=&page=0");
         masterdata.put("Partneri", "Prodavac - prodajno mesto", "/masterdata/partner/read-merchant-page.html?id=&name=&type=MERCHANT&page=0");
@@ -133,7 +135,7 @@ public class MenuFormPreparer implements ViewPreparer {
         Module service = new Module();
         service.setPath("service");
         service.setName("Servis aparata");
-        service.put("Proba", "Proba", "/service/proba/0");
+        service.put("Proba 1", "Proba 2", "/service/proba/0");
         modules.add(service);
 
 

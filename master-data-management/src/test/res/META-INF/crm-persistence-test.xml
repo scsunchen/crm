@@ -7,7 +7,6 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
         <shared-cache-mode>ALL</shared-cache-mode>
         <!-- ***************CORE*************************************-->
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.invado.core.domain.Article</class>
         <class>com.invado.core.domain.Township</class>
         <class>com.invado.core.domain.ApplicationSetup</class>
@@ -19,15 +18,21 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.core.domain.Currency</class>
         <class>com.invado.core.domain.ExchangeRate</class>
         <class>com.invado.core.domain.BankCreditor</class>
-        <class>com.invado.core.domain.Employee</class>
         <class>com.invado.core.domain.Job</class>
-        <class>com.invado.finance.domain.Invoice</class>
-        <class>com.invado.finance.domain.InvoiceItem</class>
-        <class>com.invado.finance.domain.Properties</class>
+        <class>com.invado.core.domain.Employee</class>
         <class>com.invado.core.domain.BusinessPartnerContactDetails</class>
+        <class>com.invado.core.domain.DeviceStatus</class>
+        <class>com.invado.core.domain.Device</class>
+        <class>com.invado.core.domain.DeviceHolderPartner</class>
+        <class>com.invado.core.domain.ConnectionType</class>
         <class>com.invado.core.domain.POSType</class>
         <class>com.invado.core.domain.PrepaidRefillType</class>
-        <class>com.invado.core.domain.ConnectionType</class>
+        <class>com.invado.core.domain.BusinessPartnerAccount</class>
+        <class>com.invado.core.domain.BusinessPartnerDocument</class>
+        <class>com.invado.core.domain.DocumentType</class>
+        <class>com.invado.core.domain.DeviceServiceProviderRegistration</class>
+        <class>com.invado.finance.domain.Invoice</class>
+        <class>com.invado.finance.domain.InvoiceItem</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>

@@ -27,7 +27,7 @@
     <input:inputField label="DeviceStatus.Table.Description" name="description"/>
 
     <div class="form-group btn-group-sm">
-        <a class="btn btn-primary" href="/masterdata/devicestatus/read-page.html?page=0">
+        <a class="btn btn-default" href="/masterdata/devicestatus/read-page.html?page=0">
             <span class="glyphicon glyphicon-backward"></span>
             <spring:message code="Common.Button.Back"></spring:message> </a>
         <button type="submit" class="btn btn-primary">

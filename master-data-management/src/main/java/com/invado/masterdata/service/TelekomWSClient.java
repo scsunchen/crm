@@ -3,9 +3,11 @@ package com.invado.masterdata.service;
 
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.Device;
+import com.invado.core.domain.DeviceServiceProviderRegistration;
 import com.invado.core.dto.BusinessPartnerDTO;
 import com.invado.core.dto.DeviceDTO;
 import com.invado.core.dto.DeviceHolderPartnerDTO;
+import com.invado.core.dto.DeviceServiceProviderRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import telekomWS.client.AddressServiceClient;
@@ -78,41 +80,47 @@ public class TelekomWSClient {
 
     /*TERMINAL*/
 
-    public Integer terminalRegistration(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception {
+    public String terminalRegistration(DeviceServiceProviderRegistrationDTO deviceHolderDTO) throws Exception {
 
         GregorianCalendar gcal = GregorianCalendar.from(deviceHolderDTO.getActivationDate().atStartOfDay(ZoneId.systemDefault()));
         XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
-
+        return "-1";
+/* ovo mora da ide preko veze terminala i prodajnog mesta...
         return Integer.valueOf(telekomWSClient.terminalUnos(deviceHolderDTO.getRefillTypeId(), deviceHolderDTO.getConnectionTypeId(), deviceHolderDTO.getDeviceCustomCode(),
                 deviceHolderDTO.getMSISDN(), deviceHolderDTO.getWorkingStartTime(), deviceHolderDTO.getWorkingEndTime(), deviceHolderDTO.getTransactionLimit(),
                 deviceHolderDTO.getLimitPerDay(), deviceHolderDTO.getLimitPerMonth(), xcal, deviceHolderDTO.getICCID(), deviceHolderDTO.getDeviceSerialNumber(),
-                deviceHolderDTO.getTelekomId(), dao.find(BusinessPartner.class, deviceHolderDTO.getBusinessPartnerId()).getParentBusinessPartner().getTelekomId()));
+                deviceHolderDTO.getTelekomId(), dao.find(BusinessPartner.class, deviceHolderDTO.getBusinessPartnerId()).getParentBusinessPartner().getTelekomId()));*/
     }
 
-    public Integer terminalUpdate(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception {
+    public String terminalUpdate(DeviceServiceProviderRegistrationDTO deviceHolderDTO) throws Exception {
 
         GregorianCalendar gcal = GregorianCalendar.from(deviceHolderDTO.getActivationDate().atStartOfDay(ZoneId.systemDefault()));
         XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
+return "-1";
 
+/*
         return Integer.valueOf(telekomWSClient.terminalIzmena(deviceHolderDTO.getTelekomId(), xcal, deviceHolderDTO.getLimitPerDay(), deviceHolderDTO.getICCID(),
                 deviceHolderDTO.getTransactionLimit(), deviceHolderDTO.getLimitPerMonth(), deviceHolderDTO.getMSISDN(), deviceHolderDTO.getWorkingStartTime(), deviceHolderDTO.getWorkingEndTime(),
                 deviceHolderDTO.getDeviceSerialNumber(), deviceHolderDTO.getTelekomId(), deviceHolderDTO.getTelekomId().toString(), deviceHolderDTO.getRefillTypeId(),
-                deviceHolderDTO.getConnectionTypeId()));
+                deviceHolderDTO.getConnectionTypeId()));*/
     }
 
-    public Integer terminalStatusUpdate(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception {
+    public String terminalStatusUpdate(DeviceServiceProviderRegistrationDTO deviceHolderDTO) throws Exception {
 
-        return Integer.valueOf(telekomWSClient.terminalIzmenaStatusa(deviceHolderDTO.getTelekomId(), dao.find(Device.class, deviceHolderDTO.getDeviceId()).getStatus().getId().intValue()));
+        return "-1";
+        /*return Integer.valueOf(telekomWSClient.terminalIzmenaStatusa(deviceHolderDTO.getTelekomId(), dao.find(Device.class, deviceHolderDTO.getDeviceId()).getStatus().getId().intValue()));*/
     }
 
-    public int terminalCancelActivate(DeviceHolderPartnerDTO deviceHolderDTO) throws Exception {
+    public String terminalCancelActivate(DeviceServiceProviderRegistrationDTO deviceHolderDTO) throws Exception {
         GregorianCalendar gcal = GregorianCalendar.from(deviceHolderDTO.getActivationDate().atStartOfDay(ZoneId.systemDefault()));
         XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
 
+        return "-1";
+        /*
         return Integer.valueOf(telekomWSClient.terminalOtkaziPonovoAktiviraj(deviceHolderDTO.getBusinessPartnerId(), deviceHolderDTO.getConnectionTypeId(), xcal,
                 deviceHolderDTO.getLimitPerDay().intValue(), deviceHolderDTO.getICCID(), deviceHolderDTO.getTransactionLimit(), deviceHolderDTO.getLimitPerMonth(),
                 deviceHolderDTO.getMSISDN(), dao.find(BusinessPartner.class, deviceHolderDTO.getBusinessPartnerId()).getParentBusinessPartner().getId(), deviceHolderDTO.getWorkingStartTime(),
-                deviceHolderDTO.getWorkingEndTime(), deviceHolderDTO.getDeviceSerialNumber(), deviceHolderDTO.getDeviceCustomCode(), deviceHolderDTO.getRefillTypeId()));
+                deviceHolderDTO.getWorkingEndTime(), deviceHolderDTO.getDeviceSerialNumber(), deviceHolderDTO.getDeviceCustomCode(), deviceHolderDTO.getRefillTypeId()));*/
     }
 
     public Integer selectPlace(String pattern) throws Exception {

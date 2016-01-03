@@ -13,11 +13,12 @@
     <thead>
     <tr>
       <th><a class="btn btn-primary" href="/masterdata/currency/${page}/create"><span class="glyphicon glyphicon-plus"></span>
-        Kreiraj</a></th>
-      <th>ISO kod</th>
-      <th>ISO broj</th>
-      <th>Naziv</th>
-      <th>Država</th>
+        <spring:message code="Common.Button.Create"></spring:message> </a>
+      </th>
+      <th><spring:message code="Currency.Table.ISO"></spring:message></th>
+      <th><spring:message code="Currency.Table.ISONO"></spring:message></th>
+      <th><spring:message code="Currency.Table.Name"></spring:message></th>
+      <th><spring:message code="Currency.Table.State"></spring:message></th>
     </tr>
     </thead>
     <tbody>
@@ -66,13 +67,13 @@
     Strana
     <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
       <a href="<c:if test="${page > 0}"><c:out value="${page - 1}" /></c:if>">
-        <span class="glyphicon glyphicon-backward"></span> Prethodna
+        <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
       </a>
     </li>
     <c:out value="${page+1} od ${numberOfPages+1}"/>
     <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
       <a href="<c:if test="${page < numberOfPages}"><c:out value="${page + 1}"/></c:if>">
-        <span class="glyphicon glyphicon-forward"></span> Naredna
+        <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
       </a>
     </li>
   </ul>

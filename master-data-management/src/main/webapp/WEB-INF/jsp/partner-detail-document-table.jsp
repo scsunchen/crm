@@ -61,8 +61,7 @@
             <th><a class="btn btn-primary"
                    href="/masterdata/document/create.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"><span
                     class="glyphicon glyphicon-plus"></span>
-                Kreiraj</a></th>
-
+                <spring:message code="Common.Button.Create"></spring:message> </a></th>
             <th><spring:message code="BusinessPartnerDocument.Table.Document"/></th>
             <th><spring:message code="BusinessPartnerDocument.Table.OwnerName"/></th>
             <th><spring:message code="BusinessPartnerDocument.Table.Description"/></th>

@@ -19,7 +19,7 @@
                 <spring:bind path="type">
                     <div class="form-group">
                         <label for="type"><spring:message code="BusinessPartner.Table.Type"></spring:message> </label>
-                        <form:select path="type" id="type" class="form-control" itemLabel="type">
+                        <form:select path="type" id="type" class="form-control" itemLabel="type" disabled="true">
                             <form:option value="${item.type}">${item.typeDescription}</form:option>
                             <form:options items="${types}" itemLabel="description"/>
                         </form:select>
@@ -112,22 +112,7 @@
                 <input:inputField name="EMail" label="BusinessPartner.Table.eMail"/>
             </div>
             <div class="col-lg-4">
-                <spring:bind path="currencyDesignation">
-                    <div class="form-group">
-                        <label for="currencyDesignation"><spring:message code="BusinessPartnerAccount.Table.Currency"></spring:message> </label>
-                        <form:select path="currencyDesignation" id="currencyDesignation" class="form-control"
-                                     items="${currencyDesignation}"
-                                     itemLabel="description"/>
-                    </div>
-                </spring:bind>
-                <input:inputField label="BusinessPartner.Table.Rebate" name="rebate"/>
-                <input:inputField label="BusinessPartner.Table.InterestFreePeriod" name="interestFreeDays"/>
-                <div class="form-group">
-                    <label for="partnerName"><spring:message code="BusinessPartner.Table.ParentPartner"></spring:message></label>
-                    <form:input id="partnerName" class="typeahead form-control" type="text"
-                                path="parentBusinesspartnerName" style="margin-bottom:  15px;"/>
-                    <form:hidden id="partnerNameHidden" path="parentBusinessPartnerId"/>
-                </div>
+
                 <div class="checkbox">
                     <label><form:checkbox path="VAT" id="VAT" class="checkbox"/><spring:message code="BusinessPartner.Table.VAT"></spring:message> </label>
                 </div>
@@ -142,11 +127,14 @@
                     </div>
                 </spring:bind>
             </div>
+            <div class="col-lg-8">
+                <input:inputTextArea name="remark" label="BusinessPartner.Table.Remark"></input:inputTextArea>
+            </div>
             <form:hidden path="version"/>
         </div>
     </fieldset>
     <div class="form-group">
-        <a class="btn btn-default" href="/masterdata/partner/read-merchant-page.html?type=${param['type']}&page=0">
+        <a class="btn btn-default" href="/masterdata/partner/read-merchant-page.html?type=${item.type}&page=0">
             <span class="glyphicon glyphicon-backward"></span>
             <spring:message code="OrgUnit.Table.BackButton"></spring:message> </a>
         <button type="submit" class="btn btn-primary" name="save">

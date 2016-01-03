@@ -16,12 +16,8 @@
 
 <nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] == null}">hidden</c:if>>
     </br>
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="btn btn-default"
-               href="${pageContext.request.contextPath}/partner/read-accounts-page.html?pointOfSaleId=${param['pointOfSaleId']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">
-                <span class="glyphicon glyphicon-backward"></span>
-                <spring:message code="BusinessPartnerDetails.Button.Back"/></a></div>
+    <div class="navbar-header">
+
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
             <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
     </div>
@@ -69,7 +65,8 @@
                 <div class="form-group">
                     <spring:bind path="currency">
                         <div>
-                            <label for="currency"><spring:message code="BusinessPartnerAccount.Table.Currency"></spring:message> </label>
+                            <label for="currency"><spring:message
+                                    code="BusinessPartnerAccount.Table.Currency"></spring:message> </label>
                             <form:input id="currency" class="typeahead form-control" type="text"
                                         path="currency" style="margin-bottom:  15px;"/>
                             <form:hidden id="currencyISOHidden" path="currencyISOCode"/>
@@ -83,16 +80,20 @@
         </div>
     </fieldset>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">
-            <c:choose>
-                <c:when test="${action == 'create'}">
-                    <c:out value="Kreiraj"/>
-                </c:when>
-                <c:otherwise>
-                    <c:out value="Promeni"/>
-                </c:otherwise>
-            </c:choose>
-        </button>
+        <a class="btn btn-default"
+           href="${pageContext.request.contextPath}/partner/read-accounts-page.html?pointOfSaleId=${param['pointOfSaleId']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">
+            <span class="glyphicon glyphicon-backward"></span>
+            <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
+    <button type="submit" class="btn btn-primary">
+        <c:choose>
+            <c:when test="${action == 'create'}">
+                <c:out value="Kreiraj"/>
+            </c:when>
+            <c:otherwise>
+                <c:out value="Promeni"/>
+            </c:otherwise>
+        </c:choose>
+    </button>
     </div>
 </form:form>
 <script type="text/javascript">
@@ -137,22 +138,22 @@
     });
 
 
-            $('#currency').typeahead({
-                hint: false,
-                highlight: true,
-                minLength: 1,
-                limit: 1000
-            }, {
-                display: 'currency',
-                source: new Bloodhound({
-                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                    queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    remote: {
-                        url: '${pageContext.request.contextPath}/read-currency/byname/%QUERY',
-                        wildcard: '%QUERY'
-                    }
-                })
-            });
+    $('#currency').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'currency',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/read-currency/byname/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
     $('#currency').bind('typeahead:selected', function (obj, datum, name) {
         $('#currencyISOHidden').val(datum['isocode']);
     });

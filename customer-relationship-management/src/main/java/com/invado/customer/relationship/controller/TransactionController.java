@@ -136,7 +136,6 @@ public class TransactionController {
                     break;
                 case 4:
                     if (params[i] != null && !params[i].isEmpty()) {
-                        System.out.println("evo vrednost " + Integer.valueOf(params[i]));
                         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("distributorId", params[i] == null || params[i].isEmpty() ? null : Integer.valueOf(params[i])));
                         transactionDTO.setDistributorId(Integer.valueOf(params[i]));
                         transactionDTO.setDistributorName(masterDataService.readClientById(Integer.valueOf(params[i])).getName());
@@ -370,6 +369,32 @@ public class TransactionController {
     }
 
 
+    @RequestMapping(value = "/transactions/mass-print-preview.html",
+            method = RequestMethod.GET)
+    public ResponseEntity<byte[]> showMassPDF(
+            @RequestParam Integer clientId,
+            @RequestParam Integer unitId,
+            @RequestParam String document)
+            throws Exception {
+        try {
+            InvoiceReportDTO dto = invoicingTransactionService.readInvoiceReport(clientId,
+                    unitId,
+                    document);
+            Locale locale = LocaleContextHolder.getLocale();
+            InvoiceReport report = new InvoiceReport(dto, locale);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("application/pdf"));
+            String filename = String.format("%s%d%d", document, clientId, unitId);
+            headers.add("content-disposition", "inline;filename=" + filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            ResponseEntity<byte[]> response = new ResponseEntity<>(
+                    getPDFFile(report), headers, HttpStatus.OK);
+            return response;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/transactions/print-preview.html",
             method = RequestMethod.GET)
     public ResponseEntity<byte[]> showPDF(
@@ -378,7 +403,7 @@ public class TransactionController {
             @RequestParam String document)
             throws Exception {
         try {
-            InvoiceReportDTO dto = invoicingTransactionService. readInvoiceReport(clientId,
+            InvoiceReportDTO dto = invoicingTransactionService.readInvoiceReport(clientId,
                     unitId,
                     document);
             Locale locale = LocaleContextHolder.getLocale();

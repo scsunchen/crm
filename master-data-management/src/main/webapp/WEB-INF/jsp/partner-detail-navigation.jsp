@@ -15,10 +15,12 @@
       ${exception.message}
   </div>
 </c:if>
+<!--
 <a href="${pageContext.request.contextPath}/partner/read-subpartners.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}"
    class="btn btn-default">
     <span class="glyphicon glyphicon-backward"></span>
-    <spring:message code="Common.Button.Back"/>
+    <spring:message code="Common.Button.Back"/></a>
+-->
 <a class="btn btn-default"
    href="${pageContext.request.contextPath}/partner/read-contactsdetals-page.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${item.id}&page=${param['page']}"
    <c:if test="${(action == 'create')}">disabled</c:if>>

@@ -313,7 +313,7 @@ public class BPController {
             model.put("message", Utils.getMessage("Processing.Save.Failure"));
             return "partner-grid";
         } else {
-            item.settAddressCode(addressServiceClient.getPAK(item.gettHouseNumberCode()));
+
             service.create(item);
             status.setComplete();
             redirectAttributes.addFlashAttribute("alertType", "success");
@@ -357,7 +357,6 @@ public class BPController {
             model.put("message", Utils.getMessage("Processing.Save.Failure"));
             return "partner-grid";
         } else {
-            item.settAddressCode(addressServiceClient.getPAK(item.gettHouseNumberCode()));
             service.create(item);
             status.setComplete();
             redirectAttributes.addFlashAttribute("alertType", "success");
@@ -449,12 +448,23 @@ public class BPController {
     }
 
     @RequestMapping(value = "/partner/update.html", method = RequestMethod.POST)
-    public String processUpdateForm(@RequestParam Integer id, @RequestParam Integer page,
+    public String processUpdateForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
+                                    @RequestParam Integer id,
+                                    @RequestParam Integer page,
+                                    SessionStatus status,
                                     Map<String, Object> model)
             throws Exception {
-        BusinessPartnerDTO item = service.read(id);
-        model.put("item", item);
-        return "partner-grid";
+
+
+        if (result.hasErrors()) {
+            return "partner-grid";
+        } else {
+            this.service.update(item);
+            status.setComplete();
+        }
+
+        return "redirect:/partner/read-page.html?&page=0";
+
     }
 
     @RequestMapping(value = "/partner/update-merchant.html", method = RequestMethod.GET)
@@ -620,6 +630,13 @@ public class BPController {
     @ResponseBody
     List<BusinessPartner> findMerchantByName(@PathVariable String name) {
         return service.readMerchantByName(name);
+    }
+
+    @RequestMapping(value = "/partner/read-service-provider/{name}")
+    public
+    @ResponseBody
+    List<BusinessPartner> findServiceproviderByName(@PathVariable String name) {
+        return service.readServiceProviderByName(name);
     }
 
 

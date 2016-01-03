@@ -10,8 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<a class="btn btn-primary" href="/masterdata/devicestatus/create.html"><span class="glyphicon glyphicon-plus"></span>
-  Kreiraj</a>
+
 <br/>
 <br/>
 
@@ -19,7 +18,8 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th></th>
+      <th><a class="btn btn-primary" href="/masterdata/devicestatus/create.html"><span class="glyphicon glyphicon-plus"></span>
+        <spring:message code="Common.Button.Create"></spring:message> </a></th>
       <th><spring:message code="DeviceStatus.Table.Id"></spring:message> </th>
       <th><spring:message code="DeviceStatus.Table.Name"></spring:message> </th>
       <th><spring:message code="DeviceStatus.Table.Description"></spring:message> </th>

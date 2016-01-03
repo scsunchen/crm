@@ -92,7 +92,6 @@ public class BPService {
             businessPartner.setName(a.getName());
             businessPartner.setName1(a.getName1());
             businessPartner.setAddress(new Address(a.getCountry(), a.getPlace(), a.getStreet(), a.getPostCode()));
-            a.settAddressCode(addressWSClient.getPAK(a.gettHouseNumberCode()));
             businessPartner.setTelekomAddress(new TelekomAddress(a.gettPlace(), a.gettPlaceCode(), a.getPostCode(), a.getStreet(), a.gettStreetCode(), a.gettHouseNumber(), a.gettHouseNumberCode(),
                     a.gettAddressCode()));
             businessPartner.setPhone(a.getPhone());
@@ -114,6 +113,7 @@ public class BPService {
                 businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId()));
             businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId().intValue()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
+            businessPartner.setRemark(a.getRemark());
             List<String> msgs = validator.validate(businessPartner).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -166,7 +166,6 @@ public class BPService {
             businessPartner.setName1(a.getName1());
             businessPartner.setAddress(new Address(a.getCountry(), a.getPlace() == null ? a.gettPlace() : a.gettPlace(),
                     a.getStreet() == null ? a.gettStreet() : a.getStreet(), a.getPostCode(), a.gettHouseNumber() == null ? a.gettHouseNumber() : a.gettHouseNumber()));
-            a.settAddressCode(addressWSClient.getPAK(a.gettHouseNumberCode()));
             businessPartner.setTelekomAddress(new TelekomAddress(a.gettPlace(), a.gettPlaceCode(), a.getPostCode(), a.getStreet(), a.gettStreetCode(), a.gettHouseNumber(), a.gettHouseNumberCode(),
                     a.gettAddressCode()));
             businessPartner.setPhone(a.getPhone());
@@ -189,6 +188,7 @@ public class BPService {
             if (a.getParentBusinessPartnerId() != null)
                 businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
+            businessPartner.setRemark(a.getRemark());
             List<String> msgs = validator.validate(businessPartner).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -249,7 +249,6 @@ public class BPService {
             if (dto.getContactPersoneName() != null)
                 item.setContactPerson(new ContactPerson(dto.getContactPersoneName(), dto.getContactPersonePhone(), dto.getContactPersoneFunction(), dto.getEMail()));
             item.setCurrentAccount(dto.getCurrentAccount());
-            dto.settAddressCode(addressWSClient.getPAK(dto.gettHouseNumberCode()));
             item.setTelekomAddress(new TelekomAddress(dto.gettPlace(), dto.gettPlaceCode(), dto.getPostCode(), dto.gettStreet(), dto.gettStreetCode(),
                     dto.gettHouseNumber(), dto.gettHouseNumberCode(), dto.gettAddressCode()));
             item.setEMail(dto.getEMail());
@@ -269,7 +268,7 @@ public class BPService {
             item.setType(dto.getType());
             item.setTelekomStatus(dto.getTelekomStatus());
             item.setTelekomId(dto.getTelekomId());
-
+            item.setRemark(dto.getRemark());
             if (dto.getParentBusinessPartnerId() != null)
                 item.setParentBusinessPartner(dao.find(BusinessPartner.class, dto.getParentBusinessPartnerId()));
 
@@ -782,6 +781,24 @@ public class BPService {
         }
     }
 
+
+    @Transactional(readOnly = true)
+    public List<BusinessPartner> readServiceProviderByName(String name) {
+        try {
+            System.out.println("evo ga servis " + name);
+            List<BusinessPartner> list = dao.createNamedQuery(
+                    BusinessPartner.READ_SERVICE_PROVIDER_BY_NAME_ORDERBY_NAME,
+                    BusinessPartner.class)
+                    .setParameter("name", ("%" + name + "%").toUpperCase())
+                    .getResultList();
+            return list;
+        } catch (Exception ex) {
+            LOG.log(Level.WARNING, "", ex);
+            throw new SystemException(Utils.getMessage(
+                    "BusinessPartner.Exception.ReadItemByDescription"),
+                    ex);
+        }
+    }
 
     @Transactional(readOnly = true)
     public List<BusinessPartner> readPointOfSaleByName(String name) {

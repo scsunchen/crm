@@ -125,6 +125,8 @@ public class BusinessPartner implements Serializable {
     private TelekomStatus telekomStatus;
     @Embedded
     private ContactPerson contactPerson;
+    @Column(name = "REMARK")
+    private String remark;
     @Version
     @Column(name = "version")
     private Long version;
@@ -357,6 +359,13 @@ public class BusinessPartner implements Serializable {
         this.type = type;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public TelekomStatus getTelekomStatus() {
         return telekomStatus;
@@ -425,7 +434,7 @@ public class BusinessPartner implements Serializable {
         businessPartnerDTO.setLatitude(this.getLatitude());
         businessPartnerDTO.setLongitude(this.getLongitude());
         businessPartnerDTO.setPOStype(this.getPosType());
-        if (businessPartnerDTO.getPOStype() != null){
+        if (businessPartnerDTO.getPOStype() != null) {
             businessPartnerDTO.setPosTypeId(this.getPosType().getId());
             businessPartnerDTO.setPostTypeName(this.getPosType().getDescription());
         }
@@ -433,6 +442,7 @@ public class BusinessPartner implements Serializable {
         if (this.getTelekomId() != null)
             businessPartnerDTO.setTelekomId(this.getTelekomId());
         businessPartnerDTO.setTelekomStatus(this.getTelekomStatus());
+        businessPartnerDTO.setRemark(this.getRemark());
 
 
         return businessPartnerDTO;

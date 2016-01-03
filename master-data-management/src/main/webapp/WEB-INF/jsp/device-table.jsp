@@ -35,16 +35,14 @@
     </nav>
 </form:form>
 
-<a class="btn btn-primary" href="/masterdata/device/create.html"><span class="glyphicon glyphicon-plus"></span>
-    Kreiraj</a>
-<br/>
-<br/>
 
 <div class="table-responsive generic-container">
-    <table class="table table-striped">
+  <table class="table table-striped">
         <thead>
         <tr>
-            <th></th>
+            <th>   <a class="btn btn-primary" href="/masterdata/device/create.html"><span class="glyphicon glyphicon-plus"></span>
+                <spring:message code="Common.Button.Create"></spring:message> </a>
+            </th>
             <th><spring:message code="Device.Table.Id"></spring:message> </th>
             <th><spring:message code="Device.Table.CustomCode"></spring:message> </th>
             <th><spring:message code="Device.Table.Type"></spring:message></th>

@@ -23,7 +23,7 @@
                 <input:inputField label="BusinessPartner.Table.Id" name="id" disabled="true"/>
                 <spring:bind path="typeT">
                     <div class="form-group">
-                        <label for="typeT"><spring:message code="BusinessPartner.Table.Type"></spring:message> </label>
+                        <label for="typeT"><spring:message code="BusinessPartner.Table.Type"></spring:message></label>
                         <form:select path="typeT" id="typeT" class="form-control" itemLabel="typeT">
                             <form:option value="${item.type}">${item.typeDescription}</form:option>
                             <form:options items="${types}" itemLabel="description"/>
@@ -71,23 +71,27 @@
                             </div>
                         </spring:bind>
                     </div>
-                    <spring:bind path="tStreet">
-                        <div class="form-group">
-                            <label for="tStreet"><spring:message
-                                    code="BusinessPartnerContacts.Table.Street"/></label>
-                            <form:input id="tStreet" class="typeahead form-control" type="text"
-                                        path="tStreet" style="margin-bottom:  15px;"/>
-                            <form:hidden id="streetCodeHidden" path="tStreetCode"/>
-                        </div>
-                    </spring:bind>
-                    <spring:bind path="tHouseNumber">
-                        <div class="form-group">
-                            <label for="tHouseNumber"><spring:message
-                                    code="BusinessPartnerContacts.Table.HouseNumber"/></label>
-                            <form:input id="tHouseNumber" path="tHouseNumber" class="form-control"/>
-                            <form:hidden id="houseNumberCodeHidden" path="tHouseNumberCode"/>
-                        </div>
-                    </spring:bind>
+                    <div class="col-lg-9">
+                        <spring:bind path="tStreet">
+                            <div class="form-group">
+                                <label for="tStreet"><spring:message
+                                        code="BusinessPartnerContacts.Table.Street"/></label>
+                                <form:input id="tStreet" class="typeahead form-control" type="text"
+                                            path="tStreet" style="margin-bottom:  15px;"/>
+                                <form:hidden id="streetCodeHidden" path="tStreetCode"/>
+                            </div>
+                        </spring:bind>
+                    </div>
+                    <div class="col-lg-3">
+                        <spring:bind path="tHouseNumber">
+                            <div class="form-group">
+                                <label for="tHouseNumber"><spring:message
+                                        code="BusinessPartnerContacts.Table.HouseNumber"/></label>
+                                <form:input id="tHouseNumber" path="tHouseNumber" class="form-control"/>
+                                <form:hidden id="houseNumberCodeHidden" path="tHouseNumberCode"/>
+                            </div>
+                        </spring:bind>
+                    </div>
                 </nav>
                 <form:hidden path="tAddressCode"/>
             </div>
@@ -96,24 +100,27 @@
                 <input:inputField name="fax" label="BusinessPartner.Table.Fax"/>
                 <input:inputField name="EMail" label="BusinessPartner.Table.eMail"/>
                 <div class="form-group">
-                    <label for="partnerName"><spring:message code="BusinessPartner.Table.ParentPartner"></spring:message> </label>
+                    <label for="partnerName"><spring:message
+                            code="BusinessPartner.Table.ParentPartner"></spring:message></label>
                     <form:input id="partnerName" class="typeahead form-control" type="text"
                                 path="parentBusinesspartnerName" style="margin-bottom:  15px;"/>
                     <form:hidden id="partnerNameHidden" path="parentBusinessPartnerId"/>
                 </div>
                 <div class="form-group">
                     <spring:bind path="posTypeId">
-                        <label for="posTypeId"><spring:message code="BusinessPartner.POS.Type"></spring:message> </label>
+                        <label for="posTypeId"><spring:message code="BusinessPartner.POS.Type"></spring:message></label>
                         <form:select path="posTypeId" id="posTypeId" class="form-control">
                             <form:option value=""></form:option>
                             <form:options items="${POSTypes}" itemLabel="description" itemValue="id"/>
                         </form:select>
                     </spring:bind>
                 </div>
+
                 <input:inputField label="BusinessPartner.Table.TelekomId" name="telekomId"/>
                 <spring:bind path="telekomStatus">
                     <div class="form-group">
-                        <label for="telekomStatus"><spring:message code="BusinessPartner.Table.TelekomStatus"></spring:message></label>
+                        <label for="telekomStatus"><spring:message
+                                code="BusinessPartner.Table.TelekomStatus"></spring:message></label>
                         <form:select path="telekomStatus" id="telekomStatus" class="form-control" itemLabel="type">
                             <form:option value="${item.telekomStatus}">${item.telekomStatusDescription}</form:option>
                             <form:options items="${telekomStatuses}" itemLabel="description"/>
@@ -122,12 +129,18 @@
                 </spring:bind>
 
             </div>
-
+            <div class="col-lg-12">
+                <input:inputTextArea name="remark" label="BusinessPartner.Table.Remark"></input:inputTextArea>
+            </div>
         </div>
     </fieldset>
 
     <div class="form-group">
         </br>
+        <a href="${pageContext.request.contextPath}/partner/read-subpartners.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}"
+           class="btn btn-default">
+            <span class="glyphicon glyphicon-backward"></span>
+            <spring:message code="Common.Button.Back"/></a>
         <button type="submit" class="btn btn-primary">
             <c:choose>
                 <c:when test="${action == 'create'}">
@@ -141,19 +154,22 @@
         <div class="btn-group pull-right">
             <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                <spring:message code="BusinessPartner.Table.TelekomWS"></spring:message> <span class="caret"></span>
+                Telekom WS <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
 
                 <li>
-                    <button class="btn btn-default btn-block" type="submit" name="register"><spring:message code="BusinessPartner.POS.Registration"></spring:message></button>
+                    <button class="btn btn-default btn-block" type="submit" name="register"><spring:message
+                            code="BusinessPartner.POS.Registration"></spring:message></button>
                 </li>
                 <li>
-                    <button class="btn btn-default btn-block" type="submit" name="update"><spring:message code="BusinessPartner.POS.Update"></spring:message></button>
+                    <button class="btn btn-default btn-block" type="submit" name="update"><spring:message
+                            code="BusinessPartner.POS.Update"></spring:message></button>
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                    <button class="btn btn-default btn-block" type="submit" name="deactivation"><spring:message code="BusinessPartner.POS.Deactiovation"></spring:message>
+                    <button class="btn btn-default btn-block" type="submit" name="deactivation"><spring:message
+                            code="BusinessPartner.POS.Deactiovation"></spring:message>
                     </button>
                 </li>
 

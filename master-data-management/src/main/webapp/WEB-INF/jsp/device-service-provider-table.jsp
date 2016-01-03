@@ -14,16 +14,17 @@
 <nav class="navbar navbar-default">
     <br/>
     <!-- Pretraživanje merchant...pos... -->
-    <form:form role="search" method="GET" modelAttribute="deviceHolderPartnerDTO"
-               action="${pageContext.request.contextPath}/deviceholder/device-assignment.html">
-        <div class="form-group col-lg-4">
-            <form:input class="form-control" id="deviceCustomCode" placeholder="Terminal..." type="text"
-                        path="deviceCustomCode"/>
+    <form:form role="search" method="GET" modelAttribute="deviceServiceProviderRegistrationDTO"
+               action="${pageContext.request.contextPath}/deviceservprovider/device-serv-provider.html">
+        <div class="form-group  col-lg-4">
+            <form:input id="deviceCustomCode" class="typeahead form-control" type="text"
+                        path="deviceCustomCode" style="margin-bottom:  15px;" placeholder="Terminal..."/>
+            <form:hidden id="deviceCustomCodeHidden" path="deviceId"/>
         </div>
         <div class="form-group col-lg-4">
-            <form:input id="pointOfSale" class="typeahead form-control"
-                        placeholder="POS..." type="text" path="businessPartnerName"/>
-            <form:input id="pointOfSale-hidden" type="hidden" path="businessPartnerId"/>
+            <form:input id="serviceProvider" class="typeahead form-control"
+                        placeholder="Service provider..." type="text" path="serviceProviderName"/>
+            <form:input id="serviceProvider-hidden" type="hidden" path="serviceProviderId"/>
         </div>
         <form:hidden path="page" value="0"></form:hidden>
         <div class="col-lg-4">
@@ -33,22 +34,21 @@
 </nav>
 
 <div class="table-responsive generic-container">
-       <table class="table table-striped">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th><a class="btn btn-primary"
-                   href="/masterdata/deviceholder/create.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"><span
+                   href="/masterdata/deviceservprovider/create.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"><span
                     class="glyphicon glyphicon-plus"></span>
-                <spring:message code="Common.Button.Create"></spring:message> </a>
-            </th>
+                <spring:message code="Common.Button.Create"></spring:message> </a></th>
             <th><spring:message code="Device.Table.CustomCode"></spring:message></th>
             <th></th>
             <th><spring:message code="Device.Table.SerialNo"></spring:message></th>
-            <th><spring:message code="BusinessPartnerDevice.Table.POS"></spring:message></th>
-            <th><spring:message code="BusinessPartnerDevice.Table.RefillType"></spring:message></th>
-            <th><spring:message code="BusinessPartnerDevice.Table.ConnectionType"></spring:message></th>
-            <th><spring:message code="BusinessPartnerDevice.Table.FromDate"></spring:message></th>
-            <th><spring:message code="BusinessPartnerDevice.Table.ToDate"></spring:message></th>
+            <th><spring:message code="ServiceProviderDevice.Table.ServiceProvider"></spring:message></th>
+            <th><spring:message code="ServiceProviderDevice.Table.RefillType"></spring:message></th>
+            <th><spring:message code="ServiceProviderDevice.Table.ConnectionType"></spring:message></th>
+            <th><spring:message code="ServiceProviderDevice.Table.Registration"></spring:message></th>
+            <th><spring:message code="ServiceProviderDevice.Table.Status"></spring:message></th>
         </tr>
         </thead>
         <tbody>
@@ -75,7 +75,7 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="${pageContext.request.contextPath}/deviceholder/update-assignment.html?id=${item.id}&page=0"
+                        <a href="${pageContext.request.contextPath}/deviceservprovider/update-serv-provider.html?id=${item.id}&page=0"
                            class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
@@ -88,11 +88,13 @@
                        class="btn btn-primary"><span
                         class="glyphicon glyphicon-search"></span> terminal</a></td>
                 <td><c:out value="${item.deviceSerialNumber}"/></td>
-                <td><c:out value="${item.businessPartnerName}"/></td>
+                <td><c:out value="${item.serviceProviderName}"/></td>
                 <td><c:out value="${item.refillDescription}"></c:out></td>
                 <td><c:out value="${item.connectionDescription}"></c:out></td>
-                <td><spring:eval expression="item.startDate"/></td>
-                <td><spring:eval expression="item.endDate"/></td>
+                <td><c:out value="${item.registrationId}"></c:out></td>
+                <td><c:out value="${item.deviceCustomCode}"></c:out>
+                    <StatusName
+                    /td>
             </tr>
             <c:set var="count" value="${count + 1}" scope="page"/>
         </c:forEach>
@@ -118,7 +120,7 @@
     </ul>
 </nav>
 <script>
-    $('#pointOfSale').typeahead({
+    $('#serviceProvider').typeahead({
         highlight: true,
         minLength: 1
     }, {
@@ -127,12 +129,33 @@
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             remote: {
-                url: '${pageContext.request.contextPath}/partner/read-all-pos/%QUERY',
+                url: '${pageContext.request.contextPath}/partner/read-service-provider/%QUERY',
                 wildcard: '%QUERY'
             }
         })
     });
-    $('#pointOfSale').bind('typeahead:selected', function (obj, datum, name) {
-        $('#pointOfSale-hidden').val(datum['id']);
+    $('#serviceProvider').bind('typeahead:selected', function (obj, datum, name) {
+        $('#serviceProvider-hidden').val(datum['id']);
+    });
+
+    $('#deviceCustomCode').typeahead({
+        hint: false,
+        highlight: true,
+        minLength: 1,
+        limit: 1000
+    }, {
+        display: 'customCode',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/read-device/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#deviceCustomCode').bind('typeahead:selected', function (obj, datum, name) {
+        console.log("evo ga rezultat jebeni")
+        $('#deviceCustomCodeHidden').val(datum['id']);
     });
 </script>

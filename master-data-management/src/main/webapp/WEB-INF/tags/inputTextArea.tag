@@ -1,7 +1,7 @@
-%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@tag pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ attribute name="name" required="true" rtexprvalue="true"
               description="Name of corresponding property in bean object" %>
 <%@ attribute name="label" required="true" rtexprvalue="true"
@@ -14,7 +14,7 @@
 <spring:bind path="${name}">
 
     <div class="form-group">
-        <label for="${name}" >${label}</label>
+        <label for="${name}" ><spring:message code="${label}"/></label>
         <form:textarea id="${name}" path="${name}"
                     class="form-control ${status.error ? 'error' : '' }"
                     disabled="${disabled}"
