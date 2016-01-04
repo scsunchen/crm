@@ -111,6 +111,7 @@ public class MenuFormPreparer implements ViewPreparer {
         masterdata.put("Terminali", "Terminal - Service provider", "/masterdata/deviceservprovider/device-serv-provider.html?page=0");
 
 
+        masterdata.put("Partneri", "Poslovni partner Status", "/masterdata/partnerstatus/read-page.html?page=0");
         masterdata.put("Partneri", "Poslovni partner", "/masterdata/partner/read-page.html?id=&name=&page=0");
         masterdata.put("Partneri", "Prodavac - prodajno mesto", "/masterdata/partner/read-merchant-page.html?id=&name=&type=MERCHANT&page=0");
 

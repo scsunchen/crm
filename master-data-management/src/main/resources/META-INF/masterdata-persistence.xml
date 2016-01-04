@@ -32,6 +32,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <class>com.invado.core.domain.BusinessPartnerDocument</class>
         <class>com.invado.core.domain.DocumentType</class>
         <class>com.invado.core.domain.DeviceServiceProviderRegistration</class>
+        <class>com.invado.core.domain.BusinessPartnerStatus</class>
         <class>com.invado.finance.domain.Invoice</class>
         <class>com.invado.finance.domain.InvoiceItem</class>
 

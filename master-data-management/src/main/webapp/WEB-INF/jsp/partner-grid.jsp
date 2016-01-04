@@ -112,6 +112,17 @@
                 <input:inputField name="EMail" label="BusinessPartner.Table.eMail"/>
             </div>
             <div class="col-lg-4">
+
+                <spring:bind path="partnerStatusId">
+                    <div class="form-group">
+                        <label for="status"><spring:message code="BusinessPartner.Table.Status"></spring:message> </label>
+                        <form:select path="partnerStatusId" id="status" class="form-control" itemLabel="status">
+                            <form:option value="${partnerStatusId}">${partnerStatusName}</form:option>
+                            <form:options items="${partnerStatuses}" itemLabel="name" itemValue="id"/>
+                        </form:select>
+                    </div>
+                </spring:bind>
+
                 <div class="form-group">
                     <label for="partnerName"><spring:message
                             code="BusinessPartner.Table.ParentPartner"></spring:message></label>

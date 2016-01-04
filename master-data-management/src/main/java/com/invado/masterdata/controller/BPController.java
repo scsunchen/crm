@@ -1,15 +1,14 @@
 package com.invado.masterdata.controller;
 
-import bg_bu_gos.webservicelokator.service1.SelectMesto;
 import com.invado.core.domain.*;
 import com.invado.core.dto.*;
-import com.invado.finance.service.PartnerSpecificationByDate;
 import com.invado.masterdata.Utils;
 import com.invado.masterdata.service.*;
 import com.invado.masterdata.service.dto.MasterPartnerDTO;
 import com.invado.masterdata.service.dto.PageRequestDTO;
 import com.invado.masterdata.service.dto.ReadRangeDTO;
 import com.invado.masterdata.service.dto.RequestPartnerDTO;
+import com.invado.masterdata.service.BusinessPartnerStatusService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import telekomWS.client.dto.SelectPlace;
 import telekomWS.client.dto.SelectStreet;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +48,8 @@ public class BPController {
     private BusinessPartnerAccountService accountService;
     @Inject
     private BusinessPartnerDocumentService documentService;
+    @Inject
+    private BusinessPartnerStatusService businessPartnerStatusService;
 
 
     @RequestMapping(value = "/partner/read-page.html", method = RequestMethod.GET)
@@ -333,8 +333,10 @@ public class BPController {
         List<BusinessPartner.Type> types = service.getTypes();
         List<BusinessPartner.TelekomStatus> telekomStatuses = service.getTelekomStatuses();
         List<POSTypeDTO> POSTypes = posTypeService.readAll(null, null);
+        List<BusinessPartnerStatusDTO> partnerStatuses = businessPartnerStatusService.readAll(null, null);
         BusinessPartnerDTO item = new BusinessPartnerDTO();
         model.put("item", item);
+        model.put("partnerStatuses", partnerStatuses);
         model.put("types", types);
         model.put("action", "create");
 
@@ -443,6 +445,8 @@ public class BPController {
                                  Map<String, Object> model)
             throws Exception {
         BusinessPartnerDTO item = service.read(id);
+        List<BusinessPartnerStatusDTO> partnerStatuses = businessPartnerStatusService.readAll(null, null);
+        model.put("partnerStatuses", partnerStatuses);
         model.put("item", item);
         return "partner-grid";
     }

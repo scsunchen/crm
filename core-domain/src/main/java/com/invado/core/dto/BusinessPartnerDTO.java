@@ -1,6 +1,7 @@
 package com.invado.core.dto;
 
 import com.invado.core.domain.BusinessPartner;
+import com.invado.core.domain.BusinessPartnerStatus;
 import com.invado.core.domain.POSType;
 
 /**
@@ -53,6 +54,9 @@ public class BusinessPartnerDTO {
     private Integer longitude;
     private Integer latitude;
     private String namePattern;
+    private BusinessPartnerStatus businessPartnerStatus;
+    private Integer partnerStatusId;
+    private String partnerStatusName;
     private Integer telekomId;
     private BusinessPartner.TelekomStatus telekomStatus;
     private String telekomStatusValue;
@@ -406,6 +410,30 @@ public class BusinessPartnerDTO {
 
     public void setPostTypeName(String postTypeName) {
         this.postTypeName = postTypeName;
+    }
+
+    public BusinessPartnerStatus getBusinessPartnerStatus() {
+        return businessPartnerStatus;
+    }
+
+    public void setBusinessPartnerStatus(BusinessPartnerStatus businessPartnerStatus) {
+        this.businessPartnerStatus = businessPartnerStatus;
+    }
+
+    public Integer getPartnerStatusId() {
+        return partnerStatusId;
+    }
+
+    public void setPartnerStatusId(Integer partnerStatusId) {
+        this.partnerStatusId = partnerStatusId;
+    }
+
+    public String getPartnerStatusName() {
+        return partnerStatusName;
+    }
+
+    public void setPartnerStatusName(String partnerStatusName) {
+        this.partnerStatusName = partnerStatusName;
     }
 
     public Integer getTelekomId() {

@@ -109,6 +109,8 @@ public class BPService {
             businessPartner.setType(a.getType());
             businessPartner.setTelekomStatus(a.getTelekomStatus());
             businessPartner.setTelekomId(a.getTelekomId());
+            if (a.getPartnerStatusId() != null)
+                businessPartner.setStatus(dao.find(BusinessPartnerStatus.class, a.getPartnerStatusId()));
             if (a.getPosTypeId() != null)
                 businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId()));
             businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId().intValue()));
@@ -187,6 +189,8 @@ public class BPService {
                 businessPartner.setPosType(dao.find(POSType.class, a.getPosTypeId()));
             if (a.getParentBusinessPartnerId() != null)
                 businessPartner.setParentBusinessPartner(dao.find(BusinessPartner.class, a.getParentBusinessPartnerId()));
+            if (a.getPartnerStatusId() != null)
+                businessPartner.setStatus(dao.find(BusinessPartnerStatus.class, a.getPartnerStatusId()));
             businessPartner.setContactPerson(new ContactPerson(a.getContactPersoneName(), a.getContactPersonePhone(), a.getContactPersoneFunction(), a.getEMail()));
             businessPartner.setRemark(a.getRemark());
             List<String> msgs = validator.validate(businessPartner).stream()
@@ -271,7 +275,8 @@ public class BPService {
             item.setRemark(dto.getRemark());
             if (dto.getParentBusinessPartnerId() != null)
                 item.setParentBusinessPartner(dao.find(BusinessPartner.class, dto.getParentBusinessPartnerId()));
-
+            if (dto.getPartnerStatusId() != null)
+                item.setStatus(dao.find(BusinessPartnerStatus.class, dto.getPartnerStatusId()));
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());

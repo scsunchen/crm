@@ -18,7 +18,7 @@
     <div class="form-group">
         <c:choose>
             <c:when test="${action == 'create'}">
-                <input:inputField label="Šifra *" name="id" disabled="true"/>
+                <input:inputField label="DeviceStatus.Table.Id" name="id" disabled="true"/>
             </c:when>
         </c:choose>
     </div>

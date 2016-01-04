@@ -37,7 +37,9 @@ import org.hibernate.validator.constraints.NotBlank;
         @NamedQuery(name = BusinessPartner.READ_PARENT,
                 query = "SELECT x FROM BusinessPartner x where x.parentBusinessPartner is null"),
         @NamedQuery(name = BusinessPartner.READBY_NAME_TYPE_ORDERBY_NAME,
-                query = "SELECT x FROM BusinessPartner x where UPPER(x.name) LIKE :name and x.type = :type")
+                query = "SELECT x FROM BusinessPartner x where UPPER(x.name) LIKE :name and x.type = :type"),
+        @NamedQuery(name = BusinessPartner.READ_BY_STATUS,
+                query = "SELECT x FROM BusinessPartner x where x.status = :status order by x.name")
 })
 public class BusinessPartner implements Serializable {
 
@@ -51,6 +53,7 @@ public class BusinessPartner implements Serializable {
     public static final String READ_SERVICE_PROVIDER_BY_ID = "BusinessPartner.ReadGeneralPartnerById";
     public static final String READBY_NAME_TYPE_ORDERBY_NAME = "BusinessPartner.ReadByNameAndTypeOrderByName";
     public static final String READ_MERCHANT_BY_NAME_ORDERBY_NAME = "BusinessPartner.ReadMerchantByName";
+    public static final String READ_BY_STATUS = "BusinessPartner.ReadbyPartner";
 
     @TableGenerator(
             name = "PartnerTab",
@@ -119,6 +122,9 @@ public class BusinessPartner implements Serializable {
     @ManyToOne
     @JoinColumn(name = "pos_type_id")
     private POSType posType;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private BusinessPartnerStatus status;
     @Column(name = "TELEKOM_ID")
     private Integer telekomId;
     @Column(name = "TELEKOM_STATUS")
@@ -383,6 +389,14 @@ public class BusinessPartner implements Serializable {
         this.parentBusinessPartner = parentBusinessPartner;
     }
 
+    public BusinessPartnerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BusinessPartnerStatus status) {
+        this.status = status;
+    }
+
     public BusinessPartnerDTO getDTO() {
 
         BusinessPartnerDTO businessPartnerDTO = new BusinessPartnerDTO();
@@ -438,7 +452,10 @@ public class BusinessPartner implements Serializable {
             businessPartnerDTO.setPosTypeId(this.getPosType().getId());
             businessPartnerDTO.setPostTypeName(this.getPosType().getDescription());
         }
-
+        if (this.getStatus() != null){
+            businessPartnerDTO.setPartnerStatusId(this.getStatus().getId());
+            businessPartnerDTO.setPartnerStatusName(this.getStatus().getName());
+        }
         if (this.getTelekomId() != null)
             businessPartnerDTO.setTelekomId(this.getTelekomId());
         businessPartnerDTO.setTelekomStatus(this.getTelekomStatus());
