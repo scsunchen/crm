@@ -108,23 +108,25 @@ public class MenuFormPreparer implements ViewPreparer {
         finance.put("Knjigovodstvo izveštaj", "Analitička kartica glavne knjige", "/finance/gl-card/read-general-ledger.html");
         finance.put("Knjigovodstvo izveštaj", "Otvorene stavke", "/finance/open-item-statements/read.html");
         finance.put("Knjigovodstvo izveštaj", "Specifikacija poslovnih partnera", "/finance/partner-specification/read.html");
-//        finance.put("Zatezna kamata", "Obračun zatezne kamate", "/finance/desc/0");
         modules.add(finance);
+        Module masterdata = new Module();
+        masterdata.setPath("masterdata");
+        masterdata.setName("Matični Podaci");
+        modules.add(masterdata);
         Module crm = new Module();
         crm.setPath("crm");
-        crm.setName("CRM");
-        crm.put("Proba", "Proba", "/crm/proba/0");
+        crm.setName("CRM");        
         modules.add(crm);
-        Module service = new Module();
-        service.setPath("service");
-        service.setName("Servis aparata");
-        service.put("Proba", "Proba", "/service/proba/0");
-        modules.add(service);
+        Module hr = new Module();
+        hr.setPath("HR");
+        hr.setName("Human Resource");
+        modules.add(hr);
     }
 
     @Override
     public void execute(Request request, AttributeContext ac) {
-        HttpServletRequest request1 = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+        HttpServletRequest request1 = ((ServletRequestAttributes) 
+                RequestContextHolder.getRequestAttributes())
                 .getRequest();
         ac.putAttribute("modules", new Attribute(modules));
         ac.putAttribute(

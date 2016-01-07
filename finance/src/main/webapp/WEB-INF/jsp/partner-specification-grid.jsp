@@ -80,7 +80,7 @@
     $('#valueDateTo').datepicker({});
     $('#client').autocomplete(
             'name',
-            '${pageContext.request.contextPath}/partner-specification/read-client/%QUERY',
+            '${pageContext.request.contextPath}/partner-specification/read-client/%QUERY'
     );
     $('#client')
     .bind('typeahead:selected', function (obj, datum, name) {

@@ -4,6 +4,7 @@
  */
 package com.invado.finance.service;
 
+import com.invado.core.domain.ApplicationSetup;
 import com.invado.core.domain.ApplicationUser;
 import com.invado.core.domain.BusinessPartner;
 import com.invado.core.domain.ExchangeRate;
@@ -15,12 +16,12 @@ import com.invado.core.exception.ConstraintViolationException;
 import com.invado.core.exception.EntityNotFoundException;
 import com.invado.core.exception.SystemException;
 import com.invado.finance.Utils;
-import static com.invado.finance.Utils.getMessage;
 import com.invado.core.domain.Invoice;
 import com.invado.core.domain.InvoiceBusinessPartner;
 import com.invado.core.domain.InvoiceItem;
 import com.invado.core.domain.InvoicePK;
 import com.invado.core.domain.InvoiceType;
+import static com.invado.finance.Utils.getMessage;
 import com.invado.finance.domain.journal_entry.Account;
 import com.invado.finance.domain.journal_entry.ChangeType;
 import static com.invado.finance.domain.journal_entry.ChangeType.DEBIT;
@@ -40,6 +41,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -104,6 +106,11 @@ public class RecordInvoiceService {
             if(invoice.getInvoiceType() == InvoiceType.PROFORMA_INVOICE) {
                 throw new ProformaInvoicePostingException(
                         Utils.getMessage("RecordInvoice.IllegalArgument.ProformaPosting")); 
+            }
+            Integer businessYear = EM.find(ApplicationSetup.class, 1).getYear();
+            if(businessYear.compareTo(dto.getRecordDate().getYear()) != 0){
+                throw new ConstraintViolationException("",
+                        Arrays.asList(getMessage("JournalEntry.ConstraintViolation.Year")));
             }
             if(EM.find(JournalEntry.class, new JournalEntryPK(dto.getClientId(), 
                                          dto.getEntryOrderType(),
@@ -391,7 +398,8 @@ public class RecordInvoiceService {
             invoice.setRecorded(Boolean.TRUE);
             EM.persist(order);
         } catch(EntityNotFoundException | PostedInvoiceException | 
-                ProformaInvoicePostingException | JournalEntryExistsException ex) {
+                ProformaInvoicePostingException | JournalEntryExistsException |
+                ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

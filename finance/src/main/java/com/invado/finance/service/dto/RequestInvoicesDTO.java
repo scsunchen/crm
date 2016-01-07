@@ -5,8 +5,6 @@
  */
 package com.invado.finance.service.dto;
 
-import java.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -15,10 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class RequestInvoicesDTO {
     
     private String document;
-    @DateTimeFormat(style = "M-")
-    private LocalDate dateFrom; 
-    @DateTimeFormat(style = "M-")
-    private LocalDate dateTo;
+    private Integer invoicingTransactionId;
     private Integer partnerId;
     private Integer page;
     private String partnerName;
@@ -31,20 +26,12 @@ public class RequestInvoicesDTO {
         this.document = document;
     }
 
-    public LocalDate getDateFrom() {
-        return dateFrom;
+    public Integer getInvoicingTransactionId() {
+        return invoicingTransactionId;
     }
 
-    public void setDateFrom(LocalDate dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public LocalDate getDateTo() {
-        return dateTo;
-    }
-
-    public void setDateTo(LocalDate dateTo) {
-        this.dateTo = dateTo;
+    public void setInvoicingTransactionId(Integer i) {
+        this.invoicingTransactionId = i;
     }
 
     public Integer getPartnerId() {
@@ -70,6 +57,5 @@ public class RequestInvoicesDTO {
     public void setPartnerName(String partnerName) {
         this.partnerName = partnerName;
     }
-    
     
 }

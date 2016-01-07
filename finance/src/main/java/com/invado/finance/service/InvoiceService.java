@@ -23,6 +23,8 @@ import com.invado.core.domain.InvoiceItemPK;
 import com.invado.core.domain.InvoicePK;
 import com.invado.core.domain.InvoiceType;
 import com.invado.core.domain.Invoice_;
+import com.invado.core.domain.InvoicingTransaction;
+import com.invado.core.domain.InvoicingTransaction_;
 import com.invado.core.domain.Properties;
 import com.invado.core.dto.InvoiceDTO;
 import com.invado.core.dto.InvoiceItemDTO;
@@ -146,7 +148,7 @@ public class InvoiceService {
             Currency currency = null;
             String ISOCode = dao.find(Properties.class, "domestic_currency")
                     .getValue();
-            if (dto.getCurrencyISOCode() == null 
+            if (dto.getCurrencyISOCode() == null
                     || (dto.getCurrencyISOCode().equals(ISOCode) | dto.getCurrencyISOCode().isEmpty())) {
                 invoice.setIsDomesticCurrency(Boolean.TRUE);
                 //read domestic currency ISO code from application properties
@@ -318,7 +320,7 @@ public class InvoiceService {
             Currency currency = null;
             String ISOCode = dao.find(Properties.class, "domestic_currency")
                     .getValue();
-            if (dto.getCurrencyISOCode() == null 
+            if (dto.getCurrencyISOCode() == null
                     || (dto.getCurrencyISOCode().equals(ISOCode) | dto.getCurrencyISOCode().isEmpty())) {
                 temp.setIsDomesticCurrency(Boolean.TRUE);
                 //read domestic currency ISO code from application properties
@@ -834,24 +836,24 @@ public class InvoiceService {
             if (pageNumber.equals(-1)) {
                 int start = numberOfPages.intValue() * pageSize;
                 result.setData(convertToDTO(dao.createNamedQuery(
-                    InvoiceItem.READ_ITEMS_BY_INVOICE, InvoiceItem.class)
-                    .setParameter("clientId", clientId)
-                    .setParameter("orgUnit", unitId)
-                    .setParameter("document", document)
-                    .setFirstResult(start)
-                    .setMaxResults(pageSize)
-                    .getResultList()));
+                        InvoiceItem.READ_ITEMS_BY_INVOICE, InvoiceItem.class)
+                        .setParameter("clientId", clientId)
+                        .setParameter("orgUnit", unitId)
+                        .setParameter("document", document)
+                        .setFirstResult(start)
+                        .setMaxResults(pageSize)
+                        .getResultList()));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
                 result.setData(convertToDTO(dao.createNamedQuery(
-                    InvoiceItem.READ_ITEMS_BY_INVOICE, InvoiceItem.class)
-                    .setParameter("clientId", clientId)
-                    .setParameter("orgUnit", unitId)
-                    .setParameter("document", document)
-                    .setFirstResult(p.getPage()* pageSize)
-                    .setMaxResults(pageSize)
-                    .getResultList()));
+                        InvoiceItem.READ_ITEMS_BY_INVOICE, InvoiceItem.class)
+                        .setParameter("clientId", clientId)
+                        .setParameter("orgUnit", unitId)
+                        .setParameter("document", document)
+                        .setFirstResult(p.getPage() * pageSize)
+                        .setMaxResults(pageSize)
+                        .getResultList()));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
             }
@@ -1022,6 +1024,7 @@ public class InvoiceService {
         LocalDate from = null;
         LocalDate to = null;
         String businessPartner = null;
+        Integer invoicingTransactionId = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("document") && s.getValue() instanceof String) {
                 document = (String) s.getValue();
@@ -1035,10 +1038,13 @@ public class InvoiceService {
             if (s.getKey().equals("partner") && s.getValue() instanceof String) {
                 businessPartner = (String) s.getValue();
             }
+            if(s.getKey().equals("invoicingTransaction") && s.getValue() instanceof Integer) {
+                invoicingTransactionId = (Integer) s.getValue();
+            }
         }
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
-            Long countEntities = this.count(dao, document, from, to, businessPartner);
+            Long countEntities = this.count(dao, document, from, to, businessPartner,invoicingTransactionId);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             if (p.getPage().compareTo(-1) == -1
@@ -1055,6 +1061,7 @@ public class InvoiceService {
                         from,
                         to,
                         businessPartner,
+                        invoicingTransactionId,
                         start,
                         pageSize);
                 result.setData(data.stream().map(Invoice::getDTO).collect(Collectors.toList()));
@@ -1066,6 +1073,7 @@ public class InvoiceService {
                         from,
                         to,
                         businessPartner,
+                        invoicingTransactionId,
                         p.getPage() * pageSize,
                         pageSize);
                 result.setData(data.stream().map(Invoice::getDTO).collect(Collectors.toList()));
@@ -1088,6 +1096,7 @@ public class InvoiceService {
             LocalDate from,
             LocalDate to,
             String partnerName,
+            Integer invoicingTransactionId, 
             int start,
             int range) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
@@ -1110,6 +1119,11 @@ public class InvoiceService {
                     root.get(Invoice_.invoiceDate),
                     cb.parameter(LocalDate.class, "to")));
         }
+        if(invoicingTransactionId != null) {
+            criteria.add(cb.equal(root.get(Invoice_.invoicingTransaction)
+                    .get(InvoicingTransaction_.id), 
+                    cb.parameter(Integer.class, "invoicingTransactionId")));
+        }
         if (partnerName != null && partnerName.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(Invoice_.partner)
                     .get(BusinessPartner_.name)),
@@ -1130,8 +1144,11 @@ public class InvoiceService {
         if (to != null) {
             q.setParameter("to", to);
         }
+        if(invoicingTransactionId != null) {
+            q.setParameter("invoicingTransactionId", invoicingTransactionId);            
+        }
         if (partnerName != null && partnerName.isEmpty() == false) {
-            q.setParameter("partner", "%" + partnerName.toUpperCase()+ "%");
+            q.setParameter("partner", "%" + partnerName.toUpperCase() + "%");
         }
         q.setFirstResult(start);
         q.setMaxResults(range);
@@ -1142,7 +1159,8 @@ public class InvoiceService {
             String document,
             LocalDate from,
             LocalDate to,
-            String partnerName) {
+            String partnerName,
+            Integer invoicingTransactionId) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<Invoice> root = c.from(Invoice.class);
@@ -1159,6 +1177,11 @@ public class InvoiceService {
         if (to != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Invoice_.invoiceDate),
                     cb.parameter(LocalDate.class, "to")));
+        }
+        if(invoicingTransactionId != null) {
+            criteria.add(cb.equal(root.get(Invoice_.invoicingTransaction)
+                    .get(InvoicingTransaction_.id), 
+                    cb.parameter(Integer.class, "invoicingTransactionId")));
         }
         if (partnerName != null && partnerName.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(Invoice_.partner)
@@ -1177,9 +1200,25 @@ public class InvoiceService {
             q.setParameter("to", to);
         }
         if (partnerName != null && partnerName.isEmpty() == false) {
-            q.setParameter("partner", "%" + partnerName.toUpperCase()+ "%");
+            q.setParameter("partner", "%" + partnerName.toUpperCase() + "%");
+        }
+        if(invoicingTransactionId != null) {
+            q.setParameter("invoicingTransactionId", invoicingTransactionId);            
         }
         return q.getSingleResult();
+    }
+
+    public List<InvoicingTransaction> getAllPeriods() {
+        try {
+            return dao.createNamedQuery(
+                    InvoicingTransaction.READ_ALL_ORDERBY_INVOICING_DATE_DESC,
+                    InvoicingTransaction.class)
+                    .getResultList();
+        } catch (Exception x) {
+            LOG.log(Level.WARNING, "", x);
+            throw new SystemException(
+                    Utils.getMessage("Invoice.PersistenceException."), x);
+        }
     }
 
 }

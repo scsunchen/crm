@@ -24,36 +24,27 @@
                         var="documentLabel"/></label>
             <form:input id="document" path="document" type="text" class="form-control" 
                         placeholder="${documentLabel}" />
-        </div>
-        <div class="form-group">
-            <label for="partner" class="sr-only"><spring:message code="FindInvoice.Label.Partner" var="partnerLabel"/></label>
-            <form:input id="partner" class="form-control" type="text" path="partnerName" 
-                        placeholder="${partnerLabel}" />
-        </div> 
-
+    </div>
     <div class="form-group">
-            <spring:bind path="dateFrom" >                    
-                <label for="dateFrom" class="sr-only">
-                    <spring:message code="FindInvoice.Label.DateFrom" 
-                                    var = "dateFromLabel"/></label>
-                <form:input id="dateFrom" type="text" class="form-control" path="dateFrom" 
-                            placeholder="${dateFromLabel}"/>
-                <span class="help-inline">
-                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
-                    </span>
-            </spring:bind>
-        </div>
-        <div class="form-group" >
-            <spring:bind path="dateTo" >                    
-                <label for="dateTo" class="sr-only"><spring:message code="FindInvoice.Label.DateTo" var="dateToLabel"/></label>
-                <form:input id="dateTo" type="text" class="form-control" path="dateTo"
-                            placeholder="${dateToLabel}"/>
-                <span class="help-inline">
-                    <c:if test="${status.error}"><c:out value="${status.errorMessage}" /></c:if>
-                    </span>
-            </spring:bind>
-        </div>
-
+        <label for="partner" class="sr-only"><spring:message code="FindInvoice.Label.Partner" var="partnerLabel"/></label>
+        <form:input id="partner" class="form-control" type="text" path="partnerName" 
+                    placeholder="${partnerLabel}" />
+    </div> 
+    <div class="form-group">
+        <label for="document" class="sr-only" ><spring:message code="FindInvoice.Label.Document" 
+                        var="documentLabel"/></label>
+         <form:select path="invoicingTransactionId" 
+                      class="form-control" >
+             <form:option value=""><spring:message code="FindInvoice.Label.All"/></form:option> 
+             <c:forEach var="invoiceTransaction" items="${invoiceTransactions}">
+                 <form:option value="${invoiceTransaction.id}">
+                     <spring:message code="FindInvoice.Label.InvoiceTransactions" 
+                                     arguments="${invoiceTransaction.formattedInvoicedFrom},
+                                                ${invoiceTransaction.formattedInvoicedTo}" />
+                 </form:option>
+             </c:forEach>
+         </form:select>
+    </div>    
     <button type="submit" class="btn btn-primary" name="page" value="0">
         <spring:message code="FindInvoice.Button.Search" />
     </button>
