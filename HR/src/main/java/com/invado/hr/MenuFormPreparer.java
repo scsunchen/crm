@@ -122,8 +122,8 @@ public class MenuFormPreparer implements ViewPreparer {
         Module HR = new Module();
         HR.setPath("HR");
         HR.setName("Human Resource");
-        HR.put("Human Resource", "Radno mesto", "/HR/job/0");
-        HR.put("Human Resource", "Radnik", "/HR/employee/0");
+        HR.put("Human Resource", "Radno mesto", "/HR/job/read-page.html?page=0");
+        HR.put("Human Resource", "Radnik", "/HR/employee/read-page.html?page=0");
         modules.add(HR);
     }
 

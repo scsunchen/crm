@@ -169,16 +169,20 @@ public class BPController {
                                      @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
                                      @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
                                      @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                     @RequestParam(value = "partnerId", required = false) Integer partnerId,
+                                     @RequestParam(value = "partnerName", required = false) String partnerName,
                                      @RequestParam(value = "contactName", required = false) String contactName,
                                      @ModelAttribute("businessPartnerDTO") BusinessPartnerDTO businessPartnerDTO, BindingResult partnerResult,
                                      Map<String, Object> model) throws Exception {
 
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-        if (pointOfSaleId == null) {
+        if (masterPartnerId != null) {
             request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerId", masterPartnerId));
-        } else {
+        } else if (pointOfSaleId != null) {
             request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerId", pointOfSaleId));
+        } else if (partnerId != null) {
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("partnerId", partnerId));
         }
 
         if (pointOfSaleId == null)
@@ -207,16 +211,19 @@ public class BPController {
                                      @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
                                      @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
                                      @RequestParam(value = "contactName", required = false) String account,
+                                     @RequestParam(value = "partnerId", required = false) Integer partnerId,
+                                     @RequestParam(value = "partnerName", required = false) String partnerName,
                                      @ModelAttribute("businessPartnerDTO") BusinessPartnerDTO businessPartnerDTO, BindingResult partnerResult,
                                      Map<String, Object> model) throws Exception {
 
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
-
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("accountOwnerId", masterPartnerId));
+        if (masterPartnerId != null)
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("accountOwnerId", masterPartnerId));
+        if (partnerId != null)
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("accountOwnerId", partnerId));
 
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("account", account));
-
         ReadRangeDTO<BusinessPartnerAccountDTO> items = accountService.readPage(request);
 
         model.put("data", items.getData());
@@ -237,6 +244,8 @@ public class BPController {
                                        @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
                                        @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
                                        @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                       @RequestParam(value = "partnerId", required = false) Integer partnerId,
+                                       @RequestParam(value = "partnerName", required = false) String partnerName,
                                        @RequestParam(value = "contactName", required = false) String account,
                                        @ModelAttribute("businessPartnerDTO") BusinessPartnerDTO businessPartnerDTO, BindingResult partnerResult,
                                        Map<String, Object> model) throws Exception {
@@ -244,8 +253,13 @@ public class BPController {
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(page);
 
-        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("businesspartnerOwnerId", masterPartnerId));
-
+        if (masterPartnerId != null) {
+            System.out.println("usao u prvi jbt "+masterPartnerId);
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("businessPartnerOwnerId", masterPartnerId));
+        } else if (partnerId != null) {
+            System.out.println("nenego u  drugi  jbt "+partnerId);
+            request.addSearchCriterion(new PageRequestDTO.SearchCriterion("businessPartnerOwnerId", partnerId));
+        }
 
         ReadRangeDTO<BusinessPartnerDocumentDTO> items = documentService.readPage(request);
 
@@ -283,8 +297,8 @@ public class BPController {
 
     @RequestMapping(value = "/partner/create-merchant.html", method = RequestMethod.GET)
     public String initCreateMerchantForm(@RequestParam Integer page,
-                                 @RequestParam(value = "type", required = false) String type,
-                                 Map<String, Object> model) {
+                                         @RequestParam(value = "type", required = false) String type,
+                                         Map<String, Object> model) {
 
         List<BusinessPartner> parents = service.readParentPartners();
         List<BusinessPartner.Type> types = service.getTypes();
@@ -301,11 +315,11 @@ public class BPController {
 
     @RequestMapping(value = "/partner/create-merchant.html", method = RequestMethod.POST, params = "save")
     public String processCreationMerchantForm(@ModelAttribute("item") BusinessPartnerDTO item, BindingResult result,
-                                      @RequestParam Integer page,
-                                      @RequestParam(value = "type", required = false) String type,
-                                      SessionStatus status,
-                                      Map<String, Object> model,
-                                      final RedirectAttributes redirectAttributes)
+                                              @RequestParam Integer page,
+                                              @RequestParam(value = "type", required = false) String type,
+                                              SessionStatus status,
+                                              Map<String, Object> model,
+                                              final RedirectAttributes redirectAttributes)
             throws Exception {
 
         if (result.hasErrors()) {

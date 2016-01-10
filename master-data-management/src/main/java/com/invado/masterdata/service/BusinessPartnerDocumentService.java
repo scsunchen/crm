@@ -240,7 +240,7 @@ public class BusinessPartnerDocumentService {
             if (s.getKey().equals("type") && s.getValue() instanceof DocumentType) {
                 type = (DocumentType) s.getValue();
             }
-            if (s.getKey().equals("businessPartnerOwner")) {
+            if (s.getKey().equals("businessPartnerOwnerId")) {
                 if (s.getValue() instanceof BusinessPartner) {
                     businessPartnerOwner = (BusinessPartner) s.getValue();
                 } else if (s.getValue() instanceof Integer) {

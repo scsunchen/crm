@@ -13,30 +13,35 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
-<form:form modelAttribute="item" method="post">
-  <div class="form-group">
-    <c:choose>
-      <c:when test="${action == 'create'}">
-        <input:inputField label="Šifra *" name="id" disabled="true"/>
-      </c:when>
-    </c:choose>
-  </div>
-  <input:inputField label="Naziv *" name="name"/>
-  <input:inputField label="Opis " name="description"/>
-  <form:hidden path="version"/>
-
-  <div class="form-group btn-group-sm">
-      <a class="btn btn-primary" href="/HR/job/0">Povratak</a>
-    <button type="submit" class="btn btn-primary">
-      <c:choose>
-        <c:when test="${action == 'create'}">
-          <c:out value="Kreiraj"/>
-        </c:when>
-        <c:otherwise>
-          <c:out value="Promeni"/>
-        </c:otherwise>
-      </c:choose>
-    </button>
-  </div>
+<form:form modelAttribute="item" method="post" cssClass="generic-container">
+    <div class="form-group">
+        <div class="col-lg-3">
+            <c:choose>
+                <c:when test="${action == 'create'}">
+                    <input:inputField label="Job.Table.Id" name="id" disabled="true"/>
+                </c:when>
+            </c:choose>
+        </div>
+        <div class="col-lg-9">
+        <input:inputField label="Job.Table.Name" name="name"/>
+        </div>
+        <input:inputTextArea label="Job.Table.Description" name="description"/>
+        <form:hidden path="version"/>
+    </div>
+    <div class="form-group btn-group-sm">
+        <a class="btn btn-default" href="/HR/job/read-page.html?page=0">
+            <span class="glyphicon glyphicon-backward"></span>
+            <spring:message code="Common.Button.Back"></spring:message> </a>
+        <button type="submit" class="btn btn-primary">
+            <c:choose>
+                <c:when test="${action == 'create'}">
+                    <c:out value="Kreiraj"/>
+                </c:when>
+                <c:otherwise>
+                    <c:out value="Promeni"/>
+                </c:otherwise>
+            </c:choose>
+        </button>
+    </div>
 </form:form>
 

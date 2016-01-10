@@ -11,6 +11,9 @@
         <put-attribute name="body" value=""/>
     </definition>
     <definition name="home" extends="main-menu-form">
+        <put-attribute name="title" value="CRM"/>
+        <put-attribute name="panel-title" value="Admin/HR"/>
+
         <put-attribute name="body" value="/WEB-INF/jsp/logo.jsp"/>
     </definition>
     <definition name="error" extends="main-menu-form">
@@ -42,4 +45,5 @@
         <put-attribute name="panel-title" value="Ažuriranje podataka o radnicima"/>
         <put-attribute name="body" value="/WEB-INF/jsp/employee-grid.jsp"/>
     </definition>
+    <definition name="login" template="/WEB-INF/jsp/login.jsp"/>
 </tiles-definitions>

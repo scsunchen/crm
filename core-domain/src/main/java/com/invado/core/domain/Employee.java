@@ -48,8 +48,12 @@ public class Employee implements Serializable {
     private String phone;
     @Column(name = "email")
     private String email;
-    @Column(name = "picture")
+    @Column(name = "PICTURE_DATA")
     private byte[] picture;
+    @Column(name = "PICTURE_NAME")
+    private String pictureName;
+    @Column(name = "PICTURE_CONTENT_TYPE")
+    private String pictureContentType;
     @ManyToOne
     @JoinColumn(name = "org_unit_id", referencedColumnName = "org_unit_id")
     @NotNull(message = "{Employee.OrgUnit.NotNull}")
@@ -68,6 +72,8 @@ public class Employee implements Serializable {
     private Job job;
     @Embedded
     private Address address;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private ApplicationUser user;
     @Version
     private Long version;
 
@@ -178,6 +184,29 @@ public class Employee implements Serializable {
         this.picture = picture;
     }
 
+    public String getPictureName() {
+        return pictureName;
+    }
+
+    public void setPictureName(String pictureName) {
+        this.pictureName = pictureName;
+    }
+
+    public String getPictureContentType() {
+        return pictureContentType;
+    }
+
+    public void setPictureContentType(String pictureContentType) {
+        this.pictureContentType = pictureContentType;
+    }
+
+    public ApplicationUser getUser() {
+        return user;
+    }
+
+    public void setUser(ApplicationUser user) {
+        this.user = user;
+    }
 
     public Long getVersion() {
         return version;
@@ -192,25 +221,39 @@ public class Employee implements Serializable {
         EmployeeDTO employeeDTO = new EmployeeDTO();
 
         employeeDTO.setPicture(this.getPicture());
+        employeeDTO.setPictureName(this.getPictureName());
         employeeDTO.setPhone(this.getPhone());
-        employeeDTO.setPostCode(this.getAddress().getPostCode());
-        employeeDTO.setCountry(this.getAddress().getCountry());
-        employeeDTO.setStreet(this.getAddress().getStreet());
-        employeeDTO.setPlace(this.getAddress().getPlace());
+        if (this.getAddress() != null) {
+            employeeDTO.setPostCode(this.getAddress().getPostCode());
+            employeeDTO.setCountry(this.getAddress().getCountry());
+            employeeDTO.setStreet(this.getAddress().getStreet());
+            employeeDTO.setPlace(this.getAddress().getPlace());
+        }
         employeeDTO.setDateOfBirth(this.getDateOfBirth());
         employeeDTO.setEmail(this.getEmail());
         employeeDTO.setEndDate(this.getEndDate());
         employeeDTO.setHireDate(this.getHireDate());
         employeeDTO.setId(this.getId());
-        employeeDTO.setJobId(this.getJob().getId());
-        employeeDTO.setJobName(this.getJob().getName());
+        if (this.getJob() != null) {
+            employeeDTO.setJobId(this.getJob().getId());
+            employeeDTO.setJobName(this.getJob().getName());
+        }
         employeeDTO.setLastName(this.getLastName());
         employeeDTO.setDateOfBirth(this.getDateOfBirth());
         employeeDTO.setMiddleName(this.getMiddleName());
         employeeDTO.setName(this.getName());
         employeeDTO.setEndDate(this.getEndDate());
-        employeeDTO.setOrgUnitId(this.getOrgUnit().getId());
-        employeeDTO.setOrgUnitName(this.getOrgUnit().getName());
+        if (this.getOrgUnit() != null) {
+            employeeDTO.setOrgUnitId(this.getOrgUnit().getId());
+            employeeDTO.setOrgUnitName(this.getOrgUnit().getName());
+        }
+        if (this.getUser() != null){
+            employeeDTO.setUser(this.getUser());
+            employeeDTO.setAppUsername(this.getUser().getUsername());
+            employeeDTO.setAppUserPassword(this.getUser().getPassword());
+            employeeDTO.setAppUserDesc(this.getUser().getDescription());
+        }
+
 
         return employeeDTO;
     }

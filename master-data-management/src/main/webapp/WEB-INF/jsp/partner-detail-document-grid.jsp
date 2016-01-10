@@ -14,11 +14,19 @@
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 
 
-<nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] == null}">hidden</c:if>>
+<nav id="masterPartner" class="navbar navbar-default" <c:if test="${param['masterPartnerId'] == null || param['masterPartnerId'] == ''}">hidden</c:if>>
     </br>
-    <div class="container-fluid">
+    <div class="navbar-header">
+
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
             <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></p></div>
+    </div>
+</nav>
+<nav id="partner" class="navbar navbar-default" <c:if test="${param['partnerId'] == null && param['partnerId'] == ''}">hidden</c:if>>
+    </br>
+    <div class="navbar-header">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-66"><p class="navbar-text navbar-right">
+            <c:out value="${param['partnerId']} / ${param['partnerName']}"/></p></div>
     </div>
 </nav>
 <form:form modelAttribute="item" enctype="multipart/form-data" method="post" cssClass="generic-container">
@@ -99,13 +107,12 @@
                 <a href="#" onclick="document.getElementById('fileID').click(); return false;"><spring:message
                         code="BusinessPartnerDocument.Table.FileUpload"/></a>
                 <input type="file" id="fileID" name="fileUpload" style="visibility: hidden;"/>
-
             </div>
         </div>
     </fieldset>
     <div class="form-group">
         <a class="btn btn-default"
-           href="${pageContext.request.contextPath}/partner/read-documents-page.html?pointOfSaleId=${param['pointOfSaleId']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">
+           href="${pageContext.request.contextPath}/partner/read-documents-page.html?partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&pointOfSaleId=${param['pointOfSaleId']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">
             <span class="glyphicon glyphicon-backward"></span>
             <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
         <button type="submit" class="btn btn-primary">

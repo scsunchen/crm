@@ -1,3 +1,4 @@
+<%@tag pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -19,11 +20,12 @@
 <spring:bind path="${name}">
     
     <div class="form-group">
-        <label for="${name}" >${label}</label>
+        <label for="${name}"  ><spring:message code="${label}"/></label>
         <form:input readonly="${readonly}" id="${name}" path="${name}"
                     class="form-control ${cssclass} ${status.error ? 'error' : '' }"
                     disabled="${disabled}" autofocus="${autofocus}" placeholder="${placeholder}"/>
         <span class="help-inline">${status.errorMessage}</span>
     </div>
 </spring:bind>
+
 

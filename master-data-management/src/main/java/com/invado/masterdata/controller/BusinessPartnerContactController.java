@@ -61,13 +61,17 @@ public class BusinessPartnerContactController {
                                  @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
                                  @RequestParam(value = "masterPartnerId", required = false) Integer masterPartnerId,
                                  @RequestParam(value = "masterPartnerName", required = false) String masterPartnerName,
+                                 @RequestParam(value = "partnerId", required = false) Integer partnerId,
+                                 @RequestParam(value = "partnerName", required = false) String partnerName,
                                  Map<String, Object> model) {
         BusinessPartnerContactDetailsDTO businessPartnerContactDetailsDTO = new BusinessPartnerContactDetailsDTO();
         BusinessPartnerDTO businessPartner = null;
         if (pointOfSaleId != null) {
             businessPartner = bpService.read(pointOfSaleId);
-        } else {
+        } else if(masterPartnerId != null){
             businessPartner = bpService.read(masterPartnerId);
+        }else if(partnerId != null){
+            businessPartner = bpService.read(partnerId);
         }
         if (businessPartner.getParentBusinessPartnerId() != null) {
             businessPartnerContactDetailsDTO.setMerchantId(businessPartner.getParentBusinessPartnerId());

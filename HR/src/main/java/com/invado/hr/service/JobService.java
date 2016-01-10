@@ -44,25 +44,25 @@ public class JobService {
 
     @Autowired
     private Validator validator;
-    private final String username = "a";
 
 
     @Transactional(rollbackFor = Exception.class)
     public Job create(JobDTO a) throws IllegalArgumentException,
             EntityExistsException, ConstraintViolationException {
         //check CreateJobPermission
+
+
         if (a == null) {
             throw new IllegalArgumentException(
                     Utils.getMessage("Job.IllegalArgumentEx"));
         }
         if (a.getName() == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("BankCreditor.IllegalArgumentException.name"));
+            throw new IllegalArgumentException(
+                    Utils.getMessage("Job.IllegalArgumentException.name"));
         }
+
         try {
-
             Job job = new Job();
-
             job.setName(a.getName());
             job.setDescription(a.getDescription());
 
@@ -78,6 +78,7 @@ public class JobService {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
+            ex.printStackTrace();
             throw new SystemException(
                     Utils.getMessage("Job.PersistenceEx.Create", ex)
             );
@@ -86,27 +87,20 @@ public class JobService {
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public Job update(JobDTO dto) throws ConstraintViolationException,
-            EntityNotFoundException,
+            com.invado.hr.service.exception.EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateJobPermission
-        if (dto == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("Job.IllegalArgumentEx"));
-        }
-        if (dto.getId() == null ) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("Job.IllegalArgumentEx.Code"));
-        }
         if (dto.getName() == null) {
             throw new ConstraintViolationException(
-                    Utils.getMessage("BankCreditor.IllegalArgumentException.name"));
+                    Utils.getMessage("Job.IllegalArgumentException.name"));
         }
+
         try {
             Job item = dao.find(Job.class,
                     dto.getId(),
                     LockModeType.OPTIMISTIC);
             if (item == null) {
-                throw new EntityNotFoundException(
+                throw new javax.persistence.EntityNotFoundException(
                         Utils.getMessage("Job.EntityNotFoundEx",
                                 dto.getId())
                 );
@@ -114,8 +108,6 @@ public class JobService {
             dao.lock(item, LockModeType.OPTIMISTIC);
             item.setName(dto.getName());
             item.setDescription(dto.getDescription());
-            /*Dodaj ovde ostalo*/
-            item.setVersion(dto.getVersion());
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -124,7 +116,7 @@ public class JobService {
             }
             dao.flush();
             return item;
-        } catch (ConstraintViolationException | EntityNotFoundException ex) {
+        } catch (ConstraintViolationException | javax.persistence.EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -149,7 +141,7 @@ public class JobService {
         //TODO : check DeleteJobPermission
         if (id == null) {
             throw new IllegalArgumentException(
-                    Utils.getMessage("Job.IllegalArgumentEx.Code")
+                    Utils.getMessage("Job.IllegalArgumentEx.Id")
             );
         }
         try {
@@ -167,22 +159,22 @@ public class JobService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public JobDTO read(Integer id) throws EntityNotFoundException {
+    public JobDTO read(Integer id) throws com.invado.hr.service.exception.EntityNotFoundException {
         //TODO : check ReadJobPermission
         if (id == null) {
-            throw new EntityNotFoundException(
-                    Utils.getMessage("Job.IllegalArgumentEx.Code")
+            throw new com.invado.hr.service.exception.EntityNotFoundException(
+                    Utils.getMessage("Job.IllegalArgumentEx.Id")
             );
         }
         try {
-            JobDTO job = dao.find(Job.class, id).getDTO();
+            Job job = dao.find(Job.class, id);
             if (job == null) {
-                throw new EntityNotFoundException(
+                throw new com.invado.hr.service.exception.EntityNotFoundException(
                         Utils.getMessage("Job.EntityNotFoundEx", id)
                 );
             }
-            return job;
-        } catch (EntityNotFoundException ex) {
+            return job.getDTO();
+        } catch (com.invado.hr.service.exception.EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
@@ -196,20 +188,24 @@ public class JobService {
     public ReadRangeDTO<JobDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadJobPermission
-        Integer code = null;
+        Integer id = null;
         String name = null;
+        String TIN = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
-            if (s.getKey().equals("code") && s.getValue() instanceof String) {
-                code = (Integer) s.getValue();
+            if (s.getKey().equals("id") && s.getValue() instanceof String) {
+                id = (Integer) s.getValue();
             }
             if (s.getKey().equals("name") && s.getValue() instanceof String) {
                 name = (String) s.getValue();
             }
+
         }
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
-            Long countEntities = this.count(dao, code, name);
+            Long countEntities = this.count(dao,
+                    id,
+                    name);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             Integer pageNumber = p.getPage();
@@ -224,11 +220,17 @@ public class JobService {
                 //if page number is -1 read last page
                 //first Job = last page number * Jobs per page
                 int start = numberOfPages.intValue() * pageSize;
-                result.setData(convertToDTO(this.search(dao, code, name,  start, pageSize)));
+                result.setData(convertToDTO(this.search(dao,
+                        id,
+                        name,
+                        start,
+                        pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                result.setData(convertToDTO(this.search(dao, code, name,
+                result.setData(convertToDTO(this.search(dao,
+                        id,
+                        name,
                         p.getPage() * pageSize,
                         pageSize)));
                 result.setNumberOfPages(numberOfPages.intValue());
@@ -253,40 +255,38 @@ public class JobService {
         return listaDTO;
     }
 
+
     private Long count(
             EntityManager EM,
-            Integer code,
+            Integer id,
             String name) {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
         Root<Job> root = c.from(Job.class);
         c.select(cb.count(root));
         List<Predicate> criteria = new ArrayList<>();
-        if (code != null) {
+        if (id != null) {
             criteria.add(cb.equal(root.get(Job_.id),
-                    cb.parameter(Integer.class, "code")));
+                    cb.parameter(String.class, "code")));
         }
         if (name != null && name.isEmpty() == false) {
             criteria.add(cb.like(cb.upper(root.get(Job_.name)),
-                    cb.parameter(String.class, "name")));
+                    cb.parameter(String.class, "desc")));
         }
-
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
-        if (code != null ) {
-            q.setParameter("code", code);
+        if (id != null) {
+            q.setParameter("id", id);
         }
         if (name != null && name.isEmpty() == false) {
             q.setParameter("name", name.toUpperCase() + "%");
         }
-
-
         return q.getSingleResult();
     }
 
     private List<Job> search(EntityManager em,
-                                  Integer code,
+                                  Integer id,
                                   String name,
                                   int first,
                                   int pageSize) {
@@ -295,20 +295,21 @@ public class JobService {
         Root<Job> root = query.from(Job.class);
         query.select(root);
         List<Predicate> criteria = new ArrayList<>();
-        if (code != null ) {
+        if (id != null) {
             criteria.add(cb.equal(root.get(Job_.id),
-                    cb.parameter(Integer.class, "code")));
+                    cb.parameter(Integer.class, "id")));
         }
         if (name != null && name.isEmpty() == false) {
-            criteria.add(cb.like(root.get(Job_.name),
+            criteria.add(cb.like(cb.upper(root.get(Job_.name)),
                     cb.parameter(String.class, "name")));
         }
+
 
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(Job_.id)));
         TypedQuery<Job> typedQuery = em.createQuery(query);
-        if (code != null ) {
-            typedQuery.setParameter("code", code);
+        if (id != null) {
+            typedQuery.setParameter("id", id);
         }
         if (name != null && name.isEmpty() == false) {
             typedQuery.setParameter("name", name.toUpperCase() + "%");
@@ -320,11 +321,10 @@ public class JobService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<JobDTO> readAll(
-            Integer code,
-            String name) {
+    public List<JobDTO> readAll(Integer id,
+                                     String name) {
         try {
-            return convertToDTO(this.search(dao, code, name, 0, 0));
+            return convertToDTO(this.search(dao, id, name, 0, 0));
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

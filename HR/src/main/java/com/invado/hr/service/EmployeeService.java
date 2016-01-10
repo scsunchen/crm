@@ -36,7 +36,6 @@ public class EmployeeService {
 
     @Autowired
     private Validator validator;
-    private final String username = "a";
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -50,12 +49,24 @@ public class EmployeeService {
                     Utils.getMessage("Employee.IllegalArgumentEx"));
         }
         if (a.getName() == null) {
-            throw new ConstraintViolationException(
+            throw new IllegalArgumentException(
                     Utils.getMessage("Employee.IllegalArgumentException.name"));
         }
         if (a.getLastName() == null) {
-            throw new ConstraintViolationException(
+            throw new IllegalArgumentException(
                     Utils.getMessage("Employee.IllegalArgumentException.LastName"));
+        }
+        if (a.getDateOfBirth() == null) {
+            throw new IllegalArgumentException(
+                    Utils.getMessage("Employee.IllegalArgumentException.DateOfBirth"));
+        }
+        if (a.getHireDate() == null) {
+            throw new IllegalArgumentException(
+                    Utils.getMessage("Employee.IllegalArgumentException.HireDate"));
+        }
+        if (a.getOrgUnitId() == null) {
+            throw new IllegalArgumentException(
+                    Utils.getMessage("Employee.IllegalArgumentException.OrgUnit"));
         }
         try {
             Employee employee = new Employee();
@@ -71,6 +82,25 @@ public class EmployeeService {
             employee.setOrgUnit(dao.find(OrgUnit.class, a.getOrgUnitId()));
             employee.setPhone(a.getPhone());
             employee.setPicture(a.getPicture());
+            employee.setPictureName(a.getPictureName());
+            if (a.getAppUsername() != null && !a.getAppUsername().isEmpty()) {
+                if (dao.createNamedQuery(ApplicationUser.READ_BY_USERNAME)
+                        .setParameter(1, a.getAppUsername())
+                        .getResultList().size() != 0){
+                    throw new IllegalArgumentException(
+                            Utils.getMessage("Employee.IllegalArgumentException.UniqueUsername"));
+                }
+                if (a.getAppUserPassword() == null) {
+                    throw new IllegalArgumentException(
+                            Utils.getMessage("Employee.IllegalArgumentException.Password"));
+                }
+                if (a.getAppUserDesc() == null) {
+                    throw new IllegalArgumentException(
+                            Utils.getMessage("Employee.IllegalArgumentException.Description"));
+                }
+                ApplicationUser applicationUser = new ApplicationUser(a.getAppUsername(), a.getAppUserPassword(), a.getAppUserDesc());
+                employee.setUser(applicationUser);
+            }
 
             List<String> msgs = validator.validate(a).stream()
                     .map(ConstraintViolation::getMessage)
@@ -79,15 +109,17 @@ public class EmployeeService {
                 throw new IllegalArgumentException("", msgs);
             }
             dao.persist(employee);
+            dao.flush();
+            dao.refresh(employee);
             return employee;
         } catch (IllegalArgumentException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(
-                    Utils.getMessage("Employee.PersistenceEx.Create", ex)
-            );
+            ex.printStackTrace();
+            throw new SystemException(ex.getStackTrace().toString());
         }
+
     }
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
@@ -95,14 +127,6 @@ public class EmployeeService {
             com.invado.hr.service.exception.EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateEmployeePermission
-        if (dto == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("Employee.IllegalArgumentEx"));
-        }
-        if (dto.getId() == null) {
-            throw new ConstraintViolationException(
-                    Utils.getMessage("Employee.IllegalArgumentEx.Code"));
-        }
         if (dto.getName() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Employee.IllegalArgumentException.name"));
@@ -110,6 +134,18 @@ public class EmployeeService {
         if (dto.getLastName() == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Employee.IllegalArgumentException.LastName"));
+        }
+        if (dto.getDateOfBirth() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Employee.IllegalArgumentException.DateOfBirth"));
+        }
+        if (dto.getHireDate() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Employee.IllegalArgumentException.HireDate"));
+        }
+        if (dto.getOrgUnitId() == null) {
+            throw new ConstraintViolationException(
+                    Utils.getMessage("Employee.IllegalArgumentException.OrgUnit"));
         }
         try {
             Employee item = dao.find(Employee.class,
@@ -140,6 +176,7 @@ public class EmployeeService {
             }
             item.setPhone(dto.getPhone());
             item.setPicture(dto.getPicture());
+            item.setPictureName(dto.getPictureName());
             List<String> msgs = validator.validate(item).stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -173,7 +210,7 @@ public class EmployeeService {
         //TODO : check DeleteEmployeePermission
         if (id == null) {
             throw new IllegalArgumentException(
-                    Utils.getMessage("Employee.IllegalArgumentEx.Code")
+                    Utils.getMessage("Employee.IllegalArgumentEx.Id")
             );
         }
         try {
@@ -195,7 +232,7 @@ public class EmployeeService {
         //TODO : check ReadEmployeePermission
         if (id == null) {
             throw new com.invado.hr.service.exception.EntityNotFoundException(
-                    Utils.getMessage("Employee.IllegalArgumentEx.Code")
+                    Utils.getMessage("Employee.IllegalArgumentEx.Id")
             );
         }
         try {
@@ -354,7 +391,7 @@ public class EmployeeService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<EmployeeDTO> readAll(Integer id,
-                                  String name) {
+                                     String name) {
         try {
             return convertToDTO(this.search(dao, id, name, 0, 0));
         } catch (Exception ex) {

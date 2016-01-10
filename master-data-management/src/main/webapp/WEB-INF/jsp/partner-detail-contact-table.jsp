@@ -11,20 +11,26 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] == null}">hidden</c:if>>
+<nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] == null && param['pointOfSaleId'] == null && param['partnerId'] == null}">hidden</c:if>>
     </br>
     <div class="container-fluid">
         <div class="navbar-header">
             <c:choose>
-                <c:when test="${param['pointOfSaleId'] == null || param['pointOfSaleId'] == ''}">
+                <c:when test="${param['masterPartnerId'] != null && (param['pointOfSaleId'] == null || param['pointOfSaleId'] == '') }">
                     <a class="btn btn-default"
                        href="${pageContext.request.contextPath}/partner/update-merchant.html?id=${param['masterPartnerId']}&name=${param['masterPartnerName']}&page=${param['page']}">
                         <span class="glyphicon glyphicon-backward"></span>
                         <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
                 </c:when>
-                <c:otherwise>
+                <c:when test="${param['pointOfSaleId'] != null && param['pointOfSaleId'] != '' && param['masterPartnerId'] != null && param['pointOfSaleId'] != null }">
                     <a class="btn btn-default"
                        href="${pageContext.request.contextPath}/partner/update-subpartner.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&id=${param['pointOfSaleId']}&page=${param['page']}">
+                        <span class="glyphicon glyphicon-backward"></span>
+                        <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
+                </c:when>
+                <c:otherwise>
+                    <a class="btn btn-default"
+                       href="${pageContext.request.contextPath}/partner/update.html?partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&id=${param['partnerId']}&page=${param['page']}">
                         <span class="glyphicon glyphicon-backward"></span>
                         <spring:message code="BusinessPartnerDetails.Button.Back"/></a>
                 </c:otherwise>
@@ -34,7 +40,7 @@
            <strong> <c:out value="${param['masterPartnerId']} / ${param['masterPartnerName']}"/></strong></p></div>
     </div>
 </nav>
-<nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] != null}">hidden</c:if>>
+<nav class="navbar navbar-default" <c:if test="${param['masterPartnerId'] != null || param['partnerId'] != null}">hidden</c:if>>
     <br/>
     <!-- Pretraživanje merchant...pos... -->
     <form:form role="search" method="GET" modelAttribute="filterObjectsList"
@@ -69,7 +75,7 @@
         <thead>
         <tr>
             <th><a class="btn btn-primary"
-                   href="/masterdata/contact/create.html?masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"><span
+                   href="/masterdata/contact/create.html?partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"><span
                     class="glyphicon glyphicon-plus"></span>
                 <spring:message code="Common.Button.Create"></spring:message> </a></th>
             <th><spring:message code="BusinessPartnerContacts.Table.Name"/></th>
@@ -98,7 +104,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
                             <a type="button" class="btn btn-danger"
-                               href="/masterdata/contact/delete.html?id=${contactItem.id}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">Obriši</a>
+                               href="/masterdata/contact/delete.html?id=${contactItem.id}&partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${param['page']}">Obriši</a>
                         </div>
                     </div>
                 </div>
@@ -106,7 +112,7 @@
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm" role="group">
-                        <a href="/masterdata/contact/update.html?id=${contactItem.id}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"
+                        <a href="/masterdata/contact/update.html?id=${contactItem.id}&partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&pointOfSaleId=${param['pointOfSaleId']}&page=${param['page']}"
                            class="btn btn-primary"><span
                                 class="glyphicon glyphicon-search"></span> pregled</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
@@ -133,13 +139,13 @@
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page > 0}"><c:out value="${page - 1}??masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page - 1}"/></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="${page - 1}?partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page - 1}"/></c:if>">
                 <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-            <a href="<c:if test="${page < numberOfPages}"><c:out value="${page - 1}??masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page + 1}"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="${page - 1}?partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&masterPartnerId=${param['masterPartnerId']}&masterPartnerName=${param['masterPartnerName']}&page=${page + 1}"/></c:if>">
                 <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
             </a>
         </li>

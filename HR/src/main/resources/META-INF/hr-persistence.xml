@@ -8,21 +8,16 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
         <shared-cache-mode>ALL</shared-cache-mode>
         <!-- ***************CORE*************************************-->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.invado.core.domain.Article</class>
-        <class>com.invado.core.domain.Township</class>
-        <class>com.invado.core.domain.ApplicationSetup</class>
-        <class>com.invado.core.domain.OrgUnit</class>
-        <class>com.invado.core.domain.BusinessPartner</class>
-        <class>com.invado.core.domain.ApplicationUser</class>
-        <class>com.invado.core.domain.Role</class>
-        <class>com.invado.core.domain.Client</class>
-        <class>com.invado.core.domain.Currency</class>
-        <class>com.invado.core.domain.ExchangeRate</class>
-        <class>com.invado.core.domain.BankCreditor</class>
         <class>com.invado.core.domain.Job</class>
         <class>com.invado.core.domain.Employee</class>
-        <class>com.invado.core.domain.DeviceStatus</class>
-        <class>com.invado.core.domain.Device</class>
+        <class>com.invado.core.domain.OrgUnit</class>
+        <class>com.invado.core.domain.Client</class>
+        <class>com.invado.core.domain.BankCreditor</class>
+        <class>com.invado.core.domain.Township</class>
+        <class>com.invado.core.domain.ApplicationSetup</class>
+        <class>com.invado.core.domain.ApplicationUser</class>
+        <class>com.invado.core.domain.Role</class>
+
 
 
         <properties>

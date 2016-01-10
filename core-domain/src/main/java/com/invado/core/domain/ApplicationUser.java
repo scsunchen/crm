@@ -17,7 +17,8 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author draganbob
  */
 @Entity
-@Table(name = "c_application_user", schema = "devel")
+@Table(name = "c_application_user", schema = "devel", uniqueConstraints=
+@UniqueConstraint(columnNames={"USERNAME"}))
 @NamedQueries({
     @NamedQuery(name = ApplicationUser.READ_BY_USERNAME_AND_PASSWORD,
             query = "SELECT x FROM ApplicationUser x WHERE x.username = ?1 AND x.password = ?2"),
@@ -40,7 +41,7 @@ public class ApplicationUser implements Serializable {
     @Column(name = "id")
     private Integer id;
     @NotBlank(message = "{User.Username.NotBlank}")
-    @Column(name = "username")
+    @Column(name = "USERNAME", unique = true)
     @Size(max = 20, message = "{User.Username.Size}")
     private String username;
     @Size(min = 1, max = 20, message = "{User.Password.Size}")
@@ -75,6 +76,11 @@ public class ApplicationUser implements Serializable {
         this.password = password;
     }
 
+    public ApplicationUser(String username, char[] password, String description) {
+        this.username = username;
+        this.password = password;
+        this.description = description;
+    }
     //************************************************************************//    
     // GET/SET METHODS //
     //************************************************************************//

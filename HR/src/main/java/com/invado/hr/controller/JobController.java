@@ -8,12 +8,11 @@ import com.invado.hr.service.dto.ReadRangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.inject.Inject;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,17 +20,12 @@ import java.util.Map;
  */
 @Controller
 public class JobController {
-    @Autowired
+    
+    @Inject
     private JobService service;
 
-
-    @RequestMapping("/home")
-    public String showHomePage() {
-        return "home";
-    }
-
-    @RequestMapping("/job/{page}")
-    public String showItems(@PathVariable Integer page,
+    @RequestMapping("/job/read-page.html")
+    public String showItems(@RequestParam Integer page,
                             Map<String, Object> model)
             throws Exception {
         PageRequestDTO request = new PageRequestDTO();
@@ -40,18 +34,19 @@ public class JobController {
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
+
         //return "item-table";
         return "job-view";
     }
 
-    @RequestMapping(value = "/job/{page}/create", method = RequestMethod.GET)
-    public String initCreateForm(@PathVariable String page, Map<String, Object> model) {
-        model.put("item", new JobDTO());
+    @RequestMapping(value = "/job/create.html", method = RequestMethod.GET)
+    public String initCreateForm(Map<String, Object> model) {
         model.put("action", "create");
+        model.put("item", new JobDTO());
         return "job-grid";
     }
 
-    @RequestMapping(value = "/job/{page}/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/job/create.html", method = RequestMethod.POST)
     public String processCreationForm(@ModelAttribute("item") JobDTO item,
                                       BindingResult result,
                                       SessionStatus status,
@@ -64,18 +59,18 @@ public class JobController {
             this.service.create(item);
             status.setComplete();
         }
-        return "redirect:/job/{page}/create";
+        return "redirect:/job/create.html";
     }
 
     @RequestMapping("/job/{page}/{id}/delete.html")
     public String delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
-        return "redirect:/job/{page}";
+        return "redirect:/job/read-page.html?page=0";
     }
 
-    @RequestMapping(value = "/job/{page}/update/{id}",
+    @RequestMapping(value = "/job/update.html",
             method = RequestMethod.GET)
-    public String initUpdateForm(@PathVariable Integer id,
+    public String initUpdateForm(@RequestParam Integer id,
                                  Map<String, Object> model)
             throws Exception {
         JobDTO item = service.read(id);
@@ -83,9 +78,10 @@ public class JobController {
         return "job-grid";
     }
 
-    @RequestMapping(value = "/job/{page}/update/{id}",
+    @RequestMapping(value = "/job/update.html",
             method = RequestMethod.POST)
-    public String processUpdationForm(@ModelAttribute("item") JobDTO item,
+    public String processUpdationForm(@RequestParam Integer id,
+                                      @ModelAttribute("item") JobDTO item,
                                       BindingResult result,
                                       SessionStatus status,
                                       Map<String, Object> model)
@@ -93,9 +89,11 @@ public class JobController {
         if (result.hasErrors()) {
             return "job-grid";
         } else {
+            if (item.getId() == null)
+                item.setId(id);
             this.service.update(item);
             status.setComplete();
         }
-        return "redirect:/job/{page}";
+        return "redirect:/job/read-page.html?page=0";
     }
 }

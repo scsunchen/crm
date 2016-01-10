@@ -42,7 +42,7 @@
         <property name="password" value="devel" />
     </bean>
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-    <bean id="userService" class="com.invado.finance.service.UserDataService" />
+    <bean id="userService" class="com.invado.masterdata.service.UserDataService" />
     <bean id="localDateConverter" class="com.invado.core.domain.LocalDateConverter"/>
 
     <bean id="multipartResolver"

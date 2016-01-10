@@ -1,6 +1,7 @@
 package com.invado.core.dto;
 
 
+import com.invado.core.domain.ApplicationUser;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -18,7 +19,10 @@ public class EmployeeDTO {
     private LocalDate dateOfBirth;
     private String phone;
     private String email;
+    private String picturePath;
+    private String pictureName;
     private byte[] picture;
+    private String pictureContentType;
     private Integer orgUnitId;
     private String OrgUnitName;
     @DateTimeFormat(pattern = "dd.MM.yyyy")
@@ -31,6 +35,11 @@ public class EmployeeDTO {
     private String place;
     private String street;
     private String postCode;
+    private ApplicationUser user;
+    private Integer userId;
+    private String appUsername;
+    private char[] appUserPassword;
+    private String appUserDesc;
     private Long version;
 
     public Integer getId() {
@@ -175,6 +184,70 @@ public class EmployeeDTO {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
+
+    public String getPictureName() {
+        return pictureName;
+    }
+
+    public void setPictureName(String pictureName) {
+        this.pictureName = pictureName;
+    }
+
+    public String getPictureContentType() {
+        return pictureContentType;
+    }
+
+    public void setPictureContentType(String pictureContentType) {
+        this.pictureContentType = pictureContentType;
+    }
+
+    public ApplicationUser getUser() {
+        return user;
+    }
+
+    public void setUser(ApplicationUser user) {
+        this.user = user;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getAppUsername() {
+        return appUsername;
+    }
+
+    public void setAppUsername(String appUsername) {
+        this.appUsername = appUsername;
+    }
+
+    public char[] getAppUserPassword() {
+        return appUserPassword;
+    }
+
+    public void setAppUserPassword(char[] appUserPassword) {
+        this.appUserPassword = appUserPassword;
+    }
+
+    public String getAppUserDesc() {
+        return appUserDesc;
+    }
+
+    public void setAppUserDesc(String appUserDesc) {
+        this.appUserDesc = appUserDesc;
     }
 
     public Long getVersion() {

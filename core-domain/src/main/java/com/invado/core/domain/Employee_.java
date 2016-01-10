@@ -18,6 +18,8 @@ public class Employee_ {
     public static volatile SingularAttribute<Employee, Date> dateOfBirth;
     public static volatile SingularAttribute<Employee, String> phone;
     public static volatile SingularAttribute<Employee, String> email;
+    public static volatile SingularAttribute<Employee, String> pictureName;
+    public static volatile SingularAttribute<Employee, String> pictureContentType;
     public static volatile SingularAttribute<Employee, byte[]> picture;
     public static volatile SingularAttribute<Employee, OrgUnit> orgUnite;
     public static volatile SingularAttribute<Employee, Date> hireDate;
@@ -25,6 +27,7 @@ public class Employee_ {
     public static volatile SingularAttribute<Employee, Job> job;
     public static volatile SingularAttribute<Employee, Address> address;
     public static volatile SingularAttribute<Employee, OrgUnit> orgUnit;
+    public static volatile SingularAttribute<Employee, ApplicationUser> user;
     public static volatile SingularAttribute<Employee, Long> version;
 
 }
