@@ -94,14 +94,12 @@ public class InvoiceController {
                 "document",
                 request.getDocument()));
         dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
-                "from",
-                request.getDateFrom()));
-        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
-                "to",
-                request.getDateTo()));
-        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
                 "partner",
                 request.getPartnerName())
+        );
+        dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
+                "invoicingTransaction",
+                request.getInvoicingTransactionId())
         );
         ReadRangeDTO<InvoiceDTO> items = invoiceService.readPage(dto);
         status.setComplete();
@@ -109,6 +107,7 @@ public class InvoiceController {
         model.put("page", items.getPage());
         model.put("numberOfPages", items.getNumberOfPages());
         model.put("requestInvoices", request);
+        model.put("invoiceTransactions", invoiceService.getAllPeriods());
         return "invoice-table";
     }
 
@@ -120,7 +119,7 @@ public class InvoiceController {
             Map<String, Object> model)
             throws Exception {
         invoiceService.deleteInvoice(clientId, unitId, document);
-        return "redirect:/invoice/read-page.html?document=&partnerName=&dateFrom=&dateTo=&page=0";
+        return "redirect:/invoice/read-page.html?document=&partnerName=&dateFrom=&dateTo=&page={page}";
     }
 
     @RequestMapping(value = "/invoice/record.html", method = RequestMethod.GET)
@@ -130,7 +129,7 @@ public class InvoiceController {
             @RequestParam String document,
             @RequestParam(required = false) Integer pageNumber,
             Map<String, Object> model) throws Exception {
-        RequestInvoiceRecordingDTO dto = new RequestInvoiceRecordingDTO();        
+        RequestInvoiceRecordingDTO dto = new RequestInvoiceRecordingDTO();
         dto.setClientId(clientId);
         dto.setOrgUnitId(unitId);
         dto.setDocument(document);
@@ -149,9 +148,9 @@ public class InvoiceController {
             Map<String, Object> model) throws Exception {
         if (result.hasErrors()) {
             model.put("page", page);
-            model.put("invoice", invoiceService.readInvoice(dto.getClientId(), 
-                                                            dto.getOrgUnitId(), 
-                                                            dto.getDocument()));
+            model.put("invoice", invoiceService.readInvoice(dto.getClientId(),
+                    dto.getOrgUnitId(),
+                    dto.getDocument()));
             return "invoice-record";
         }
         try {
@@ -160,17 +159,15 @@ public class InvoiceController {
             dto.setUser(username);
             recordService.perform(dto);
             status.setComplete();
-        } catch (ConstraintViolationException | EntityNotFoundException 
-                | JournalEntryExistsException | PostedInvoiceException 
-                | ProformaInvoicePostingException ex) {
+        } catch (ConstraintViolationException | EntityNotFoundException | JournalEntryExistsException | PostedInvoiceException | ProformaInvoicePostingException ex) {
             model.put("page", page);
-            model.put("invoice", invoiceService.readInvoice(dto.getClientId(), 
-                                                            dto.getOrgUnitId(), 
-                                                            dto.getDocument()));
+            model.put("invoice", invoiceService.readInvoice(dto.getClientId(),
+                    dto.getOrgUnitId(),
+                    dto.getDocument()));
             model.put("exception", ex);
             return "invoice-record";
         }
-        return "redirect:/invoice/read-page.html?document=&partnerName=&dateFrom=&dateTo=&page=0";
+        return "redirect:/invoice/read-page.html?document=&partnerName=&dateFrom=&dateTo=&page={page}";
     }
 
     @RequestMapping(value = "/invoice/{page}/create", method = RequestMethod.GET)
@@ -206,15 +203,15 @@ public class InvoiceController {
             return "invoice-create-grid";
         }
         return String.format(
-                "redirect:/invoice/update.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s", 
+                "redirect:/invoice/update.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s",
                 invoice.getClientId(),
                 invoice.getOrgUnitId(),
-                invoice.getDocument(),                
+                invoice.getDocument(),
                 page);
     }
 
-    @RequestMapping(value = "/invoice/print-preview.html", 
-                    method = RequestMethod.GET)
+    @RequestMapping(value = "/invoice/print-preview.html",
+            method = RequestMethod.GET)
     public ResponseEntity<byte[]> showPDF(
             @RequestParam Integer clientId,
             @RequestParam Integer unitId,
@@ -287,11 +284,11 @@ public class InvoiceController {
     List<OrgUnit> findOrganizationalUnitByName(@PathVariable String name) {
         return masterDataservice.readOrgUnitByName(name);
     }
-    
+
     @RequestMapping(value = "/invoice/read-orgunit/{name}/{client}")
     public @ResponseBody
     List<OrgUnit> findOrganizationalUnitByClientAndName(@PathVariable String name,
-                                                        @PathVariable Integer client) {
+            @PathVariable Integer client) {
         return masterDataservice.readOrgUnitByClientAndName(client, name);
     }
 
@@ -300,7 +297,7 @@ public class InvoiceController {
     List<BusinessPartner> findBussinesPartnerByName(@PathVariable String name) {
         return masterDataservice.readBusinessPartnerByName(name);
     }
-    
+
     @RequestMapping(value = "/invoice/read-businesspartner/{name}/{max}")
     public @ResponseBody
     List<BusinessPartner> findBussinesPartnerByName(
@@ -308,7 +305,7 @@ public class InvoiceController {
             @PathVariable Integer max) {
         return masterDataservice.readBusinessPartnerByName(name, max);
     }
-    
+
     @RequestMapping(value = "/invoice/read-bank/{name}")
     public @ResponseBody
     List<BankCreditor> findBankByName(@PathVariable String name) {
@@ -322,7 +319,8 @@ public class InvoiceController {
     }
 
     @RequestMapping(value = "/invoice/read-item/{code}")
-    public @ResponseBody List<Article> findItemByDescription(@PathVariable String code) {
+    public @ResponseBody
+    List<Article> findItemByDescription(@PathVariable String code) {
         return masterDataservice.readItemByCode(code);
     }
 
@@ -331,17 +329,18 @@ public class InvoiceController {
     List<Description> findDescriptionByName(@PathVariable String name) {
         return masterDataservice.readDescByName(name);
     }
-    
+
     @RequestMapping(value = "/invoice/read-journal-entry-type/{name}/{clientId}")
-    public @ResponseBody List<JournalEntryTypeDTO> findTypeByNameAndClientId(
+    public @ResponseBody
+    List<JournalEntryTypeDTO> findTypeByNameAndClientId(
             @PathVariable String name,
             @PathVariable Integer clientId) {
         return masterDataservice.readJournalEntryTypeByNameAndClient(
                 clientId, name);
     }
-    
+
     @RequestMapping(value = "/invoice/update.html",
-                    method = RequestMethod.GET)
+            method = RequestMethod.GET)
     public String initUpdateForm(@RequestParam String page,
             @RequestParam Integer clientId,
             @RequestParam Integer unitId,
@@ -352,30 +351,30 @@ public class InvoiceController {
         model.put("page", page);
         model.put("invoice", tmp);
         model.put("partnerTypes", InvoiceBusinessPartner.values());
-        model.put("invoiceTypes", InvoiceType.values());     
+        model.put("invoiceTypes", InvoiceType.values());
         return "invoice-update";
     }
-    
-    @RequestMapping(value = "/invoice/{page}/update.html", 
-                    method = RequestMethod.POST)
+
+    @RequestMapping(value = "/invoice/{page}/update.html",
+            method = RequestMethod.POST)
     public String processUpdateForm(
             @ModelAttribute("invoice") InvoiceDTO invoice,
             BindingResult result,
             SessionStatus status,
             @PathVariable String page,
             Map<String, Object> model) throws Exception {
-        String username = ((User)SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal()).getUsername();
-        invoice.setUsername(username);        
+        String username = ((User) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal()).getUsername();
+        invoice.setUsername(username);
         if (result.hasErrors()) {
             model.put("page", page);
             model.put("partnerTypes", InvoiceBusinessPartner.values());
             model.put("invoiceTypes", InvoiceType.values());
             return "invoice-update";
         }
-        try{
+        try {
             invoiceService.updateInvoice(invoice);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             model.put("exception", ex);
             model.put("page", page);
             model.put("partnerTypes", InvoiceBusinessPartner.values());
@@ -383,13 +382,13 @@ public class InvoiceController {
             return "invoice-update";
         }
         return String.format(
-                "redirect:/invoice/update.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s", 
+                "redirect:/invoice/update.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s",
                 invoice.getClientId(),
                 invoice.getOrgUnitId(),
-                invoice.getDocument(),                
+                invoice.getDocument(),
                 page);
     }
-    
+
     @RequestMapping(value = "/invoice/details.html", method = RequestMethod.GET)
     public String initDetailsForm(@RequestParam(required = false) String page,
             @RequestParam Integer clientId,
@@ -410,8 +409,8 @@ public class InvoiceController {
                 "unitId",
                 unitId));
         ReadRangeDTO<InvoiceItemDTO> items = invoiceService.readIncomeItemsPage(dto);
-        model.put("itemsPage", items.getPage());        
-        model.put("numberOfPages", items.getNumberOfPages());        
+        model.put("itemsPage", items.getPage());
+        model.put("numberOfPages", items.getNumberOfPages());
         model.put("items", items.getData());
         InvoiceDTO invoice = invoiceService.readInvoice(clientId, unitId, document);
         model.put("invoice", invoice);
@@ -424,19 +423,19 @@ public class InvoiceController {
         model.put("invoiceItem", item);
         return "invoice-details";
     }
-    
+
     @RequestMapping(value = "/invoice/deleteItem.html",
-                    method = RequestMethod.POST)
+            method = RequestMethod.POST)
     public String deleteItem(@RequestParam Integer clientId,
-                             @RequestParam Integer unitId,
-                             @RequestParam String invoiceDocument,
-                             @RequestParam Integer ordinal,
-                             @RequestParam Long version,
-                             @RequestParam(required = false) String page,
-                             @RequestParam(required = false) String itemsPage)
-                             throws Exception {
-        String username = ((User)SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal()).getUsername();
+            @RequestParam Integer unitId,
+            @RequestParam String invoiceDocument,
+            @RequestParam Integer ordinal,
+            @RequestParam Long version,
+            @RequestParam(required = false) String page,
+            @RequestParam(required = false) String itemsPage)
+            throws Exception {
+        String username = ((User) SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal()).getUsername();
         invoiceService.removeItem(
                 clientId,
                 unitId,
@@ -446,71 +445,71 @@ public class InvoiceController {
                 version
         );
         return String.format("redirect:/invoice/details.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s&itemsPage=%5$s",
-                          clientId,
-                          unitId,
-                          invoiceDocument,
-                          page,
-                          itemsPage);
+                clientId,
+                unitId,
+                invoiceDocument,
+                page,
+                itemsPage);
     }
 
     @RequestMapping(value = "/invoice/{page}/{itemsPage}/addItem.html",
-                    method = RequestMethod.POST)
+            method = RequestMethod.POST)
     public String addItem(@ModelAttribute("invoiceItem") InvoiceItemDTO item,
-                          BindingResult result,
-                          SessionStatus status,
-                          @PathVariable String page,
-                          @PathVariable String itemsPage,
-                          Map<String, Object> model) throws Exception {
+            BindingResult result,
+            SessionStatus status,
+            @PathVariable String page,
+            @PathVariable String itemsPage,
+            Map<String, Object> model) throws Exception {
         PageRequestDTO dto = new PageRequestDTO();
         dto.setPage(Integer.valueOf(itemsPage));
         dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
-                 "document",
-                 item.getInvoiceDocument()));
+                "document",
+                item.getInvoiceDocument()));
         dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
-                 "clientId",
-                 item.getClientId()));
+                "clientId",
+                item.getClientId()));
         dto.addSearchCriterion(new PageRequestDTO.SearchCriterion(
-                 "unitId",
-                 item.getUnitId()));
-         if (result.hasErrors()) {
+                "unitId",
+                item.getUnitId()));
+        if (result.hasErrors()) {
             model.put("showDialog", Boolean.TRUE);
             model.put("page", page);
             ReadRangeDTO<InvoiceItemDTO> range = invoiceService.readIncomeItemsPage(dto);
             model.put("itemsPage", range.getPage());
-            model.put("numberOfPages", range.getNumberOfPages());        
+            model.put("numberOfPages", range.getNumberOfPages());
             model.put("items", range.getData());
-            InvoiceDTO invoice = invoiceService.readInvoice(item.getClientId(), 
-                                                            item.getUnitId(), 
-                                                            item.getInvoiceDocument());
+            InvoiceDTO invoice = invoiceService.readInvoice(item.getClientId(),
+                    item.getUnitId(),
+                    item.getInvoiceDocument());
             model.put("invoice", invoice);
             return "invoice-details";
         }
         try {
-            String username = ((User)SecurityContextHolder.getContext()
-            .getAuthentication().getPrincipal()).getUsername();
+            String username = ((User) SecurityContextHolder.getContext()
+                    .getAuthentication().getPrincipal()).getUsername();
             item.setUsername(username);
             invoiceService.addItem(item);
             return String.format("redirect:/invoice/details.html?clientId=%1$s&unitId=%2$s&document=%3$s&page=%4$s&itemsPage=%5$s",
-                          item.getClientId(),
-                          item.getUnitId(),
-                          item.getInvoiceDocument(),
-                          page,
-                          itemsPage);
-        } catch(Exception ex) {
+                    item.getClientId(),
+                    item.getUnitId(),
+                    item.getInvoiceDocument(),
+                    page,
+                    itemsPage);
+        } catch (Exception ex) {
             model.put("showDialog", Boolean.TRUE);
             model.put("addItemException", ex);
             model.put("page", page);
             ReadRangeDTO<InvoiceItemDTO> range = invoiceService.readIncomeItemsPage(dto);
             model.put("itemsPage", range.getPage());
-            model.put("numberOfPages", range.getNumberOfPages());        
+            model.put("numberOfPages", range.getNumberOfPages());
             model.put("items", range.getData());
             InvoiceDTO invoice = invoiceService.readInvoice(
-                    item.getClientId(), 
-                    item.getUnitId(), 
+                    item.getClientId(),
+                    item.getUnitId(),
                     item.getInvoiceDocument());
             model.put("invoice", invoice);
             return "invoice-details";
         }
     }
-    
+
 }

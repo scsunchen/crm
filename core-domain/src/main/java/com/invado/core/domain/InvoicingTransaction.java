@@ -3,18 +3,24 @@ package com.invado.core.domain;
 
 
 import com.invado.core.dto.InvoicingTransactionDTO;
+import java.io.Serializable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Created by Nikola on 12/09/2015.
  */
 @Entity
 @Table(name = "CRM_INVOICING_TRANSACTION")
-
-
 @SqlResultSetMapping(name = "invoicingTransactions", entities = {@EntityResult(entityClass = InvoicingTransaction.class,
         fields = {
                 @FieldResult(name = "id", column = "ID"),
@@ -28,13 +34,14 @@ import java.time.format.DateTimeFormatter;
         @NamedNativeQuery(name = InvoicingTransaction.LAST_TRANSACTION, query = " select *  " +
                                 " from (select * from crm_invoicing_transaction order by 3 desc) where rownum=1" ,
                 resultClass = InvoicingTransaction.class)})
-
-
-public class InvoicingTransaction {
+@NamedQuery(name = InvoicingTransaction.READ_ALL_ORDERBY_INVOICING_DATE_DESC,
+            query = "SELECT x FROM InvoicingTransaction x ORDER BY x.invoicingDate DESC")
+public class InvoicingTransaction implements Serializable {
 
     public static final String LAST_INVOICING_TRANSACTION = "InvoicingTransaction.LastInvoicingTransaction";
     public static final String LAST_TRANSACTION = "InvoicingTransaction.LastTransaction";
-
+    public static final String READ_ALL_ORDERBY_INVOICING_DATE_DESC = "InvoicingTransaction.ReadAllOrderByInvoicingDateDesc";
+    
     @TableGenerator(
             name = "InvTransTab",
             table = "id_generator",
@@ -54,8 +61,10 @@ public class InvoicingTransaction {
     private LocalDate invoicingDate;
     @Column (name = "INVOICED_FROM")
     @Convert(converter = LocalDateConverter.class)
+    @DateTimeFormat(style = "M-")
     private LocalDate invoicedFrom;
     @Column (name = "INVOICED_TO")
+    @DateTimeFormat(style = "M-")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate invoicedTo;
     @Version
@@ -80,11 +89,12 @@ public class InvoicingTransaction {
     public LocalDate getInvoicingDate() {
         return invoicingDate;
     }
-
+    
     public void setInvoicingDate(LocalDate invoicingDate) {
         this.invoicingDate = invoicingDate;
     }
 
+    
     public LocalDate getInvoicedFrom() {
         return invoicedFrom;
     }
@@ -95,6 +105,25 @@ public class InvoicingTransaction {
 
     public LocalDate getInvoicedTo() {
         return invoicedTo;
+    }
+    
+    public String getFormattedInvoicedFrom() {
+        //Spring bug : JSP tag spring:eval does not apply @NumberFormat and @DateTimeFormat 
+        //formatting on the expression when using the var attribute
+        //https://jira.spring.io/browse/SPR-7509
+        return DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                .withLocale(LocaleContextHolder.getLocale())
+                .format(invoicedFrom);
+        
+    }
+    
+    public String getFormattedInvoicedTo() {
+       //Spring bug : JSP tag spring:eval does not apply @NumberFormat and @DateTimeFormat 
+        //formatting on the expression when using the var attribute
+        //https://jira.spring.io/browse/SPR-7509
+        return DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                .withLocale(LocaleContextHolder.getLocale())
+                .format(invoicedTo);
     }
 
     public void setInvoicedTo(LocalDate invoicedTo) {

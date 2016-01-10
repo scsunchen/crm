@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
@@ -40,7 +41,6 @@ import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +56,7 @@ public class ArticleService {
     @PersistenceContext(name = "unit")
     private EntityManager dao;
 
-    @Autowired
+    @Inject
     private Validator validator;
 
 
@@ -105,7 +105,8 @@ public class ArticleService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Article update(Article dto) throws com.invado.core.exception.ConstraintViolationException,
+    public Article update(Article dto) throws 
+            ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
         //check UpdateArticlePermission

@@ -22,6 +22,20 @@
         <class>com.invado.core.domain.Invoice</class>
         <class>com.invado.core.domain.InvoiceItem</class>
         <class>com.invado.core.domain.Properties</class>
+        <class>com.invado.core.domain.BusinessPartnerContactDetails</class>
+        <class>com.invado.core.domain.BusinessPartnerStatus</class>
+        <class>com.invado.core.domain.DeviceStatus</class>
+        <class>com.invado.core.domain.Device</class>
+        <class>com.invado.core.domain.DeviceHolderPartner</class>
+        <class>com.invado.core.domain.ConnectionType</class>
+        <class>com.invado.core.domain.POSType</class>
+        <class>com.invado.core.domain.PrepaidRefillType</class>
+        <class>com.invado.core.domain.BusinessPartnerAccount</class>
+        <class>com.invado.core.domain.BusinessPartnerDocument</class>
+        <class>com.invado.core.domain.DocumentType</class>
+        <class>com.invado.core.domain.DeviceServiceProviderRegistration</class>
+        <class>com.invado.finance.domain.Invoice</class>
+        <class>com.invado.finance.domain.InvoiceItem</class>
         <!-- ***************FINANCE*************************************-->
         <class>com.invado.finance.domain.journal_entry.RecordInvoiceAccount</class>
         <class>com.invado.finance.domain.journal_entry.Account</class>
