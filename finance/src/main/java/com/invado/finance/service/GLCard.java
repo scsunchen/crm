@@ -58,7 +58,7 @@ public class GLCard{
     private static final Logger LOG = Logger.getLogger(GLCard.class.getName());
     
     @PersistenceContext(name = "unit")
-    private EntityManager dao;
+    EntityManager dao;
     
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public ReadLedgerCardsDTO readGLCard(RequestGLCardDTO dto) 

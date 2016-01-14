@@ -32,7 +32,7 @@ public class AnalyticalTransactionsStatus {
     private static final Logger LOG = Logger.getLogger(AnalyticalTransactionsStatus.class.getName());
     
     @PersistenceContext(name = "unit")
-    private EntityManager EM;
+    EntityManager EM;
 
     @Transactional(rollbackFor = Exception.class)
     public void openAllItems()  {

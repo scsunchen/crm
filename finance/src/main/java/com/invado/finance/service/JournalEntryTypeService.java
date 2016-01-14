@@ -28,10 +28,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import static com.invado.finance.Utils.getMessage;
 import com.invado.finance.service.exception.ClientNotFoundException;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,54 +48,41 @@ public class JournalEntryTypeService {
 
     @PersistenceContext(name = "unit")
     private EntityManager EM;
-    @Autowired
+    @Inject
     private Validator validator;
 
     @Transactional(readOnly = true)
     public List<JournalEntryTypeDTO> readJournalEntryTypeByNameAndClient(Integer clientId,
             String name) {
         try {
-            List<JournalEntryType> result
-                    = EM.createNamedQuery(JournalEntryType.READ_BY_CLIENT_AND_NAME,
+            return EM.createNamedQuery(JournalEntryType.READ_BY_CLIENT_AND_NAME,
                             JournalEntryType.class)
                     .setParameter("clientId", clientId)
                     .setParameter("name", ("%" + name + "%").toUpperCase())
-                    .getResultList();
-
-            List<JournalEntryTypeDTO> dto = new ArrayList<>();
-            for (JournalEntryType result1 : result) {
-                dto.add(result1.getDTO());
-            }
-            return dto;
+                    .getResultList()
+                    .stream()
+                    .map(JournalEntryType::getDTO)
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(getMessage(
-                    "JournalEntryType.Persistence.Read"),
-                    ex
-            );
+            throw new SystemException(getMessage("JournalEntryType.Persistence.Read"),ex);
         }
     }
     
     @Transactional(readOnly = true)
     public List<JournalEntryTypeDTO> readJournalEntryTypeByName(String name) {
         try {
-            List<JournalEntryType> result
-                    = EM.createNamedQuery(JournalEntryType.READ_BY_NAME,
+            return EM.createNamedQuery(JournalEntryType.READ_BY_NAME,
                             JournalEntryType.class)
                     .setParameter("name", ("%" + name + "%").toUpperCase())
-                    .getResultList();
+                    .getResultList()
+                    .stream()
+                    .map(JournalEntryType::getDTO)
+                    .collect(Collectors.toList());
 
-            List<JournalEntryTypeDTO> dto = new ArrayList<>();
-            for (JournalEntryType result1 : result) {
-                dto.add(result1.getDTO());
-            }
-            return dto;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
-            throw new SystemException(getMessage(
-                    "JournalEntryType.Persistence.Read"),
-                    ex
-            );
+            throw new SystemException(getMessage("JournalEntryType.Persistence.Read"),ex);
         }
     }
 
@@ -116,8 +103,7 @@ public class JournalEntryTypeService {
                     new JournalEntryTypePK(dto.getTypeId(), dto.getClientId()));
             if (tmp == null) {
                 throw new JournalEntryTypeNotFoundException(
-                        getMessage("JournalEntryType.JournalEntryTypeNotExists",
-                                dto.getClientId(), dto.getTypeId()));
+                        getMessage("JournalEntryType.JournalEntryTypeNotExists"));
             }
             tmp.setName(dto.getName());
             tmp.setNumber(dto.getJournalEntryNumber());
@@ -205,16 +191,13 @@ public class JournalEntryTypeService {
                     new JournalEntryTypePK(typeID, clientID));
             if (tmp == null) {
                 throw new JournalEntryTypeNotFoundException(
-                        getMessage("JournalEntryType.JournalEntryTypeNotExists",
-                                clientID, typeID));
+                        getMessage("JournalEntryType.JournalEntryTypeNotExists"));
             }
             return tmp.getDTO();
         } catch (JournalEntryTypeNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
-            LOG.log(Level.WARNING,
-                    "",
-                    ex);
+            LOG.log(Level.WARNING, "", ex);
             throw new SystemException(
                     getMessage("JournalEntryType.Persistence.Read"),
                     ex);
@@ -228,37 +211,34 @@ public class JournalEntryTypeService {
         try {
             JournalEntryType temp = EM.find(JournalEntryType.class,
                     new JournalEntryTypePK(typeID, clientID));
-            if (temp == null) {
-                throw new JournalEntryTypeNotFoundException(
-                        getMessage("JournalEntryType.JournalEntryTypeNotExists",
-                                clientID, typeID));
+            if (temp != null) {
+                if (!EM.createNamedQuery(GeneralLedger.READ_BY_JOURNAL_ENTRY_TYPE)
+                        .setParameter(1, typeID)
+                        .setParameter(2, clientID)
+                        .getResultList().isEmpty()) {
+                    throw new ReferentialIntegrityException(
+                            getMessage("JournalEntryType.ReferentialIntegrity.RecordedJournalEntry",
+                                    clientID, typeID));
+                }
+                if (!EM.createNamedQuery(Analytical.READ_BY_JOURNAL_ENTRY_TYPE)
+                        .setParameter(1, typeID)
+                        .setParameter(2, clientID)
+                        .getResultList().isEmpty()) {
+                    throw new ReferentialIntegrityException(
+                            getMessage("JournalEntryType.ReferentialIntegrity.RecordedJournalEntry",
+                                    clientID, typeID));
+                }
+                if (!EM.createNamedQuery(JournalEntry.READ_BY_TYPE)
+                        .setParameter(1, typeID)
+                        .setParameter(2, clientID)
+                        .getResultList().isEmpty()) {
+                    throw new ReferentialIntegrityException(
+                            getMessage("JournalEntryType.ReferentialIntegrity.JournalEntry",
+                                    clientID, typeID));
+                }
+                EM.remove(temp);
             }
-            if (!EM.createNamedQuery(GeneralLedger.READ_BY_JOURNAL_ENTRY_TYPE)
-                    .setParameter(1, typeID)
-                    .setParameter(2, clientID)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("JournalEntryType.ReferentialIntegrity.RecordedJournalEntry",
-                                clientID, typeID));
-            }
-            if (!EM.createNamedQuery(Analytical.READ_BY_JOURNAL_ENTRY_TYPE)
-                    .setParameter(1, typeID)
-                    .setParameter(2, clientID)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("JournalEntryType.ReferentialIntegrity.RecordedJournalEntry",
-                                clientID, typeID));
-            }
-            if (!EM.createNamedQuery(JournalEntry.READ_BY_TYPE)
-                    .setParameter(1, typeID)
-                    .setParameter(2, clientID)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("JournalEntryType.ReferentialIntegrity.JournalEntry",
-                                clientID, typeID));
-            }
-            EM.remove(temp);
-        } catch (JournalEntryTypeNotFoundException | ReferentialIntegrityException ex) {
+        } catch (ReferentialIntegrityException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);

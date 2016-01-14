@@ -48,11 +48,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +67,7 @@ public class RecordInvoiceService {
     
     @PersistenceContext(name = "unit")
     private EntityManager EM;
-    @Autowired
+    @Inject
     private Validator validator; 
    
     @Transactional(rollbackFor = Exception.class)

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.invado.finance.service" />
+    <!--Instantiating beans **OK*********************************************-->
+    <bean id="mocksControl" 
+          class="org.easymock.EasyMock"  
+          factory-method="createStrictControl" >
+    </bean>
+    <bean id="validatorMocksControl" 
+          factory-bean="mocksControl" 
+          factory-method="createMock" >
+        <constructor-arg type="java.lang.Class" value="javax.validation.Validator" >
+        </constructor-arg>
+    </bean>
+    <bean id="entityManagerMocksControl" factory-bean="mocksControl" factory-method="createMock" >
+        <constructor-arg type="java.lang.Class" 
+                         value="javax.persistence.EntityManager"> 
+        </constructor-arg>
+    </bean> 
+    <bean id="typedQueryMocksControl" factory-bean="mocksControl" factory-method="createMock" >
+        <constructor-arg type="java.lang.Class" 
+                         value="javax.persistence.TypedQuery"> 
+        </constructor-arg>
+    </bean> 
+    <bean id="entityManagerFactory" class="org.easymock.EasyMock" 
+            factory-method="mock" >
+        <constructor-arg type="java.lang.Class" 
+                         value="javax.persistence.EntityManagerFactory"> 
+        </constructor-arg>
+    </bean>
+</beans> 

@@ -59,11 +59,9 @@ public class ArticleService {
     @Inject
     private Validator validator;
 
-
     @Transactional(rollbackFor = Exception.class)
     public Article create(Article a) throws ConstraintViolationException,
             EntityExistsException {
-        //check CreateArticlePermission
         if (a == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Article.IllegalArgumentEx"));
@@ -105,11 +103,10 @@ public class ArticleService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Article update(Article dto) throws 
+    public Article update(Article dto) throws
             ConstraintViolationException,
             EntityNotFoundException,
             ReferentialIntegrityException {
-        //check UpdateArticlePermission
         if (dto == null) {
             throw new ConstraintViolationException(
                     "", Arrays.asList(Utils.getMessage("Article.IllegalArgumentEx")));
@@ -144,8 +141,7 @@ public class ArticleService {
             }
             dao.merge(dto);
             return item;
-        } catch (com.invado.core.exception.ConstraintViolationException
-                | EntityNotFoundException ex) {
+        } catch (com.invado.core.exception.ConstraintViolationException | EntityNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
             if (ex instanceof OptimisticLockException
@@ -167,7 +163,6 @@ public class ArticleService {
     @Transactional(rollbackFor = Exception.class)
     public void delete(String code) throws ConstraintViolationException,
             ReferentialIntegrityException {
-        //TODO : check DeleteArticlePermission
         if (code == null) {
             throw new ConstraintViolationException(
                     Utils.getMessage("Article.IllegalArgumentEx.Code")
@@ -187,7 +182,6 @@ public class ArticleService {
                     );
                 }
                 dao.remove(service);
-                dao.flush();
             }
         } catch (ReferentialIntegrityException ex) {
             throw ex;
@@ -337,32 +331,32 @@ public class ArticleService {
         }
         if (dateFrom != null) {
             criteria.add(cb.greaterThanOrEqualTo(
-                            root.get(Article_.updated),
-                            cb.parameter(Date.class, "updatedFrom"))
+                    root.get(Article_.updated),
+                    cb.parameter(Date.class, "updatedFrom"))
             );
         }
         if (dateTo != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Article_.updated),
-                            cb.parameter(Date.class, "updatedTo"))
+                    cb.parameter(Date.class, "updatedTo"))
             );
         }
         if (stockFrom != null) {
             criteria.add(cb.greaterThanOrEqualTo(root.get(Article_.unitsInStock),
-                            cb.parameter(BigDecimal.class, "stockFrom"))
+                    cb.parameter(BigDecimal.class, "stockFrom"))
             );
         }
         if (stockTo != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Article_.unitsInStock),
-                            cb.parameter(BigDecimal.class, "stockTo"))
+                    cb.parameter(BigDecimal.class, "stockTo"))
             );
         }
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
         if (code != null && code.isEmpty() == false) {
-            q.setParameter("code", "%"+ code.toUpperCase() + "%");
+            q.setParameter("code", "%" + code.toUpperCase() + "%");
         }
         if (desc != null && desc.isEmpty() == false) {
-            q.setParameter("desc", "%"+desc.toUpperCase() + "%");
+            q.setParameter("desc", "%" + desc.toUpperCase() + "%");
         }
         if (dateFrom != null) {
             q.setParameter("updatedFrom", dateFrom);
@@ -380,14 +374,14 @@ public class ArticleService {
     }
 
     private List<Article> search(EntityManager em,
-                                 String code,
-                                 String desc,
-                                 LocalDate updatedFrom,
-                                 LocalDate updatedTo,
-                                 BigDecimal stockFrom,
-                                 BigDecimal stockTo,
-                                 int first,
-                                 int pageSize) {
+            String code,
+            String desc,
+            LocalDate updatedFrom,
+            LocalDate updatedTo,
+            BigDecimal stockFrom,
+            BigDecimal stockTo,
+            int first,
+            int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Article> query = cb.createQuery(Article.class);
         Root<Article> root = query.from(Article.class);
@@ -407,17 +401,17 @@ public class ArticleService {
         }
         if (updatedTo != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Article_.updated),
-                            cb.parameter(Date.class, "updatedTo"))
+                    cb.parameter(Date.class, "updatedTo"))
             );
         }
         if (stockFrom != null) {
             criteria.add(cb.greaterThanOrEqualTo(root.get(Article_.unitsInStock),
-                            cb.parameter(BigDecimal.class, "stockFrom"))
+                    cb.parameter(BigDecimal.class, "stockFrom"))
             );
         }
         if (stockTo != null) {
             criteria.add(cb.lessThanOrEqualTo(root.get(Article_.unitsInStock),
-                            cb.parameter(BigDecimal.class, "stockTo"))
+                    cb.parameter(BigDecimal.class, "stockTo"))
             );
         }
         query.where(criteria.toArray(new Predicate[0]))
@@ -448,11 +442,11 @@ public class ArticleService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<Article> readAll(String code,
-                                 String desc,
-                                 LocalDate updatedFrom,
-                                 LocalDate updatedTo,
-                                 BigDecimal stockFrom,
-                                 BigDecimal stockTo) {
+            String desc,
+            LocalDate updatedFrom,
+            LocalDate updatedTo,
+            BigDecimal stockFrom,
+            BigDecimal stockTo) {
         try {
             return this.search(dao, code, desc, updatedFrom, updatedTo, stockFrom, stockTo, 0, 0);
         } catch (Exception ex) {

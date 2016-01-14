@@ -35,12 +35,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.security.auth.login.AccountNotFoundException;
 import javax.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.invado.finance.service.dto.ReadAllDTO;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import org.springframework.transaction.annotation.Transactional;
 import static com.invado.finance.Utils.getMessage;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 /**
  *
@@ -53,7 +53,7 @@ public class AccountService {
 
     @PersistenceContext(name = "unit")
     private EntityManager EM;
-    @Autowired
+    @Inject
     private Validator validator;
     
     @Transactional(rollbackFor = Exception.class)

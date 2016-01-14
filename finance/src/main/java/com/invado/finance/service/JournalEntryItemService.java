@@ -26,7 +26,6 @@ import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.invado.finance.domain.journal_entry.Account;
 import com.invado.finance.domain.journal_entry.ChangeType;
 import com.invado.finance.domain.journal_entry.Description;
@@ -44,6 +43,7 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import static com.invado.finance.Utils.*;
 import com.invado.finance.service.dto.UpdateJournalEntryResultDTO;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,7 +57,7 @@ public class JournalEntryItemService  {
     private static final Logger LOG = Logger.getLogger(JournalEntryItemService.class.getName());
     @PersistenceContext(name = "unit")
     private EntityManager EM;
-    @Autowired
+    @Inject
     private Validator validator;
     
     @Transactional(rollbackFor = Exception.class, readOnly = true)

@@ -43,7 +43,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.invado.finance.service.dto.AccountDTO;
 import com.invado.finance.service.dto.JournalEntryItemDTO;
 import com.invado.finance.service.dto.JournalEntryReportDTO;
@@ -51,6 +50,7 @@ import com.invado.finance.service.exception.AccountNotFoundException;
 import static com.invado.finance.Utils.getMessage;
 import com.invado.finance.domain.journal_entry.JournalEntryPK_;
 import java.util.Arrays;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,7 +64,7 @@ public class JournalEntryService {
     private static final Logger LOG = Logger.getLogger(JournalEntryService.class.getName());
     @PersistenceContext(name = "unit")
     private EntityManager EM;
-    @Autowired
+    @Inject
     private Validator validator;
     
     @Transactional(rollbackFor = Exception.class, readOnly = true)

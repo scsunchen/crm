@@ -23,9 +23,9 @@ import javax.persistence.LockModeType;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import static com.invado.finance.Utils.getMessage;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +40,7 @@ public class RecordJournalEntryService {
 
     @PersistenceContext(name = "unit")
     private EntityManager EM;
-    @Autowired
+    @Inject
     private Validator validator;
     
     @Transactional(rollbackFor = Exception.class)
@@ -73,9 +73,6 @@ public class RecordJournalEntryService {
             this.isJournalEntryBalanced(temp);
             this.recordJournalEntry(EM, temp);
             temp.setPosted(Boolean.TRUE);
-//            EM.remove(temp);
-//            System.out.println(temp.getVersion()+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//            System.out.println(version+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         } catch (PostingConstraintViolationException ex) {
             LOG.log(Level.WARNING,
                     "JournalEntry.Persistence.Record. Message :" + ex.getMessage()

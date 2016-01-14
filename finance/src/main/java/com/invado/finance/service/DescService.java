@@ -27,8 +27,8 @@ import com.invado.finance.service.exception.DescriptionConstraintViolationExcept
 import com.invado.finance.service.exception.DescriptionNotFoundException;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
-import org.springframework.beans.factory.annotation.Autowired;
 import static com.invado.finance.Utils.getMessage;
+import javax.inject.Inject;
 import javax.persistence.LockModeType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +45,7 @@ public class DescService {
 
     @PersistenceContext(name = "unit")
     private EntityManager EM;
-    @Autowired
+    @Inject
     private Validator validator;
     
     @Transactional(rollbackFor = Exception.class)
@@ -53,8 +53,7 @@ public class DescService {
                                            DescriptionNotFoundException {
         try {
             if (dto.getId() == null || EM.find(Description.class, dto.getId()) == null) {
-                throw new DescriptionNotFoundException(
-                        getMessage("Desc.DescNotExists", dto.getId())
+                throw new DescriptionNotFoundException(getMessage("Desc.DescNotExists")
                 );
             }
             Description temp = EM.find(Description.class, dto.getId(), LockModeType.OPTIMISTIC);
@@ -88,8 +87,7 @@ public class DescService {
     }
     
     @Transactional(rollbackFor = Exception.class)
-    public void create(DescDTO dto)
-            throws DescriptionConstraintViolationException {
+    public void create(DescDTO dto) throws DescriptionConstraintViolationException {
         try {
             Description temp = new Description();
             temp.set(dto);
@@ -113,37 +111,34 @@ public class DescService {
     
     @Transactional(rollbackFor = Exception.class)
     public void delete(Integer id)
-            throws DescriptionNotFoundException,
-            ReferentialIntegrityException {
+            throws ReferentialIntegrityException {
         try {
             Description temp = EM.find(Description.class, id);
-            if (temp == null) {
-                throw new DescriptionNotFoundException(
-                        getMessage("Desc.DescNotExists", id));
+            if (temp != null) {
+                if (!EM.createNamedQuery(Analytical.READ_BY_DESCRIPTION)
+                        .setParameter(1, id)
+                        .getResultList().isEmpty()) {
+                    throw new ReferentialIntegrityException(
+                            getMessage("Desc.ReferentialIntegrity.RecordedJournalEntry",
+                                    id));
+                }
+                if (!EM.createNamedQuery(GeneralLedger.READ_BY_DESCRIPTION)
+                        .setParameter(1, id)
+                        .getResultList().isEmpty()) {
+                    throw new ReferentialIntegrityException(
+                            getMessage("Desc.ReferentialIntegrity.RecordedJournalEntry",
+                                    id));
+                }
+                if (!EM.createNamedQuery(JournalEntryItem.READ_BY_DESCRIPTION)
+                        .setParameter(1, id)
+                        .getResultList().isEmpty()) {
+                    throw new ReferentialIntegrityException(
+                            getMessage("Desc.ReferentialIntegrity.JournalEntry",
+                                    id));
+                }
+                EM.remove(temp);
             }
-            if (!EM.createNamedQuery(Analytical.READ_BY_DESCRIPTION)
-                    .setParameter(1, id)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("Desc.ReferentialIntegrity.RecordedJournalEntry",
-                                id));
-            }
-            if (!EM.createNamedQuery(GeneralLedger.READ_BY_DESCRIPTION)
-                    .setParameter(1, id)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("Desc.ReferentialIntegrity.RecordedJournalEntry",
-                                id));
-            }
-            if (!EM.createNamedQuery(JournalEntryItem.READ_BY_DESCRIPTION)
-                    .setParameter(1, id)
-                    .getResultList().isEmpty()) {
-                throw new ReferentialIntegrityException(
-                        getMessage("Desc.ReferentialIntegrity.JournalEntry",
-                                id));
-            }
-            EM.remove(temp);
-        } catch (DescriptionNotFoundException | ReferentialIntegrityException iz) {
+        } catch (ReferentialIntegrityException iz) {
             throw iz;
         } catch (Exception iz) {
             LOG.log(Level.WARNING, "", iz);
@@ -156,14 +151,13 @@ public class DescService {
         try {
             Description temp = EM.find(Description.class, id);
             if (temp == null) {
-                throw new DescriptionNotFoundException(
-                        getMessage("Desc.DescNotExists", id));
+                throw new DescriptionNotFoundException(getMessage("Desc.DescNotExists"));
             }
             return temp.getDTO();
         } catch (DescriptionNotFoundException ex) {
             throw ex;
         } catch (Exception ex) {
-            LOG.log(Level.WARNING, "Desc.Persistence.Read", ex);
+            LOG.log(Level.WARNING, "", ex);
             throw new SystemException(getMessage("Desc.Persistence.Read"),ex);
         } 
     }
