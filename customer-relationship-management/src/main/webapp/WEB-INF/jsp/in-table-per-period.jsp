@@ -41,9 +41,9 @@
         <thead>
         <tr>
             <th></th>
-            <th><spring:message code="Invoice.Table.Partner"></spring:message> </th>
-            <th><spring:message code="Invoice.Table.Ammount"></spring:message> </th>
-            <th><spring:message code="Invoice.Table.Distributor"></spring:message> </th>
+            <th><spring:message code="Invoice.Table.Partner"></spring:message></th>
+            <th><spring:message code="Invoice.Table.Ammount"></spring:message></th>
+            <th><spring:message code="Invoice.Table.Distributor"></spring:message></th>
         </tr>
         </thead>
         <tbody>
@@ -74,17 +74,33 @@
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-period.html?id=${param['id']}&partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&page=${page - 1}"/></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
+                <span class="glyphicon glyphicon-backward"></span> <spring:message
+                    code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
 
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-period.html?id=${param['id']}&partnerId=${param['partnerId']}&partnerName=${param['partnerName']}&page=${page - 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
+                <span class="glyphicon glyphicon-forward"></span> <spring:message
+                    code="Common.Button.NextPage"></spring:message>
             </a>
         </li>
     </ul>
+    <table class="table">
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerPage"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmountPerPage}"/></strong></td>
+        </tr>
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerQuery"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmount}"/></strong></td>
+        </tr>
+    </table>
 </nav>
 
 

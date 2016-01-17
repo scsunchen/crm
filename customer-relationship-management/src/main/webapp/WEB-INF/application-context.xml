@@ -51,5 +51,6 @@
     </bean>
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
      <bean id="userService" class="com.invado.customer.relationship.service.UserDataService" />
+    <bean id="localDateConverter" class="com.invado.core.domain.LocalDateConverter"/>
 </beans>
 

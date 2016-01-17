@@ -11,5 +11,6 @@ public class DocumentType_ {
 
     public static volatile SingularAttribute<DocumentType, Integer> id;
     public static volatile SingularAttribute<DocumentType, String> description;
+    public static volatile SingularAttribute<DocumentType, Long> version;
 }
 

@@ -33,5 +33,6 @@ public class BusinessPartner_ {
     public static volatile SingularAttribute<BusinessPartner, BusinessPartnerStatus> businessPartnerStatus;
     public static volatile SingularAttribute<BusinessPartner, BusinessPartner.TelekomStatus> telekomStatus;
     public static volatile SingularAttribute<BusinessPartner, String> remark;
+    public static volatile SingularAttribute<BusinessPartner, BusinessPartnerStatus> status;
 
 }

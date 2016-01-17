@@ -77,7 +77,11 @@
     <table class="table table-striped" data-sort-name="item.distributorName">
         <thead>
         <tr>
-            <th></th>
+            <th>
+                <button data-toggle="modal" data-target="#dialogGenInvoices" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoicing.Button.GenInvoice"/>
+                </button>
+            </th>
             <th>Merchant</th>
             <th>Iznos</th>
             <th>Distributor</th>
@@ -107,13 +111,9 @@
     </table>
 </div>
 <nav>
-    <ul class="pager pull-left">
-        <button data-toggle="modal" data-target="#dialogGenInvoices" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoicing.Button.GenInvoice"/>
-        </button>
-        <br/>
-    </ul>
-    <ul class="pager pull-right">
+
+
+    <ul class="pager pull-right ">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions.html?merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
@@ -128,6 +128,20 @@
             </a>
         </li>
     </ul>
+    <table class="table">
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerPage"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmountPerPage}"/></strong></td>
+        </tr>
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerQuery"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmount}"/></strong></td>
+        </tr>
+    </table>
 </nav>
 
 

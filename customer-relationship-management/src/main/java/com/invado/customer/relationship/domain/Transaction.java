@@ -36,6 +36,38 @@ import java.time.LocalDateTime;
         "                     group by trans.client_id, distributor.name, trans.business_partner_id, merchant.name, service.id, a.code, a.description, null," +
         "                               pos.id, pos.name, null, null, trunc(sysdate) " +
         "                     order by 1, 8 DESC, 3, 14, 5 "),
+        @NamedNativeQuery(name = Transaction.INVOICING_SUM, query = " select sum(nvl(trans.amount, 0)) as amount " +
+                "                     from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, c_business_partner pos, " +
+                "                             crm_Service_Provider_Services service, r_article a " +
+                "                     where type.invoiceable = 1 " +
+                "                     and type.invoicingStatuses like '%'||trans.transaction_status||'%' " +
+                "                     and trans.statusId is not null " +
+                "                     and trans.invoicing_Status = :invoicingStatus " +
+                "                     and trunc(trans.response_Time)  between :invoicingDateFrom and :invoicingDateTo " +
+                "                     and trans.type_id = type.id" +
+                "                     and trans.client_id = distributor.id" +
+                "                     and (trans.business_partner_id = :merchantId or :merchantId is null)" +
+                "                     and (trans.point_of_sale_id = :posId or :posId is null)" +
+                "                     and trans.service_Provider_id = service.service_Provider" +
+                "                     and trans.business_partner_id = merchant.id" +
+                "                     and service.service_id = a.code" +
+                "                     and trans.point_of_sale_id = pos.id  "),
+        @NamedNativeQuery(name = Transaction.INVOICING_SUM_NOPARAM, query = " select sum(nvl(trans.amount, 0)) as amount " +
+                "                     from crm_Transaction_Type type, crm_Transaction trans, c_client distributor, c_business_partner merchant, c_business_partner pos, " +
+                "                             crm_Service_Provider_Services service, r_article a " +
+                "                     where type.invoiceable = 1 " +
+                "                     and type.invoicingStatuses like '%'||trans.transaction_status||'%' " +
+                "                     and trans.statusId is not null " +
+                "                     and trans.invoicing_Status = :invoicingStatus " +
+                "                     and trunc(trans.response_Time)  between :invoicingDateFrom and :invoicingDateTo " +
+                "                     and trans.type_id = type.id" +
+                "                     and trans.client_id = distributor.id" +
+                "                     and (trans.business_partner_id = :merchantId or :merchantId= 0)" +
+                "                     and (trans.point_of_sale_id = :posId or :posId = 0)" +
+                "                     and trans.service_Provider_id = service.service_Provider" +
+                "                     and trans.business_partner_id = merchant.id" +
+                "                     and service.service_id = a.code" +
+                "                     and trans.point_of_sale_id = pos.id  "),
         @NamedNativeQuery(name = Transaction.COUNT_INVOICING_SUM_PER_ARTICLE, query = " select count(*) " +
                 " from (select trans.client_id as distributorId, " +
                 "                                     distributor.name as distributorName, trans.business_partner_id as merchantId, merchant.name as merchantName," +
@@ -175,6 +207,8 @@ public class Transaction implements Serializable {
     public static final String COUNT_INVOICING_SUM_PER_MERCHANT = "Transaction.CountInvoincingSumSetPerMerchant";
     public static final String INVOICING_CANDIDATES_PER_MERCHANT = "Transaction.ReadInvoicingCandidatesTransactionsPerMerchant";
     public static final String COUNT_INVOICING_CANDIDATES_PER_MERCHANT = "Transaction.CountInvoincingCandidatesSetPerMerchant";
+    public static final String INVOICING_SUM = "Transaction.SumAmount";
+    public static final String INVOICING_SUM_NOPARAM = "Transaction.SumAmountNoParam";
     @Id
     private Long id;
     @Column(name = "TRANSACTION_STATUS")
