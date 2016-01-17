@@ -45,7 +45,7 @@ public class OpenItemStatements {
     private static final Logger LOG = Logger.getLogger(OpenItemStatements.class.getName());
 
     @PersistenceContext(name = "unit")
-    private EntityManager dao;
+    EntityManager dao;
 
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<OpenItemStatementsDTO> readOpenItemStatements(RequestOpenItemStatementsDTO dto)
@@ -121,7 +121,7 @@ public class OpenItemStatements {
     }
 
     private List<Analytical> readOpenItemsFromDB(EntityManager EM, RequestOpenItemStatementsDTO dto) {
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         //Unos konta je obavezan(u formi)
         String queryCondition = "WHERE x.status = ?1 AND o.client.id = "
                 + dto.getClientID() + " AND k.number ='"
