@@ -44,7 +44,7 @@ public class PartnerSpecificationByDate  {
             PartnerSpecificationByDate.class.getName());
     
     @PersistenceContext(name = "unit")
-    private EntityManager dao;
+    EntityManager dao;
     
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public ReadSpecificationsDTO readPartnerSpecificationByDate(
@@ -249,9 +249,9 @@ public class PartnerSpecificationByDate  {
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Analytical> query = cb.createQuery(Analytical.class);
         Root<Analytical> root = query.from(Analytical.class);
+        query.select(root);
         Join<Analytical, OrgUnit> orgUnitJoin =
                 root.join(Analytical_.orgUnit, JoinType.LEFT);
-        query.select(root);
         Predicate criteria = cb.conjunction();
         criteria = cb.and(criteria, cb.equal(orgUnitJoin.get(OrgUnit_.client)
                 .get(Client_.id),
@@ -292,7 +292,7 @@ public class PartnerSpecificationByDate  {
         }
         query.where(criteria).orderBy(
                 cb.asc(root.get(Analytical_.account).get(Account_.number)),
-                cb.asc(orgUnitJoin.get(OrgUnit_.id)),
+                cb.asc(root.get(Analytical_.orgUnit).get(OrgUnit_.id)),
                 cb.asc(root.get(Analytical_.partner).get(BusinessPartner_.companyIdNumber)));
         TypedQuery<Analytical> q = EM.createQuery(query);
         q.setParameter("client", clientId);

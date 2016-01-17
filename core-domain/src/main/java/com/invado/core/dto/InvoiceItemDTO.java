@@ -28,6 +28,7 @@ public class InvoiceItemDTO {
     @NumberFormat(style = NumberFormat.Style.NUMBER, pattern = "#.##")
     private BigDecimal quantity;
     @NumberFormat(style = NumberFormat.Style.PERCENT)
+    //FIXME : rabat -> rebate
     private BigDecimal rabatPercent;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal totalCost;

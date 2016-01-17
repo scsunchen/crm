@@ -26,7 +26,6 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import static com.invado.finance.Utils.getMessage;
 import com.invado.finance.service.exception.ZeroExchangeRateException;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -34,8 +33,10 @@ import java.util.Date;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.invado.finance.Utils.getMessage;
+
 /**
- * @see rs.sproduct.finance.services.card.ReceivablePayableCard
  * @author Bobic Dragan
  */
 @Service
@@ -44,7 +45,7 @@ public class ReceivablePayableCard  {
     private static final Logger LOG = Logger.getLogger(ReceivablePayableCard.class.getName());
     
     @PersistenceContext(name = "unit")
-    private EntityManager dao;
+    EntityManager dao;
     
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public ReadLedgerCardsDTO readReceivablePayableCard(RequestLedgerCardDTO dto) 

@@ -70,7 +70,7 @@ public class InvoiceService {
     private static final Logger LOG = Logger.getLogger(InvoiceService.class.getName());
 
     @PersistenceContext(name = "unit")
-    private EntityManager dao;
+    EntityManager dao;
     @Inject
     private Validator validator;
 
@@ -180,11 +180,11 @@ public class InvoiceService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             if (msgs.size() > 0) {
-                System.out.println("Proba");
                 throw new ConstraintViolationException("", msgs);
             }
             dao.persist(invoice);
-        } catch (EntityExistsException | ReferentialIntegrityException | ConstraintViolationException ex) {
+        } catch (EntityExistsException | ReferentialIntegrityException 
+                | ConstraintViolationException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
