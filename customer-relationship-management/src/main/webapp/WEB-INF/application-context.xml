@@ -50,7 +50,22 @@
         <property name="password" value="devel"/>
     </bean>
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
-     <bean id="userService" class="com.invado.customer.relationship.service.UserDataService" />
+    <bean id="userService" class="com.invado.customer.relationship.service.UserDataService"/>
     <bean id="localDateConverter" class="com.invado.core.domain.LocalDateConverter"/>
+
+
+    <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+        <constructor-arg>
+            <list>
+                <ref bean="authenticationProvider"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userService"/>
+    </bean>
+
+
 </beans>
 

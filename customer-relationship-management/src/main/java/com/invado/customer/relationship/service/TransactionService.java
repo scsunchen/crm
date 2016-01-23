@@ -1516,10 +1516,22 @@ public class TransactionService {
                                      Integer serviceProviderId,
                                      Integer terminalId,
                                      Integer typeId,
-                                     LocalDateTime dateFrom,
-                                     LocalDateTime dateTo) {
+                                     String dateFrom,
+                                     String dateTo) {
+        LocalDateTime localDateFrom = null;
+        LocalDateTime localDateTo = null;
+
+        if (dateFrom != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+            localDateFrom = LocalDateTime.parse(dateFrom + " 00:00", formatter);
+        }
+        if (dateTo != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+            localDateTo = LocalDateTime.parse(dateTo + " 00:00", formatter);
+        }
         try {
-            return this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, dateFrom, dateTo, 0, 0);
+
+            return this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, localDateFrom, localDateTo, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

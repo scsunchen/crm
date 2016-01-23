@@ -115,7 +115,12 @@
                         </form:select>
                     </spring:bind>
                 </div>
-
+                <div class="col-lg-6">
+                    <input:inputField name="longitude" label="BusinessPartner.Table.Longitude"></input:inputField>
+                </div>
+                <div class="col-lg-6">
+                    <input:inputField name="latitude" label="BusinessPartner.Table.Latitude"></input:inputField>
+                </div>
                 <input:inputField label="BusinessPartner.Table.TelekomId" name="telekomId"/>
                 <spring:bind path="telekomStatus">
                     <div class="form-group">

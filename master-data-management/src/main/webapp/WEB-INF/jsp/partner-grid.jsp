@@ -134,6 +134,12 @@
                     <label><form:checkbox path="VAT" id="VAT" class="checkbox"/><spring:message
                             code="BusinessPartner.Table.VAT"></spring:message> </label>
                 </div>
+                <div class="col-lg-6">
+                    <input:inputField name="longitude" label="BusinessPartner.Table.Longitude"></input:inputField>
+                </div>
+                <div class="col-lg-6">
+                    <input:inputField name="latitude" label="BusinessPartner.Table.Latitude"></input:inputField>
+                </div>
                 <input:inputField label="BusinessPartner.Table.TelekomId" name="telekomId"/>
                 <spring:bind path="telekomStatus">
                     <div class="form-group">
@@ -173,16 +179,16 @@
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <button class="btn btn-default btn-block" type="submit" name="register"><spring:message
+                    <button type="submit" name="register"><spring:message
                             code="BusinessPartner.Table.TelekomRegistration"></spring:message></button>
                 </li>
                 <li>
-                    <button class="btn btn-default btn-block" type="submit" name="update"><spring:message
+                    <button type="submit" name="update"><spring:message
                             code="BusinessPartner.Table.TelekomUpdate"></spring:message></button>
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                    <button class="btn btn-default btn-block" type="submit" name="deactivation"><spring:message
+                    <button type="submit" name="deactivation"><spring:message
                             code="BusinessPartner.Table.TelekomDeactivation"></spring:message></button>
                 </li>
             </ul>

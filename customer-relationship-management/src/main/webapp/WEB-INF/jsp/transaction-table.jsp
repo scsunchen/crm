@@ -52,7 +52,10 @@
             </div>
             <form:hidden id="page" path="page" value="0"/>
             <button type="submit" class="btn btn-primary"><span class=" glyphicon glyphicon-search"></span></button>
-
+            <a class="btn btn-default" data-toggle="tooltip" title="Excel"
+               href="${pageContext.request.contextPath}/transactions/downloadExcel.html?serviceProviderId=${param['serviceProviderId']}&pointOfSaleId=${param['pointOfSaleId']}&&terminalCustomCode=${param['terminalCustomCode']}&terminalId=${param['terminalId']}&typeId=${param['typeId']}">
+                <img src="../resources/images/ExcelIcon40.png"/>
+            </a>
         </div>
     </nav>
 </form:form>

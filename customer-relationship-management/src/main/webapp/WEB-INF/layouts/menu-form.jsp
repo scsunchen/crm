@@ -24,6 +24,7 @@
 
         <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-hover-dropdown.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/Moment.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/typeahead/typeahead.bundle.min.js"></script>
         <tiles:importAttribute name="datepickerLanguage"/>
@@ -36,6 +37,9 @@
             $(document).ready(function () {
                 $('[data-toggle="offcanvas"]').click(function () {
                     $('.row-offcanvas-left').toggleClass('active')
+                });
+                $('[data-toggle="tooltip"]').tooltip({
+                    placement : 'top'
                 });
             });
         </script>

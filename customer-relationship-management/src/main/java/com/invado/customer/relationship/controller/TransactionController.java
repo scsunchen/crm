@@ -5,6 +5,7 @@ import com.invado.core.dto.InvoiceDTO;
 import com.invado.core.dto.InvoiceReportDTO;
 import com.invado.core.dto.InvoicingTransactionDTO;
 import com.invado.core.report.InvoiceReport;
+import com.invado.customer.relationship.domain.Transaction;
 import com.invado.customer.relationship.service.InvoicingTransactionService;
 import com.invado.customer.relationship.service.MasterDataService;
 import com.invado.customer.relationship.service.TransactionService;
@@ -39,6 +40,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
@@ -388,6 +390,28 @@ public class TransactionController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "transactions/downloadExcel.html", method = RequestMethod.GET)
+    public ModelAndView downloadExcel(@RequestParam(value = "serviceProviderName", required = false) String serviceProviderName,
+                                      @RequestParam(value = "serviceProviderId", required = false) Integer serviceProviderId,
+                                      @RequestParam(value = "pointOfSaleName", required = false) String pointOfSaleName,
+                                      @RequestParam(value = "pointOfSaleId", required = false) Integer pointOfSaleId,
+                                      @RequestParam(value = "terminalCustomCode", required = false) String terminalCustomCode,
+                                      @RequestParam(value = "terminalId", required = false) Integer terminalId,
+                                      @RequestParam(value = "typeDescription", required = false) String typeDescription,
+                                      @RequestParam(value = "typeId", required = false) Integer typeId,
+                                      @RequestParam(value = "id", required = false) Long id,
+                                      @RequestParam(value = "responseTimeFrom", required = false) String responseTimeFrom,
+                                      @RequestParam(value = "responseTimeTo", required = false) String responseTimeTo) {
+        // create some sample data
+
+        Client client = masterDataService.readClient();
+
+        List<Transaction> items = transactionService.readAll(id, client.getId(), pointOfSaleId, serviceProviderId,
+                terminalId, typeId, responseTimeFrom, responseTimeTo);
+
+        return new ModelAndView("excelView", "listTrasnactions", items);
     }
 
     @RequestMapping(value = "/crm/read-distributor/{name}")

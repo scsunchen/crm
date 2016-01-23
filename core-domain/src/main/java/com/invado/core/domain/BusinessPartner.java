@@ -111,9 +111,9 @@ public class BusinessPartner implements Serializable {
     @Column(name = "vat")
     private Boolean VAT;
     @Column(name = "longitude")
-    private Integer longitude;
+    private String longitude;
     @Column(name = "latitude")
-    private Integer latitude;
+    private String latitude;
     @Column(name = "type")
     private Type type;
     @ManyToOne
@@ -288,19 +288,19 @@ public class BusinessPartner implements Serializable {
         this.VAT = VAT;
     }
 
-    public Integer getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Integer longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public Integer getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Integer latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
