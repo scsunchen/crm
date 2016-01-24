@@ -52,6 +52,7 @@ public class BPController {
     private BusinessPartnerStatusService businessPartnerStatusService;
 
 
+
     @RequestMapping(value = "/partner/read-page.html", method = RequestMethod.GET)
     public String showItems(@ModelAttribute("businessPartnerDTO") RequestPartnerDTO requestPartner,
                             BindingResult partnerResult,
@@ -61,6 +62,7 @@ public class BPController {
 
 
         List<BusinessPartner.Type> types = service.getTypes();
+        List<BusinessPartnerStatusDTO> partnerStatuses = businessPartnerStatusService.readAll(null, null);
 
         PageRequestDTO request = new PageRequestDTO();
         request.setPage(requestPartner.getPage());
@@ -68,14 +70,16 @@ public class BPController {
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("id", requestPartner.getId()));
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("name", requestPartner.getName()));
         request.addSearchCriterion(new PageRequestDTO.SearchCriterion("type", requestPartner.getType()));
+        request.addSearchCriterion(new PageRequestDTO.SearchCriterion("status", requestPartner.getStatusId()));
+
         ReadRangeDTO<BusinessPartnerDTO> items = service.readPage(request);
         model.put("data", items.getData());
         model.put("page", items.getPage());
         model.put("types", types);
+        model.put("partnerStatuses", partnerStatuses);
         model.put("requestPartner", requestPartner);
         model.put("numberOfPages", items.getNumberOfPages());
 
-        //return "item-table";
         return "partner-view";
     }
 

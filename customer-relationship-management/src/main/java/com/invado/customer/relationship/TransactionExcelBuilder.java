@@ -64,26 +64,26 @@ public class TransactionExcelBuilder extends AbstractExcelView {
             header.createCell(5).setCellValue("Client Id");
             header.getCell(5).setCellStyle(style);
 
-            header.createCell(5).setCellValue("Prodavac Id");
-            header.getCell(5).setCellStyle(style);
+            header.createCell(6).setCellValue("Prodavac Id");
+            header.getCell(6).setCellStyle(style);
 
-            header.createCell(5).setCellValue("Service Provider Id");
-            header.getCell(5).setCellStyle(style);
+            header.createCell(7).setCellValue("Service Provider Id");
+            header.getCell(7).setCellStyle(style);
 
-            header.createCell(5).setCellValue("Terminal Id");
-            header.getCell(5).setCellStyle(style);
+            header.createCell(8).setCellValue("Terminal Id");
+            header.getCell(8).setCellStyle(style);
 
-            header.createCell(5).setCellValue("Tip Id");
-            header.getCell(5).setCellStyle(style);
+            header.createCell(9).setCellValue("Tip Id");
+            header.getCell(9).setCellStyle(style);
 
-            header.createCell(5).setCellValue("Prodajno mesto Id");
-            header.getCell(5).setCellStyle(style);
+            header.createCell(10).setCellValue("Prodajno mesto Id");
+            header.getCell(10).setCellStyle(style);
 
-            header.createCell(5).setCellValue("Inovicing Status Id");
-            header.getCell(5).setCellStyle(style);
+            header.createCell(11).setCellValue("Inovicing Status Id");
+            header.getCell(11).setCellStyle(style);
 
-            header.createCell(5).setCellValue("Transaction Status Id");
-            header.getCell(5).setCellStyle(style);
+            header.createCell(12).setCellValue("Transaction Status Id");
+            header.getCell(12).setCellStyle(style);
 
             // create data rows
             int rowCount = 1;

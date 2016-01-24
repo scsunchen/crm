@@ -13,6 +13,10 @@ public class RequestPartnerDTO {
     private String masterPartnerName;
     private BusinessPartner.Type type;
     private Integer page;
+    private String statusName;
+    private String statusDescrtiption;
+    private Integer statusId;
+
 
     public Integer getId() {
         return id;
@@ -60,5 +64,29 @@ public class RequestPartnerDTO {
 
     public void setPage(Integer page) {
         this.page = page;
+    }
+
+    public String getStatusDescrtiption() {
+        return statusDescrtiption;
+    }
+
+    public void setStatusDescrtiption(String statusDescrtiption) {
+        this.statusDescrtiption = statusDescrtiption;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 }

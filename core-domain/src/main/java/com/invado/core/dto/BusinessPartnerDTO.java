@@ -57,6 +57,7 @@ public class BusinessPartnerDTO {
     private BusinessPartnerStatus businessPartnerStatus;
     private Integer partnerStatusId;
     private String partnerStatusName;
+    private String partnerStatusDescription;
     private Integer telekomId;
     private BusinessPartner.TelekomStatus telekomStatus;
     private String telekomStatusValue;
@@ -434,6 +435,14 @@ public class BusinessPartnerDTO {
 
     public void setPartnerStatusName(String partnerStatusName) {
         this.partnerStatusName = partnerStatusName;
+    }
+
+    public String getPartnerStatusDescription() {
+        return partnerStatusDescription;
+    }
+
+    public void setPartnerStatusDescription(String partnerStatusDescription) {
+        this.partnerStatusDescription = partnerStatusDescription;
     }
 
     public Integer getTelekomId() {

@@ -122,7 +122,6 @@
                         </form:select>
                     </div>
                 </spring:bind>
-
                 <div class="form-group">
                     <label for="partnerName"><spring:message
                             code="BusinessPartner.Table.ParentPartner"></spring:message></label>

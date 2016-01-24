@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by Nikola on 04/01/2016.
  */
 @Entity
-@Table(name = "BUSINESSPARTNERSTATUS")
+@Table(name = "C_BUSINESS_PARTNER_STATUS")
 public class BusinessPartnerStatus {
 
     @TableGenerator(

@@ -389,6 +389,8 @@ public class BPService {
         String TIN = null;
         BusinessPartner.Type type = null;
         BusinessPartner parentBusinessPartner = null;
+        BusinessPartnerStatus status = null;
+        Integer statusId = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("id") && s.getValue() instanceof Integer) {
                 id = (Integer) s.getValue();
@@ -412,6 +414,10 @@ public class BPService {
                     type = (BusinessPartner.Type) s.getValue();
                 }
             }
+            if (s.getKey().equals("status") && s.getValue() instanceof Integer) {
+                statusId = (Integer) s.getValue();
+                status = dao.find(BusinessPartnerStatus.class, statusId);
+            }
             if (s.getKey().equals("parentBusinessPartner")) {
                 if (s.getValue() instanceof BusinessPartner) {
                     parentBusinessPartner = (BusinessPartner) s.getValue();
@@ -429,7 +435,8 @@ public class BPService {
                     name,
                     TIN,
                     type,
-                    parentBusinessPartner);
+                    parentBusinessPartner,
+                    status );
             System.out.println("broj entiteta je " + countEntities);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
@@ -445,12 +452,12 @@ public class BPService {
                 //if page number is -1 read last page
                 //first BusinessPartner = last page number * BusinessPartners per page
                 int start = numberOfPages.intValue() * pageSize;
-                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, start, pageSize));
+                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, status, start, pageSize));
                 result.setData(businessPartnerDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, p.getPage() * pageSize, pageSize));
+                List<BusinessPartnerDTO> businessPartnerDTOList = convertToDTO(this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, status, p.getPage() * pageSize, pageSize));
                 result.setData(businessPartnerDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
@@ -491,7 +498,8 @@ public class BPService {
             String name,
             String TIN,
             BusinessPartner.Type type,
-            BusinessPartner parentBusinessPartner) {
+            BusinessPartner parentBusinessPartner,
+            BusinessPartnerStatus status) {
 
         CriteriaBuilder cb = EM.getCriteriaBuilder();
         CriteriaQuery<Long> c = cb.createQuery(Long.class);
@@ -525,6 +533,10 @@ public class BPService {
             criteria.add(cb.equal(root.get(BusinessPartner_.parentBusinessPartner),
                     cb.parameter(BusinessPartner.class, "parentBusinessPartner")));
         }
+        if(status != null){
+            criteria.add(cb.equal(root.get(BusinessPartner_.status),
+                    cb.parameter(BusinessPartnerStatus.class, "status")));
+        }
 
 
         c.where(cb.and(criteria.toArray(new Predicate[0])));
@@ -547,6 +559,9 @@ public class BPService {
         if (parentBusinessPartner != null) {
             q.setParameter("parentBusinessPartner", parentBusinessPartner);
         }
+        if (status != null) {
+            q.setParameter("status", status);
+        }
         return q.getSingleResult();
     }
 
@@ -557,6 +572,7 @@ public class BPService {
                                          String TIN,
                                          BusinessPartner.Type type,
                                          BusinessPartner parentBusinessPartner,
+                                         BusinessPartnerStatus status,
                                          int first,
                                          int pageSize) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -588,6 +604,10 @@ public class BPService {
             criteria.add(cb.equal(root.get(BusinessPartner_.parentBusinessPartner),
                     cb.parameter(BusinessPartner.class, "parentBusinessPartner")));
         }
+        if (status != null) {
+            criteria.add(cb.equal(root.get(BusinessPartner_.status),
+                    cb.parameter(BusinessPartnerStatus.class, "status")));
+        }
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(BusinessPartner_.companyIdNumber)));
         query.orderBy(cb.asc(root.get(BusinessPartner_.name)));
@@ -609,6 +629,9 @@ public class BPService {
         }
         if (parentBusinessPartner != null) {
             typedQuery.setParameter("parentBusinessPartner", parentBusinessPartner);
+        }
+        if (status != null) {
+            typedQuery.setParameter("status", status);
         }
         System.out.println("first " + first + " a ps je " + pageSize);
         typedQuery.setFirstResult(first);
@@ -744,9 +767,10 @@ public class BPService {
                                          String name,
                                          String TIN,
                                          BusinessPartner.Type type,
-                                         BusinessPartner parentBusinessPartner) {
+                                         BusinessPartner parentBusinessPartner,
+                                         BusinessPartnerStatus status) {
         try {
-            return this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, 0, 0);
+            return this.search(dao, id, companyIdNumber, name, TIN, type, parentBusinessPartner, status, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",

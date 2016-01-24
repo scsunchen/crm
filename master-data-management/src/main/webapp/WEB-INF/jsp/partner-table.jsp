@@ -11,167 +11,180 @@
 
 <form:form role="search" modelAttribute="businessPartnerDTO" method="GET"
            action="${pageContext.request.contextPath}/partner/read-page.html" cssClass="generic-container">
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <br/>
-      <!-- Pretraživanje poslovnih partnera -->
-      <div class="form-group col-lg-4">
-        <spring:bind path="type">
-          <form:select path="type" id="type" class="form-control" itemLabel="type">
-            <form:option value="null" label="Tip partnera..." />
-            <form:options items="${types}" itemLabel="description"/>
-          </form:select>
-        </spring:bind>
-      </div>
-      <div class="form-group col-lg-4">
-        <form:input id="businessPartner" class="typeahead form-control"
-                    placeholder="Naziv poslovnog partnera..." type="text" path="name"/>
-        <form:input id="businessPartner-hidden" type="hidden"
-                    path="id"/>
-        <form:input id="type-hidden" type="hidden" path="page" value="0"/>
-      </div>
-      <div class="col-lg-4">
-        <button type="submit" class="btn btn-primary"><span class=" glyphicon glyphicon-search"></span></button>
-      </div>
-      <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-  </nav>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <br/>
+            <!-- Pretraživanje poslovnih partnera -->
+            <div class="form-group col-lg-3">
+                <spring:bind path="type">
+                    <form:select path="type" id="type" class="form-control" itemLabel="type">
+                        <form:option value="null" label="Tip partnera..."/>
+                        <form:options items="${types}" itemLabel="description"/>
+                    </form:select>
+                </spring:bind>
+            </div>
+            <div class="form-group col-lg-3">
+                <form:input id="businessPartner" class="typeahead form-control"
+                            placeholder="Naziv poslovnog partnera..." type="text" path="name"/>
+                <form:input id="businessPartner-hidden" type="hidden"
+                            path="id"/>
+                <form:input id="type-hidden" type="hidden" path="page" value="0"/>
+            </div>
+            <div class="form-group col-lg-3">
+                <spring:bind path="statusId">
+                    <div class="form-group">
+                        <form:select path="statusId" id="status" class="form-control" itemLabel="status">
+                            <form:option value="-1" label="Status partnera..." />
+                            <form:options items="${partnerStatuses}" itemLabel="name" itemValue="id"/>
+                        </form:select>
+                    </div>
+                </spring:bind>
+            </div>
+            <div class="col-lg-3">
+                <button type="submit" class="btn btn-primary"><span class=" glyphicon glyphicon-search"></span></button>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
 </form:form>
 
 <div class="table-responsive generic-container">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th><a class="btn btn-primary"
-             href="/masterdata/partner/create.html?page=${param['page']}"><span
-              class="glyphicon glyphicon-plus"></span>
-        Kreiraj</a></th>
-      <th><spring:message code="BusinessPartner.Table.CompaniIDNumber"/></th>
-      <th><spring:message code="BusinessPartner.Table.Name"/></th>
-      <th><spring:message code="BusinessPartner.Table.Address"/></th>
-      <th><spring:message code="BusinessPartner.Table.Phone"/></th>
-      <th><spring:message code="BusinessPartner.Table.eMail"/></th>
-      <th><spring:message code="BusinessPartner.Table.BankAccount"/></th>
-      <th><spring:message code="BusinessPartner.Table.ContactPerson"/></th>
-      <th><spring:message code="BusinessPartner.Table.Type"/></th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:set var="count" value="0" scope="page"/>
-    <c:forEach var="item" items="${data}">
-      <!-- Modal -->
-      <div class="modal fade" id="dialog${count}" tabindex="-1" role="dialog"
-           aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                      aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">Da li ste sigurni da želite da
-                obrišete ${item.name}?</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th><a class="btn btn-primary"
+                   href="/masterdata/partner/create.html?page=${param['page']}"><span
+                    class="glyphicon glyphicon-plus"></span>
+                Kreiraj</a></th>
+            <th><spring:message code="BusinessPartner.Table.CompaniIDNumber"/></th>
+            <th><spring:message code="BusinessPartner.Table.Name"/></th>
+            <th><spring:message code="BusinessPartner.Table.Address"/></th>
+            <th><spring:message code="BusinessPartner.Table.Phone"/></th>
+            <th><spring:message code="BusinessPartner.Table.Status"/></th>
+            <th><spring:message code="BusinessPartner.Table.BankAccount"/></th>
+            <th><spring:message code="BusinessPartner.Table.ContactPerson"/></th>
+            <th><spring:message code="BusinessPartner.Table.Type"/></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:set var="count" value="0" scope="page"/>
+        <c:forEach var="item" items="${data}">
+            <!-- Modal -->
+            <div class="modal fade" id="dialog${count}" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Da li ste sigurni da želite da
+                                obrišete ${item.name}?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
+                            <a type="button" class="btn btn-danger" href="${page}/${item.id}/delete.html">Obriši</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Odustani</button>
-              <a type="button" class="btn btn-danger" href="${page}/${item.id}/delete.html">Obriši</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <tr>
-        <td>
-          <div class="btn-group btn-group-sm" role="group">
-            <a href="update.html?id=${item.id}&page=${page}"
-               class="btn btn-primary"><span
-                    class="glyphicon glyphicon-search"></span> pregled</a>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
-                    class="glyphicon glyphicon-trash"></span> brisanje
-            </button>
-          </div>
-        </td>
-        <td id="companyIdNumber"><c:out value="${item.companyIdNumber}"/></td>
-        <td id="name"><c:out value="${item.name}"/></td>
-        <td><c:out value="${item.country} ${item.postCode} ${item.place} ${item.street} ${item.houseNumber}"/></td>
-        <td><c:out value="${item.phone}"/></td>
-        <td><c:out value="${item.EMail}"/></td>
-        <td><c:out value="${item.currentAccount}"/></td>
-        <td><c:out value="${item.contactPersoneName}"/></td>
-        <td><c:out value="${item.typeDescription}"/></td>
-        <td id="id" hidden><c:out value="${item.id}"/></td>
-      </tr>
-      <c:set var="count" value="${count + 1}" scope="page"/>
-    </c:forEach>
-    </tbody>
-  </table>
+            <tr>
+                <td>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <a href="update.html?id=${item.id}&page=${page}"
+                           class="btn btn-primary"><span
+                                class="glyphicon glyphicon-search"></span> pregled</a>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#dialog${count}"><span
+                                class="glyphicon glyphicon-trash"></span> brisanje
+                        </button>
+                    </div>
+                </td>
+                <td id="companyIdNumber"><c:out value="${item.companyIdNumber}"/></td>
+                <td id="name"><c:out value="${item.name}"/></td>
+                <td><c:out
+                        value="${item.country} ${item.postCode} ${item.place} ${item.street} ${item.houseNumber}"/></td>
+                <td><c:out value="${item.phone}"/></td>
+                <td><c:out value="${item.partnerStatusName}"/></td>
+                <td><c:out value="${item.currentAccount}"/></td>
+                <td><c:out value="${item.contactPersoneName}"/></td>
+                <td><c:out value="${item.typeDescription}"/></td>
+                <td id="id" hidden><c:out value="${item.id}"/></td>
+            </tr>
+            <c:set var="count" value="${count + 1}" scope="page"/>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 <nav>
-  <ul class="pager pull-right">
-    Strana
-    <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
-      <a href="<c:if test="${page > 0}"><c:out value="?type=${param['type']}&id=${param['id']}&name=${param['name']}&page=${page - 1}" /></c:if>">
-        <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
-      </a>
-    </li>
-    <c:out value="${page+1} od ${numberOfPages+1}"/>
-    <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
-      <a href="<c:if test="${page < numberOfPages}"><c:out value="?type=${param['type']}&id=${param['id']}&name=${param['name']}&page=${page + 1}"/></c:if>">
-        <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
-      </a>
-    </li>
-  </ul>
+    <ul class="pager pull-right">
+        Strana
+        <li class="<c:if test="${page == 0}"><c:out value="disabled" /></c:if>">
+            <a href="<c:if test="${page > 0}"><c:out value="?type=${param['type']}&id=${param['id']}&name=${param['name']}&statusID=${param['statusId']}&page=${page - 1}" /></c:if>">
+                <span class="glyphicon glyphicon-backward"></span> <spring:message
+                    code="Common.Button.PreviousPage"></spring:message>
+            </a>
+        </li>
+        <c:out value="${page+1} od ${numberOfPages+1}"/>
+        <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
+            <a href="<c:if test="${page < numberOfPages}"><c:out value="?type=${param['type']}&id=${param['id']}&name=${param['name']}&statusID=${param['statusId']}&page=${page + 1}"/></c:if>">
+                <span class="glyphicon glyphicon-forward"></span> <spring:message
+                    code="Common.Button.NextPage"></spring:message>
+            </a>
+        </li>
+    </ul>
 </nav>
 <script type="text/javascript">
-  $('#businessPartner').typeahead({
-    highlight: true,
-    minLength: 1
-  }, {
-    display: 'name',
-    source: new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      remote: {
-        url: '${pageContext.request.contextPath}/partner/read-partner/%QUERY',
-        wildcard: '%QUERY'
-      }
-    })
-  });
-  $('#businessPartner').bind('typeahead:selected', function (obj, datum, name) {
-    console.log("obj " + obj);
-    console.log("datum " + datum);
-    console.log("name " + name);
-    $('#businessPartner-hidden').val(datum['id']);
-  });
+    $('#businessPartner').typeahead({
+        highlight: true,
+        minLength: 1
+    }, {
+        display: 'name',
+        source: new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: '${pageContext.request.contextPath}/partner/read-partner/%QUERY',
+                wildcard: '%QUERY'
+            }
+        })
+    });
+    $('#businessPartner').bind('typeahead:selected', function (obj, datum, name) {
+        console.log("obj " + obj);
+        console.log("datum " + datum);
+        console.log("name " + name);
+        $('#businessPartner-hidden').val(datum['id']);
+    });
 </script>
 <script>
-  $(document).ready(function () {
-    var table = $('#example').DataTable({
-              paging: false,
-              searching: false,
-              ordering: false,
-              info: false
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+                    paging: false,
+                    searching: false,
+                    ordering: false,
+                    info: false
+                }
+        );
+
+        $('#example tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
             }
-    );
-
-    $('#example tbody').on('click', 'tr', function () {
-      if ($(this).hasClass('selected')) {
-        $(this).removeClass('selected');
-      }
-      else {
-        table.$('tr.selected').removeClass('selected');
-        $(this).addClass('selected');
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
 
 
-        $("#selectedPartnerId").val($(this).find("#id").html());
-        $("#selectedPartnerName").val($(this).find("#name").html());
-        console.log("ovo je id " + $("#selectedPartnerId").val() + " a treba " + $(this).find("#id").html());
-        console.log("ovo je name " + $("#selectedPartnerName").val() + " a treba " + $(this).find("#name").html());
-      }
-    });
+                $("#selectedPartnerId").val($(this).find("#id").html());
+                $("#selectedPartnerName").val($(this).find("#name").html());
+                console.log("ovo je id " + $("#selectedPartnerId").val() + " a treba " + $(this).find("#id").html());
+                console.log("ovo je name " + $("#selectedPartnerName").val() + " a treba " + $(this).find("#name").html());
+            }
+        });
 
-    $('#button').click(function () {
-      table.row('.selected').remove().draw(false);
-    });
-  })
-  ;
+        $('#button').click(function () {
+            table.row('.selected').remove().draw(false);
+        });
+    })
+    ;
 </script>
