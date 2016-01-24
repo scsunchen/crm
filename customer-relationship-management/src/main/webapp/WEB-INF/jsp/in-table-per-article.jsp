@@ -10,6 +10,7 @@
 <%@ taglib prefix="input" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sprong" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <form:form method="post" modelAttribute="transactionDTO"
            action="${pageContext.request.contextPath}/invoicing/review-invoices.html">
@@ -58,10 +59,9 @@
                href="${pageContext.request.contextPath}/transactions/in-transactions-per-pos.html?posId=${item.posId}&posName=${item.posName}&merchantId=${param['merchantId']}&merchantName=${param['merchantName']}&invoicingDate=${param['invoicingDate']}&page=0">
                 <span class="glyphicon glyphicon-backward"></span>
                 <spring:message code="Invoicing.Button.Back"/></a></div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"><p class="navbar-text navbar-right">
-            <c:out value="${param['posId']} / ${param['postName']}"/></p></div>
-        <div class="collapse navbar-collapse" id="bs-total-navbar-collapse-6"><p class="navbar-text navbar-right">
-            <spring:message code="Invoicing.Amount.Total"/><spring:eval expression="totalAmount"/></p></div>
+        <div class="collapse navbar-collapse" id="bs-total-navbar-collapse-6">
+            <p class="navbar-text navbar-right"><spring:message code="Review.Table.POS"></spring:message> <strong><c:out value="${param['posId']}  ${param['posName']}"></c:out></strong></p>
+        </div>
     </div>
 </nav>
 
@@ -70,10 +70,14 @@
     <table class="table table-striped" data-sort-name="item.distributorName">
         <thead>
         <tr>
-            <th>POS</th>
-            <th>Artikal</th>
-            <th>Iznos</th>
-            <th>Distributor</th>
+            <th>
+                <button data-toggle="modal" data-target="#dialogGenInvoices" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoicing.Button.GenInvoice"/>
+                </button>
+            </th>
+            <th><spring:message code="Review.Table.Article"></spring:message> </th>
+            <th><spring:message code="Review.Table.Amount"></spring:message> </th>
+            <th><spring:message code="Invoice.Table.Distributor"></spring:message> </th>
         </tr>
         </thead>
         <tbody>
@@ -81,14 +85,7 @@
         <c:forEach var="item" items="${data}">
             <!-- Modal -->
             <tr>
-                <td>
-                    <div class="btn-group btn-group-sm" role="group">
-                        <a href="${pageContext.request.contextPath}/transactions/in-table-per-article.html?posId=${item.posId}&page=0"
-                           class="btn btn-primary"><span
-                                class="glyphicon glyphicon-search"></span>
-                            <spring:message code="Intable.Button.ViewPerPOS"/></a>
-                    </div>
-                </td>
+                <td></td>
                 <td><c:out value="${item.posName}"/></td>
                 <td><c:out value="${item.serviceDescription}"/></td>
                 <td><spring:eval expression="item.amount"/></td>
@@ -101,27 +98,36 @@
     </table>
 </div>
 <nav>
-    <ul class="pager pull-left">
-        <button data-toggle="modal" data-target="#dialogGenInvoices" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoicing.Button.GenInvoice"/>
-        </button>
-        <br/>
-    </ul>
+
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-pos.html?&merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
+                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
 
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions-per-pos.html?&merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
+                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
             </a>
         </li>
     </ul>
+    <table class="table">
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerPage"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmountPerPage}"/></strong></td>
+        </tr>
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerQuery"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmount}"/></strong></td>
+        </tr>
+    </table>
 </nav>
 
 

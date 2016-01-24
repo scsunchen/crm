@@ -20,6 +20,7 @@ public class BusinessPartnerDocument_ {
     public static volatile SingularAttribute<BusinessPartnerDocument, String> fileName;
     public static volatile SingularAttribute<BusinessPartnerDocument, String> fileContentType;
     public static volatile SingularAttribute<BusinessPartnerDocument, byte[]> file;
+    public static volatile SingularAttribute<BusinessPartnerDocument, Long> version;
 
 
 }

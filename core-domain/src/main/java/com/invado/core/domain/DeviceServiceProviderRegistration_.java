@@ -26,4 +26,5 @@ public class DeviceServiceProviderRegistration_ {
     public static volatile SingularAttribute<DeviceServiceProviderRegistration, String> ICCID;
     public static volatile SingularAttribute<DeviceServiceProviderRegistration, String> registration;
     public static volatile SingularAttribute<DeviceServiceProviderRegistration, DeviceStatus> deviceStatus;
+    public static volatile SingularAttribute<DeviceServiceProviderRegistration, Long> version;
 }

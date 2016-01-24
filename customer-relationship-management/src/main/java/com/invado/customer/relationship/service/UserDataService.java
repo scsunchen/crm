@@ -37,19 +37,20 @@ public class UserDataService implements UserDetailsService{
     @Transactional(rollbackFor = Exception.class)
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
         try {
-            ApplicationUser user = dao.createNamedQuery(
+            ApplicationUser appUser = dao.createNamedQuery(
                     ApplicationUser.READ_BY_USERNAME, 
                     ApplicationUser.class)
                     .setParameter(1, string)
                     .getSingleResult();
             Collection<GrantedAuthority> authorities = new ArrayList<>();
-            for (Role role : user.getRoles()) {
+            for (Role role : appUser.getRoles()) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
             }
-            return new User(
+            User user = new User(
                     string,
-                    String.valueOf(user.getPassword()),
+                    String.valueOf(appUser.getPassword()),
                     authorities);
+            return user;
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "", ex);
             throw new UsernameNotFoundException("Exception occured during during app user reading.", ex);

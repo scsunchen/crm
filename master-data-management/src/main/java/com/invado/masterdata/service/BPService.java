@@ -104,6 +104,8 @@ public class BPService {
             businessPartner.setRebate(a.getRebate());
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
             businessPartner.setVAT(a.getVAT());
+            businessPartner.setLongitude(a.getLongitude());
+            businessPartner.setLatitude(a.getLatitude());
             if (a.getTypeT() != null)
                 a.setType(a.getTypeT());
             businessPartner.setType(a.getType());
@@ -179,6 +181,8 @@ public class BPService {
             businessPartner.setActivityCode(a.getActivityCode());
             businessPartner.setRebate(a.getRebate());
             businessPartner.setInterestFreeDays(a.getInterestFreeDays());
+            businessPartner.setLongitude(a.getLongitude());
+            businessPartner.setLatitude(a.getLatitude());
             businessPartner.setVAT(a.getVAT());
             if (a.getTypeT() != null)
                 a.setType(a.getTypeT());
@@ -273,6 +277,8 @@ public class BPService {
             item.setTelekomStatus(dto.getTelekomStatus());
             item.setTelekomId(dto.getTelekomId());
             item.setRemark(dto.getRemark());
+            item.setLongitude(dto.getLongitude());
+            item.setLatitude(dto.getLatitude());
             if (dto.getParentBusinessPartnerId() != null)
                 item.setParentBusinessPartner(dao.find(BusinessPartner.class, dto.getParentBusinessPartnerId()));
             if (dto.getPartnerStatusId() != null)

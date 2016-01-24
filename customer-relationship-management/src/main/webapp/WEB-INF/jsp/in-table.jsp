@@ -77,10 +77,14 @@
     <table class="table table-striped" data-sort-name="item.distributorName">
         <thead>
         <tr>
-            <th></th>
-            <th>Merchant</th>
-            <th>Iznos</th>
-            <th>Distributor</th>
+            <th>
+                <button data-toggle="modal" data-target="#dialogGenInvoices" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoicing.Button.GenInvoice"/>
+                </button>
+            </th>
+            <th><spring:message code="Review.Table.Merchant"></spring:message> </th>
+            <th><spring:message code="Review.Table.Amount"></spring:message> </th>
+            <th><spring:message code="Invoice.Table.Distributor"></spring:message> </th>
         </tr>
         </thead>
         <tbody>
@@ -107,27 +111,37 @@
     </table>
 </div>
 <nav>
-    <ul class="pager pull-left">
-        <button data-toggle="modal" data-target="#dialogGenInvoices" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span><spring:message code="Invoicing.Button.GenInvoice"/>
-        </button>
-        <br/>
-    </ul>
-    <ul class="pager pull-right">
+
+
+    <ul class="pager pull-right ">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
             <a href="<c:if test="${page > 0}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions.html?merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page - 1}"/></c:if>">
-                <span class="glyphicon glyphicon-backward"></span> Prethodna
+                <span class="glyphicon glyphicon-backward"></span> <spring:message code="Common.Button.PreviousPage"></spring:message>
             </a>
         </li>
         <c:out value="${page+1} od ${numberOfPages+1}"/>
         <li class="<c:if test="${page == numberOfPages}"><c:out value="disabled"/></c:if>">
 
             <a href="<c:if test="${page < numberOfPages}"><c:out value="${pageContext.request.contextPath}/transactions/in-transactions.html?merchantId=${param['merchantId']}&invoicingDate=${param['invoicingDate']}&page=${page + 1}"/></c:if>">
-                <span class="glyphicon glyphicon-forward"></span> Naredna
+                <span class="glyphicon glyphicon-forward"></span> <spring:message code="Common.Button.NextPage"></spring:message>
             </a>
         </li>
     </ul>
+    <table class="table">
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerPage"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmountPerPage}"/></strong></td>
+        </tr>
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerQuery"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmount}"/></strong></td>
+        </tr>
+    </table>
 </nav>
 
 

@@ -33,6 +33,10 @@ public class TransactionDTO {
     @DateTimeFormat(style = "MM")
     private LocalDateTime responseTime;
     @DateTimeFormat(style = "M-")
+    private LocalDate responseTimeFrom;
+    @DateTimeFormat(style = "M-")
+    private LocalDate responseTimeTo;
+    @DateTimeFormat(style = "M-")
     private String invoicingDate;
     private Boolean invoicingStatus;
     @DateTimeFormat(style = "M-")
@@ -41,6 +45,8 @@ public class TransactionDTO {
     private String invoicingDistributorName;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private BigDecimal amount;
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    private BigDecimal sumAmount;
     private Integer page;
 
 
@@ -85,6 +91,14 @@ public class TransactionDTO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getSumAmount() {
+        return sumAmount;
+    }
+
+    public void setSumAmount(BigDecimal sumAmount) {
+        this.sumAmount = sumAmount;
     }
 
     public Integer getTerminalId() {
@@ -221,6 +235,22 @@ public class TransactionDTO {
 
     public void setInvoicingDistributorName(String invoicingDistributorName) {
         this.invoicingDistributorName = invoicingDistributorName;
+    }
+
+    public LocalDate getResponseTimeFrom() {
+        return responseTimeFrom;
+    }
+
+    public void setResponseTimeFrom(LocalDate responseTimeFrom) {
+        this.responseTimeFrom = responseTimeFrom;
+    }
+
+    public LocalDate getResponseTimeTo() {
+        return responseTimeTo;
+    }
+
+    public void setResponseTimeTo(LocalDate responseTimeTo) {
+        this.responseTimeTo = responseTimeTo;
     }
 
     public Integer getPage() {

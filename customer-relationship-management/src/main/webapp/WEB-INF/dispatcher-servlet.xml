@@ -15,7 +15,8 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.invado.customer.relationship.controller"></context:component-scan>
+    <context:component-scan
+            base-package="com.invado.customer.relationship.controller, com.invado.customer.relationship.service"></context:component-scan>
     <!-- all resources inside folder src/main/webapp/resources are mapped so they can be refered to inside JSP files
     (see header.jsp for more details) -->
     <mvc:annotation-driven conversion-service="conversionService">
@@ -30,7 +31,7 @@
             <value>org.springframework.web.servlet.view.tiles3.TilesView</value>
         </property>
     </bean>
-    <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean" />
+    <bean id="conversionService" class="com.invado.core.format.FormattingConversionServiceFactoryBean"/>
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions">
             <list>
@@ -42,8 +43,8 @@
         </property>
     </bean>
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-        <property name="defaultLocale" value="sr_RS" />
-        <property name="defaultTimeZone" value="Europe/Belgrade" />
+        <property name="defaultLocale" value="sr_RS"/>
+        <property name="defaultTimeZone" value="Europe/Belgrade"/>
     </bean>
     <bean id="localeChangeInterceptor"
           class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
@@ -68,5 +69,9 @@
                 <prop key="java.lang.Throwable">error</prop>
             </props>
         </property>
+    </bean>
+    <bean id="viewResolver1" class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="order" value="1"/>
+        <property name="location" value="/WEB-INF/views.xml"/>
     </bean>
 </beans>

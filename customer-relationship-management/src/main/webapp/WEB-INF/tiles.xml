@@ -46,25 +46,25 @@
     </definition>
     <definition name="invoiced-candidates-per-period-view" extends="main-menu-form">
         <put-attribute name="title" value="Transakcije"/>
-        <put-attribute name="panel-title" value="Pregled fakturisanih suma po merchantu"/>
+        <put-attribute name="panel-title" value="Pregled fakturisanih suma po prodavcu"/>
         <put-attribute name="filter" value="/WEB-INF/jsp/transacton-filter.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/in-table-per-period.jsp"/>
     </definition>
     <definition name="invoicing-candidates-view" extends="main-menu-form">
         <put-attribute name="title" value="Transakcije"/>
-        <put-attribute name="panel-title" value="Pregled suma za fakturisanje po merchantu"/>
+        <put-attribute name="panel-title" value="Pregled suma za fakturisanje po prodavcu"/>
         <put-attribute name="filter" value="/WEB-INF/jsp/transacton-filter.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/in-table.jsp"/>
     </definition>
     <definition name="invoicing-candidates-per-pos-view" extends="main-menu-form">
         <put-attribute name="title" value="Transakcije"/>
-        <put-attribute name="panel-title" value="Pregled suma za fakturisanje po POS-u"/>
+        <put-attribute name="panel-title" value="Pregled suma za fakturisanje po prodajnom mestu"/>
         <put-attribute name="filter" value="/WEB-INF/jsp/transacton-filter.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/in-table-per-pos.jsp"/>
     </definition>
     <definition name="invoicing-candidates-per-article-view" extends="main-menu-form">
         <put-attribute name="title" value="Transakcije"/>
-        <put-attribute name="panel-title" value="Pregled suma za fakturisanje po POS-u"/>
+        <put-attribute name="panel-title" value="Pregled suma za fakturisanje po prodajnom mestu"/>
         <put-attribute name="filter" value="/WEB-INF/jsp/transacton-filter.jsp"/>
         <put-attribute name="body" value="/WEB-INF/jsp/in-table-per-article.jsp"/>
     </definition>

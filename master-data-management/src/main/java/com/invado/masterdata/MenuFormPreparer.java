@@ -128,7 +128,7 @@ public class MenuFormPreparer implements ViewPreparer {
 
 
         Module crm = new Module();
-        crm.setPath("crm");
+        crm.setPath("crm/auto-login");
         crm.setName("CRM");
         modules.add(crm);
 

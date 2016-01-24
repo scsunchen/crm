@@ -51,8 +51,8 @@ public class BusinessPartnerDTO {
     private BusinessPartner.Type typeT;
     private String typeValue;
     private String typeDescription;
-    private Integer longitude;
-    private Integer latitude;
+    private String longitude;
+    private String latitude;
     private String namePattern;
     private BusinessPartnerStatus businessPartnerStatus;
     private Integer partnerStatusId;
@@ -348,19 +348,19 @@ public class BusinessPartnerDTO {
         this.typeValue = typeValue;
     }
 
-    public Integer getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Integer longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public Integer getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Integer latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 

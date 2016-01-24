@@ -12,12 +12,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <form:form role="search" modelAttribute="transactionDTO" method="GET"
-           action="${pageContext.request.contextPath}/transactions/view-transactions-page.html?page=0">
+           action="${pageContext.request.contextPath}/transactions/view-transactions-page.html">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Pretraživanje poslovnih partnera -->
             <br/>
 
+            <div class="col-md-2">
+                <form:input path="id" class="form-control" placeholder="Transaction id..."/>
+            </div>
             <div class="col-md-2">
                 <form:input id="serviceProviderName" class="typeahead form-control" type="text"
                             path="serviceProviderName" style="margin-bottom:  15px;"
@@ -34,17 +37,26 @@
                             path="terminalCustomCode" style="margin-bottom:  15px;" placeholder="Treminal..."/>
                 <form:hidden id="terminalIdHidden" path="terminalId"/>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <form:input id="typeDescription" class="typeahead form-control" type="text"
                             path="typeDescription" style="margin-bottom:  15px;" placeholder="Tip transakcije..."/>
                 <form:hidden id="typeIdHidden" path="typeId"/>
             </div>
-            <form:hidden id="page" path="page" valu="0"/>
-            <button type="submit" class="btn btn-default">Pretraga</button>
-
-            <!-- /.navbar-collapse -->
+            <div class="form-group col-md-1">
+                <form:input id="dateFrom" path="responseTimeFrom" type="text"
+                            class="form-control" placeholder="Datum od..."/>
+            </div>
+            <div class="form-group col-md-1">
+                <form:input id="dateTo" path="responseTimeTo" type="text"
+                            class="form-control" placeholder="Datum do..."/>
+            </div>
+            <form:hidden id="page" path="page" value="0"/>
+            <button type="submit" class="btn btn-primary"><span class=" glyphicon glyphicon-search"></span></button>
+            <a class="btn btn-default" data-toggle="tooltip" title="Excel"
+               href="${pageContext.request.contextPath}/transactions/downloadExcel.html?serviceProviderId=${param['serviceProviderId']}&pointOfSaleId=${param['pointOfSaleId']}&&terminalCustomCode=${param['terminalCustomCode']}&terminalId=${param['terminalId']}&typeId=${param['typeId']}">
+                <img src="../resources/images/ExcelIcon40.png"/>
+            </a>
         </div>
-        <!-- /.container-fluid -->
     </nav>
 </form:form>
 
@@ -83,8 +95,7 @@
         </tbody>
     </table>
 </div>
-<nav>
-
+<nav class="row">
     <ul class="pager pull-right">
         Strana
         <li class="<c:if test="${page == 0}"><c:out value="disabled"/></c:if>">
@@ -99,6 +110,20 @@
             </a>
         </li>
     </ul>
+    <table class="table">
+        <tr class="col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerPage"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmountPerPage}"/></strong></td>
+        </tr>
+        <tr class=" col-lg-3">
+            <td><spring:message code="Common.Summary.SumPerQuery"></spring:message></td>
+            <td><strong><fmt:formatNumber type="currency"
+                                          maxFractionDigits="2"
+                                          value="${sumAmount}"/></strong></td>
+        </tr>
+    </table>
 </nav>
 <script type="text/javascript">
     $('#serviceProviderName').typeahead({
@@ -185,6 +210,8 @@
     });
 </script>
 <script type="text/javascript">
+    $('#dateFrom').datepicker({});
+    $('#dateTo').datepicker({});
     $('#distributorName').typeahead({
         hint: false,
         highlight: true,

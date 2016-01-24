@@ -6,13 +6,11 @@ import com.invado.core.domain.Properties;
 import com.invado.core.dto.InvoiceDTO;
 import com.invado.core.dto.InvoiceItemDTO;
 import com.invado.core.dto.InvoiceReportDTO;
+import com.invado.core.dto.InvoicingTransactionDTO;
 import com.invado.core.utils.NativeQueryResultsMapper;
 import com.invado.customer.relationship.Utils;
 import com.invado.customer.relationship.domain.*;
-import com.invado.customer.relationship.service.dto.InvoicingTransactionSetDTO;
-import com.invado.customer.relationship.service.dto.PageRequestDTO;
-import com.invado.customer.relationship.service.dto.ReadRangeDTO;
-import com.invado.customer.relationship.service.dto.TransactionDTO;
+import com.invado.customer.relationship.service.dto.*;
 import com.invado.core.exception.ConstraintViolationException;
 import com.invado.core.exception.EntityExistsException;
 import com.invado.core.exception.EntityNotFoundException;
@@ -35,11 +33,13 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,7 +61,6 @@ public class TransactionService {
 
     @Inject
     private Validator validator;
-
 
     @Transactional(rollbackFor = Exception.class)
     public Transaction create(TransactionDTO a) throws IllegalArgumentException,
@@ -218,15 +217,17 @@ public class TransactionService {
     public ReadRangeDTO<TransactionDTO> readPage(PageRequestDTO p)
             throws PageNotExistsException {
         //TODO : check ReadTransactionPermission
-        Integer id = null;
+        Long id = null;
         Integer distributorId = null;
         Integer pointOfSaleId = null;
         Integer serviceProviderId = null;
         Integer terminalId = null;
         Integer typeId = null;
+        LocalDateTime dateFrom = null;
+        LocalDateTime dateTo = null;
         for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
             if (s.getKey().equals("id") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
-                id = Integer.valueOf(s.getValue().toString());
+                id = Long.valueOf(s.getValue().toString());
             }
             if (s.getKey().equals("distributorId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
                 distributorId = Integer.valueOf(s.getValue().toString());
@@ -243,12 +244,19 @@ public class TransactionService {
             if (s.getKey().equals("typeId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
                 typeId = Integer.valueOf(s.getValue().toString());
             }
-
+            if (s.getKey().equals("dateFrom") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+                dateFrom = LocalDateTime.parse(s.getValue().toString() + " 00:00", formatter);
+            }
+            if (s.getKey().equals("dateTo") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+                dateTo = LocalDateTime.parse(s.getValue().toString() + " 00:00", formatter);
+            }
         }
         try {
             Integer pageSize = dao.find(ApplicationSetup.class, 1).getPageSize();
 
-            Long countEntities = this.count(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId);
+            Long countEntities = this.count(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, dateFrom, dateTo);
             Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                     ? (countEntities / pageSize - 1) : countEntities / pageSize;
             Integer pageNumber = p.getPage();
@@ -263,12 +271,12 @@ public class TransactionService {
                 //if page number is -1 read last page
                 //first Transaction = last page number * Transaction per page
                 int start = numberOfPages.intValue() * pageSize;
-                List<TransactionDTO> TransactionDTOList = convertToDTO(this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, start, pageSize));
+                List<TransactionDTO> TransactionDTOList = convertToDTO(this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, dateFrom, dateTo, start, pageSize));
                 result.setData(TransactionDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(numberOfPages.intValue());
             } else {
-                List<TransactionDTO> TransactionDTOList = convertToDTO(this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, p.getPage() * pageSize, pageSize));
+                List<TransactionDTO> TransactionDTOList = convertToDTO(this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, dateFrom, dateTo, p.getPage() * pageSize, pageSize));
                 result.setData(TransactionDTOList);
                 result.setNumberOfPages(numberOfPages.intValue());
                 result.setPage(pageNumber);
@@ -294,12 +302,14 @@ public class TransactionService {
 
     private Long count(
             EntityManager EM,
-            Integer id,
+            Long id,
             Integer distributorId,
             Integer pointOfSaleId,
             Integer serviceProviderId,
             Integer terminalId,
-            Integer typeId) {
+            Integer typeId,
+            LocalDateTime dateFrom,
+            LocalDateTime dateTo) {
 
         Client distributor = null;
         BusinessPartner pointOfSale = null;
@@ -314,7 +324,7 @@ public class TransactionService {
         List<Predicate> criteria = new ArrayList<>();
         if (id != null) {
             criteria.add(cb.equal(root.get(Transaction_.id),
-                    cb.parameter(Integer.class, "id")));
+                    cb.parameter(Long.class, "id")));
         }
         if (distributorId != null) {
             distributor = dao.find(Client.class, distributorId);
@@ -341,8 +351,14 @@ public class TransactionService {
             criteria.add(cb.equal(root.get(Transaction_.type),
                     cb.parameter(TransactionType.class, "type")));
         }
-
-
+        if (dateFrom != null) {
+            criteria.add(cb.greaterThanOrEqualTo(root.get(Transaction_.responseTime),
+                    cb.parameter(LocalDateTime.class, "localDateFrom")));
+        }
+        if (dateTo != null) {
+            criteria.add(cb.lessThanOrEqualTo(root.get(Transaction_.responseTime),
+                    cb.parameter(LocalDateTime.class, "localDateTo")));
+        }
         c.where(cb.and(criteria.toArray(new Predicate[0])));
         TypedQuery<Long> q = EM.createQuery(c);
         if (id != null) {
@@ -363,35 +379,70 @@ public class TransactionService {
         if (type != null) {
             q.setParameter("type", type);
         }
-
+        if (dateFrom != null) {
+            q.setParameter("localDateFrom", dateFrom);
+        }
+        if (dateTo != null) {
+            q.setParameter("localDateTo", dateTo);
+        }
         return q.getSingleResult();
     }
 
 
-    private List<Transaction> search(EntityManager em,
-                                     Integer id,
-                                     Integer distributorId,
-                                     Integer pointOfSaleId,
-                                     Integer serviceProviderId,
-                                     Integer terminalId,
-                                     Integer typeId,
-                                     int first,
-                                     int pageSize) {
+    public BigDecimal sumAmount(PageRequestDTO p) {
 
         Client distributor = null;
         BusinessPartner pointOfSale = null;
         BusinessPartner serviceProvider = null;
         Device terminal = null;
         TransactionType type = null;
+        Long id = null;
+        Integer distributorId = null;
+        Integer pointOfSaleId = null;
+        Integer serviceProviderId = null;
+        Integer terminalId = null;
+        Integer typeId = null;
+        LocalDateTime dateFrom = null;
+        LocalDateTime dateTo = null;
 
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Transaction> query = cb.createQuery(Transaction.class);
-        Root<Transaction> root = query.from(Transaction.class);
-        query.select(root);
+        for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
+
+            if (s.getKey().equals("id") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                id = Long.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("distributorId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                distributorId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("pointOfSaleId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                pointOfSaleId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("serviceProviderId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                serviceProviderId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("terminalId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                terminalId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("typeId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                typeId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("dateFrom") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+                dateFrom = LocalDateTime.parse(s.getValue().toString() + " 00:00", formatter);
+            }
+            if (s.getKey().equals("dateTo") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+                dateTo = LocalDateTime.parse(s.getValue().toString() + " 00:00", formatter);
+            }
+        }
+
+        CriteriaBuilder cb = dao.getCriteriaBuilder();
+        CriteriaQuery<BigDecimal> c = cb.createQuery(BigDecimal.class);
+        Root<Transaction> root = c.from(Transaction.class);
+        c.select(cb.sum(root.get("amount")));
         List<Predicate> criteria = new ArrayList<>();
         if (id != null) {
             criteria.add(cb.equal(root.get(Transaction_.id),
-                    cb.parameter(Integer.class, "id")));
+                    cb.parameter(Long.class, "id")));
         }
         if (distributorId != null) {
             distributor = dao.find(Client.class, distributorId);
@@ -418,7 +469,103 @@ public class TransactionService {
             criteria.add(cb.equal(root.get(Transaction_.type),
                     cb.parameter(TransactionType.class, "type")));
         }
+        if (dateFrom != null) {
+            criteria.add(cb.greaterThanOrEqualTo(root.get(Transaction_.responseTime),
+                    cb.parameter(LocalDateTime.class, "localDateFrom")));
+        }
+        if (dateTo != null) {
+            criteria.add(cb.lessThanOrEqualTo(root.get(Transaction_.responseTime),
+                    cb.parameter(LocalDateTime.class, "localDateTo")));
+        }
+        c.where(cb.and(criteria.toArray(new Predicate[0])));
+        TypedQuery<BigDecimal> q = dao.createQuery(c);
+        if (id != null) {
+            q.setParameter("id", id);
+        }
+        if (distributor != null) {
+            q.setParameter("distributor", distributor);
+        }
+        if (pointOfSale != null) {
+            q.setParameter("pointOfSale", pointOfSale);
+        }
+        if (serviceProvider != null) {
+            q.setParameter("serviceProvider", serviceProvider);
+        }
+        if (terminal != null) {
+            q.setParameter("terminal", terminal);
+        }
+        if (type != null) {
+            q.setParameter("type", type);
+        }
+        if (dateFrom != null) {
+            q.setParameter("localDateFrom", dateFrom);
+        }
+        if (dateTo != null) {
+            q.setParameter("localDateTo", dateTo);
+        }
+        return q.getSingleResult();
+    }
 
+    private List<Transaction> search(EntityManager em,
+                                     Long id,
+                                     Integer distributorId,
+                                     Integer pointOfSaleId,
+                                     Integer serviceProviderId,
+                                     Integer terminalId,
+                                     Integer typeId,
+                                     LocalDateTime dateFrom,
+                                     LocalDateTime dateTo,
+                                     int first,
+                                     int pageSize) {
+
+        Client distributor = null;
+        BusinessPartner pointOfSale = null;
+        BusinessPartner serviceProvider = null;
+        Device terminal = null;
+        TransactionType type = null;
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Transaction> query = cb.createQuery(Transaction.class);
+        Root<Transaction> root = query.from(Transaction.class);
+        query.select(root);
+        List<Predicate> criteria = new ArrayList<>();
+        if (id != null) {
+            criteria.add(cb.equal(root.get(Transaction_.id),
+                    cb.parameter(Long.class, "id")));
+        }
+        if (distributorId != null) {
+            distributor = dao.find(Client.class, distributorId);
+            criteria.add(cb.equal(root.get(Transaction_.distributor),
+                    cb.parameter(Client.class, "distributor")));
+        }
+        if (pointOfSaleId != null) {
+            pointOfSale = dao.find(BusinessPartner.class, pointOfSaleId);
+            criteria.add(cb.equal(root.get(Transaction_.pointOfSale),
+                    cb.parameter(BusinessPartner.class, "pointOfSale")));
+        }
+        if (serviceProviderId != null) {
+            serviceProvider = dao.find(BusinessPartner.class, serviceProviderId);
+            criteria.add(cb.equal(root.get(Transaction_.serviceProvider),
+                    cb.parameter(BusinessPartner.class, "serviceProvider")));
+        }
+        if (terminalId != null) {
+            terminal = dao.find(Device.class, terminalId);
+            criteria.add(cb.equal(root.get(Transaction_.terminal),
+                    cb.parameter(Device.class, "terminal")));
+        }
+        if (typeId != null) {
+            type = dao.find(TransactionType.class, typeId);
+            criteria.add(cb.equal(root.get(Transaction_.type),
+                    cb.parameter(TransactionType.class, "type")));
+        }
+        if (dateFrom != null) {
+            criteria.add(cb.greaterThanOrEqualTo(root.get(Transaction_.responseTime),
+                    cb.parameter(LocalDateTime.class, "localDateFrom")));
+        }
+        if (dateTo != null) {
+            criteria.add(cb.lessThanOrEqualTo(root.get(Transaction_.responseTime),
+                    cb.parameter(LocalDateTime.class, "localDateTo")));
+        }
         query.where(criteria.toArray(new Predicate[0]))
                 .orderBy(cb.asc(root.get(Transaction_.pointOfSale)), cb.asc(root.get(Transaction_.serviceProvider)), cb.asc(root.get(Transaction_.id)));
         TypedQuery<Transaction> q = em.createQuery(query);
@@ -439,6 +586,12 @@ public class TransactionService {
         }
         if (type != null) {
             q.setParameter("type", type);
+        }
+        if (dateFrom != null) {
+            q.setParameter("localDateFrom", dateFrom);
+        }
+        if (dateTo != null) {
+            q.setParameter("localDateTo", dateTo);
         }
         q.setFirstResult(first);
         q.setMaxResults(pageSize);
@@ -468,7 +621,6 @@ public class TransactionService {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
             }
             if (s.getKey().equals("invoicingDateFrom") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -510,7 +662,7 @@ public class TransactionService {
             countEntitiesQuery.setParameter("invoicingDateTo", invoicingDate == null ? Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()) : invoicingDate);
             if (invoicingDateFrom == null)
                 invoicingDateFrom = Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            countEntitiesQuery.setParameter("invoicingDateFrom",   invoicingDateFrom);
+            countEntitiesQuery.setParameter("invoicingDateFrom", invoicingDateFrom);
 
             Long countEntities = new Long(countEntitiesQuery.getSingleResult().toString());
 
@@ -755,6 +907,81 @@ public class TransactionService {
             );
         }
     }
+
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public BigDecimal sumInvoicingCandidatesAmount(PageRequestDTO p)
+            throws PageNotExistsException {
+        //TODO : check ReadTransactionPermission
+
+
+        Date invoicingDate = null;
+        Date invoicingDateFrom = null;
+        Integer distributorId = null;
+        int merchantId = 0;
+        int posId = 0;
+        Integer invoicingStatus = null;
+        List<InvoicingTransactionSetDTO> invoicingTransactionSetDTOs = new ArrayList<InvoicingTransactionSetDTO>();
+
+        for (PageRequestDTO.SearchCriterion s : p.readAllSearchCriterions()) {
+            if (s.getKey().equals("invoicingDateTo") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+                    String in = s.getValue().toString();
+                    invoicingDate = formatter.parse(in);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //out = (Date)s.getValue();
+            }
+            if (s.getKey().equals("invoicingDateFrom") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+                    String in = s.getValue().toString();
+                    invoicingDateFrom = formatter.parse(in);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //out = (Date)s.getValue();
+            }
+            if (s.getKey().equals("distributorId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                distributorId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("merchantId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                merchantId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("posId") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                posId = Integer.valueOf(s.getValue().toString());
+            }
+            if (s.getKey().equals("invoicingStatus") && !(s.getValue() == null) && !s.getValue().toString().isEmpty()) {
+                invoicingStatus = Integer.valueOf(s.getValue().toString());
+            }
+        }
+
+        TypedQuery<InvoicingTransaction> queryLastInvoicingTransaction = dao.createNamedQuery(InvoicingTransaction.LAST_TRANSACTION, InvoicingTransaction.class);
+        InvoicingTransaction invoicingTransaction = queryLastInvoicingTransaction.getSingleResult();
+
+        Query query = dao.createNamedQuery(Transaction.INVOICING_SUM_NOPARAM);
+        if (invoicingDate == null)
+            invoicingDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        if (invoicingDateFrom == null)
+            invoicingDateFrom = Date.from(invoicingTransaction.getInvoicedTo().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        query.setParameter("invoicingDateTo", invoicingDate);
+        query.setParameter("invoicingDateFrom", invoicingDateFrom);
+        query.setParameter("merchantId", merchantId);
+        query.setParameter("posId", posId);
+        query.setParameter("invoicingStatus", invoicingStatus);
+
+        try {
+            System.out.println("resultat : " + query.getResultList().get(0));
+            return new BigDecimal(query.getResultList().get(0).toString());
+
+        } catch (NullPointerException e) {
+            System.out.println("nije nist nasao  ");
+            return new BigDecimal(0);
+        }
+    }
+
 
     @Transactional(rollbackFor = Exception.class)
     public void createInvoice(InvoiceDTO dto) throws ConstraintViolationException,
@@ -1283,14 +1510,28 @@ public class TransactionService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Transaction> readAll(Integer id,
+    public List<Transaction> readAll(Long id,
                                      Integer distributorId,
                                      Integer pointOfSaleId,
                                      Integer serviceProviderId,
                                      Integer terminalId,
-                                     Integer typeId) {
+                                     Integer typeId,
+                                     String dateFrom,
+                                     String dateTo) {
+        LocalDateTime localDateFrom = null;
+        LocalDateTime localDateTo = null;
+
+        if (dateFrom != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+            localDateFrom = LocalDateTime.parse(dateFrom + " 00:00", formatter);
+        }
+        if (dateTo != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm");
+            localDateTo = LocalDateTime.parse(dateTo + " 00:00", formatter);
+        }
         try {
-            return this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, 0, 0);
+
+            return this.search(dao, id, distributorId, pointOfSaleId, serviceProviderId, terminalId, typeId, localDateFrom, localDateTo, 0, 0);
         } catch (Exception ex) {
             LOG.log(Level.WARNING,
                     "",
@@ -1425,13 +1666,13 @@ public class TransactionService {
                 //addItem(invoiceItemDTO);
             } else {
                 invoiceItemDTO.setNetPrice(invoiceItemDTO.getNetPrice().add(transactionSetDTO.getAmount().divide(BigDecimal.ONE.add(invoiceItemDTO.getVATPercent()), 2, RoundingMode.HALF_UP)));
-                System.out.println("net price drugi  "+ invoice.getPartnerID()+" " + invoiceItemDTO.getNetPrice());
+                System.out.println("net price drugi  " + invoice.getPartnerID() + " " + invoiceItemDTO.getNetPrice());
                 invoiceItemDTO.setTotalCost(invoiceItemDTO.getNetPrice().subtract(invoiceItemDTO.getNetPrice().multiply(invoiceItemDTO.getRabatPercent()))
                         .multiply(BigDecimal.ONE.add(invoiceItemDTO.getVATPercent()).setScale(2, RoundingMode.HALF_UP)).setScale(2, RoundingMode.HALF_UP));
-                System.out.println("totl cost drugi "+ invoice.getPartnerID()+" " + invoiceItemDTO.getTotalCost());
+                System.out.println("totl cost drugi " + invoice.getPartnerID() + " " + invoiceItemDTO.getTotalCost());
                 invoice.setTotalAmount(invoice.getTotalAmount().add((transactionSetDTO.getAmount().divide(BigDecimal.ONE.add(invoiceItemDTO.getVATPercent()), 2, RoundingMode.HALF_UP))
                         .multiply(BigDecimal.ONE.add(invoiceItemDTO.getRabatPercent()))).multiply(BigDecimal.ONE.add(invoiceItemDTO.getRabatPercent())));
-                System.out.println("total amount "+ invoice.getPartnerID()+" " + invoice.getTotalAmount());
+                System.out.println("total amount " + invoice.getPartnerID() + " " + invoice.getTotalAmount());
                 invoiceItemDTO.setUsername(invoice.getUsername());
                 invoiceItemDTO.setInvoiceVersion(invoice.getVersion() == null ? 0 : invoice.getVersion());
             }
@@ -1510,7 +1751,7 @@ public class TransactionService {
                 maxDocument = dao.createNamedQuery(Invoice.READ_MAX_DOCUMENT, Integer.class)
                         .setParameter("client", client)
                         .setParameter("orgUnit", orgUnit).getSingleResult();
-                invoice.setDocument(maxDocument == null ? new Integer(1 + invoicingTransactionSetDTOs.indexOf(transactionSetDTO))+"" : (maxDocument + invoicingTransactionSetDTOs.indexOf(transactionSetDTO)) + "");
+                invoice.setDocument(maxDocument == null ? new Integer(1 + invoicingTransactionSetDTOs.indexOf(transactionSetDTO)) + "" : (maxDocument + invoicingTransactionSetDTOs.indexOf(transactionSetDTO)) + "");
                 invoice.setClientId(client.getId());
                 invoice.setClientDesc(client.getName());
                 invoice.setCreditRelationDate(invoicingDate);
@@ -1644,7 +1885,7 @@ public class TransactionService {
                     q.setParameter("partner", null);
                 }
                 countEntities = Long.valueOf(q.getResultList().size() + 1);
-                System.out.println("evo ga "+countEntities+" "+pageSize);
+                System.out.println("evo ga " + countEntities + " " + pageSize);
                 Long numberOfPages = (countEntities != 0 && countEntities % pageSize == 0)
                         ? (countEntities / pageSize - 1) : countEntities / pageSize;
                 Integer pageNumber = page;
@@ -1686,7 +1927,6 @@ public class TransactionService {
             );
         }
     }
-
 
 
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
@@ -1735,6 +1975,14 @@ public class TransactionService {
                     "TransactionType.Exception.ReadAll"),
                     ex);
         }
+    }
+
+    public BigDecimal getSumPerTransactionPage(List<TransactionDTO> list) {
+        return list.stream().map(TransactionDTO::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getSumPerInvoicingPage(List<InvoicingTransactionSetDTO> list) {
+        return list.stream().map(InvoicingTransactionSetDTO::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
 
