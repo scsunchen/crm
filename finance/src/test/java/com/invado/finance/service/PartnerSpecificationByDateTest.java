@@ -71,6 +71,7 @@ public class PartnerSpecificationByDateTest {
     @Before
     public void before() {
         service.dao = EM;
+        mocks.reset();
     }
 
     @Test
