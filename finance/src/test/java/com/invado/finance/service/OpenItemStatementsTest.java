@@ -56,6 +56,7 @@ public class OpenItemStatementsTest {
     @Before
     public void before() {
         service.dao = EM;
+        mocks.reset();
     }
     
     @Test

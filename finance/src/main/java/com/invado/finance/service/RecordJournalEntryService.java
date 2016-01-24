@@ -39,7 +39,7 @@ public class RecordJournalEntryService {
     private static final Logger LOG = Logger.getLogger(RecordJournalEntryService.class.getName());
 
     @PersistenceContext(name = "unit")
-    private EntityManager EM;
+    EntityManager EM;
     @Inject
     private Validator validator;
     
@@ -191,11 +191,5 @@ public class RecordJournalEntryService {
         }
         EM.persist(GL);
     }
-
-//    public void testKreirajStanje(JournalEntry nalog) {
-//        for (int i = 0, n = nalog.getItems().size(); i < n; i++) {
-//            createBusinessPartnerSpecification(nalog, nalog.getItems().get(i));
-//        }
-//    }
 
 }

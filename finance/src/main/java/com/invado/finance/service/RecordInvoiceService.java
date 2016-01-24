@@ -66,7 +66,8 @@ public class RecordInvoiceService {
     private static final Logger LOG = Logger.getLogger(RecordInvoiceService.class.getName());
     
     @PersistenceContext(name = "unit")
-    private EntityManager EM;
+    EntityManager EM;
+    
     @Inject
     private Validator validator; 
    
@@ -191,7 +192,8 @@ public class RecordInvoiceService {
                     //dao.rollbackTransaction();
                     throw new EntityNotFoundException(
                             Utils.getMessage("RecordInvoice.EntityNotFoundEx.ExchangeRate",
-                            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).format(invoice.getCreditRelationDate()),
+                            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                                    .format(invoice.getCreditRelationDate()),
                             invoice.getCurrencyISOCode()));
                 }
                 total = total.multiply(rate.getMiddle());
